@@ -1,0 +1,5 @@
+[workspace]
+
+members = [
+    "rpg_tools_core",
+]
