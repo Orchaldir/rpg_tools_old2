@@ -1,7 +1,7 @@
 /// A color defined by a name.
 /// See https://en.wikipedia.org/wiki/Web_colors.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum ColorName {
+pub enum Color {
     Aqua,
     Black,
     Blue,
