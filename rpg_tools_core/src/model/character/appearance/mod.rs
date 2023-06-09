@@ -4,7 +4,7 @@ use crate::model::length::Length;
 pub mod skin;
 
 /// How does a [`character`](crate::model::character::Character) look like?
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Appearance {
     /// The [`character`](crate::model::character::Character) consists only of a head. E.g. a floating skull
     HeadOnly { height: Length, skin: Skin },

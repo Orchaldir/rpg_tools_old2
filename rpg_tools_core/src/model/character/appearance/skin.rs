@@ -1,7 +1,7 @@
 use crate::model::color::Color;
 
 /// The skin of a [`Character`](crate::model::character::Character).
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Skin {
     Scales(Color),
     Skin(SkinColor),
