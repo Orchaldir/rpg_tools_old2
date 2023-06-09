@@ -1,6 +1,8 @@
+use crate::model::character::appearance::body::BodyShape;
 use crate::model::character::appearance::skin::Skin;
 use crate::model::length::Length;
 
+pub mod body;
 pub mod skin;
 
 /// How does a [`character`](crate::model::character::Character) look like?
@@ -9,7 +11,11 @@ pub enum Appearance {
     /// The [`character`](crate::model::character::Character) consists only of a head. E.g. a floating skull
     HeadOnly { height: Length, skin: Skin },
     /// The [`character`](crate::model::character::Character) is a humanoid. E.g. a human
-    Humanoid { height: Length, skin: Skin },
+    Humanoid {
+        body_shape: BodyShape,
+        height: Length,
+        skin: Skin,
+    },
 }
 
 impl Appearance {
@@ -17,13 +23,21 @@ impl Appearance {
         Self::HeadOnly { height, skin }
     }
 
-    pub fn humanoid(height: Length, skin: Skin) -> Self {
-        Self::Humanoid { height, skin }
+    pub fn humanoid(body_shape: BodyShape, height: Length, skin: Skin) -> Self {
+        Self::Humanoid {
+            body_shape,
+            height,
+            skin,
+        }
     }
 }
 
 impl Default for Appearance {
     fn default() -> Self {
-        Self::humanoid(Length::from_metre(1.0), Skin::default())
+        Self::humanoid(
+            BodyShape::default(),
+            Length::from_metre(1.0),
+            Skin::default(),
+        )
     }
 }

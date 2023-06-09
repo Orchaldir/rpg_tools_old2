@@ -1,0 +1,26 @@
+/// The body shape is defined by the ratio between shoulders, waist & hips.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum BodyShape {
+    /// The body gets wider from the shoulders to the hips.
+    Fat,
+    /// The shoulders & hips are wider than the waist.
+    Hourglass,
+    /// The body gets wider from the hips to the shoulders.
+    Muscular,
+    /// The shoulders, waist & hips are equally wide.
+    Rectangle(BodyWidth),
+}
+
+impl Default for BodyShape {
+    fn default() -> Self {
+        Self::Rectangle(BodyWidth::Average)
+    }
+}
+
+/// How wide is the body?
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum BodyWidth {
+    Thin,
+    Average,
+    Wide,
+}
