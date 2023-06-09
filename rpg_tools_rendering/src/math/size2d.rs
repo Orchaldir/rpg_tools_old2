@@ -64,7 +64,7 @@ impl Size2d {
 impl Div<f32> for Size2d {
     type Output = Self;
 
-    /// Divides a [`Point2d`] by a f32.
+    /// Divides a size by a f32.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::size2d::Size2d;
@@ -81,7 +81,7 @@ impl Div<f32> for Size2d {
 impl Mul<f32> for Size2d {
     type Output = Self;
 
-    /// Multiplies a [`Point2d`] by a f32.
+    /// Multiplies a size by a f32.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::size2d::Size2d;

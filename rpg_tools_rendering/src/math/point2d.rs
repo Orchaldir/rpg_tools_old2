@@ -56,7 +56,7 @@ impl Point2d {
 impl Add<Point2d> for Point2d {
     type Output = Point2d;
 
-    /// Add a [`Point2d`] to another [`Point2d`].
+    /// Add 2 points together.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::point2d::Point2d;
@@ -75,7 +75,7 @@ impl Add<Point2d> for Point2d {
 impl Add<Size2d> for Point2d {
     type Output = Point2d;
 
-    /// Add a [`Size2d`] to a [`Point2d`].
+    /// Add a [`Size2d`] to a point.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::point2d::Point2d;
@@ -97,7 +97,7 @@ impl Add<Size2d> for Point2d {
 impl Div<f32> for Point2d {
     type Output = Self;
 
-    /// Divides a [`Point2d`] by a f32.
+    /// Divides a point by a f32.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::point2d::Point2d;
@@ -114,7 +114,7 @@ impl Div<f32> for Point2d {
 impl Mul<f32> for Point2d {
     type Output = Self;
 
-    /// Multiplies a [`Point2d`] by a f32.
+    /// Multiplies a point by a f32.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::point2d::Point2d;
@@ -131,7 +131,7 @@ impl Mul<f32> for Point2d {
 impl Sub<Point2d> for Point2d {
     type Output = Point2d;
 
-    /// Subtracts a [`Point2d`] from another [`Point2d`].
+    /// Subtracts a point from another point.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::point2d::Point2d;
