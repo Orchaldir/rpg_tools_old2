@@ -29,12 +29,12 @@ pub struct Size2d {
 
 impl Size2d {
     /// Returns a new size.
-    pub const fn new(width: u32, height: u32) -> Size2d {
+    pub const fn new(width: u32, height: u32) -> Self {
         Size2d { width, height }
     }
 
     /// Returns a size with equal width & height.
-    pub const fn square(size: u32) -> Size2d {
+    pub const fn square(size: u32) -> Self {
         Size2d::new(size, size)
     }
 
