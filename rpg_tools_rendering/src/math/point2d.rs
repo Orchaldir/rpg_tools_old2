@@ -1,3 +1,4 @@
+use crate::math::size2d::Size2d;
 use std::ops::{Add, Div, Mul, Sub};
 
 /// Defines a point in 2 dimensions.
@@ -68,6 +69,28 @@ impl Add<Point2d> for Point2d {
     /// ```
     fn add(self, other: Point2d) -> Point2d {
         Point2d::new(self.x + other.x, self.y + other.y)
+    }
+}
+
+impl Add<Size2d> for Point2d {
+    type Output = Point2d;
+
+    /// Add a [`Size2d`] to a [`Point2d`].
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::size2d::Size2d;
+    /// let a = Point2d::new(1, 2);
+    /// let b = Size2d::new(30, 50);
+    /// let result = Point2d::new(31, 52);
+    ///
+    /// assert_eq!(a + b, result);
+    /// ```
+    fn add(self, other: Size2d) -> Point2d {
+        Point2d::new(
+            self.x + other.width() as i32,
+            self.y + other.height() as i32,
+        )
     }
 }
 
