@@ -1,4 +1,5 @@
 use crate::model::character::appearance::skin::Skin;
+use crate::model::length::Length;
 
 pub mod skin;
 
@@ -6,12 +7,13 @@ pub mod skin;
 /// Currently this is limited to humanoids.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Appearance {
+    height: Length,
     skin: Skin,
 }
 
 impl Appearance {
-    pub fn new(skin: Skin) -> Self {
-        Self { skin }
+    pub fn new(height: Length, skin: Skin) -> Self {
+        Self { height, skin }
     }
 
     pub fn skin(&self) -> &Skin {
@@ -21,6 +23,6 @@ impl Appearance {
 
 impl Default for Appearance {
     fn default() -> Self {
-        Self::new(Skin::default())
+        Self::new(Length::from_metre(1.0), Skin::default())
     }
 }
