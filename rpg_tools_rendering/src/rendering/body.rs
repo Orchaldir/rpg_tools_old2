@@ -24,10 +24,11 @@ impl BodyRenderer {
         let leg_height = 0.21;
         let feet_height = 0.07;
 
-        let torso_width = get_torso_width(body);
-        let arm_width = 0.1;
-        let leg_width = 0.14;
-        let feet_width = 0.21;
+        let width_factor = get_width_factor(body);
+        let torso_width = 0.35 * width_factor;
+        let arm_width = 0.1 * width_factor;
+        let leg_width = 0.14 * width_factor;
+        let feet_width = 0.21 * width_factor;
 
         let hands_factor = 0.14 * 0.5;
 
@@ -77,10 +78,10 @@ impl BodyRenderer {
     }
 }
 
-fn get_torso_width(body: &Body) -> f32 {
+fn get_width_factor(body: &Body) -> f32 {
     match body.width {
-        BodyWidth::Thin => 0.25,
-        BodyWidth::Average => 0.35,
-        BodyWidth::Wide => 0.45,
+        BodyWidth::Thin => 0.8,
+        BodyWidth::Average => 1.0,
+        BodyWidth::Wide => 1.2,
     }
 }
