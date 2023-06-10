@@ -2,6 +2,7 @@ use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::RenderConfig;
+use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{
     GeometricHeadShape, Head, HeadShape, RealisticHeadShape,
 };
@@ -55,6 +56,10 @@ impl HeadRenderer {
     ) {
         let options = config.get_options(&head.skin);
 
+        let top_width = get_top_width(realistic);
+        let top_left = aabb.get_point(0.5 - top_width, 0.0);
+        let top_right = aabb.get_point(0.5 + top_width, 0.0);
+
         let forehead = get_forehead(realistic);
         let forehead_width = get_forehead_width(realistic);
         let forehead_left = aabb.get_point(0.5 - forehead_width, forehead);
@@ -69,15 +74,15 @@ impl HeadRenderer {
         let chin_left = aabb.get_point(0.5 - chin_width, 1.0);
         let chin_right = aabb.get_point(0.5 + chin_width, 1.0);
 
-        let top = aabb.get_point(0.5, 0.0);
         let polygon = Polygon2d::new(vec![
+            top_left,
             forehead_left,
             mouth_left,
             chin_left,
             chin_right,
             mouth_right,
             forehead_right,
-            top,
+            top_right,
         ]);
         let cut = polygon.cut_corners_n(0.25, 0.25, 3).unwrap();
 
@@ -96,29 +101,30 @@ fn get_mouth(realistic: RealisticHeadShape) -> f32 {
 const WIDE: f32 = 0.45;
 const NARROW: f32 = 0.33;
 
+fn get_top_width(realistic: RealisticHeadShape) -> f32 {
+    match realistic {
+        Rectangle | Square => 0.3,
+        _ => 0.2,
+    }
+}
+
 fn get_forehead_width(realistic: RealisticHeadShape) -> f32 {
     match realistic {
-        RealisticHeadShape::Round
-        | RealisticHeadShape::Square
-        | RealisticHeadShape::TriangleDown => WIDE,
+        Round | Square | TriangleDown => WIDE,
         _ => NARROW,
     }
 }
 
 fn get_mouth_width(realistic: RealisticHeadShape) -> f32 {
     match realistic {
-        RealisticHeadShape::Round | RealisticHeadShape::Square | RealisticHeadShape::TriangleUp => {
-            WIDE
-        }
+        Round | Square | TriangleUp => WIDE,
         _ => NARROW,
     }
 }
 
 fn get_chin_width(realistic: RealisticHeadShape) -> f32 {
     match realistic {
-        RealisticHeadShape::Rectangle
-        | RealisticHeadShape::Square
-        | RealisticHeadShape::TriangleUp => 0.3,
+        Rectangle | Square | TriangleUp => 0.3,
         _ => 0.2,
     }
 }
