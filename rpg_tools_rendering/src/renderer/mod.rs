@@ -1,5 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
+use crate::math::polygon2d::Polygon2d;
 use crate::renderer::color::WebColor;
 
 pub mod color;
@@ -27,7 +28,7 @@ pub trait Renderer {
     fn render_circle(&mut self, center: &Point2d, radius: u32, options: &RenderOptions);
 
     /// Renders a polygon.
-    fn render_polygon(&mut self, path: &str, options: &RenderOptions);
+    fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions);
 
     /// Renders an axis aligned rectangle.
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions);

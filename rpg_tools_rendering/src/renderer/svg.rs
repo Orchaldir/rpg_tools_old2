@@ -1,5 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
+use crate::math::polygon2d::Polygon2d;
 use crate::math::size2d::Size2d;
 use crate::renderer::{RenderOptions, Renderer};
 use anyhow::Result;
@@ -67,10 +68,10 @@ impl Renderer for SvgBuilder {
         ));
     }
 
-    fn render_polygon(&mut self, path: &str, options: &RenderOptions) {
+    fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
         self.lines.push(format!(
             "  <path  d=\"{}\" style=\"{}\"/>",
-            path,
+            to_path(polygon),
             to_style(options),
         ));
     }
@@ -85,6 +86,21 @@ impl Renderer for SvgBuilder {
             to_style(options),
         ));
     }
+}
+
+fn to_path(polygon: &Polygon2d) -> String {
+    let mut path = String::new();
+    let corners = polygon.corners();
+    let first = &corners[0];
+    path.push_str(format!("M {} {}", first.x, first.y).as_str());
+
+    for point in corners.iter().skip(1) {
+        path.push_str(format!(" L {} {}", point.x, point.y).as_str());
+    }
+
+    path.push_str(" Z");
+
+    path
 }
 
 fn to_style(options: &RenderOptions) -> String {

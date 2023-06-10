@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::RenderConfig;
 use rpg_tools_core::model::character::appearance::head::{
@@ -68,30 +69,18 @@ impl HeadRenderer {
         let chin_left = aabb.get_point(0.5 - chin_width, 1.0);
         let chin_right = aabb.get_point(0.5 + chin_width, 1.0);
 
-        let top = aabb.get_point(0.5, -0.2);
+        let top = aabb.get_point(0.5, 0.0);
+        let polygon = Polygon2d::new(vec![
+            forehead_left,
+            mouth_left,
+            chin_left,
+            chin_right,
+            mouth_right,
+            forehead_right,
+            top,
+        ]);
 
-        renderer.render_polygon(
-            &format!(
-                "M {} {} L {} {} L {} {} L {} {} L {} {} L {} {} Q {} {} {} {} Z",
-                forehead_left.x,
-                forehead_left.y,
-                mouth_left.x,
-                mouth_left.y,
-                chin_left.x,
-                chin_left.y,
-                chin_right.x,
-                chin_right.y,
-                mouth_right.x,
-                mouth_right.y,
-                forehead_right.x,
-                forehead_right.y,
-                top.x,
-                top.y,
-                forehead_left.x,
-                forehead_left.y,
-            ),
-            &options,
-        );
+        renderer.render_polygon(&polygon, &options);
     }
 }
 
