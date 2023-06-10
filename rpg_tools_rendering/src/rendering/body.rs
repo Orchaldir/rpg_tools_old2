@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::size2d::Size2d;
 use crate::renderer::Renderer;
 use crate::rendering::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
@@ -32,7 +33,7 @@ impl BodyRenderer {
         let feet_width = 0.21;
 
         let head_size = 0.286;
-        let hands_size = 0.14;
+        let hands_factor = 0.14 * 0.5;
 
         let torso_y = 0.21;
 
@@ -45,6 +46,13 @@ impl BodyRenderer {
         renderer.render_rectangle(&AABB::new(left_arm_start, arm_size), &options);
         let right_arm_start = aabb.get_point(0.5 - average_width / 2.0 - arm_width, torso_y);
         renderer.render_rectangle(&AABB::new(right_arm_start, arm_size), &options);
+
+        let hand_radius = (height as f32 * hands_factor) as u32;
+        let arm_offset = (average_width + arm_width) / 2.0;
+        let left_hand_center = aabb.get_point(0.5 + arm_offset, torso_y + arm_height);
+        renderer.render_circle(&left_hand_center, hand_radius, &options);
+        let right_hand_center = aabb.get_point(0.5 - arm_offset, torso_y + arm_height);
+        renderer.render_circle(&right_hand_center, hand_radius, &options);
     }
 
     pub fn calculate_head_aabb(&self, aabb: &AABB) -> AABB {

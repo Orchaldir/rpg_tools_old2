@@ -81,6 +81,16 @@ impl AxisAlignedBoundingBox {
         AxisAlignedBoundingBox { start, end, size }
     }
 
+    /// Returns a new axis aligned bounding box.
+    pub fn with_center(center: Point2d, size: Size2d) -> Self {
+        let start = Point2d::new(
+            center.x - size.width() as i32 / 2,
+            center.y - size.height() as i32 / 2,
+        );
+        let end = start + size;
+        AxisAlignedBoundingBox { start, end, size }
+    }
+
     pub fn start(&self) -> Point2d {
         self.start
     }
