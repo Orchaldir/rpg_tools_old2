@@ -46,6 +46,22 @@ impl AxisAlignedBoundingBox {
         AxisAlignedBoundingBox { start, end, size }
     }
 
+    /// Returns a new axis aligned bounding box initialized with primitives.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::size2d::Size2d;
+    /// let aabb = AxisAlignedBoundingBox::simple(2, 3, 30, 50);
+    ///
+    /// assert_eq!(aabb.start(), Point2d::new(2, 3));
+    /// assert_eq!(aabb.end(), Point2d::new(32, 53));
+    /// assert_eq!(aabb.size(), Size2d::new(30, 50));
+    /// ```
+    pub fn simple(x: i32, y: i32, width: u32, height: u32) -> Self {
+        Self::new(Point2d::new(x, y), Size2d::new(width, height))
+    }
+
     /// Returns a new axis aligned bounding box.
     ///
     /// ```
@@ -74,10 +90,7 @@ impl AxisAlignedBoundingBox {
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
     ///# use rpg_tools_rendering::math::point2d::Point2d;
-    ///# use rpg_tools_rendering::math::size2d::Size2d;
-    /// let start = Point2d::new(2, 3);
-    /// let size = Size2d::new(30, 50);
-    /// let aabb = AxisAlignedBoundingBox::new(start, size);
+    /// let aabb = AxisAlignedBoundingBox::simple(2, 3, 30, 50);
     ///
     /// assert_eq!(aabb.center(), Point2d::new(17, 28));
     /// ```
@@ -98,10 +111,7 @@ impl AxisAlignedBoundingBox {
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
     ///# use rpg_tools_rendering::math::point2d::Point2d;
-    ///# use rpg_tools_rendering::math::size2d::Size2d;
-    /// let start = Point2d::new(10, 20);
-    /// let size = Size2d::new(30, 40);
-    /// let aabb = AxisAlignedBoundingBox::new(start, size);
+    /// let aabb = AxisAlignedBoundingBox::simple(10, 20, 30, 40);
     ///
     /// assert!(aabb.is_inside(&Point2d::new(25, 40)));
     /// assert!(!aabb.is_inside(&Point2d::new(0, 0)));
