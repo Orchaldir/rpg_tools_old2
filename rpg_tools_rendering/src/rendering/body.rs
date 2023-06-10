@@ -22,20 +22,22 @@ impl BodyRenderer {
 
         let torso_height = 0.5;
         let arm_height = 0.36;
-        let legs_height = 0.21;
+        let leg_height = 0.21;
         let feet_height = 0.07;
 
         let thin_width = 0.25;
         let average_width = 0.35;
         let wide_width = 0.45;
         let arm_width = 0.1;
-        let legs_width = 0.14;
+        let leg_width = 0.14;
         let feet_width = 0.21;
 
         let head_size = 0.286;
         let hands_factor = 0.14 * 0.5;
 
         let torso_y = 0.21;
+        let arm_y = torso_y + arm_height;
+        let leg_y = torso_y + torso_height;
 
         let torso_start = aabb.get_point(0.5 - average_width / 2.0, torso_y);
         let torso_size = aabb.size().scale(average_width, torso_height);
@@ -49,10 +51,16 @@ impl BodyRenderer {
 
         let hand_radius = (height as f32 * hands_factor) as u32;
         let arm_offset = (average_width + arm_width) / 2.0;
-        let left_hand_center = aabb.get_point(0.5 + arm_offset, torso_y + arm_height);
+        let left_hand_center = aabb.get_point(0.5 + arm_offset, arm_y);
         renderer.render_circle(&left_hand_center, hand_radius, &options);
-        let right_hand_center = aabb.get_point(0.5 - arm_offset, torso_y + arm_height);
+        let right_hand_center = aabb.get_point(0.5 - arm_offset, arm_y);
         renderer.render_circle(&right_hand_center, hand_radius, &options);
+
+        let leg_size = aabb.size().scale(leg_width, leg_height);
+        let left_leg_start = aabb.get_point(0.5 + average_width / 2.0 - leg_width, leg_y);
+        renderer.render_rectangle(&AABB::new(left_leg_start, leg_size), &options);
+        let right_leg_start = aabb.get_point(0.5 - average_width / 2.0, leg_y);
+        renderer.render_rectangle(&AABB::new(right_leg_start, leg_size), &options);
     }
 
     pub fn calculate_head_aabb(&self, aabb: &AABB) -> AABB {
