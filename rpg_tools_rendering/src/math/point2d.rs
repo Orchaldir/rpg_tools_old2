@@ -1,3 +1,4 @@
+use crate::math::interpolate::lerp;
 use crate::math::size2d::Size2d;
 use std::ops::{Add, Div, Mul, Sub};
 
@@ -50,6 +51,21 @@ impl Point2d {
     /// ```
     pub fn calculate_distance(&self, point: &Point2d) -> f32 {
         (self.x as f32 - point.x as f32).hypot(self.y as f32 - point.y as f32)
+    }
+
+    /// Interpolates between 2 points linearly.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    /// let a = Point2d::new(1, 20);
+    /// let b = Point2d::new(5, 40);
+    /// let c = Point2d::new(3, 30);
+    ///
+    /// assert_eq!(a.lerp(&b, 0.5), c);
+    /// assert_eq!(b.lerp(&a, 0.5), c);
+    /// ```
+    pub fn lerp(&self, other: &Point2d, factor: f32) -> Point2d {
+        Point2d::new(lerp(self.x, other.x, factor), lerp(self.y, other.y, factor))
     }
 }
 
