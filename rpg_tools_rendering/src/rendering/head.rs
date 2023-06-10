@@ -68,11 +68,11 @@ impl HeadRenderer {
         let chin_left = aabb.get_point(0.5 - chin_width, 1.0);
         let chin_right = aabb.get_point(0.5 + chin_width, 1.0);
 
-        let top = aabb.get_point(0.5, 0.0);
+        let top = aabb.get_point(0.5, -0.2);
 
         renderer.render_polygon(
             &format!(
-                "M {} {} L {} {} L {} {} L {} {} L {} {} L {} {} L {} {} Z",
+                "M {} {} L {} {} L {} {} L {} {} L {} {} L {} {} Q {} {} {} {} Z",
                 forehead_left.x,
                 forehead_left.y,
                 mouth_left.x,
@@ -87,6 +87,8 @@ impl HeadRenderer {
                 forehead_right.y,
                 top.x,
                 top.y,
+                forehead_left.x,
+                forehead_left.y,
             ),
             &options,
         );
@@ -101,14 +103,32 @@ fn get_mouth(realistic: RealisticHeadShape) -> f32 {
     0.75
 }
 
+const WIDE: f32 = 0.5;
+const NARROW: f32 = 0.33;
+
 fn get_forehead_width(realistic: RealisticHeadShape) -> f32 {
-    0.5
+    match realistic {
+        RealisticHeadShape::Round
+        | RealisticHeadShape::Square
+        | RealisticHeadShape::TriangleDown => WIDE,
+        _ => NARROW,
+    }
 }
 
 fn get_mouth_width(realistic: RealisticHeadShape) -> f32 {
-    0.5
+    match realistic {
+        RealisticHeadShape::Round | RealisticHeadShape::Square | RealisticHeadShape::TriangleUp => {
+            WIDE
+        }
+        _ => NARROW,
+    }
 }
 
 fn get_chin_width(realistic: RealisticHeadShape) -> f32 {
-    0.2
+    match realistic {
+        RealisticHeadShape::Rectangle
+        | RealisticHeadShape::Square
+        | RealisticHeadShape::TriangleUp => 0.3,
+        _ => 0.2,
+    }
 }

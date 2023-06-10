@@ -10,6 +10,7 @@ use rpg_tools_core::model::length::Length;
 use rpg_tools_rendering::math::aabb2d::AABB;
 use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
+use rpg_tools_rendering::renderer::{RenderOptions, Renderer};
 use rpg_tools_rendering::rendering::body::BodyRenderer;
 use rpg_tools_rendering::rendering::character::CharacterRenderer;
 use rpg_tools_rendering::rendering::head::HeadRenderer;
@@ -21,10 +22,15 @@ fn main() {
         line_width: 50,
     };
     let character_renderer = CharacterRenderer {
-        border: 200,
+        border: 500,
         body_renderer: BodyRenderer {},
         head_renderer: HeadRenderer {},
     };
+    let options = RenderOptions::new(
+        WebColor::from_color(Color::White),
+        WebColor::from_color(Color::Black),
+        10,
+    );
 
     for (i, realistic) in [Oval, Rectangle, Round, Square, TriangleDown, TriangleUp]
         .iter()
@@ -41,6 +47,7 @@ fn main() {
         let aabb = AABB::with_size(size);
         let mut svg_builder = SvgBuilder::new(size);
 
+        svg_builder.render_rectangle(&aabb, &options);
         character_renderer.render(&mut svg_builder, &config, &aabb, &appearance);
         let svg = svg_builder.finish();
         svg.save(&format!("{}-{:?}.svg", i, realistic)).unwrap();
