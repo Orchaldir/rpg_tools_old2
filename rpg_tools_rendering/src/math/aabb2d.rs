@@ -122,4 +122,23 @@ impl AxisAlignedBoundingBox {
             && point.x < self.end.x
             && point.y < self.end.y
     }
+
+    /// Shrinks the axis aligned bounding box by a certain amount?
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    /// let aabb = AxisAlignedBoundingBox::simple(10, 20, 130, 140).shrink(5);
+    /// let desired = AxisAlignedBoundingBox::simple(15, 25, 120, 130);
+    ///
+    /// assert_eq!(aabb, desired);
+    /// ```
+    pub fn shrink(&self, border: u32) -> Self {
+        Self::simple(
+            self.start.x + border as i32,
+            self.start.y + border as i32,
+            self.size.width() - border * 2,
+            self.size.height() - border * 2,
+        )
+    }
 }
