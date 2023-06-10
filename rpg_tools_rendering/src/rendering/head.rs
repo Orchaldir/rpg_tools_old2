@@ -60,12 +60,12 @@ impl HeadRenderer {
         let top_left = aabb.get_point(0.5 - top_width, 0.0);
         let top_right = aabb.get_point(0.5 + top_width, 0.0);
 
-        let forehead = get_forehead(realistic);
+        let forehead = 0.25;
         let forehead_width = get_forehead_width(realistic);
         let forehead_left = aabb.get_point(0.5 - forehead_width, forehead);
         let forehead_right = aabb.get_point(0.5 + forehead_width, forehead);
 
-        let mouth = get_mouth(realistic);
+        let mouth = 0.75;
         let mouth_width = get_mouth_width(realistic);
         let mouth_left = aabb.get_point(0.5 - mouth_width, mouth);
         let mouth_right = aabb.get_point(0.5 + mouth_width, mouth);
@@ -88,14 +88,6 @@ impl HeadRenderer {
 
         renderer.render_polygon(&cut, &options);
     }
-}
-
-fn get_forehead(realistic: RealisticHeadShape) -> f32 {
-    0.25
-}
-
-fn get_mouth(realistic: RealisticHeadShape) -> f32 {
-    0.75
 }
 
 const WIDE: f32 = 0.45;
@@ -125,6 +117,7 @@ fn get_mouth_width(realistic: RealisticHeadShape) -> f32 {
 fn get_chin_width(realistic: RealisticHeadShape) -> f32 {
     match realistic {
         Rectangle | Square | TriangleUp => 0.3,
-        _ => 0.2,
+        Round => 0.2,
+        _ => 0.1,
     }
 }
