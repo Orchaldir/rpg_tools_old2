@@ -106,6 +106,16 @@ impl AxisAlignedBoundingBox {
         self.size
     }
 
+    /// Returns the inner radius of the axis aligned bounding box.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
+    /// assert_eq!(AABB::simple(2, 3, 30, 50).inner_radius(), 15);
+    /// ```
+    pub fn inner_radius(&self) -> u32 {
+        self.size.width().min(self.size.height()) / 2
+    }
+
     /// Is the [`Point2d`] inside?
     ///
     /// ```

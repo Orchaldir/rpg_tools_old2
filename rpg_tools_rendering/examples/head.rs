@@ -15,7 +15,7 @@ use rpg_tools_rendering::rendering::head::HeadRenderer;
 fn main() {
     let appearance = Appearance::head(
         Head {
-            shape: HeadShape::Geometric(GeometricHeadShape::Square),
+            shape: HeadShape::Geometric(GeometricHeadShape::Circle),
             skin: Skin::Scales(Color::Red),
         },
         Length::from_metre(1.0),

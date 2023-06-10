@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::point2d::Point2d;
 use rpg_tools_core::model::color::Color;
 
 pub mod svg;
@@ -21,6 +22,9 @@ impl RenderOptions {
 }
 
 pub trait Renderer {
+    /// Renders a a circle.
+    fn render_circle(&mut self, center: &Point2d, radius: u32, options: &RenderOptions);
+
     /// Renders an axis aligned rectangle.
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions);
 }

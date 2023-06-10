@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::point2d::Point2d;
 use crate::math::size2d::Size2d;
 use crate::renderer::{RenderOptions, Renderer};
 use anyhow::Result;
@@ -57,6 +58,16 @@ impl SvgBuilder {
 }
 
 impl Renderer for SvgBuilder {
+    fn render_circle(&mut self, center: &Point2d, radius: u32, options: &RenderOptions) {
+        self.lines.push(format!(
+            "  <circle cx=\"{}\" cy=\"{}\" r=\"{}\" style=\"{}\"/>",
+            center.x,
+            center.y,
+            radius,
+            to_style(options),
+        ));
+    }
+
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions) {
         self.lines.push(format!(
             "  <rect x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" style=\"{}\"/>",

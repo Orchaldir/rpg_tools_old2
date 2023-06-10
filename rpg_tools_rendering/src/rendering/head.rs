@@ -24,11 +24,12 @@ impl HeadRenderer {
         head: &Head,
         geometric: GeometricHeadShape,
     ) {
+        let options = RenderOptions::new(Color::Red, Color::Blue, 20);
         match geometric {
-            GeometricHeadShape::Circle => {}
-            GeometricHeadShape::Square => {
-                renderer.render_rectangle(aabb, &RenderOptions::new(Color::Red, Color::Blue, 20))
+            GeometricHeadShape::Circle => {
+                renderer.render_circle(&aabb.center(), aabb.inner_radius(), &options)
             }
+            GeometricHeadShape::Square => renderer.render_rectangle(aabb, &options),
         }
     }
 }
