@@ -1,25 +1,30 @@
 use crate::model::character::appearance::body::Body;
-use crate::model::character::appearance::skin::Skin;
+use crate::model::character::appearance::head::Head;
 use crate::model::length::Length;
 
 pub mod body;
+pub mod head;
 pub mod skin;
 
 /// How does a [`character`](crate::model::character::Character) look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Appearance {
     /// The [`character`](crate::model::character::Character) consists only of a head. E.g. a floating skull
-    HeadOnly { height: Length, skin: Skin },
+    HeadOnly { head: Head, height: Length },
     /// The [`character`](crate::model::character::Character) is a humanoid. E.g. a human
-    Humanoid { body: Body, height: Length },
+    Humanoid {
+        body: Body,
+        head: Head,
+        height: Length,
+    },
 }
 
 impl Appearance {
-    pub fn head(height: Length, skin: Skin) -> Self {
-        Self::HeadOnly { height, skin }
+    pub fn head(head: Head, height: Length) -> Self {
+        Self::HeadOnly { head, height }
     }
 
-    pub fn humanoid(body: Body, height: Length) -> Self {
-        Self::Humanoid { body, height }
+    pub fn humanoid(body: Body, head: Head, height: Length) -> Self {
+        Self::Humanoid { body, head, height }
     }
 }
