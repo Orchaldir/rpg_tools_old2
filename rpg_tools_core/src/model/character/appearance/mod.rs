@@ -27,4 +27,11 @@ impl Appearance {
     pub fn humanoid(body: Body, head: Head, height: Length) -> Self {
         Self::Humanoid { body, head, height }
     }
+
+    pub fn calculate_height(&self) -> Length {
+        *match self {
+            Appearance::HeadOnly { height, .. } => height,
+            Appearance::Humanoid { height, .. } => height,
+        }
+    }
 }
