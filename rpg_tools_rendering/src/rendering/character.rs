@@ -8,9 +8,9 @@ use rpg_tools_core::model::character::appearance::Appearance;
 /// Renders a [`character`](rpg_tools_core::model::character::Character).
 #[derive(Debug, PartialEq, Eq)]
 pub struct CharacterRenderer {
-    border: u32,
-    body_renderer: BodyRenderer,
-    head_renderer: HeadRenderer,
+    pub border: u32,
+    pub body_renderer: BodyRenderer,
+    pub head_renderer: HeadRenderer,
 }
 
 impl CharacterRenderer {

@@ -3,8 +3,8 @@ use crate::model::character::appearance::skin::Skin;
 /// How does the head look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Head {
-    shape: HeadShape,
-    skin: Skin,
+    pub shape: HeadShape,
+    pub skin: Skin,
 }
 
 /// What is the shape of the head?

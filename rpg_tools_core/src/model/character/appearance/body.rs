@@ -3,9 +3,9 @@ use crate::model::character::appearance::skin::Skin;
 /// How does the humanoid body  look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Body {
-    shape: BodyShape,
-    width: BodyWidth,
-    skin: Skin,
+    pub shape: BodyShape,
+    pub width: BodyWidth,
+    pub skin: Skin,
 }
 
 /// The body shape is defined by the ratio between shoulders, waist & hips.
