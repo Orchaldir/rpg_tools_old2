@@ -19,15 +19,15 @@ impl BodyRenderer {
         let options = config.get_options(&body.skin);
         let height = aabb.size().height();
 
-        let body_height = 0.5;
-        let arms_height = 0.36;
+        let torso_height = 0.5;
+        let arm_height = 0.36;
         let legs_height = 0.21;
         let feet_height = 0.07;
 
         let thin_width = 0.25;
         let average_width = 0.35;
         let wide_width = 0.45;
-        let arms_width = 0.1;
+        let arm_width = 0.1;
         let legs_width = 0.14;
         let feet_width = 0.21;
 
@@ -37,10 +37,14 @@ impl BodyRenderer {
         let torso_y = 0.21;
 
         let torso_start = aabb.get_point(0.5 - average_width / 2.0, torso_y);
-        let torso_size = aabb.size().scale(average_width, body_height);
-        let torso_aabb = AABB::new(torso_start, torso_size);
+        let torso_size = aabb.size().scale(average_width, torso_height);
+        renderer.render_rectangle(&AABB::new(torso_start, torso_size), &options);
 
-        renderer.render_rectangle(&torso_aabb, &options);
+        let arm_size = aabb.size().scale(arm_width, arm_height);
+        let left_arm_start = aabb.get_point(0.5 + average_width / 2.0, torso_y);
+        renderer.render_rectangle(&AABB::new(left_arm_start, arm_size), &options);
+        let right_arm_start = aabb.get_point(0.5 - average_width / 2.0 - arm_width, torso_y);
+        renderer.render_rectangle(&AABB::new(right_arm_start, arm_size), &options);
     }
 
     pub fn calculate_head_aabb(&self, aabb: &AABB) -> AABB {
