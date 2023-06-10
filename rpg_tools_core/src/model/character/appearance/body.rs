@@ -1,3 +1,13 @@
+use crate::model::character::appearance::skin::Skin;
+
+/// How does the humanoid body  look like?
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Body {
+    shape: BodyShape,
+    width: BodyWidth,
+    skin: Skin,
+}
+
 /// The body shape is defined by the ratio between shoulders, waist & hips.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum BodyShape {
@@ -8,13 +18,7 @@ pub enum BodyShape {
     /// The body gets wider from the hips to the shoulders.
     Muscular,
     /// The shoulders, waist & hips are equally wide.
-    Rectangle(BodyWidth),
-}
-
-impl Default for BodyShape {
-    fn default() -> Self {
-        Self::Rectangle(BodyWidth::Average)
-    }
+    Rectangle,
 }
 
 /// How wide is the body?

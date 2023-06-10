@@ -1,4 +1,4 @@
-use crate::model::character::appearance::body::BodyShape;
+use crate::model::character::appearance::body::Body;
 use crate::model::character::appearance::skin::Skin;
 use crate::model::length::Length;
 
@@ -11,11 +11,7 @@ pub enum Appearance {
     /// The [`character`](crate::model::character::Character) consists only of a head. E.g. a floating skull
     HeadOnly { height: Length, skin: Skin },
     /// The [`character`](crate::model::character::Character) is a humanoid. E.g. a human
-    Humanoid {
-        body_shape: BodyShape,
-        height: Length,
-        skin: Skin,
-    },
+    Humanoid { body: Body, height: Length },
 }
 
 impl Appearance {
@@ -23,21 +19,7 @@ impl Appearance {
         Self::HeadOnly { height, skin }
     }
 
-    pub fn humanoid(body_shape: BodyShape, height: Length, skin: Skin) -> Self {
-        Self::Humanoid {
-            body_shape,
-            height,
-            skin,
-        }
-    }
-}
-
-impl Default for Appearance {
-    fn default() -> Self {
-        Self::humanoid(
-            BodyShape::default(),
-            Length::from_metre(1.0),
-            Skin::default(),
-        )
+    pub fn humanoid(body: Body, height: Length) -> Self {
+        Self::Humanoid { body, height }
     }
 }
