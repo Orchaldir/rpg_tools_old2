@@ -1,8 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::math::size2d::Size2d;
 use crate::renderer::Renderer;
-use crate::rendering::body::BodyRenderer;
-use crate::rendering::head::HeadRenderer;
 use crate::rendering::RenderConfig;
 use rpg_tools_core::model::character::appearance::Appearance;
 
@@ -10,8 +8,6 @@ use rpg_tools_core::model::character::appearance::Appearance;
 #[derive(Debug, PartialEq, Eq)]
 pub struct CharacterRenderer {
     pub border: u32,
-    pub body_renderer: BodyRenderer,
-    pub head_renderer: HeadRenderer,
 }
 
 impl CharacterRenderer {
@@ -32,10 +28,10 @@ impl CharacterRenderer {
 
         match appearance {
             Appearance::HeadOnly { head, .. } => {
-                self.head_renderer.render(renderer, config, &inner, head)
+                config.head_renderer.render(renderer, config, &inner, head)
             }
             Appearance::Humanoid { body, .. } => {
-                self.body_renderer.render(renderer, config, &inner, body)
+                config.body_renderer.render(renderer, config, &inner, body)
             }
         }
     }

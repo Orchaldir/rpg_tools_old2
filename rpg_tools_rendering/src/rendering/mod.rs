@@ -1,15 +1,19 @@
 use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
+use crate::rendering::body::BodyRenderer;
+use crate::rendering::head::HeadRenderer;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 
 pub mod body;
 pub mod character;
 pub mod head;
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq)]
 pub struct RenderConfig {
     pub line_color: WebColor,
     pub line_width: u32,
+    pub body_renderer: BodyRenderer,
+    pub head_renderer: HeadRenderer,
 }
 
 impl RenderConfig {

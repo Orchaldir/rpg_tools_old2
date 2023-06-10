@@ -20,12 +20,10 @@ fn main() {
     let config = RenderConfig {
         line_color: WebColor::from_color(Color::Black),
         line_width: 50,
-    };
-    let character_renderer = CharacterRenderer {
-        border: 500,
         body_renderer: BodyRenderer {},
         head_renderer: HeadRenderer {},
     };
+    let character_renderer = CharacterRenderer { border: 500 };
     let options = RenderOptions::new(
         WebColor::from_color(Color::White),
         WebColor::from_color(Color::Black),
