@@ -25,9 +25,9 @@ impl RenderConfig {
         match skin {
             Skin::Scales(color) => WebColor::from_color(*color),
             Skin::Skin(skin_color) => match skin_color {
+                SkinColor::Fair => WebColor::from_rgb(254, 228, 208),
                 SkinColor::Light => WebColor::from_rgb(232, 198, 175),
                 SkinColor::Medium => WebColor::from_rgb(175, 118, 88),
-                SkinColor::Warm => WebColor::from_rgb(58, 26, 13),
                 SkinColor::Tan => WebColor::from_rgb(156, 89, 60),
                 SkinColor::Dark => WebColor::from_rgb(122, 68, 44),
                 SkinColor::VeryDark => WebColor::from_rgb(58, 26, 13),

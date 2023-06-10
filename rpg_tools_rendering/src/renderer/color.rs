@@ -1,4 +1,5 @@
 use rpg_tools_core::model::color::Color;
+use std::fmt::{Display, Formatter};
 
 /// A valid [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -17,7 +18,9 @@ impl WebColor {
     pub fn from_rgb(r: u8, g: u8, b: u8) -> WebColor {
         WebColor::RBG { r, g, b }
     }
+}
 
+impl Display for WebColor {
     /// Returns the color as string.
     ///
     /// ```
@@ -25,10 +28,10 @@ impl WebColor {
     /// assert_eq!(WebColor::Name("test".to_string()).to_string(), "test");
     /// assert_eq!(WebColor::from_rgb(255, 128, 0).to_string(), "#ff8000");
     /// ```
-    pub fn to_string(&self) -> String {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
-            WebColor::Name(name) => name.clone(),
-            WebColor::RBG { r, g, b } => format!("#{:02x}{:02x}{:02x}", r, *g, *b),
+            WebColor::Name(name) => write!(f, "{}", name.clone()),
+            WebColor::RBG { r, g, b } => write!(f, "#{:02x}{:02x}{:02x}", r, *g, *b),
         }
     }
 }

@@ -16,9 +16,9 @@ impl Default for Skin {
 /// The skin color of a [`Character`](crate::model::character::Character).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum SkinColor {
+    Fair,
     Light,
     Medium,
-    Warm,
     Tan,
     Dark,
     VeryDark,
