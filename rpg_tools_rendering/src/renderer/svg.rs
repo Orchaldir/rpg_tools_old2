@@ -1,6 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::math::size2d::Size2d;
-use crate::rendering::{RenderOptions, Renderer};
+use crate::renderer::{RenderOptions, Renderer};
 use anyhow::Result;
 use rpg_tools_core::model::color::Color;
 use std::fs::File;
