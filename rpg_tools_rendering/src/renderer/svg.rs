@@ -3,7 +3,6 @@ use crate::math::point2d::Point2d;
 use crate::math::size2d::Size2d;
 use crate::renderer::{RenderOptions, Renderer};
 use anyhow::Result;
-use rpg_tools_core::model::color::Color;
 use std::fs::File;
 use std::io::Write;
 
@@ -80,15 +79,11 @@ impl Renderer for SvgBuilder {
     }
 }
 
-fn to_svg(color: Color) -> String {
-    color.to_string().to_lowercase()
-}
-
 fn to_style(options: &RenderOptions) -> String {
     format!(
         "fill:{};stroke:{};stroke-width:{}",
-        to_svg(options.fill_color),
-        to_svg(options.line_color),
+        options.fill_color.to_string().to_lowercase(),
+        options.line_color.to_string().to_lowercase(),
         options.line_width
     )
 }
@@ -97,6 +92,8 @@ fn to_style(options: &RenderOptions) -> String {
 mod tests {
     use super::*;
     use crate::math::point2d::Point2d;
+    use crate::renderer::color::WebColor;
+    use rpg_tools_core::model::color::Color;
 
     #[test]
     fn test_empty_svg() {
@@ -110,7 +107,11 @@ mod tests {
 
     #[test]
     fn test_rectangles() {
-        let options = RenderOptions::new(Color::Blue, Color::Red, 5);
+        let options = RenderOptions::new(
+            WebColor::from_color(Color::Blue),
+            WebColor::from_color(Color::Red),
+            5,
+        );
         let aabb = AABB::new(Point2d::new(10, 20), Size2d::new(30, 40));
         let result = "<svg viewBox=\"0 0 100 150\" xmlns=\"http://www.w3.org/2000/svg\">
   <rect x=\"10\" y=\"20\" width=\"30\" height=\"40\" style=\"fill:blue;stroke:red;stroke-width:5\"/>

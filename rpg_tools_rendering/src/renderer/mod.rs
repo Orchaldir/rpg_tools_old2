@@ -1,18 +1,19 @@
 use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
-use rpg_tools_core::model::color::Color;
+use crate::renderer::color::WebColor;
 
+pub mod color;
 pub mod svg;
 
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RenderOptions {
-    fill_color: Color,
-    line_color: Color,
+    fill_color: WebColor,
+    line_color: WebColor,
     line_width: u32,
 }
 
 impl RenderOptions {
-    pub const fn new(fill_color: Color, line_color: Color, line_width: u32) -> Self {
+    pub const fn new(fill_color: WebColor, line_color: WebColor, line_width: u32) -> Self {
         Self {
             fill_color,
             line_color,

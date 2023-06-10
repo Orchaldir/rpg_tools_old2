@@ -3,6 +3,7 @@ use crate::math::size2d::Size2d;
 use crate::renderer::Renderer;
 use crate::rendering::body::BodyRenderer;
 use crate::rendering::head::HeadRenderer;
+use crate::rendering::RenderConfig;
 use rpg_tools_core::model::character::appearance::Appearance;
 
 /// Renders a [`character`](rpg_tools_core::model::character::Character).
@@ -20,12 +21,22 @@ impl CharacterRenderer {
         Size2d::square(height.to_millimetre() + self.border * 2)
     }
 
-    pub fn render(&self, renderer: &mut dyn Renderer, aabb: &AABB, appearance: &Appearance) {
+    pub fn render(
+        &self,
+        renderer: &mut dyn Renderer,
+        config: &RenderConfig,
+        aabb: &AABB,
+        appearance: &Appearance,
+    ) {
         let inner = aabb.shrink(self.border);
 
         match appearance {
-            Appearance::HeadOnly { head, .. } => self.head_renderer.render(renderer, &inner, head),
-            Appearance::Humanoid { body, .. } => self.body_renderer.render(renderer, &inner, body),
+            Appearance::HeadOnly { head, .. } => {
+                self.head_renderer.render(renderer, config, &inner, head)
+            }
+            Appearance::Humanoid { body, .. } => {
+                self.body_renderer.render(renderer, config, &inner, body)
+            }
         }
     }
 }
