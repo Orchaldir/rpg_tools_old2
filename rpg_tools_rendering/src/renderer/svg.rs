@@ -67,6 +67,14 @@ impl Renderer for SvgBuilder {
         ));
     }
 
+    fn render_polygon(&mut self, path: &str, options: &RenderOptions) {
+        self.lines.push(format!(
+            "  <path  d=\"{}\" style=\"{}\"/>",
+            path,
+            to_style(options),
+        ));
+    }
+
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions) {
         self.lines.push(format!(
             "  <rect x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" style=\"{}\"/>",

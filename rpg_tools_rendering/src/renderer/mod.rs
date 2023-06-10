@@ -26,6 +26,9 @@ pub trait Renderer {
     /// Renders a a circle.
     fn render_circle(&mut self, center: &Point2d, radius: u32, options: &RenderOptions);
 
+    /// Renders a polygon.
+    fn render_polygon(&mut self, path: &str, options: &RenderOptions);
+
     /// Renders an axis aligned rectangle.
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions);
 }

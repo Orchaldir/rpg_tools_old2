@@ -151,4 +151,20 @@ impl AxisAlignedBoundingBox {
             self.size.height() - border * 2,
         )
     }
+
+    /// Gets a [`point`](Point2d) inside the axis aligned bounding box.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    /// let aabb = AxisAlignedBoundingBox::simple(2, 3, 30, 60);
+    ///
+    /// assert_eq!(aabb.get_point(0.5, 0.25), Point2d::new(17, 18));
+    /// ```
+    pub fn get_point(&self, horizontal: f32, vertical: f32) -> Point2d {
+        Point2d::new(
+            self.start.x + (self.size.width() as f32 * horizontal) as i32,
+            self.start.y + (self.size.height() as f32 * vertical) as i32,
+        )
+    }
 }

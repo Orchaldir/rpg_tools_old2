@@ -1,8 +1,8 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use rpg_tools_core::model::character::appearance::head::{GeometricHeadShape, Head, HeadShape};
-use rpg_tools_core::model::character::appearance::skin::SkinColor::*;
+use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
+use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
@@ -26,14 +26,14 @@ fn main() {
         head_renderer: HeadRenderer {},
     };
 
-    for (i, color) in [Fair, Light, Medium, Tan, Dark, VeryDark]
+    for (i, realistic) in [Oval, Rectangle, Round, Square, TriangleDown, TriangleUp]
         .iter()
         .enumerate()
     {
         let appearance = Appearance::head(
             Head {
-                shape: HeadShape::Geometric(GeometricHeadShape::Circle),
-                skin: Skin::Skin(*color),
+                shape: HeadShape::Realistic(*realistic),
+                skin: Skin::Skin(SkinColor::Light),
             },
             Length::from_metre(1.0),
         );
@@ -43,6 +43,6 @@ fn main() {
 
         character_renderer.render(&mut svg_builder, &config, &aabb, &appearance);
         let svg = svg_builder.finish();
-        svg.save(&format!("{}-{:?}.svg", i, color)).unwrap();
+        svg.save(&format!("{}-{:?}.svg", i, realistic)).unwrap();
     }
 }
