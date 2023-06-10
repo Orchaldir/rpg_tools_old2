@@ -1,9 +1,10 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use rpg_tools_core::model::character::appearance::body::{Body, BodyShape, BodyWidth};
-use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
+use rpg_tools_core::model::character::appearance::body::Body;
+use rpg_tools_core::model::character::appearance::body::BodyShape::*;
+use rpg_tools_core::model::character::appearance::body::BodyWidth::*;
+use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
@@ -31,30 +32,28 @@ fn main() {
         5,
     );
     let skin = Skin::Skin(SkinColor::Light);
+    let mut i = 0;
 
-    for (i, realistic) in [Oval, Rectangle, Round, Square, TriangleDown, TriangleUp]
-        .iter()
-        .enumerate()
-    {
-        let appearance = Appearance::humanoid(
-            Body {
-                shape: BodyShape::Rectangle,
-                width: BodyWidth::Average,
-                skin,
-            },
-            Head {
-                shape: HeadShape::Realistic(*realistic),
-                skin,
-            },
-            Length::from_metre(1.8),
-        );
-        let size = character_renderer.calculate_size(&appearance);
-        let aabb = AABB::with_size(size);
-        let mut svg_builder = SvgBuilder::new(size);
+    for &shape in [Fat, Hourglass, Muscular, Rectangle].iter() {
+        for &width in [Thin, Average, Wide].iter() {
+            let appearance = Appearance::humanoid(
+                Body { shape, width, skin },
+                Head {
+                    shape: HeadShape::Realistic(RealisticHeadShape::Oval),
+                    skin,
+                },
+                Length::from_metre(1.8),
+            );
+            let size = character_renderer.calculate_size(&appearance);
+            let aabb = AABB::with_size(size);
+            let mut svg_builder = SvgBuilder::new(size);
 
-        svg_builder.render_rectangle(&aabb, &options);
-        character_renderer.render(&mut svg_builder, &config, &aabb, &appearance);
-        let svg = svg_builder.finish();
-        svg.save(&format!("{}-{:?}.svg", i, realistic)).unwrap();
+            svg_builder.render_rectangle(&aabb, &options);
+            character_renderer.render(&mut svg_builder, &config, &aabb, &appearance);
+            let svg = svg_builder.finish();
+            svg.save(&format!("{}-{:?}-{:?}.svg", i, shape, width))
+                .unwrap();
+            i += 1;
+        }
     }
 }
