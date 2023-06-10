@@ -21,6 +21,23 @@ impl Polygon2d {
         &self.corners
     }
 
+    /// Execute a simple corner cutting algorithm multiple times.
+    pub fn cut_corners_n(&self, u: f32, v: f32, n: u32) -> Result<Polygon2d> {
+        if n == 0 {
+            bail!("Parameter n is 0!");
+        } else if n == 1 {
+            return self.cut_corners(u, v);
+        }
+
+        let mut polygon = self.cut_corners(u, v)?;
+
+        for _i in 0..(n - 1) {
+            polygon = polygon.cut_corners(u, v)?;
+        }
+
+        Ok(polygon)
+    }
+
     /// Execute a simple corner cutting algorithm.
     pub fn cut_corners(&self, u: f32, v: f32) -> Result<Polygon2d> {
         if !VALID_RANGE.contains(&u) {

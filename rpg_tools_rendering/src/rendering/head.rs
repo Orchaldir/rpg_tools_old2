@@ -79,8 +79,9 @@ impl HeadRenderer {
             forehead_right,
             top,
         ]);
+        let cut = polygon.cut_corners_n(0.25, 0.25, 3).unwrap();
 
-        renderer.render_polygon(&polygon, &options);
+        renderer.render_polygon(&cut, &options);
     }
 }
 
@@ -92,7 +93,7 @@ fn get_mouth(realistic: RealisticHeadShape) -> f32 {
     0.75
 }
 
-const WIDE: f32 = 0.5;
+const WIDE: f32 = 0.45;
 const NARROW: f32 = 0.33;
 
 fn get_forehead_width(realistic: RealisticHeadShape) -> f32 {
