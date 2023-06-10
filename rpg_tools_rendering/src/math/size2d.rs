@@ -59,6 +59,19 @@ impl Size2d {
     pub fn height(&self) -> u32 {
         self.height
     }
+
+    /// Scales the size.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::size2d::Size2d;
+    /// assert_eq!(Size2d::new(10, 30).scale(0.2, 0.5), Size2d::new(2, 15));
+    /// ```
+    pub fn scale(&self, horizontal: f32, vertical: f32) -> Self {
+        Size2d::new(
+            (self.width as f32 * horizontal) as u32,
+            (self.height as f32 * vertical) as u32,
+        )
+    }
 }
 
 impl Div<f32> for Size2d {

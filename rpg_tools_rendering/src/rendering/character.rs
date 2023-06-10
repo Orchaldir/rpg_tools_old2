@@ -30,8 +30,12 @@ impl CharacterRenderer {
             Appearance::HeadOnly { head, .. } => {
                 config.head_renderer.render(renderer, config, &inner, head)
             }
-            Appearance::Humanoid { body, .. } => {
-                config.body_renderer.render(renderer, config, &inner, body)
+            Appearance::Humanoid { body, head, .. } => {
+                config.body_renderer.render(renderer, config, &inner, body);
+                let head_aabb = config.body_renderer.calculate_head_aabb(&inner);
+                config
+                    .head_renderer
+                    .render(renderer, config, &head_aabb, head);
             }
         }
     }
