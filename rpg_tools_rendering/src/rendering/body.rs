@@ -55,17 +55,21 @@ impl BodyRenderer {
                 let polygon = self.render_muscular(&torso_aabb);
                 renderer.render_polygon(&polygon, &options);
             }
+            BodyShape::Fat => {
+                let polygon = self.render_fat(&torso_aabb);
+                renderer.render_polygon(&polygon, &options);
+            }
             _ => renderer.render_rectangle(&torso_aabb, &options),
         }
 
         let arm_size = aabb.size().scale(arm_width, arm_height);
-        let left_arm_start = aabb.get_point(0.5 + shoulder_width / 2.0, torso_y);
+        let left_arm_start = aabb.get_point(0.5 + torso_width / 2.0, torso_y);
         renderer.render_rectangle(&AABB::new(left_arm_start, arm_size), &options);
         let right_arm_start = aabb.get_point(torso_start_x - arm_width, torso_y);
         renderer.render_rectangle(&AABB::new(right_arm_start, arm_size), &options);
 
         let hand_radius = (height as f32 * hands_factor) as u32;
-        let arm_offset = (shoulder_width + arm_width) / 2.0;
+        let arm_offset = (torso_width + arm_width) / 2.0;
         let left_hand_center = aabb.get_point(0.5 + arm_offset, arm_y);
         renderer.render_circle(&left_hand_center, hand_radius, &options);
         let right_hand_center = aabb.get_point(0.5 - arm_offset, arm_y);
@@ -91,6 +95,10 @@ impl BodyRenderer {
 
     fn render_muscular(&self, aabb: &AABB) -> Polygon2d {
         self.render_torso(aabb, 0.0, 0.09, 0.18)
+    }
+
+    fn render_fat(&self, aabb: &AABB) -> Polygon2d {
+        self.render_torso(aabb, 0.18, 0.09, 0.0)
     }
 
     fn render_torso(
@@ -157,5 +165,9 @@ fn get_shoulder_width(body: &Body, width_factor: f32) -> f32 {
 }
 
 fn get_hip_width(body: &Body, width_factor: f32) -> f32 {
-    0.35 * width_factor
+    0.35 * (width_factor
+        + match body.shape {
+            BodyShape::Fat => 0.4,
+            _ => 0.0,
+        })
 }
