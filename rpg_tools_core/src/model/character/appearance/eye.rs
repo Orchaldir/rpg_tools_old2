@@ -5,16 +5,7 @@ use crate::model::color::Color;
 pub enum Eyes {
     None,
     One(Eye),
-    Two { left: Eye, right: Eye },
-}
-
-impl Eyes {
-    pub fn two_identical(eye: Eye) -> Self {
-        Self::Two {
-            left: eye,
-            right: eye,
-        }
-    }
+    Two { eye: Eye, distance: EyeDistance },
 }
 
 /// How does the eye look like?
@@ -31,6 +22,14 @@ pub enum Eye {
         iris_color: Color,
         background_color: Color,
     },
+}
+
+/// What is the distance between the eyes?
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum EyeDistance {
+    Low,
+    Medium,
+    High,
 }
 
 /// What is the shape of the eye?
