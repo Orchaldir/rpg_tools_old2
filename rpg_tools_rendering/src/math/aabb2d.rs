@@ -66,14 +66,8 @@ impl AxisAlignedBoundingBox {
     ///
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AABB;
-    ///# use rpg_tools_rendering::math::point2d::Point2d;
     ///# use rpg_tools_rendering::math::size2d::Size2d;
-    /// let size = Size2d::new(30, 50);
-    /// let aabb = AABB::with_size(size);
-    ///
-    /// assert_eq!(aabb.start(), &Point2d::new(0, 0));
-    /// assert_eq!(aabb.end(), &Point2d::new(30, 50));
-    /// assert_eq!(aabb.size(), &size);
+    /// assert_eq!(AABB::with_size(Size2d::new(30, 50)), AABB::simple(0, 0, 30, 50));
     /// ```
     pub fn with_size(size: Size2d) -> Self {
         let start = Point2d::new(0, 0);
