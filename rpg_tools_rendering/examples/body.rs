@@ -24,8 +24,11 @@ fn main() {
         line_color: WebColor::from_color(Color::Black),
         line_width: 25,
         head: HeadConfig {
-            wide_width: 0.45,
-            narrow_width: 0.33,
+            width_wide: 0.45,
+            width_narrow: 0.33,
+            width_square: 0.3,
+            width_round: 0.2,
+            width_sharp: 0.1,
         },
     };
     let options = RenderOptions::new(
