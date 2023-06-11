@@ -1,6 +1,7 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
+use crate::config::{create_border_options, create_head_config};
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
@@ -11,29 +12,20 @@ use rpg_tools_core::model::length::Length;
 use rpg_tools_rendering::math::aabb2d::AABB;
 use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
-use rpg_tools_rendering::renderer::{RenderOptions, Renderer};
+use rpg_tools_rendering::renderer::Renderer;
 use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character};
-use rpg_tools_rendering::rendering::config::head::HeadConfig;
 use rpg_tools_rendering::rendering::config::RenderConfig;
+
+pub mod config;
 
 fn main() {
     let config = RenderConfig {
         border: 500,
         line_color: WebColor::from_color(Color::Black),
         line_width: 50,
-        head: HeadConfig {
-            width_wide: 0.9,
-            width_narrow: 0.66,
-            width_square: 0.6,
-            width_round: 0.4,
-            width_sharp: 0.2,
-        },
+        head: create_head_config(),
     };
-    let options = RenderOptions::new(
-        WebColor::from_color(Color::White),
-        WebColor::from_color(Color::Black),
-        10,
-    );
+    let options = create_border_options();
 
     for (i, realistic) in [Oval, Rectangle, Round, Square, TriangleDown, TriangleUp]
         .iter()
