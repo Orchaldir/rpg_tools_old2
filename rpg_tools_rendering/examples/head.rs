@@ -13,7 +13,7 @@ use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
 use rpg_tools_rendering::renderer::{RenderOptions, Renderer};
 use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character};
-use rpg_tools_rendering::rendering::RenderConfig;
+use rpg_tools_rendering::rendering::config::RenderConfig;
 
 fn main() {
     let config = RenderConfig {

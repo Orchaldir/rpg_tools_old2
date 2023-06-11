@@ -1,7 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
-use crate::rendering::RenderConfig;
+use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape, BodyWidth};
 use std::ops::Mul;
 

@@ -2,8 +2,8 @@ use crate::math::aabb2d::AABB;
 use crate::math::size2d::Size2d;
 use crate::renderer::Renderer;
 use crate::rendering::body::{calculate_head_aabb, render_body};
+use crate::rendering::config::RenderConfig;
 use crate::rendering::head::render_head;
-use crate::rendering::RenderConfig;
 use rpg_tools_core::model::character::appearance::Appearance;
 
 pub fn calculate_character_size(config: &RenderConfig, appearance: &Appearance) -> Size2d {
