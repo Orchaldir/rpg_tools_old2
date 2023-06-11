@@ -44,7 +44,10 @@ impl BodyRenderer {
         let torso_aabb = AABB::new(torso_start, torso_size);
 
         match body.shape {
-            BodyShape::Hourglass => self.render_hourglass(renderer, config, &torso_aabb, body),
+            BodyShape::Hourglass => {
+                let polygon = self.render_hourglass(&torso_aabb);
+                renderer.render_polygon(&polygon, &options);
+            }
             _ => renderer.render_rectangle(&torso_aabb, &options),
         }
 
@@ -75,14 +78,7 @@ impl BodyRenderer {
         renderer.render_rectangle(&AABB::new(right_foot_start, foot_size), &options);
     }
 
-    pub fn render_hourglass(
-        &self,
-        renderer: &mut dyn Renderer,
-        config: &RenderConfig,
-        aabb: &AABB,
-        body: &Body,
-    ) {
-        let options = config.get_options(&body.skin);
+    pub fn render_hourglass(&self, aabb: &AABB) -> Polygon2d {
         let upper_height = 0.3;
         let waist_height = 0.5;
         let lower_height = 0.75;
@@ -113,9 +109,7 @@ impl BodyRenderer {
             upper_right,
             top_right,
         ]);
-        let cut = polygon.cut_corners_n(0.25, 0.25, 3).unwrap();
-
-        renderer.render_polygon(&cut, &options);
+        polygon.cut_corners_n(0.25, 0.25, 3).unwrap()
     }
 
     pub fn calculate_head_aabb(&self, aabb: &AABB) -> AABB {
