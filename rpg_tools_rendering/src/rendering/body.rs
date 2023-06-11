@@ -78,12 +78,14 @@ impl BodyRenderer {
         renderer.render_rectangle(&AABB::new(right_foot_start, foot_size), &options);
     }
 
-    pub fn render_hourglass(&self, aabb: &AABB) -> Polygon2d {
+    fn render_hourglass(&self, aabb: &AABB) -> Polygon2d {
+        self.render_torso(aabb, 0.15)
+    }
+
+    fn render_torso(&self, aabb: &AABB, waits_factor: f32) -> Polygon2d {
         let upper_height = 0.3;
         let waist_height = 0.5;
         let lower_height = 0.75;
-
-        let waits_factor = 0.15;
 
         let top_left = aabb.get_point(0.0, 0.0);
         let upper_left = aabb.get_point(0.0, upper_height);
