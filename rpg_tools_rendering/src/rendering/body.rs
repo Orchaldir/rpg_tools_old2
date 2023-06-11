@@ -26,7 +26,9 @@ impl BodyRenderer {
         let feet_height = 0.07;
 
         let width_factor = get_width_factor(body);
-        let torso_width = 0.35 * width_factor;
+        let shoulder_width = get_shoulder_width(body, width_factor);
+        let hip_width = get_hip_width(body, width_factor);
+        let torso_width = shoulder_width.max(hip_width);
         let arm_width = 0.1 * width_factor;
         let leg_width = 0.14 * width_factor;
         let feet_width = 0.21 * width_factor;
@@ -39,6 +41,7 @@ impl BodyRenderer {
         let foot_y = leg_y + leg_height;
 
         let torso_start_x = 0.5 - torso_width / 2.0;
+        let hip_star_x = 0.5 - hip_width / 2.0;
         let torso_start = aabb.get_point(torso_start_x, torso_y);
         let torso_size = aabb.size().scale(torso_width, torso_height);
         let torso_aabb = AABB::new(torso_start, torso_size);
@@ -56,29 +59,29 @@ impl BodyRenderer {
         }
 
         let arm_size = aabb.size().scale(arm_width, arm_height);
-        let left_arm_start = aabb.get_point(0.5 + torso_width / 2.0, torso_y);
+        let left_arm_start = aabb.get_point(0.5 + shoulder_width / 2.0, torso_y);
         renderer.render_rectangle(&AABB::new(left_arm_start, arm_size), &options);
         let right_arm_start = aabb.get_point(torso_start_x - arm_width, torso_y);
         renderer.render_rectangle(&AABB::new(right_arm_start, arm_size), &options);
 
         let hand_radius = (height as f32 * hands_factor) as u32;
-        let arm_offset = (torso_width + arm_width) / 2.0;
+        let arm_offset = (shoulder_width + arm_width) / 2.0;
         let left_hand_center = aabb.get_point(0.5 + arm_offset, arm_y);
         renderer.render_circle(&left_hand_center, hand_radius, &options);
         let right_hand_center = aabb.get_point(0.5 - arm_offset, arm_y);
         renderer.render_circle(&right_hand_center, hand_radius, &options);
 
         let leg_size = aabb.size().scale(leg_width, leg_height);
-        let left_leg_start_x = 0.5 + torso_width / 2.0 - leg_width;
+        let left_leg_start_x = 0.5 + hip_width / 2.0 - leg_width;
         let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);
         renderer.render_rectangle(&AABB::new(left_leg_start, leg_size), &options);
-        let right_leg_start = aabb.get_point(torso_start_x, leg_y);
+        let right_leg_start = aabb.get_point(hip_star_x, leg_y);
         renderer.render_rectangle(&AABB::new(right_leg_start, leg_size), &options);
 
         let foot_size = aabb.size().scale(feet_width, feet_height);
         let left_foot_start = aabb.get_point(left_leg_start_x, foot_y);
         renderer.render_rectangle(&AABB::new(left_foot_start, foot_size), &options);
-        let right_foot_start = aabb.get_point(torso_start_x - feet_width + leg_width, foot_y);
+        let right_foot_start = aabb.get_point(hip_star_x - feet_width + leg_width, foot_y);
         renderer.render_rectangle(&AABB::new(right_foot_start, foot_size), &options);
     }
 
@@ -87,7 +90,7 @@ impl BodyRenderer {
     }
 
     fn render_muscular(&self, aabb: &AABB) -> Polygon2d {
-        self.render_torso(aabb, -0.1, 0.0, 0.1)
+        self.render_torso(aabb, 0.0, 0.1, 0.2)
     }
 
     fn render_torso(
@@ -143,4 +146,16 @@ fn get_width_factor(body: &Body) -> f32 {
         BodyWidth::Average => 1.0,
         BodyWidth::Wide => 1.2,
     }
+}
+
+fn get_shoulder_width(body: &Body, width_factor: f32) -> f32 {
+    0.35 * (width_factor
+        + match body.shape {
+            BodyShape::Muscular => 0.2,
+            _ => 0.0,
+        })
+}
+
+fn get_hip_width(body: &Body, width_factor: f32) -> f32 {
+    0.35 * width_factor
 }
