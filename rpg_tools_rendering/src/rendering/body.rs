@@ -48,6 +48,10 @@ impl BodyRenderer {
                 let polygon = self.render_hourglass(&torso_aabb);
                 renderer.render_polygon(&polygon, &options);
             }
+            BodyShape::Muscular => {
+                let polygon = self.render_muscular(&torso_aabb);
+                renderer.render_polygon(&polygon, &options);
+            }
             _ => renderer.render_rectangle(&torso_aabb, &options),
         }
 
@@ -79,25 +83,35 @@ impl BodyRenderer {
     }
 
     fn render_hourglass(&self, aabb: &AABB) -> Polygon2d {
-        self.render_torso(aabb, 0.15)
+        self.render_torso(aabb, 0.0, 0.15, 0.0)
     }
 
-    fn render_torso(&self, aabb: &AABB, waits_factor: f32) -> Polygon2d {
+    fn render_muscular(&self, aabb: &AABB) -> Polygon2d {
+        self.render_torso(aabb, -0.1, 0.0, 0.1)
+    }
+
+    fn render_torso(
+        &self,
+        aabb: &AABB,
+        shoulder_factor: f32,
+        waits_factor: f32,
+        hip_factor: f32,
+    ) -> Polygon2d {
         let upper_height = 0.3;
         let waist_height = 0.5;
         let lower_height = 0.75;
 
-        let top_left = aabb.get_point(0.0, 0.0);
-        let upper_left = aabb.get_point(0.0, upper_height);
+        let top_left = aabb.get_point(shoulder_factor, 0.0);
+        let upper_left = aabb.get_point(shoulder_factor, upper_height);
         let waist_left = aabb.get_point(waits_factor, waist_height);
-        let lower_left = aabb.get_point(0.0, lower_height);
-        let bottom_left = aabb.get_point(0.0, 1.0);
+        let lower_left = aabb.get_point(hip_factor, lower_height);
+        let bottom_left = aabb.get_point(hip_factor, 1.0);
 
-        let top_right = aabb.get_point(1.0, 0.0);
-        let upper_right = aabb.get_point(1.0, upper_height);
+        let top_right = aabb.get_point(1.0 - shoulder_factor, 0.0);
+        let upper_right = aabb.get_point(1.0 - shoulder_factor, upper_height);
         let waist_right = aabb.get_point(1.0 - waits_factor, waist_height);
-        let lower_right = aabb.get_point(1.0, lower_height);
-        let bottom_right = aabb.get_point(1.0, 1.0);
+        let lower_right = aabb.get_point(1.0 - hip_factor, lower_height);
+        let bottom_right = aabb.get_point(1.0 - hip_factor, 1.0);
 
         let polygon = Polygon2d::new(vec![
             top_left,
