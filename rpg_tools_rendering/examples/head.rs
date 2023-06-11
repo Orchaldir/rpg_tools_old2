@@ -22,11 +22,11 @@ fn main() {
         line_color: WebColor::from_color(Color::Black),
         line_width: 50,
         head: HeadConfig {
-            width_wide: 0.45,
-            width_narrow: 0.33,
-            width_square: 0.3,
-            width_round: 0.2,
-            width_sharp: 0.1,
+            width_wide: 0.9,
+            width_narrow: 0.66,
+            width_square: 0.6,
+            width_round: 0.4,
+            width_sharp: 0.2,
         },
     };
     let options = RenderOptions::new(
