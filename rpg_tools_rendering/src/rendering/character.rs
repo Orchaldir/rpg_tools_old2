@@ -22,7 +22,10 @@ pub fn render_character(
     let inner = aabb.shrink(config.border);
 
     match appearance {
-        Appearance::HeadOnly { head, .. } => render_head(renderer, config, &inner, head),
+        Appearance::HeadOnly { head, .. } => {
+            render_head(renderer, config, &inner, head);
+            render_eyes(renderer, config, &inner, head);
+        }
         Appearance::Humanoid { body, head, .. } => {
             render_body(renderer, config, &inner, body);
             let head_aabb = calculate_head_aabb(&inner);

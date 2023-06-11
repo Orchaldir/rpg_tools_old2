@@ -6,7 +6,7 @@ use rpg_tools_core::model::character::appearance::body::{Body, BodyShape, BodyWi
 use std::ops::Mul;
 
 pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, body: &Body) {
-    let options = config.get_options(&body.skin);
+    let options = config.get_skin_options(&body.skin);
     let height = aabb.size().height();
 
     let torso_height = 0.5;

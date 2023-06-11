@@ -25,7 +25,7 @@ fn render_geometric(
     head: &Head,
     geometric: GeometricHeadShape,
 ) {
-    let options = config.get_options(&head.skin);
+    let options = config.get_skin_options(&head.skin);
     match geometric {
         GeometricHeadShape::Circle => {
             renderer.render_circle(&aabb.center(), aabb.inner_radius(), &options)
@@ -41,7 +41,7 @@ fn render_realistic(
     head: &Head,
     realistic: RealisticHeadShape,
 ) {
-    let options = config.get_options(&head.skin);
+    let options = config.get_skin_options(&head.skin);
 
     let (top_left, top_right) =
         get_mirrored_points(aabb, config.head.get_top_width(realistic), 0.0);

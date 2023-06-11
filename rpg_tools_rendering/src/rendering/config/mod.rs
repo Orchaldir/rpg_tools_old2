@@ -4,6 +4,7 @@ use crate::renderer::RenderOptions;
 use crate::rendering::config::head::HeadConfig;
 use anyhow::Result;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
+use rpg_tools_core::model::color::Color;
 
 pub mod head;
 
@@ -19,7 +20,12 @@ pub struct RenderConfig {
 }
 
 impl RenderConfig {
-    pub fn get_options(&self, skin: &Skin) -> RenderOptions {
+    pub fn get_options(&self, color: Color) -> RenderOptions {
+        let web_color = WebColor::from_color(color);
+        RenderOptions::new(web_color.clone(), web_color, self.line_width)
+    }
+
+    pub fn get_skin_options(&self, skin: &Skin) -> RenderOptions {
         RenderOptions::new(
             self.get_color(skin),
             self.line_color.clone(),
