@@ -90,7 +90,7 @@ impl BodyRenderer {
     }
 
     fn render_muscular(&self, aabb: &AABB) -> Polygon2d {
-        self.render_torso(aabb, 0.0, 0.1, 0.2)
+        self.render_torso(aabb, 0.0, 0.09, 0.18)
     }
 
     fn render_torso(
@@ -151,7 +151,7 @@ fn get_width_factor(body: &Body) -> f32 {
 fn get_shoulder_width(body: &Body, width_factor: f32) -> f32 {
     0.35 * (width_factor
         + match body.shape {
-            BodyShape::Muscular => 0.2,
+            BodyShape::Muscular => 0.4,
             _ => 0.0,
         })
 }
