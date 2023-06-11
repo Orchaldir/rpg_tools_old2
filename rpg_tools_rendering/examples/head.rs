@@ -1,9 +1,10 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
+use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
-use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
+use rpg_tools_core::model::character::appearance::skin::Skin;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
@@ -36,8 +37,15 @@ fn main() {
     {
         let appearance = Appearance::head(
             Head {
+                eyes: Eyes::One(Eye::Normal {
+                    eye_shape: EyeShape::Round,
+                    pupil_shape: PupilShape::VerticalSlit,
+                    pupil_color: Color::Black,
+                    iris_color: Color::Red,
+                    background_color: Color::White,
+                }),
                 shape: HeadShape::Realistic(*realistic),
-                skin: Skin::Skin(SkinColor::Light),
+                skin: Skin::Scales(Color::Red),
             },
             Length::from_metre(1.0),
         );
