@@ -46,21 +46,13 @@ impl BodyRenderer {
         let torso_size = aabb.size().scale(torso_width, torso_height);
         let torso_aabb = AABB::new(torso_start, torso_size);
 
-        match body.shape {
-            BodyShape::Hourglass => {
-                let polygon = self.render_hourglass(&torso_aabb);
-                renderer.render_polygon(&polygon, &options);
-            }
-            BodyShape::Muscular => {
-                let polygon = self.render_muscular(&torso_aabb);
-                renderer.render_polygon(&polygon, &options);
-            }
-            BodyShape::Fat => {
-                let polygon = self.render_fat(&torso_aabb);
-                renderer.render_polygon(&polygon, &options);
-            }
-            _ => renderer.render_rectangle(&torso_aabb, &options),
-        }
+        let polygon = match body.shape {
+            BodyShape::Fat => self.create_fat(&torso_aabb),
+            BodyShape::Hourglass => self.create_hourglass(&torso_aabb),
+            BodyShape::Muscular => self.create_muscular(&torso_aabb),
+            BodyShape::Rectangle => self.create_rectangle(&torso_aabb),
+        };
+        renderer.render_polygon(&polygon, &options);
 
         let arm_size = aabb.size().scale(arm_width, arm_height);
         let left_arm_start = aabb.get_point(0.5 + torso_width / 2.0, torso_y);
@@ -89,19 +81,23 @@ impl BodyRenderer {
         renderer.render_rectangle(&AABB::new(right_foot_start, foot_size), &options);
     }
 
-    fn render_hourglass(&self, aabb: &AABB) -> Polygon2d {
-        self.render_torso(aabb, 0.0, 0.15, 0.0)
+    fn create_fat(&self, aabb: &AABB) -> Polygon2d {
+        self.create_torso(aabb, 0.18, 0.09, 0.0)
     }
 
-    fn render_muscular(&self, aabb: &AABB) -> Polygon2d {
-        self.render_torso(aabb, 0.0, 0.09, 0.18)
+    fn create_hourglass(&self, aabb: &AABB) -> Polygon2d {
+        self.create_torso(aabb, 0.0, 0.15, 0.0)
     }
 
-    fn render_fat(&self, aabb: &AABB) -> Polygon2d {
-        self.render_torso(aabb, 0.18, 0.09, 0.0)
+    fn create_muscular(&self, aabb: &AABB) -> Polygon2d {
+        self.create_torso(aabb, 0.0, 0.09, 0.18)
     }
 
-    fn render_torso(
+    fn create_rectangle(&self, aabb: &AABB) -> Polygon2d {
+        self.create_torso(aabb, 0.0, 0.0, 0.0)
+    }
+
+    fn create_torso(
         &self,
         aabb: &AABB,
         shoulder_factor: f32,
