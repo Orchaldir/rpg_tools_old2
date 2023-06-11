@@ -5,19 +5,21 @@ use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 ///
 /// All the *width* variables are relative to the head's height.
 ///
+/// All the *y* variables are along the head's height. 0 means the top and 1 the chin.
+///
 /// # Diagram
 ///
 /// ```svgbob
 ///
 ///   +----------> width
 ///   |
-/// 0 | +-------+ top
-///   | |       |
+/// 0 |  +-----+ top
+///   | /       \
 ///   | +       + forehead
 ///   | |       |
 ///   | +       + mouth
-///   | |       |
-/// 1 | +-------+ chin
+///   | \       /
+/// 1 |  +-----+ chin
 ///   |
 ///   v
 /// y-axis
@@ -29,6 +31,8 @@ pub struct HeadConfig {
     pub width_square: f32,
     pub width_round: f32,
     pub width_sharp: f32,
+    pub y_forehead: f32,
+    pub y_mouth: f32,
 }
 
 impl HeadConfig {
