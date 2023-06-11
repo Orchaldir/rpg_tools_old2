@@ -1,6 +1,5 @@
 use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
-use crate::rendering::body::BodyRenderer;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 
 pub mod body;
@@ -12,7 +11,6 @@ pub struct RenderConfig {
     pub border: u32,
     pub line_color: WebColor,
     pub line_width: u32,
-    pub body_renderer: BodyRenderer,
 }
 
 impl RenderConfig {
