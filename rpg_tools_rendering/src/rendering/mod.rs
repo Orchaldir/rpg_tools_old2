@@ -10,6 +10,7 @@ pub mod head;
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct RenderConfig {
+    pub border: u32,
     pub line_color: WebColor,
     pub line_width: u32,
     pub body_renderer: BodyRenderer,

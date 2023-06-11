@@ -15,18 +15,18 @@ use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
 use rpg_tools_rendering::renderer::{RenderOptions, Renderer};
 use rpg_tools_rendering::rendering::body::BodyRenderer;
-use rpg_tools_rendering::rendering::character::CharacterRenderer;
+use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character};
 use rpg_tools_rendering::rendering::head::HeadRenderer;
 use rpg_tools_rendering::rendering::RenderConfig;
 
 fn main() {
     let config = RenderConfig {
+        border: 500,
         line_color: WebColor::from_color(Color::Black),
         line_width: 25,
         body_renderer: BodyRenderer {},
         head_renderer: HeadRenderer {},
     };
-    let character_renderer = CharacterRenderer { border: 500 };
     let options = RenderOptions::new(
         WebColor::from_color(Color::White),
         WebColor::from_color(Color::Black),
@@ -46,12 +46,12 @@ fn main() {
                 },
                 Length::from_metre(1.8),
             );
-            let size = character_renderer.calculate_size(&appearance);
+            let size = calculate_character_size(&config, &appearance);
             let aabb = AABB::with_size(size);
             let mut svg_builder = SvgBuilder::new(size);
 
             svg_builder.render_rectangle(&aabb, &options);
-            character_renderer.render(&mut svg_builder, &config, &aabb, &appearance);
+            render_character(&mut svg_builder, &config, &aabb, &appearance);
             let svg = svg_builder.finish();
             svg.save(&format!("{}-{:?}-{:?}.svg", i, shape, width))
                 .unwrap();
