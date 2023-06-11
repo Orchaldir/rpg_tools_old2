@@ -75,12 +75,19 @@ impl AxisAlignedBoundingBox {
         AxisAlignedBoundingBox { start, end, size }
     }
 
-    /// Returns a new axis aligned bounding box.
+    /// Returns a new axis aligned bounding box around a center.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::size2d::Size2d;
+    /// let center = Point2d::new(100, 200);
+    /// let size = Size2d::new(30, 50);
+    /// let start = Point2d::new(85, 175);
+    /// assert_eq!(AABB::with_center(center, size), AABB::new(start, size));
+    /// ```
     pub fn with_center(center: Point2d, size: Size2d) -> Self {
-        let start = Point2d::new(
-            center.x - size.width() as i32 / 2,
-            center.y - size.height() as i32 / 2,
-        );
+        let start = center - size / 2.0;
         let end = start + size;
         AxisAlignedBoundingBox { start, end, size }
     }
