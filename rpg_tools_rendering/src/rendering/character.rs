@@ -1,6 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::math::size2d::Size2d;
 use crate::renderer::Renderer;
+use crate::rendering::head::render_head;
 use crate::rendering::RenderConfig;
 use rpg_tools_core::model::character::appearance::Appearance;
 
@@ -19,15 +20,11 @@ pub fn render_character(
     let inner = aabb.shrink(config.border);
 
     match appearance {
-        Appearance::HeadOnly { head, .. } => {
-            config.head_renderer.render(renderer, config, &inner, head)
-        }
+        Appearance::HeadOnly { head, .. } => render_head(renderer, config, &inner, head),
         Appearance::Humanoid { body, head, .. } => {
             config.body_renderer.render(renderer, config, &inner, body);
             let head_aabb = config.body_renderer.calculate_head_aabb(&inner);
-            config
-                .head_renderer
-                .render(renderer, config, &head_aabb, head);
+            render_head(renderer, config, &head_aabb, head);
         }
     }
 }

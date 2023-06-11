@@ -16,7 +16,6 @@ use rpg_tools_rendering::renderer::svg::SvgBuilder;
 use rpg_tools_rendering::renderer::{RenderOptions, Renderer};
 use rpg_tools_rendering::rendering::body::BodyRenderer;
 use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character};
-use rpg_tools_rendering::rendering::head::HeadRenderer;
 use rpg_tools_rendering::rendering::RenderConfig;
 
 fn main() {
@@ -25,7 +24,6 @@ fn main() {
         line_color: WebColor::from_color(Color::Black),
         line_width: 25,
         body_renderer: BodyRenderer {},
-        head_renderer: HeadRenderer {},
     };
     let options = RenderOptions::new(
         WebColor::from_color(Color::White),
