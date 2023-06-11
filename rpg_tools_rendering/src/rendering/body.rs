@@ -41,7 +41,8 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
         BodyShape::Muscular => create_muscular(&torso_aabb),
         BodyShape::Rectangle => create_rectangle(&torso_aabb),
     };
-    renderer.render_polygon(&polygon, &options);
+    let smooth_polygon = config.cut_corners(polygon).unwrap();
+    renderer.render_polygon(&smooth_polygon, &options);
 
     let arm_size = aabb.size().scale(arm_width, arm_height);
     let left_arm_start = aabb.get_point(0.5 + torso_width / 2.0, torso_y);
@@ -108,7 +109,7 @@ fn create_torso(
     let lower_right = aabb.get_point(1.0 - hip_factor, lower_height);
     let bottom_right = aabb.get_point(1.0 - hip_factor, 1.0);
 
-    let polygon = Polygon2d::new(vec![
+    Polygon2d::new(vec![
         top_left,
         upper_left,
         waist_left,
@@ -119,8 +120,7 @@ fn create_torso(
         waist_right,
         upper_right,
         top_right,
-    ]);
-    polygon.cut_corners_n(0.25, 0.25, 3).unwrap()
+    ])
 }
 
 pub fn calculate_head_aabb(aabb: &AABB) -> AABB {

@@ -23,6 +23,9 @@ fn main() {
         border: 500,
         line_color: WebColor::from_color(Color::Black),
         line_width: 50,
+        cut_corners_u: 0.25,
+        cut_corners_v: 0.25,
+        cut_corners_n: 3,
         head: create_head_config(),
     };
     let options = create_border_options();

@@ -1,6 +1,8 @@
+use crate::math::polygon2d::Polygon2d;
 use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
 use crate::rendering::config::head::HeadConfig;
+use anyhow::Result;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 
 pub mod head;
@@ -10,6 +12,9 @@ pub struct RenderConfig {
     pub border: u32,
     pub line_color: WebColor,
     pub line_width: u32,
+    pub cut_corners_u: f32,
+    pub cut_corners_v: f32,
+    pub cut_corners_n: u32,
     pub head: HeadConfig,
 }
 
@@ -35,5 +40,9 @@ impl RenderConfig {
                 SkinColor::Exotic(color) => WebColor::from_color(*color),
             },
         }
+    }
+
+    pub fn cut_corners(&self, polygon: Polygon2d) -> Result<Polygon2d> {
+        polygon.cut_corners_n(self.cut_corners_u, self.cut_corners_v, self.cut_corners_n)
     }
 }
