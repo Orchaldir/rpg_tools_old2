@@ -3,7 +3,7 @@ use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes};
+use rpg_tools_core::model::character::appearance::eye::{Eye, EyeDistance, EyeShape, Eyes};
 use rpg_tools_core::model::character::appearance::head::{
     GeometricHeadShape, Head, HeadShape, RealisticHeadShape,
 };
@@ -21,9 +21,8 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
             render_eye(renderer, config, &center, radius, eye);
         }
         Eyes::Two { eye, distance } => {
-            let eye_x_scale = 0.50;
             let head_half = head_width_factor / 2.0;
-            let eye_offset = head_half * eye_x_scale;
+            let eye_offset = head_half * get_eye_x_scale(*distance);
 
             let left = aabb.get_point(0.5 - eye_offset, config.head.y_eye);
             render_eye(renderer, config, &left, radius, eye);
@@ -31,6 +30,14 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
             let right = aabb.get_point(0.5 + eye_offset, config.head.y_eye);
             render_eye(renderer, config, &right, radius, eye);
         }
+    }
+}
+
+fn get_eye_x_scale(distance: EyeDistance) -> f32 {
+    match distance {
+        EyeDistance::Low => 0.35,
+        EyeDistance::Medium => 0.4,
+        EyeDistance::High => 0.45,
     }
 }
 
