@@ -1,7 +1,7 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::config::{create_border_options, create_head_config};
+use crate::utils::config::{create_border_options, create_head_config};
 use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::character::appearance::body::BodyShape::*;
 use rpg_tools_core::model::character::appearance::body::BodyWidth::*;
@@ -18,7 +18,7 @@ use rpg_tools_rendering::renderer::Renderer;
 use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character};
 use rpg_tools_rendering::rendering::config::RenderConfig;
 
-pub mod config;
+pub mod utils;
 
 fn main() {
     let config = RenderConfig {

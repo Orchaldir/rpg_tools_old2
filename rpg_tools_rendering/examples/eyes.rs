@@ -1,7 +1,7 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::config::{create_border_options, create_head_config};
+use crate::utils::config::{create_border_options, create_head_config};
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeDistance, EyeShape, Eyes};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
@@ -20,7 +20,7 @@ use rpg_tools_rendering::rendering::character::{
 };
 use rpg_tools_rendering::rendering::config::RenderConfig;
 
-pub mod config;
+pub mod utils;
 
 fn main() {
     let eye = Eye::Simple {
