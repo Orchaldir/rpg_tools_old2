@@ -21,7 +21,15 @@ fn main() {
         Eyes::One(eye),
         Eyes::Two {
             eye,
+            distance: EyeDistance::Low,
+        },
+        Eyes::Two {
+            eye,
             distance: EyeDistance::Medium,
+        },
+        Eyes::Two {
+            eye,
+            distance: EyeDistance::High,
         },
     ];
     let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];

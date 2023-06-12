@@ -18,8 +18,8 @@ use rpg_tools_rendering::rendering::config::RenderConfig;
 
 pub fn render_2_sets<T, S>(
     filename: &str,
-    eyes_options: Vec<T>,
-    faces: Vec<S>,
+    rows: Vec<T>,
+    columns: Vec<S>,
     create: fn(Length, &T, &S) -> Appearance,
 ) {
     let config = RenderConfig {
@@ -35,16 +35,16 @@ pub fn render_2_sets<T, S>(
     let height = Length::from_metre(1.0);
     let size = calculate_size(&config, height);
     let svg_size = Size2d::new(
-        faces.len() as u32 * size.width(),
-        eyes_options.len() as u32 * size.height(),
+        columns.len() as u32 * size.width(),
+        rows.len() as u32 * size.height(),
     );
     let mut svg_builder = SvgBuilder::new(svg_size);
     let mut start = Point2d::default();
 
-    for eyes in eyes_options.iter() {
+    for eyes in rows.iter() {
         start.x = 0;
 
-        for realistic in faces.iter() {
+        for realistic in columns.iter() {
             let appearance = create(height, eyes, realistic);
             let size = calculate_character_size(&config, &appearance);
             let aabb = AABB::new(start, size);
