@@ -36,10 +36,25 @@ fn main() {
     ];
     let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];
 
-    render_2_sets(eyes_options, faces);
+    render_2_sets(eyes_options, faces, create_appearance);
 }
 
-fn render_2_sets(eyes_options: Vec<Eyes>, faces: Vec<RealisticHeadShape>) {
+fn create_appearance(height: Length, eyes: Eyes, face: RealisticHeadShape) -> Appearance {
+    Appearance::head(
+        Head {
+            eyes,
+            shape: HeadShape::Realistic(face),
+            skin: Skin::Scales(Color::Red),
+        },
+        height,
+    )
+}
+
+fn render_2_sets(
+    eyes_options: Vec<Eyes>,
+    faces: Vec<RealisticHeadShape>,
+    create: fn(Length, Eyes, RealisticHeadShape) -> Appearance,
+) {
     let config = RenderConfig {
         border: 500,
         line_color: WebColor::from_color(Color::Black),
@@ -63,14 +78,7 @@ fn render_2_sets(eyes_options: Vec<Eyes>, faces: Vec<RealisticHeadShape>) {
         start.x = 0;
 
         for realistic in faces.iter() {
-            let appearance = Appearance::head(
-                Head {
-                    eyes,
-                    shape: HeadShape::Realistic(*realistic),
-                    skin: Skin::Scales(Color::Red),
-                },
-                height,
-            );
+            let appearance = create(height, eyes, *realistic);
             let size = calculate_character_size(&config, &appearance);
             let aabb = AABB::new(start, size);
 
