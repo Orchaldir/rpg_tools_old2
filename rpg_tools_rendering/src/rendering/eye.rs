@@ -12,25 +12,22 @@ use rpg_tools_core::model::color::Color;
 pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     match &head.eyes {
         Eyes::None => {}
-        Eyes::One(eye) => render_1_eye(renderer, config, aabb, head, eye),
-        Eyes::Two { .. } => {}
-    }
-}
-
-fn render_1_eye(
-    renderer: &mut dyn Renderer,
-    config: &RenderConfig,
-    aabb: &AABB,
-    head: &Head,
-    eye: &Eye,
-) {
-    match &head.eyes {
-        Eyes::None => {}
         Eyes::One(eye) => {
             let center = aabb.get_point(0.5, config.head.y_eye);
             render_eye(renderer, config, aabb, &center, eye);
         }
-        Eyes::Two { .. } => {}
+        Eyes::Two { eye, distance } => {
+            let eye_x_scale = 0.50;
+            let head_width = config.head.get_eye_width(head.shape);
+            let head_half = head_width / 2.0;
+            let eye_offset = head_half * eye_x_scale;
+
+            let left = aabb.get_point(0.5 - eye_offset, config.head.y_eye);
+            render_eye(renderer, config, aabb, &left, eye);
+
+            let right = aabb.get_point(0.5 + eye_offset, config.head.y_eye);
+            render_eye(renderer, config, aabb, &right, eye);
+        }
     }
 }
 
