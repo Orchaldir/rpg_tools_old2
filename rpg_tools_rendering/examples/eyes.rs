@@ -39,21 +39,21 @@ fn main() {
     render_2_sets(eyes_options, faces, create_appearance);
 }
 
-fn create_appearance(height: Length, eyes: Eyes, face: RealisticHeadShape) -> Appearance {
+fn create_appearance(height: Length, eyes: &Eyes, face: &RealisticHeadShape) -> Appearance {
     Appearance::head(
         Head {
-            eyes,
-            shape: HeadShape::Realistic(face),
+            eyes: eyes.clone(),
+            shape: HeadShape::Realistic(*face),
             skin: Skin::Scales(Color::Red),
         },
         height,
     )
 }
 
-fn render_2_sets(
-    eyes_options: Vec<Eyes>,
-    faces: Vec<RealisticHeadShape>,
-    create: fn(Length, Eyes, RealisticHeadShape) -> Appearance,
+fn render_2_sets<T, S>(
+    eyes_options: Vec<T>,
+    faces: Vec<S>,
+    create: fn(Length, &T, &S) -> Appearance,
 ) {
     let config = RenderConfig {
         border: 500,
@@ -74,11 +74,11 @@ fn render_2_sets(
     let mut svg_builder = SvgBuilder::new(svg_size);
     let mut start = Point2d::default();
 
-    for eyes in eyes_options {
+    for eyes in eyes_options.iter() {
         start.x = 0;
 
         for realistic in faces.iter() {
-            let appearance = create(height, eyes, *realistic);
+            let appearance = create(height, eyes, realistic);
             let size = calculate_character_size(&config, &appearance);
             let aabb = AABB::new(start, size);
 
