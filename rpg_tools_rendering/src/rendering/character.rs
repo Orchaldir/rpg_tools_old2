@@ -6,10 +6,13 @@ use crate::rendering::config::RenderConfig;
 use crate::rendering::eye::render_eyes;
 use crate::rendering::head::render_head;
 use rpg_tools_core::model::character::appearance::Appearance;
+use rpg_tools_core::model::length::Length;
 
 pub fn calculate_character_size(config: &RenderConfig, appearance: &Appearance) -> Size2d {
-    let height = appearance.calculate_height();
+    calculate_size(config, appearance.calculate_height())
+}
 
+pub fn calculate_size(config: &RenderConfig, height: Length) -> Size2d {
     Size2d::square(height.to_millimetre() + config.border * 2)
 }
 
