@@ -4,7 +4,7 @@ extern crate rpg_tools_rendering;
 use crate::config::{create_border_options, create_head_config};
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeDistance, EyeShape, Eyes};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
+use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::skin::Skin;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
@@ -23,18 +23,6 @@ use rpg_tools_rendering::rendering::config::RenderConfig;
 pub mod config;
 
 fn main() {
-    let config = RenderConfig {
-        border: 500,
-        line_color: WebColor::from_color(Color::Black),
-        line_width: 50,
-        cut_corners_u: 0.25,
-        cut_corners_v: 0.25,
-        cut_corners_n: 3,
-        head: create_head_config(),
-    };
-    let options = create_border_options();
-    let height = Length::from_metre(1.0);
-    let size = calculate_size(&config, height);
     let eye = Eye::Simple {
         eye_shape: EyeShape::Round,
         color: Color::Yellow,
@@ -47,6 +35,23 @@ fn main() {
         },
     ];
     let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];
+
+    render_2_sets(eyes_options, faces);
+}
+
+fn render_2_sets(eyes_options: Vec<Eyes>, faces: Vec<RealisticHeadShape>) {
+    let config = RenderConfig {
+        border: 500,
+        line_color: WebColor::from_color(Color::Black),
+        line_width: 50,
+        cut_corners_u: 0.25,
+        cut_corners_v: 0.25,
+        cut_corners_n: 3,
+        head: create_head_config(),
+    };
+    let options = create_border_options();
+    let height = Length::from_metre(1.0);
+    let size = calculate_size(&config, height);
     let svg_size = Size2d::new(
         faces.len() as u32 * size.width(),
         eyes_options.len() as u32 * size.height(),
