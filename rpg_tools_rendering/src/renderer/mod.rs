@@ -36,6 +36,15 @@ pub trait Renderer {
         options: &RenderOptions,
     );
 
+    /// Renders a pointed oval.
+    fn render_pointed_oval(
+        &mut self,
+        center: &Point2d,
+        radius_x: u32,
+        radius_y: u32,
+        options: &RenderOptions,
+    );
+
     /// Renders a polygon.
     fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions);
 

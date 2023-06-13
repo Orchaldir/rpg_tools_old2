@@ -55,6 +55,14 @@ impl SvgBuilder {
 
         Svg { lines: self.lines }
     }
+
+    fn render_path(&mut self, path: &str, options: &RenderOptions) {
+        self.lines.push(format!(
+            "  <path  d=\"{}\" style=\"{}\"/>",
+            path,
+            to_style(options),
+        ));
+    }
 }
 
 impl Renderer for SvgBuilder {
@@ -85,12 +93,46 @@ impl Renderer for SvgBuilder {
         ));
     }
 
+    fn render_pointed_oval(
+        &mut self,
+        center: &Point2d,
+        radius_x: u32,
+        radius_y: u32,
+        options: &RenderOptions,
+    ) {
+        let aabb = AABB::with_radii(*center, radius_x, radius_y);
+        let d = 0.15;
+        let left_top = aabb.get_point(d, 0.0);
+        let left_middle = aabb.get_point(0.0, 0.5);
+        let left_bottom = aabb.get_point(d, 1.0);
+        let right_top = aabb.get_point(1.0 - d, 0.0);
+        let right_middle = aabb.get_point(1.0, 0.5);
+        let right_bottom = aabb.get_point(1.0 - d, 1.0);
+
+        self.render_path(
+            &format!(
+                "M {} {} C {} {}, {} {}, {} {} C {} {}, {} {}, {} {} Z",
+                left_middle.x,
+                left_middle.y,
+                left_top.x,
+                left_top.y,
+                right_top.x,
+                right_top.y,
+                right_middle.x,
+                right_middle.y,
+                right_bottom.x,
+                right_bottom.y,
+                left_bottom.x,
+                left_bottom.y,
+                left_middle.x,
+                left_middle.y,
+            ),
+            options,
+        );
+    }
+
     fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
-        self.lines.push(format!(
-            "  <path  d=\"{}\" style=\"{}\"/>",
-            to_path(polygon),
-            to_style(options),
-        ));
+        self.render_path(&to_path(polygon), options);
     }
 
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions) {

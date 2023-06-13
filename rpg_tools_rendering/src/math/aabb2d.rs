@@ -92,6 +92,11 @@ impl AxisAlignedBoundingBox {
         AxisAlignedBoundingBox { start, end, size }
     }
 
+    pub fn with_radii(center: Point2d, radius_x: u32, radius_y: u32) -> Self {
+        let size = Size2d::new(radius_x, radius_y) * 2.0;
+        AABB::with_center(center, size)
+    }
+
     pub fn start(&self) -> &Point2d {
         &self.start
     }

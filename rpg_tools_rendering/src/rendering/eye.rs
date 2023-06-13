@@ -64,7 +64,9 @@ fn render_eye_shape(
     let options = config.get_options(color);
 
     match shape {
-        EyeShape::Almond => {}
+        EyeShape::Almond => {
+            renderer.render_pointed_oval(center, radius, get_radius_y(radius), &options)
+        }
         EyeShape::Ellipse => {
             renderer.render_ellipse(center, radius, get_radius_y(radius), &options)
         }
