@@ -68,6 +68,23 @@ impl Renderer for SvgBuilder {
         ));
     }
 
+    fn render_ellipse(
+        &mut self,
+        center: &Point2d,
+        radius_x: u32,
+        radius_y: u32,
+        options: &RenderOptions,
+    ) {
+        self.lines.push(format!(
+            "  <ellipse  cx=\"{}\" cy=\"{}\" rx=\"{}\" ry=\"{}\" style=\"{}\"/>",
+            center.x,
+            center.y,
+            radius_x,
+            radius_y,
+            to_style(options),
+        ));
+    }
+
     fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
         self.lines.push(format!(
             "  <path  d=\"{}\" style=\"{}\"/>",
