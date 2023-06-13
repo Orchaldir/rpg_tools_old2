@@ -48,7 +48,7 @@ impl RenderConfig {
         }
     }
 
-    pub fn cut_corners(&self, polygon: Polygon2d) -> Result<Polygon2d> {
+    pub fn cut_corners(&self, polygon: &Polygon2d) -> Result<Polygon2d> {
         polygon.cut_corners_n(self.cut_corners_u, self.cut_corners_v, self.cut_corners_n)
     }
 }

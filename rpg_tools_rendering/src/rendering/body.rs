@@ -41,7 +41,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
         BodyShape::Muscular => create_muscular(&torso_aabb),
         BodyShape::Rectangle => create_rectangle(&torso_aabb),
     };
-    let smooth_polygon = config.cut_corners(polygon).unwrap();
+    let smooth_polygon = config.cut_corners(&polygon).unwrap();
     renderer.render_polygon(&smooth_polygon, &options);
 
     let arm_size = aabb.size().scale(arm_width, arm_height);

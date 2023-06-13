@@ -68,7 +68,7 @@ fn render_realistic(
         forehead_right,
         top_right,
     ]);
-    let cut = config.cut_corners(polygon).unwrap();
+    let cut = config.cut_corners(&polygon).unwrap();
 
     renderer.render_polygon(&cut, &options);
 }
