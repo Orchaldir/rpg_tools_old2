@@ -65,7 +65,13 @@ fn render_eye_shape(
 
     match shape {
         EyeShape::Almond => {}
-        EyeShape::Ellipse => renderer.render_ellipse(center, radius, radius / 2, &options),
+        EyeShape::Ellipse => {
+            renderer.render_ellipse(center, radius, get_radius_y(radius), &options)
+        }
         EyeShape::Round => renderer.render_circle(center, radius, &options),
     }
+}
+
+fn get_radius_y(radius_x: u32) -> u32 {
+    (radius_x as f32 * 0.75) as u32
 }
