@@ -14,7 +14,7 @@ pub mod utils;
 
 fn main() {
     let eye = Eye::Simple {
-        eye_shape: EyeShape::Round,
+        eye_shape: EyeShape::Circle,
         color: Color::Yellow,
     };
     let eyes_options = vec![

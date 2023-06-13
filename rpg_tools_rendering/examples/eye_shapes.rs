@@ -13,7 +13,7 @@ use rpg_tools_core::model::length::Length;
 pub mod utils;
 
 fn main() {
-    let shape_options = vec![EyeShape::Almond, EyeShape::Ellipse, EyeShape::Round];
+    let shape_options = vec![EyeShape::Almond, EyeShape::Ellipse, EyeShape::Circle];
     let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];
 
     render_2_sets("eye_shapes.svg", shape_options, faces, create_appearance);

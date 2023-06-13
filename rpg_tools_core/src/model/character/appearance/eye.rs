@@ -36,8 +36,8 @@ pub enum EyeDistance {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum EyeShape {
     Almond,
+    Circle,
     Ellipse,
-    Round,
 }
 
 /// What is the shape of the pupil?

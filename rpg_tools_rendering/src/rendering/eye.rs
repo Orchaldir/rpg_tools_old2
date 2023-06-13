@@ -68,7 +68,7 @@ fn render_eye_shape(
         EyeShape::Ellipse => {
             renderer.render_ellipse(center, radius, get_radius_y(radius), &options)
         }
-        EyeShape::Round => renderer.render_circle(center, radius, &options),
+        EyeShape::Circle => renderer.render_circle(center, radius, &options),
     }
 }
 

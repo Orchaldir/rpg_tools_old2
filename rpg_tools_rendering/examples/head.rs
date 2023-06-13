@@ -37,7 +37,7 @@ fn main() {
         let appearance = Appearance::head(
             Head {
                 eyes: Eyes::One(Eye::Normal {
-                    eye_shape: EyeShape::Round,
+                    eye_shape: EyeShape::Circle,
                     pupil_shape: PupilShape::VerticalSlit,
                     pupil_color: Color::Black,
                     iris_color: Color::Red,
