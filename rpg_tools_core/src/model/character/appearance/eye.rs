@@ -1,6 +1,6 @@
 use crate::model::color::Color;
 
-/// How do the eyes look like?
+/// How many the eyes does the character have?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Eyes {
     None,
@@ -19,7 +19,6 @@ pub enum Eye {
         eye_shape: EyeShape,
         pupil_shape: PupilShape,
         pupil_color: Color,
-        iris_color: Color,
         background_color: Color,
     },
 }
@@ -43,7 +42,7 @@ pub enum EyeShape {
 /// What is the shape of the pupil?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum PupilShape {
-    Round,
+    Circle,
     VerticalSlit,
     HorizontalSlit,
 }
