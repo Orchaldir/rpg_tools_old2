@@ -20,13 +20,10 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
             render_eye(renderer, config, &center, radius, eye);
         }
         Eyes::Two { eye, distance } => {
-            let head_half = head_width_factor / 2.0;
-            let eye_offset = head_half * get_eye_x_scale(*distance);
+            let distance_between_eyes = head_width_factor * get_eye_x_scale(*distance);
+            let (left, right) = aabb.get_mirrored_points(distance_between_eyes, config.head.y_eye);
 
-            let left = aabb.get_point(0.5 - eye_offset, config.head.y_eye);
             render_eye(renderer, config, &left, radius, eye);
-
-            let right = aabb.get_point(0.5 + eye_offset, config.head.y_eye);
             render_eye(renderer, config, &right, radius, eye);
         }
     }

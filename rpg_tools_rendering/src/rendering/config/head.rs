@@ -4,6 +4,7 @@ use rpg_tools_core::model::character::appearance::head::{HeadShape, RealisticHea
 /// The rendering config of the [`head`](rpg_tools_core::model::character::appearance::head::Head).
 ///
 /// All the *width* variables are the width of the head at certain levels relative to the head's height.
+/// 1 means 100% of the height.
 ///
 /// All the *y* variables are along the head's height. 0 means the top and 1 the chin.
 ///
@@ -13,7 +14,7 @@ use rpg_tools_core::model::character::appearance::head::{HeadShape, RealisticHea
 ///
 ///   +----------> width
 ///   |
-/// 0 |  +-----+ top
+/// 0 |  +-----+  top
 ///   | /       \
 ///   | +       + forehead
 ///   | |       |
@@ -21,7 +22,7 @@ use rpg_tools_core::model::character::appearance::head::{HeadShape, RealisticHea
 ///   | |       |
 ///   | +       + mouth
 ///   | \       /
-/// 1 |  +-----+ chin
+/// 1 |  +-----+  chin
 ///   |
 ///   v
 /// y-axis

@@ -170,6 +170,23 @@ impl AxisAlignedBoundingBox {
 
     /// Gets a [`point`](Point2d) inside the axis aligned bounding box.
     ///
+    /// # Diagram
+    ///
+    /// ```svgbob
+    ///   +---------------------> horizontal
+    ///   |     0         1
+    ///   |   0 *---------*
+    ///   |     | *       |
+    ///   |     |  point  |
+    ///   |     |         |
+    ///   |   1 *---------*
+    ///   |
+    ///   v
+    /// vertical
+    /// ```
+    ///
+    /// # Examples
+    ///
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
     ///# use rpg_tools_rendering::math::point2d::Point2d;
@@ -181,6 +198,46 @@ impl AxisAlignedBoundingBox {
         Point2d::new(
             self.start.x + (self.size.width() as f32 * horizontal) as i32,
             self.start.y + (self.size.height() as f32 * vertical) as i32,
+        )
+    }
+
+    /// Gets 2 [`point`](Point2d) inside the axis aligned bounding box.
+    /// They are mirrored at a line that goes through the box's center along the x-axis.
+    /// The parameter *width* defines how much % of the box's width lies between the points.
+    ///
+    /// # Diagram
+    ///
+    /// ```svgbob
+    ///                  center
+    ///   +----------------*-------------> x-axis
+    ///   |                |
+    ///   |   0 *----------*----------*
+    ///   |     |          |          |
+    ///   |     |    *-----*-----*    |
+    ///   |     |   left   |   right  |
+    ///   |     |          |          |
+    ///   |   1 *----------*----------*
+    ///   |                |
+    ///   v
+    /// vertical
+    /// ```
+    ///
+    /// # Examples
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    /// let aabb = AxisAlignedBoundingBox::simple(2, 3, 30, 60);
+    /// let (left, right) = aabb.get_mirrored_points(0.5, 0.25);
+    ///
+    /// assert_eq!(left, Point2d::new(9, 18));
+    /// assert_eq!(right, Point2d::new(24, 18));
+    /// ```
+    pub fn get_mirrored_points(&self, width: f32, vertical: f32) -> (Point2d, Point2d) {
+        let half = width / 2.0;
+        (
+            self.get_point(0.5 - half, vertical),
+            self.get_point(0.5 + half, vertical),
         )
     }
 }
