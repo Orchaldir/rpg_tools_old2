@@ -37,6 +37,10 @@ impl EyeConfig {
             * self.circle_radius) as u32
     }
 
+    pub fn get_slit_radius(&self, radius: u32) -> u32 {
+        (radius as f32 * self.slit_radius) as u32
+    }
+
     pub fn get_distance_between_eyes(&self, distance: EyeDistance, head_width_factor: f32) -> f32 {
         head_width_factor
             * match distance {
