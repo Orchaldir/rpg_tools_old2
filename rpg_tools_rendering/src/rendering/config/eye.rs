@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use rpg_tools_core::model::character::appearance::eye::EyeDistance;
 
 /// The rendering config of the [`eyes`](rpg_tools_core::model::character::appearance::eye::Eyes).
 #[derive(Debug, PartialEq)]
@@ -17,5 +18,13 @@ impl EyeConfig {
     pub fn get_eye_radius(&self, head: &AABB, head_width_factor: f32) -> u32 {
         let head_width = head.size().height() as f32 * head_width_factor;
         (head_width * self.radius) as u32
+    }
+
+    pub fn get_distance_between_eyes(&self, distance: EyeDistance, head_width_factor: f32) -> f32 {
+        head_width_factor * match distance {
+            EyeDistance::Low => self.low_distance,
+            EyeDistance::Medium => self.medium_distance,
+            EyeDistance::High => self.high_distance,
+        }
     }
 }
