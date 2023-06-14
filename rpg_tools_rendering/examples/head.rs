@@ -1,7 +1,7 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::config::{create_border_options, create_head_config};
+use crate::utils::config::{create_border_options, create_config, create_head_config};
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
@@ -19,15 +19,7 @@ use rpg_tools_rendering::rendering::config::RenderConfig;
 pub mod utils;
 
 fn main() {
-    let config = RenderConfig {
-        border: 500,
-        line_color: WebColor::from_color(Color::Black),
-        line_width: 50,
-        cut_corners_u: 0.25,
-        cut_corners_v: 0.25,
-        cut_corners_n: 3,
-        head: create_head_config(),
-    };
+    let config = create_config();
     let options = create_border_options();
 
     for (i, realistic) in [Oval, Rectangle, Round, Square, TriangleDown, TriangleUp]

@@ -4,7 +4,9 @@ extern crate rpg_tools_rendering;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::RenderOptions;
+use rpg_tools_rendering::rendering::config::eye::EyeConfig;
 use rpg_tools_rendering::rendering::config::head::HeadConfig;
+use rpg_tools_rendering::rendering::config::RenderConfig;
 
 pub fn create_border_options() -> RenderOptions {
     RenderOptions::new(
@@ -12,6 +14,19 @@ pub fn create_border_options() -> RenderOptions {
         WebColor::from_color(Color::Black),
         5,
     )
+}
+
+pub fn create_config() -> RenderConfig {
+    RenderConfig {
+        border: 500,
+        line_color: WebColor::from_color(Color::Black),
+        line_width: 50,
+        cut_corners_u: 0.25,
+        cut_corners_v: 0.25,
+        cut_corners_n: 3,
+        head: create_head_config(),
+        eye: create_eye_config(),
+    }
 }
 
 pub fn create_head_config() -> HeadConfig {
@@ -24,5 +39,18 @@ pub fn create_head_config() -> HeadConfig {
         y_forehead: 0.25,
         y_eye: 0.5,
         y_mouth: 0.75,
+    }
+}
+
+pub fn create_eye_config() -> EyeConfig {
+    EyeConfig {
+        radius: 0.125,
+        radius_y_almond: 0.7,
+        radius_y_ellipse: 0.75,
+        low_distance: 0.35,
+        medium_distance: 0.4,
+        high_distance: 0.45,
+        circle_radius: 0.5,
+        slit_radius: 0.2,
     }
 }

@@ -1,7 +1,7 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::config::{create_border_options, create_head_config};
+use crate::utils::config::{create_border_options, create_config, create_head_config};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
@@ -22,15 +22,7 @@ pub fn render_2_sets<T, S>(
     columns: Vec<S>,
     create: fn(Length, &T, &S) -> Appearance,
 ) {
-    let config = RenderConfig {
-        border: 500,
-        line_color: WebColor::from_color(Color::Black),
-        line_width: 50,
-        cut_corners_u: 0.25,
-        cut_corners_v: 0.25,
-        cut_corners_n: 3,
-        head: create_head_config(),
-    };
+    let config = create_config();
     let options = create_border_options();
     let height = Length::from_metre(1.0);
     let size = calculate_size(&config, height);

@@ -1,6 +1,6 @@
 use crate::model::color::Color;
 
-/// How many the eyes does the character have?
+/// How many eyes does the character have?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Eyes {
     None,

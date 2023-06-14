@@ -10,8 +10,7 @@ use rpg_tools_core::model::color::Color;
 
 pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     let head_width_factor = config.head.get_eye_width(head.shape);
-    let head_width = (aabb.size().height() as f32 * head_width_factor) as u32;
-    let radius = head_width / 8;
+    let radius = config.eye.get_eye_radius(aabb, head_width_factor);
 
     match &head.eyes {
         Eyes::None => {}
