@@ -20,9 +20,9 @@ pub struct RenderConfig {
 }
 
 impl RenderConfig {
-    pub fn get_options(&self, color: Color) -> RenderOptions {
+    pub fn without_line(&self, color: Color) -> RenderOptions {
         let web_color = WebColor::from_color(color);
-        RenderOptions::new(web_color.clone(), web_color, self.line_width)
+        RenderOptions::new(web_color.clone(), web_color, 0)
     }
 
     pub fn get_skin_options(&self, skin: &Skin) -> RenderOptions {

@@ -86,7 +86,7 @@ fn render_eye_shape(
     shape: EyeShape,
     color: Color,
 ) {
-    let options = config.get_options(color);
+    let options = config.without_line(color);
 
     match shape {
         EyeShape::Almond => {
@@ -108,7 +108,7 @@ fn render_pupil(
     pupil_shape: PupilShape,
     color: Color,
 ) {
-    let options = config.get_options(color);
+    let options = config.without_line(color);
 
     match pupil_shape {
         PupilShape::Circle => {
@@ -130,9 +130,9 @@ fn get_pupil_radius(eye_shape: EyeShape, radius: u32) -> u32 {
         EyeShape::Circle => radius,
         _ => get_radius_y(radius),
     } as f32
-        * 0.3) as u32
+        * 0.5) as u32
 }
 
 fn get_slit_radius(radius: u32) -> u32 {
-    (radius as f32 * 0.1) as u32
+    (radius as f32 * 0.2) as u32
 }
