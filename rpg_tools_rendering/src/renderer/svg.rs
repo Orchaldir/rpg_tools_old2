@@ -100,10 +100,13 @@ impl Renderer for SvgBuilder {
         radius_y: u32,
         options: &RenderOptions,
     ) {
-        let radius = (radius_x.pow(2) + radius_y.pow(2)) / (2 * radius_y);
+        let radius = (radius_x.pow(2) + radius_y.pow(2)) / (2 * radius_x.min(radius_y));
         let aabb = AABB::with_radii(*center, radius_x, radius_y);
-        let left = aabb.get_point(0.0, 0.5);
-        let right = aabb.get_point(1.0, 0.5);
+        let (left, right) = if radius_x > radius_y {
+            (aabb.get_point(0.0, 0.5), aabb.get_point(1.0, 0.5))
+        } else {
+            (aabb.get_point(0.5, 0.0), aabb.get_point(0.5, 1.0))
+        };
 
         self.render_path(
             &format!(

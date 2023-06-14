@@ -114,7 +114,10 @@ fn render_pupil(
         PupilShape::Circle => {
             renderer.render_circle(center, get_pupil_radius(eye_shape, radius), &options)
         }
-        PupilShape::VerticalSlit => {}
+        PupilShape::VerticalSlit => {
+            let radius_y = get_radius_y(radius);
+            renderer.render_pointed_oval(center, get_slit_radius(radius_y), radius_y, &options)
+        }
         PupilShape::HorizontalSlit => {
             renderer.render_pointed_oval(center, radius, get_slit_radius(radius), &options)
         }

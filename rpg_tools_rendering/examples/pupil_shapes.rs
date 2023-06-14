@@ -37,8 +37,8 @@ fn create_appearance(height: Length, pupil_shape: &PupilShape, eye_shape: &EyeSh
                 eye: Eye::Normal {
                     eye_shape: *eye_shape,
                     pupil_shape: *pupil_shape,
-                    pupil_color: Color::Blue,
-                    background_color: Color::White,
+                    pupil_color: Color::Black,
+                    background_color: Color::Yellow,
                 },
                 distance: EyeDistance::Medium,
             },
