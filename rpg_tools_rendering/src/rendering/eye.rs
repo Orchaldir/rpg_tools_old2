@@ -2,9 +2,7 @@ use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::eye::{
-    Eye, EyeShape, Eyes, PupilShape,
-};
+use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::color::Color;
 
@@ -77,15 +75,12 @@ fn render_eye_shape(
     color: Color,
 ) {
     let options = config.without_line(color);
+    let radius_y = config.eye.get_eye_radius_y(shape, radius);
 
     match shape {
-        EyeShape::Almond => {
-            renderer.render_pointed_oval(center, radius, get_radius_y(radius), &options)
-        }
+        EyeShape::Almond => renderer.render_pointed_oval(center, radius, radius_y, &options),
         EyeShape::Circle => renderer.render_circle(center, radius, &options),
-        EyeShape::Ellipse => {
-            renderer.render_ellipse(center, radius, get_radius_y(radius), &options)
-        }
+        EyeShape::Ellipse => renderer.render_ellipse(center, radius, radius_y, &options),
     }
 }
 
@@ -101,29 +96,19 @@ fn render_pupil(
     let options = config.without_line(color);
 
     match pupil_shape {
-        PupilShape::Circle => {
-            renderer.render_circle(center, get_pupil_radius(eye_shape, radius), &options)
-        }
+        PupilShape::Circle => renderer.render_circle(
+            center,
+            config.eye.get_circle_radius(eye_shape, radius),
+            &options,
+        ),
         PupilShape::VerticalSlit => {
-            let radius_y = get_radius_y(radius);
+            let radius_y = config.eye.get_eye_radius_y(eye_shape, radius);
             renderer.render_pointed_oval(center, get_slit_radius(radius_y), radius_y, &options)
         }
         PupilShape::HorizontalSlit => {
             renderer.render_pointed_oval(center, radius, get_slit_radius(radius), &options)
         }
     }
-}
-
-fn get_radius_y(radius_x: u32) -> u32 {
-    (radius_x as f32 * 0.75) as u32
-}
-
-fn get_pupil_radius(eye_shape: EyeShape, radius: u32) -> u32 {
-    (match eye_shape {
-        EyeShape::Circle => radius,
-        _ => get_radius_y(radius),
-    } as f32
-        * 0.5) as u32
 }
 
 fn get_slit_radius(radius: u32) -> u32 {
