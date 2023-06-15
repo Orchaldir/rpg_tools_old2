@@ -11,7 +11,7 @@ pub struct EyeConfig {
     pub medium_distance: f32,
     pub high_distance: f32,
     pub circle_radius: f32,
-    pub slit_radius: f32,
+    pub slit_width: f32,
 }
 
 impl EyeConfig {
@@ -37,8 +37,8 @@ impl EyeConfig {
             * self.circle_radius) as u32
     }
 
-    pub fn get_slit_radius(&self, radius: u32) -> u32 {
-        (radius as f32 * self.slit_radius) as u32
+    pub fn get_slit_width(&self, length: u32) -> u32 {
+        (length as f32 * self.slit_width) as u32
     }
 
     pub fn get_distance_between_eyes(&self, distance: EyeDistance, head_width_factor: f32) -> f32 {

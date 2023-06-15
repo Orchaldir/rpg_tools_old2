@@ -94,7 +94,7 @@ fn render_pupil(
     color: Color,
 ) {
     let options = config.without_line(color);
-    let slit_radius = config.eye.get_slit_radius(radius);
+    let slit_width = config.eye.get_slit_width(radius);
 
     match pupil_shape {
         PupilShape::Circle => renderer.render_circle(
@@ -104,10 +104,10 @@ fn render_pupil(
         ),
         PupilShape::VerticalSlit => {
             let radius_y = config.eye.get_eye_radius_y(eye_shape, radius);
-            renderer.render_pointed_oval(center, slit_radius, radius_y, &options)
+            renderer.render_pointed_oval(center, slit_width, radius_y, &options)
         }
         PupilShape::HorizontalSlit => {
-            renderer.render_pointed_oval(center, radius, slit_radius, &options)
+            renderer.render_pointed_oval(center, radius, slit_width, &options)
         }
     }
 }

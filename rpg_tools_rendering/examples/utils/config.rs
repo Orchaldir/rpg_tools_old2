@@ -51,6 +51,6 @@ pub fn create_eye_config() -> EyeConfig {
         medium_distance: 0.4,
         high_distance: 0.45,
         circle_radius: 0.5,
-        slit_radius: 0.2,
+        slit_width: 0.2,
     }
 }
