@@ -45,8 +45,8 @@ pub fn create_head_config() -> HeadConfig {
 pub fn create_eye_config() -> EyeConfig {
     EyeConfig {
         radius: 0.125,
-        radius_y_almond: 0.7,
-        radius_y_ellipse: 0.75,
+        half_height_almond: 0.7,
+        half_height_ellipse: 0.75,
         low_distance: 0.35,
         medium_distance: 0.4,
         high_distance: 0.45,

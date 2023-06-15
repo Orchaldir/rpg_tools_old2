@@ -75,12 +75,12 @@ fn render_eye_shape(
     color: Color,
 ) {
     let options = config.without_line(color);
-    let radius_y = config.eye.get_eye_radius_y(shape, radius);
+    let half_height = config.eye.get_half_height(shape, radius);
 
     match shape {
-        EyeShape::Almond => renderer.render_pointed_oval(center, radius, radius_y, &options),
+        EyeShape::Almond => renderer.render_pointed_oval(center, radius, half_height, &options),
         EyeShape::Circle => renderer.render_circle(center, radius, &options),
-        EyeShape::Ellipse => renderer.render_ellipse(center, radius, radius_y, &options),
+        EyeShape::Ellipse => renderer.render_ellipse(center, radius, half_height, &options),
     }
 }
 
@@ -103,8 +103,8 @@ fn render_pupil(
             &options,
         ),
         PupilShape::VerticalSlit => {
-            let radius_y = config.eye.get_eye_radius_y(eye_shape, radius);
-            renderer.render_pointed_oval(center, slit_width, radius_y, &options)
+            let half_height = config.eye.get_half_height(eye_shape, radius);
+            renderer.render_pointed_oval(center, slit_width, half_height, &options)
         }
         PupilShape::HorizontalSlit => {
             renderer.render_pointed_oval(center, radius, slit_width, &options)
