@@ -36,7 +36,8 @@ pub trait Renderer {
         options: &RenderOptions,
     );
 
-    /// Renders a pointed oval.
+    /// Renders a pointed oval,
+    /// which is similar to an ellipse with 2 sharp corners at the ends of the longer dimension.
     fn render_pointed_oval(
         &mut self,
         center: &Point2d,
