@@ -165,7 +165,7 @@ impl Sub<Point2d> for Point2d {
 impl Sub<Size2d> for Point2d {
     type Output = Point2d;
 
-    /// Subtracts a [`Size2d`] to a point.
+    /// Subtracts a [`Size2d`] from a point.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::point2d::Point2d;
