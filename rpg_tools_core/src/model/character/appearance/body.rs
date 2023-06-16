@@ -1,6 +1,6 @@
 use crate::model::character::appearance::skin::Skin;
 
-/// How does the humanoid body  look like?
+/// How does the humanoid body look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Body {
     pub shape: BodyShape,

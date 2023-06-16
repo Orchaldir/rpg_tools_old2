@@ -30,16 +30,16 @@ impl AxisAlignedBoundingBox {
     /// Returns a new axis aligned bounding box.
     ///
     /// ```
-    ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
     ///# use rpg_tools_rendering::math::point2d::Point2d;
     ///# use rpg_tools_rendering::math::size2d::Size2d;
     /// let start = Point2d::new(2, 3);
     /// let size = Size2d::new(30, 50);
-    /// let aabb = AxisAlignedBoundingBox::new(start, size);
+    /// let aabb = AABB::new(start, size);
     ///
-    /// assert_eq!(aabb.start(), start);
-    /// assert_eq!(aabb.end(), Point2d::new(32, 53));
-    /// assert_eq!(aabb.size(), size);
+    /// assert_eq!(aabb.start(), &start);
+    /// assert_eq!(aabb.end(), &Point2d::new(32, 53));
+    /// assert_eq!(aabb.size(), &size);
     /// ```
     pub fn new(start: Point2d, size: Size2d) -> Self {
         let end = start + size;
@@ -49,14 +49,14 @@ impl AxisAlignedBoundingBox {
     /// Returns a new axis aligned bounding box initialized with primitives.
     ///
     /// ```
-    ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
     ///# use rpg_tools_rendering::math::point2d::Point2d;
     ///# use rpg_tools_rendering::math::size2d::Size2d;
-    /// let aabb = AxisAlignedBoundingBox::simple(2, 3, 30, 50);
+    /// let aabb = AABB::simple(2, 3, 30, 50);
     ///
-    /// assert_eq!(aabb.start(), Point2d::new(2, 3));
-    /// assert_eq!(aabb.end(), Point2d::new(32, 53));
-    /// assert_eq!(aabb.size(), Size2d::new(30, 50));
+    /// assert_eq!(aabb.start(), &Point2d::new(2, 3));
+    /// assert_eq!(aabb.end(), &Point2d::new(32, 53));
+    /// assert_eq!(aabb.size(), &Size2d::new(30, 50));
     /// ```
     pub fn simple(x: i32, y: i32, width: u32, height: u32) -> Self {
         Self::new(Point2d::new(x, y), Size2d::new(width, height))
@@ -65,15 +65,9 @@ impl AxisAlignedBoundingBox {
     /// Returns a new axis aligned bounding box.
     ///
     /// ```
-    ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
-    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
     ///# use rpg_tools_rendering::math::size2d::Size2d;
-    /// let size = Size2d::new(30, 50);
-    /// let aabb = AxisAlignedBoundingBox::with_size(size);
-    ///
-    /// assert_eq!(aabb.start(), Point2d::new(0, 0));
-    /// assert_eq!(aabb.end(), Point2d::new(30, 50));
-    /// assert_eq!(aabb.size(), size);
+    /// assert_eq!(AABB::with_size(Size2d::new(30, 50)), AABB::simple(0, 0, 30, 50));
     /// ```
     pub fn with_size(size: Size2d) -> Self {
         let start = Point2d::new(0, 0);
@@ -81,18 +75,30 @@ impl AxisAlignedBoundingBox {
         AxisAlignedBoundingBox { start, end, size }
     }
 
-    /// Returns a new axis aligned bounding box.
+    /// Returns a new axis aligned bounding box around a center.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::size2d::Size2d;
+    /// let center = Point2d::new(100, 200);
+    /// let size = Size2d::new(30, 50);
+    /// let start = Point2d::new(85, 175);
+    /// assert_eq!(AABB::with_center(center, size), AABB::new(start, size));
+    /// ```
     pub fn with_center(center: Point2d, size: Size2d) -> Self {
-        let start = Point2d::new(
-            center.x - size.width() as i32 / 2,
-            center.y - size.height() as i32 / 2,
-        );
+        let start = center - size / 2.0;
         let end = start + size;
         AxisAlignedBoundingBox { start, end, size }
     }
 
-    pub fn start(&self) -> Point2d {
-        self.start
+    pub fn with_radii(center: Point2d, radius_x: u32, radius_y: u32) -> Self {
+        let size = Size2d::new(radius_x, radius_y) * 2.0;
+        AABB::with_center(center, size)
+    }
+
+    pub fn start(&self) -> &Point2d {
+        &self.start
     }
 
     /// Returns the center of the axis aligned bounding box.
@@ -108,12 +114,12 @@ impl AxisAlignedBoundingBox {
         self.start + self.size / 2.0
     }
 
-    pub fn end(&self) -> Point2d {
-        self.end
+    pub fn end(&self) -> &Point2d {
+        &self.end
     }
 
-    pub fn size(&self) -> Size2d {
-        self.size
+    pub fn size(&self) -> &Size2d {
+        &self.size
     }
 
     /// Returns the inner radius of the axis aligned bounding box.
@@ -164,6 +170,23 @@ impl AxisAlignedBoundingBox {
 
     /// Gets a [`point`](Point2d) inside the axis aligned bounding box.
     ///
+    /// # Diagram
+    ///
+    /// ```svgbob
+    ///   +---------------------> horizontal
+    ///   |     0         1
+    ///   |   0 *---------*
+    ///   |     | *       |
+    ///   |     |  point  |
+    ///   |     |         |
+    ///   |   1 *---------*
+    ///   |
+    ///   v
+    /// vertical
+    /// ```
+    ///
+    /// # Examples
+    ///
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
     ///# use rpg_tools_rendering::math::point2d::Point2d;
@@ -175,6 +198,46 @@ impl AxisAlignedBoundingBox {
         Point2d::new(
             self.start.x + (self.size.width() as f32 * horizontal) as i32,
             self.start.y + (self.size.height() as f32 * vertical) as i32,
+        )
+    }
+
+    /// Gets 2 [`point`](Point2d) inside the axis aligned bounding box.
+    /// They are mirrored at a line that goes through the box's center along the x-axis.
+    /// The parameter *width* defines how much % of the box's width lies between the points.
+    ///
+    /// # Diagram
+    ///
+    /// ```svgbob
+    ///                  center
+    ///   +----------------*-------------> x-axis
+    ///   |                |
+    ///   |   0 *----------*----------*
+    ///   |     |          |          |
+    ///   |     |    *-----*-----*    |
+    ///   |     |   left   |   right  |
+    ///   |     |          |          |
+    ///   |   1 *----------*----------*
+    ///   |                |
+    ///   v
+    /// vertical
+    /// ```
+    ///
+    /// # Examples
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    /// let aabb = AxisAlignedBoundingBox::simple(2, 3, 30, 60);
+    /// let (left, right) = aabb.get_mirrored_points(0.5, 0.25);
+    ///
+    /// assert_eq!(left, Point2d::new(9, 18));
+    /// assert_eq!(right, Point2d::new(24, 18));
+    /// ```
+    pub fn get_mirrored_points(&self, width: f32, vertical: f32) -> (Point2d, Point2d) {
+        let half = width / 2.0;
+        (
+            self.get_point(0.5 - half, vertical),
+            self.get_point(0.5 + half, vertical),
         )
     }
 }

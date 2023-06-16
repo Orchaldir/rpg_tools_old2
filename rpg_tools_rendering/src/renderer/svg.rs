@@ -55,6 +55,14 @@ impl SvgBuilder {
 
         Svg { lines: self.lines }
     }
+
+    fn render_path(&mut self, path: &str, options: &RenderOptions) {
+        self.lines.push(format!(
+            "  <path  d=\"{}\" style=\"{}\"/>",
+            path,
+            to_style(options),
+        ));
+    }
 }
 
 impl Renderer for SvgBuilder {
@@ -68,12 +76,49 @@ impl Renderer for SvgBuilder {
         ));
     }
 
-    fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
+    fn render_ellipse(
+        &mut self,
+        center: &Point2d,
+        radius_x: u32,
+        radius_y: u32,
+        options: &RenderOptions,
+    ) {
         self.lines.push(format!(
-            "  <path  d=\"{}\" style=\"{}\"/>",
-            to_path(polygon),
+            "  <ellipse  cx=\"{}\" cy=\"{}\" rx=\"{}\" ry=\"{}\" style=\"{}\"/>",
+            center.x,
+            center.y,
+            radius_x,
+            radius_y,
             to_style(options),
         ));
+    }
+
+    fn render_pointed_oval(
+        &mut self,
+        center: &Point2d,
+        radius_x: u32,
+        radius_y: u32,
+        options: &RenderOptions,
+    ) {
+        let radius = (radius_x.pow(2) + radius_y.pow(2)) / (2 * radius_x.min(radius_y));
+        let aabb = AABB::with_radii(*center, radius_x, radius_y);
+        let (left, right) = if radius_x > radius_y {
+            (aabb.get_point(0.0, 0.5), aabb.get_point(1.0, 0.5))
+        } else {
+            (aabb.get_point(0.5, 0.0), aabb.get_point(0.5, 1.0))
+        };
+
+        self.render_path(
+            &format!(
+                "M {} {} A {} {}, 0, 0, 0, {} {} A {} {}, 0, 0, 0, {} {} Z",
+                left.x, left.y, radius, radius, right.x, right.y, radius, radius, left.x, left.y,
+            ),
+            options,
+        );
+    }
+
+    fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
+        self.render_path(&to_path(polygon), options);
     }
 
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions) {

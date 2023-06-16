@@ -72,7 +72,7 @@ impl Point2d {
 impl Add<Point2d> for Point2d {
     type Output = Point2d;
 
-    /// Add 2 points together.
+    /// Adds 2 points together.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::point2d::Point2d;
@@ -91,7 +91,7 @@ impl Add<Point2d> for Point2d {
 impl Add<Size2d> for Point2d {
     type Output = Point2d;
 
-    /// Add a [`Size2d`] to a point.
+    /// Adds a [`Size2d`] to a point.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::point2d::Point2d;
@@ -159,5 +159,27 @@ impl Sub<Point2d> for Point2d {
     /// ```
     fn sub(self, other: Point2d) -> Point2d {
         Point2d::new(self.x - other.x, self.y - other.y)
+    }
+}
+
+impl Sub<Size2d> for Point2d {
+    type Output = Point2d;
+
+    /// Subtracts a [`Size2d`] from a point.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::size2d::Size2d;
+    /// let a = Point2d::new(1, 2);
+    /// let b = Size2d::new(30, 50);
+    /// let result = Point2d::new(-29, -48);
+    ///
+    /// assert_eq!(a - b, result);
+    /// ```
+    fn sub(self, other: Size2d) -> Point2d {
+        Point2d::new(
+            self.x - other.width() as i32,
+            self.y - other.height() as i32,
+        )
     }
 }

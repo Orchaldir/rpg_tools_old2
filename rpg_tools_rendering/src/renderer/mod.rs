@@ -24,8 +24,27 @@ impl RenderOptions {
 }
 
 pub trait Renderer {
-    /// Renders a a circle.
+    /// Renders a circle.
     fn render_circle(&mut self, center: &Point2d, radius: u32, options: &RenderOptions);
+
+    /// Renders an ellipse.
+    fn render_ellipse(
+        &mut self,
+        center: &Point2d,
+        radius_x: u32,
+        radius_y: u32,
+        options: &RenderOptions,
+    );
+
+    /// Renders a pointed oval,
+    /// which is similar to an ellipse with 2 sharp corners at the ends of the longer dimension.
+    fn render_pointed_oval(
+        &mut self,
+        center: &Point2d,
+        radius_x: u32,
+        radius_y: u32,
+        options: &RenderOptions,
+    );
 
     /// Renders a polygon.
     fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions);
