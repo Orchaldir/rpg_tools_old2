@@ -47,8 +47,10 @@ fn render_realistic(
         config.head.get_forehead_width(realistic),
         config.head.y_forehead,
     );
-    let (mouth_left, mouth_right) =
-        aabb.get_mirrored_points(config.head.get_mouth_width(realistic), config.head.y_mouth);
+    let (mouth_left, mouth_right) = aabb.get_mirrored_points(
+        config.head.get_mouth_width_realistic(realistic),
+        config.head.y_mouth,
+    );
     let (chin_left, chin_right) =
         aabb.get_mirrored_points(config.head.get_chin_width(realistic), 1.0);
 

@@ -1,5 +1,7 @@
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
-use rpg_tools_core::model::character::appearance::head::{HeadShape, RealisticHeadShape};
+use rpg_tools_core::model::character::appearance::head::{
+    GeometricHeadShape, HeadShape, RealisticHeadShape,
+};
 
 /// The rendering config of the [`head`](rpg_tools_core::model::character::appearance::head::Head).
 ///
@@ -61,7 +63,7 @@ impl HeadConfig {
         }
     }
 
-    pub fn get_eye_width_realistic(&self, realistic: RealisticHeadShape) -> f32 {
+    fn get_eye_width_realistic(&self, realistic: RealisticHeadShape) -> f32 {
         match realistic {
             Round | Square => self.width_wide,
             Oval | Rectangle => self.width_narrow,
@@ -69,7 +71,21 @@ impl HeadConfig {
         }
     }
 
-    pub fn get_mouth_width(&self, realistic: RealisticHeadShape) -> f32 {
+    pub fn get_mouth_width(&self, shape: HeadShape) -> f32 {
+        match shape {
+            HeadShape::Geometric(geometric) => self.get_mouth_width_geometric(geometric),
+            HeadShape::Realistic(realistic) => self.get_mouth_width_realistic(realistic),
+        }
+    }
+
+    pub fn get_mouth_width_geometric(&self, geometric: GeometricHeadShape) -> f32 {
+        match geometric {
+            GeometricHeadShape::Circle => 1.0,
+            GeometricHeadShape::Square => get_circle_width(self.y_mouth),
+        }
+    }
+
+    pub fn get_mouth_width_realistic(&self, realistic: RealisticHeadShape) -> f32 {
         match realistic {
             Round | Square | TriangleUp => self.width_wide,
             _ => self.width_narrow,
@@ -83,4 +99,18 @@ impl HeadConfig {
             _ => self.width_sharp,
         }
     }
+}
+
+/// Calculates the width of the circle at a certain y position.
+///
+/// ```
+///# use rpg_tools_rendering::rendering::config::head::get_circle_width;
+/// assert_eq!(get_circle_width(0.0), 0.0);
+/// assert_eq!(get_circle_width(0.25), 0.8660254);
+/// assert_eq!(get_circle_width(0.5), 1.0);
+/// assert_eq!(get_circle_width(0.75), 0.8660254);
+/// assert_eq!(get_circle_width(1.0), 0.0);
+/// ```
+pub fn get_circle_width(y: f32) -> f32 {
+    (0.25 - (y - 0.5).powi(2)).sqrt() * 2.0
 }
