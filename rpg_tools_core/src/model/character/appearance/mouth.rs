@@ -8,6 +8,7 @@ pub enum Mouth {
     /// Like a lamprey's mouth.
     Circle {
         size: Size,
+        teeth: Teeth,
         teeth_color: TeethColor,
     },
     /// Like a human's mouth.
@@ -17,6 +18,7 @@ pub enum Mouth {
         /// Are the lips painted?
         color: Option<Color>,
         teeth: Teeth,
+        special_teeth: SpecialTeeth,
         teeth_color: TeethColor,
     },
 }
@@ -25,10 +27,16 @@ pub enum Mouth {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Teeth {
     Fangs,
-    Normal,
     Needle,
-    VampireFangs,
+    Normal,
     Triangular,
+}
+
+/// Does the character have special teeth?
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum SpecialTeeth {
+    None,
+    VampireFangs,
     Tusks,
 }
 
