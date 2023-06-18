@@ -1,10 +1,12 @@
 use crate::model::character::appearance::eye::Eyes;
+use crate::model::character::appearance::mouth::Mouth;
 use crate::model::character::appearance::skin::Skin;
 
 /// How does the head look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Head {
     pub eyes: Eyes,
+    pub mouth: Mouth,
     pub shape: HeadShape,
     pub skin: Skin,
 }

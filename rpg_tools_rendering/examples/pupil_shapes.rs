@@ -5,6 +5,7 @@ use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
+use rpg_tools_core::model::character::appearance::mouth::Mouth;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::{Appearance, Size};
 use rpg_tools_core::model::color::Color;
@@ -40,6 +41,7 @@ fn create_appearance(height: Length, pupil_shape: &PupilShape, eye_shape: &EyeSh
                 },
                 distance: Size::Medium,
             },
+            mouth: Mouth::None,
             shape: HeadShape::Realistic(Oval),
             skin: Skin::Skin(SkinColor::Light),
         },
