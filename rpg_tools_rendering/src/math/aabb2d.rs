@@ -122,13 +122,23 @@ impl AxisAlignedBoundingBox {
         &self.size
     }
 
+    /// Calculates a value based on the height.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
+    /// assert_eq!(AABB::simple(2, 3, 30, 100).calculate_from_height(0.8), 80);
+    /// ```
+    pub fn calculate_from_height(&self, factor: f32) -> u32 {
+        (self.size.height() as f32 * factor) as u32
+    }
+
     /// Returns the inner radius of the axis aligned bounding box.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AABB;
-    /// assert_eq!(AABB::simple(2, 3, 30, 50).inner_radius(), 15);
+    /// assert_eq!(AABB::simple(2, 3, 30, 50).calculate_inner_radius(), 15);
     /// ```
-    pub fn inner_radius(&self) -> u32 {
+    pub fn calculate_inner_radius(&self) -> u32 {
         self.size.width().min(self.size.height()) / 2
     }
 

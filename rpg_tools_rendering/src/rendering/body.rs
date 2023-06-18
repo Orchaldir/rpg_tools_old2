@@ -7,7 +7,6 @@ use std::ops::Mul;
 
 pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, body: &Body) {
     let options = config.get_skin_options(&body.skin);
-    let height = aabb.size().height();
 
     let torso_height = 0.5;
     let arm_height = 0.36;
@@ -50,7 +49,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let right_arm_start = aabb.get_point(torso_start_x - arm_width, torso_y);
     renderer.render_rectangle(&AABB::new(right_arm_start, arm_size), &options);
 
-    let hand_radius = (height as f32 * hands_factor) as u32;
+    let hand_radius = aabb.calculate_from_height(hands_factor);
     let arm_offset = (torso_width + arm_width) / 2.0;
     let left_hand_center = aabb.get_point(0.5 + arm_offset, arm_y);
     renderer.render_circle(&left_hand_center, hand_radius, &options);

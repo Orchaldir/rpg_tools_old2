@@ -9,7 +9,7 @@ use rpg_tools_core::model::color::Color;
 
 pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     let head_width_factor = config.head.get_mouth_width(head.shape);
-    let head_width = aabb.size().height() as f32 * head_width_factor;
+    let head_width = aabb.calculate_from_height(head_width_factor);
 
     match &head.mouth {
         Mouth::None => {}
@@ -18,7 +18,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             teeth,
             teeth_color,
         } => {
-            let free_y = aabb.size().height() as f32 * (1.0 - config.head.y_eye);
+            let free_y = aabb.calculate_from_height(1.0 - config.head.y_eye);
             let max_free_space = head_width.min(free_y);
             let center = aabb.get_point(0.5, config.head.y_mouth);
             let radius = get_circle_radius(max_free_space, *size);
@@ -29,8 +29,8 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
     }
 }
 
-fn get_circle_radius(head_width: f32, size: Size) -> u32 {
-    (head_width
+fn get_circle_radius(head_width: u32, size: Size) -> u32 {
+    (head_width as f32
         * match size {
             Size::Low => 0.2,
             Size::Medium => 0.25,
