@@ -1,7 +1,7 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::config::{create_border_options, create_config, create_head_config};
+use crate::utils::config::{create_border_options, create_config};
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
@@ -10,11 +10,9 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_rendering::math::aabb2d::AABB;
-use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
 use rpg_tools_rendering::renderer::Renderer;
 use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character};
-use rpg_tools_rendering::rendering::config::RenderConfig;
 
 pub mod utils;
 

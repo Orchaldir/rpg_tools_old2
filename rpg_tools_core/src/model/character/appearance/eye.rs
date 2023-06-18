@@ -1,3 +1,4 @@
+use crate::model::character::appearance::Size;
 use crate::model::color::Color;
 
 /// How many eyes does the character have?
@@ -5,7 +6,11 @@ use crate::model::color::Color;
 pub enum Eyes {
     None,
     One(Eye),
-    Two { eye: Eye, distance: EyeDistance },
+    Two {
+        eye: Eye,
+        /// What is the distance between the eyes?
+        distance: Size,
+    },
 }
 
 /// How does the eye look like?
@@ -21,14 +26,6 @@ pub enum Eye {
         pupil_color: Color,
         background_color: Color,
     },
-}
-
-/// What is the distance between the eyes?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum EyeDistance {
-    Low,
-    Medium,
-    High,
 }
 
 /// What is the shape of the eye?
