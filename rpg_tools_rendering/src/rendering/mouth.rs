@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::line2d::Line2d;
 use crate::math::point2d::Point2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
@@ -25,7 +26,17 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
 
             render_circular_mouth(renderer, config, &center, radius);
         }
-        Mouth::Normal { .. } => {}
+        Mouth::Normal {
+            width,
+            height,
+            color,
+            teeth,
+        } => {
+            let options = config.get_line_options();
+            let width = get_width(head_width_factor, *width);
+            let line: Line2d = aabb.get_mirrored_points(width, config.head.y_mouth).into();
+            renderer.render_line(&line, &options);
+        }
     }
 }
 
@@ -36,6 +47,15 @@ fn get_circle_radius(head_width: u32, size: Size) -> u32 {
             Size::Medium => 0.25,
             Size::High => 0.3,
         }) as u32
+}
+
+fn get_width(head_width: f32, size: Size) -> f32 {
+    head_width
+        * match size {
+            Size::Low => 0.4,
+            Size::Medium => 0.5,
+            Size::High => 0.6,
+        }
 }
 
 pub fn render_circular_mouth(

@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::line2d::Line2d;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::math::size2d::Size2d;
@@ -93,6 +94,10 @@ impl Renderer for SvgBuilder {
         ));
     }
 
+    fn render_line(&mut self, line: &Line2d, options: &RenderOptions) {
+        self.render_path(&path_from_line(line), options);
+    }
+
     fn render_pointed_oval(
         &mut self,
         center: &Point2d,
@@ -118,7 +123,7 @@ impl Renderer for SvgBuilder {
     }
 
     fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
-        self.render_path(&to_path(polygon), options);
+        self.render_path(&path_from_polygon(polygon), options);
     }
 
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions) {
@@ -133,7 +138,20 @@ impl Renderer for SvgBuilder {
     }
 }
 
-fn to_path(polygon: &Polygon2d) -> String {
+fn path_from_line(polygon: &Line2d) -> String {
+    let mut path = String::new();
+    let corners = polygon.corners();
+    let first = &corners[0];
+    path.push_str(format!("M {} {}", first.x, first.y).as_str());
+
+    for point in corners.iter().skip(1) {
+        path.push_str(format!(" L {} {}", point.x, point.y).as_str());
+    }
+
+    path
+}
+
+fn path_from_polygon(polygon: &Polygon2d) -> String {
     let mut path = String::new();
     let corners = polygon.corners();
     let first = &corners[0];

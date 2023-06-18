@@ -5,7 +5,9 @@ use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
-use rpg_tools_core::model::character::appearance::mouth::{Mouth, TeethColor, TeethType};
+use rpg_tools_core::model::character::appearance::mouth::{
+    HumanoidTeeth, Mouth, SpecialTeeth, TeethColor, TeethType,
+};
 use rpg_tools_core::model::character::appearance::skin::Skin;
 use rpg_tools_core::model::character::appearance::{Appearance, Size};
 use rpg_tools_core::model::color::Color;
@@ -18,6 +20,9 @@ fn main() {
         create_circle(Size::Low),
         create_circle(Size::Medium),
         create_circle(Size::High),
+        create_normal(Size::Low),
+        create_normal(Size::Medium),
+        create_normal(Size::High),
     ];
     let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];
 
@@ -29,6 +34,19 @@ fn create_circle(size: Size) -> Mouth {
         size,
         teeth: TeethType::Normal,
         teeth_color: TeethColor::White,
+    }
+}
+
+fn create_normal(size: Size) -> Mouth {
+    Mouth::Normal {
+        width: size,
+        height: Size::Medium,
+        color: None,
+        teeth: HumanoidTeeth {
+            teeth: TeethType::Normal,
+            special: SpecialTeeth::None,
+            color: TeethColor::White,
+        },
     }
 }
 

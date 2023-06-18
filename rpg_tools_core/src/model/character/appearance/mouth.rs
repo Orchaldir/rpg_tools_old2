@@ -24,9 +24,9 @@ pub enum Mouth {
 /// How does the teeth of a humanoid look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct HumanoidTeeth {
-    teeth: TeethType,
-    special: SpecialTeeth,
-    color: TeethColor,
+    pub teeth: TeethType,
+    pub special: SpecialTeeth,
+    pub color: TeethColor,
 }
 
 /// How do the teeth look like?
