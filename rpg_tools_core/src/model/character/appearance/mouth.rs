@@ -8,7 +8,7 @@ pub enum Mouth {
     /// Like a lamprey's mouth.
     Circle {
         size: Size,
-        teeth: Teeth,
+        teeth: TeethType,
         teeth_color: TeethColor,
     },
     /// Like a human's mouth.
@@ -17,15 +17,21 @@ pub enum Mouth {
         height: Size,
         /// Are the lips painted?
         color: Option<Color>,
-        teeth: Teeth,
-        special_teeth: SpecialTeeth,
-        teeth_color: TeethColor,
+        teeth: HumanoidTeeth,
     },
+}
+
+/// How does the teeth of a humanoid look like?
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct HumanoidTeeth {
+    teeth: TeethType,
+    special: SpecialTeeth,
+    color: TeethColor,
 }
 
 /// How do the teeth look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum Teeth {
+pub enum TeethType {
     Fangs,
     Needle,
     Normal,
