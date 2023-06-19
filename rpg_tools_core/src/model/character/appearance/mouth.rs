@@ -32,18 +32,22 @@ pub struct HumanoidTeeth {
 /// How do the teeth look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum TeethType {
-    Fangs,
     Needle,
-    Normal,
-    Triangular,
+    Rectangle,
+    Round,
+    Triangle,
 }
 
 /// Does the character have special teeth?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum SpecialTeeth {
     None,
-    VampireFangs,
-    Tusks,
+    /// All 4 canine teeth are longer. e.g. wolves
+    Fangs(Size),
+    /// The 2 lower canine teeth are longer. e.g. orcs
+    LowerFangs(Size),
+    /// The 2 upper canine teeth are longer. e.g. snakes, vampires
+    UpperFangs(Size),
 }
 
 /// The color of the the teeth.
