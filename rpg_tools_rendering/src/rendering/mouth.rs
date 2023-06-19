@@ -116,7 +116,7 @@ fn render_fang(
     horizontal: f32,
     size: Size,
 ) {
-    let fang_width = 0.05;
+    let fang_width = get_fang_width(size);
     let fang_half = fang_width * 0.5;
     let fang_height = fang_width * 2.0;
     let left = aabb.get_point(horizontal - fang_half, config.head.y_mouth);
@@ -126,4 +126,12 @@ fn render_fang(
     let options = config.without_line(Color::White);
 
     renderer.render_polygon(&polygon, &options);
+}
+
+fn get_fang_width(size: Size) -> f32 {
+    match size {
+        Size::Low => 0.04,
+        Size::Medium => 0.06,
+        Size::High => 0.08,
+    }
 }

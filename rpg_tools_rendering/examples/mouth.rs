@@ -51,7 +51,7 @@ fn create_normal(width: Size, height: Size) -> Mouth {
         color: None,
         teeth: HumanoidTeeth {
             teeth: TeethType::Rectangle,
-            special: SpecialTeeth::UpperFangs(Medium),
+            special: SpecialTeeth::UpperFangs(height),
             color: TeethColor::White,
         },
     }
