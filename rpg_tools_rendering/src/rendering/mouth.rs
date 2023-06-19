@@ -1,10 +1,11 @@
 use crate::math::aabb2d::AABB;
 use crate::math::line2d::Line2d;
 use crate::math::point2d::Point2d;
+use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::head::Head;
-use rpg_tools_core::model::character::appearance::mouth::Mouth;
+use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth};
 use rpg_tools_core::model::character::appearance::Size;
 use rpg_tools_core::model::color::Color;
 
@@ -33,7 +34,29 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             teeth,
         } => {
             let width = get_width(head_width_factor, *width);
+            let distance_between_fangs = width * 0.6;
+
             render_normal_mouth(renderer, config, aabb, width, height);
+
+            match teeth.special {
+                SpecialTeeth::UpperFangs(size) => {
+                    render_fang(
+                        renderer,
+                        config,
+                        aabb,
+                        0.5 - distance_between_fangs / 2.0,
+                        size,
+                    );
+                    render_fang(
+                        renderer,
+                        config,
+                        aabb,
+                        0.5 + distance_between_fangs / 2.0,
+                        size,
+                    );
+                }
+                _ => {}
+            }
         }
     }
 }
@@ -84,4 +107,23 @@ fn render_normal_mouth(
     let options = config.get_line_options(get_thickness(*height));
     let line: Line2d = aabb.get_mirrored_points(width, config.head.y_mouth).into();
     renderer.render_line(&line, &options);
+}
+
+fn render_fang(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    horizontal: f32,
+    size: Size,
+) {
+    let fang_width = 0.05;
+    let fang_half = fang_width * 0.5;
+    let fang_height = fang_width * 2.0;
+    let left = aabb.get_point(horizontal - fang_half, config.head.y_mouth);
+    let right = aabb.get_point(horizontal + fang_half, config.head.y_mouth);
+    let tip = aabb.get_point(horizontal, config.head.y_mouth + fang_height);
+    let polygon = Polygon2d::new(vec![left, tip, right]);
+    let options = config.without_line(Color::White);
+
+    renderer.render_polygon(&polygon, &options);
 }
