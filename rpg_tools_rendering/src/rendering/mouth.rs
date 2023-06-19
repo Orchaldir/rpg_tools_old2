@@ -32,10 +32,8 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             color,
             teeth,
         } => {
-            let options = config.get_line_options(get_thickness(*height));
             let width = get_width(head_width_factor, *width);
-            let line: Line2d = aabb.get_mirrored_points(width, config.head.y_mouth).into();
-            renderer.render_line(&line, &options);
+            render_normal_mouth(renderer, config, aabb, width, height);
         }
     }
 }
@@ -74,4 +72,16 @@ pub fn render_circular_mouth(
 ) {
     let options = config.without_line(Color::Black);
     renderer.render_circle(center, radius, &options);
+}
+
+fn render_normal_mouth(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    width: f32,
+    height: &Size,
+) {
+    let options = config.get_line_options(get_thickness(*height));
+    let line: Line2d = aabb.get_mirrored_points(width, config.head.y_mouth).into();
+    renderer.render_line(&line, &options);
 }
