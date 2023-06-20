@@ -33,4 +33,14 @@ impl Orientation {
     pub fn to_radians(&self) -> f32 {
         self.0.to_radians()
     }
+
+    /// Returns the cosinus of the orientation.
+    pub fn cos(&self) -> f32 {
+        self.0.to_radians().cos()
+    }
+
+    /// Returns the sinus of the orientation.
+    pub fn sin(&self) -> f32 {
+        self.0.to_radians().sin()
+    }
 }

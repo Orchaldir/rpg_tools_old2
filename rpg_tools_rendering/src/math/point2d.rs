@@ -1,4 +1,5 @@
 use crate::math::interpolate::lerp;
+use crate::math::orientation::Orientation;
 use crate::math::size2d::Size2d;
 use std::ops::{Add, Div, Mul, Sub};
 
@@ -51,6 +52,23 @@ impl Point2d {
     /// ```
     pub fn calculate_distance(&self, point: &Point2d) -> f32 {
         (self.x as f32 - point.x as f32).hypot(self.y as f32 - point.y as f32)
+    }
+
+    /// Calculates a new point  using polar coordinates.
+    /// See https://en.wikipedia.org/wiki/Polar_coordinate_system.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::orientation::Orientation;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    /// let point = Point2d::new(2, 3);
+    /// assert_eq!(point.calculate_polar(4.0, Orientation::from_degree(0.0)), Point2d::new(6, 3));
+    /// assert_eq!(point.calculate_polar(4.0, Orientation::from_degree(90.0)), Point2d::new(2, 7));
+    /// ```
+    pub fn calculate_polar(&self, distance: f32, orientation: Orientation) -> Self {
+        Self::new(
+            self.x + (distance * orientation.cos()) as i32,
+            self.y + (distance * orientation.sin()) as i32,
+        )
     }
 
     /// Interpolates between 2 points linearly.
