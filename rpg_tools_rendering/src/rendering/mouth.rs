@@ -1,5 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::math::line2d::Line2d;
+use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
@@ -40,18 +41,23 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
 
             match teeth.special {
                 SpecialTeeth::UpperFangs(size) => {
+                    let down = Orientation::from_degree(90.0);
+                    let head_height = aabb.size().height();
+
                     render_fang(
                         renderer,
                         config,
-                        aabb,
-                        0.5 - distance_between_fangs / 2.0,
+                        head_height,
+                        &aabb.get_point(0.5 - distance_between_fangs / 2.0, config.head.y_mouth),
+                        down,
                         size,
                     );
                     render_fang(
                         renderer,
                         config,
-                        aabb,
-                        0.5 + distance_between_fangs / 2.0,
+                        head_height,
+                        &aabb.get_point(0.5 + distance_between_fangs / 2.0, config.head.y_mouth),
+                        down,
                         size,
                     );
                 }
@@ -112,17 +118,22 @@ fn render_normal_mouth(
 fn render_fang(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
-    aabb: &AABB,
-    horizontal: f32,
+    head_height: u32,
+    point: &Point2d,
+    orientation: Orientation,
     size: Size,
 ) {
-    let fang_width = get_fang_width(size);
+    let fang_width = get_fang_width(size) * head_height as f32;
     let fang_half = fang_width * 0.5;
     let fang_height = fang_width * 2.0;
-    let left = aabb.get_point(horizontal - fang_half, config.head.y_mouth);
-    let right = aabb.get_point(horizontal + fang_half, config.head.y_mouth);
-    let tip = aabb.get_point(horizontal, config.head.y_mouth + fang_height);
+
+    let normal = orientation.normal();
+
+    let left = point.calculate_polar(-fang_half, normal);
+    let right = point.calculate_polar(fang_half, normal);
+    let tip = point.calculate_polar(fang_height, orientation);
     let polygon = Polygon2d::new(vec![left, tip, right]);
+
     let options = config.without_line(Color::White);
 
     renderer.render_polygon(&polygon, &options);

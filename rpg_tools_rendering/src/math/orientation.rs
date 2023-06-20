@@ -43,4 +43,14 @@ impl Orientation {
     pub fn sin(&self) -> f32 {
         self.0.to_radians().sin()
     }
+
+    /// Returns the orientation normal to the current one.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::orientation::Orientation;
+    /// assert_eq!(Orientation::from_degree(180.0).normal(), Orientation::from_degree(270.0));
+    /// ```
+    pub fn normal(&self) -> Orientation {
+        Self::from_degree(self.0 + 90.0)
+    }
 }
