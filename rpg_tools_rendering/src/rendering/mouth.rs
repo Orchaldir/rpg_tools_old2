@@ -36,35 +36,50 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
         } => {
             let width = get_width(head_width_factor, *width);
             let distance_between_fangs = width * 0.6;
+            let down = Orientation::from_degree(90.0);
+            let up = Orientation::from_degree(270.0);
 
             render_normal_mouth(renderer, config, aabb, width, height);
 
             match teeth.special {
                 SpecialTeeth::UpperFangs(size) => {
-                    let down = Orientation::from_degree(90.0);
-                    let head_height = aabb.size().height();
-
-                    render_fang(
-                        renderer,
-                        config,
-                        head_height,
-                        &aabb.get_point(0.5 - distance_between_fangs / 2.0, config.head.y_mouth),
-                        down,
-                        size,
-                    );
-                    render_fang(
-                        renderer,
-                        config,
-                        head_height,
-                        &aabb.get_point(0.5 + distance_between_fangs / 2.0, config.head.y_mouth),
-                        down,
-                        size,
-                    );
+                    render_2_fangs(renderer, &config, &aabb, down, distance_between_fangs, size);
+                }
+                SpecialTeeth::LowerFangs(size) => {
+                    render_2_fangs(renderer, &config, &aabb, up, distance_between_fangs, size);
                 }
                 _ => {}
             }
         }
     }
+}
+
+fn render_2_fangs(
+    renderer: &mut dyn Renderer,
+    config: &&RenderConfig,
+    aabb: &&AABB,
+    down: Orientation,
+    distance_between_fangs: f32,
+    size: Size,
+) {
+    let head_height = aabb.size().height();
+
+    render_fang(
+        renderer,
+        config,
+        head_height,
+        &aabb.get_point(0.5 - distance_between_fangs / 2.0, config.head.y_mouth),
+        down,
+        size,
+    );
+    render_fang(
+        renderer,
+        config,
+        head_height,
+        &aabb.get_point(0.5 + distance_between_fangs / 2.0, config.head.y_mouth),
+        down,
+        size,
+    );
 }
 
 fn get_circle_radius(head_width: u32, size: Size) -> u32 {

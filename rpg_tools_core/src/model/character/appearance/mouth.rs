@@ -42,8 +42,6 @@ pub enum TeethType {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum SpecialTeeth {
     None,
-    /// All 4 canine teeth are longer. e.g. wolves
-    Fangs(Size),
     /// The 2 lower canine teeth are longer. e.g. orcs
     LowerFangs(Size),
     /// The 2 upper canine teeth are longer. e.g. snakes, vampires
