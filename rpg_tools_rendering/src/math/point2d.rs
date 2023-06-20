@@ -34,8 +34,8 @@ impl Point2d {
     /// assert_eq!(point.x, 2);
     /// assert_eq!(point.y, 3);
     /// ```
-    pub const fn new(x: i32, y: i32) -> Point2d {
-        Point2d { x, y }
+    pub const fn new(x: i32, y: i32) -> Self {
+        Self { x, y }
     }
 
     /// Calculates the euclidean distance to another point.
