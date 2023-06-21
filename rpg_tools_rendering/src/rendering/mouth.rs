@@ -63,22 +63,21 @@ fn render_2_fangs(
     size: Size,
 ) {
     let head_height = aabb.size().height();
+    let fang_height = 2.0 * get_fang_width(size) * head_height as f32;
 
     render_fang(
         renderer,
         config,
-        head_height,
+        fang_height,
         &aabb.get_point(0.5 - distance_between_fangs / 2.0, config.head.y_mouth),
         down,
-        size,
     );
     render_fang(
         renderer,
         config,
-        head_height,
+        fang_height,
         &aabb.get_point(0.5 + distance_between_fangs / 2.0, config.head.y_mouth),
         down,
-        size,
     );
 }
 
@@ -116,6 +115,23 @@ pub fn render_circular_mouth(
 ) {
     let options = config.without_line(Color::Black);
     renderer.render_circle(center, radius, &options);
+
+    let n = 12;
+    let step = Orientation::split(n);
+    let mut orientation = Orientation::from_degree(0.0);
+    let fang_height = 0.4 * radius as f32;
+
+    for _i in 0..n {
+        render_fang(
+            renderer,
+            config,
+            fang_height,
+            &center.calculate_polar(radius as f32, orientation),
+            orientation.inverse(),
+        );
+
+        orientation = orientation + step;
+    }
 }
 
 fn render_normal_mouth(
@@ -133,14 +149,12 @@ fn render_normal_mouth(
 fn render_fang(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
-    head_height: u32,
+    fang_height: f32,
     point: &Point2d,
     orientation: Orientation,
-    size: Size,
 ) {
-    let fang_width = get_fang_width(size) * head_height as f32;
+    let fang_width = fang_height * 0.5;
     let fang_half = fang_width * 0.5;
-    let fang_height = fang_width * 2.0;
 
     let normal = orientation.normal();
 
