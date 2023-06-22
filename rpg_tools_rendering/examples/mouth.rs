@@ -5,9 +5,7 @@ use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
-use rpg_tools_core::model::character::appearance::mouth::{
-    HumanoidTeeth, Mouth, SpecialTeeth, TeethColor, TeethType,
-};
+use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::Skin;
 use rpg_tools_core::model::character::appearance::{Appearance, Size};
 use rpg_tools_core::model::color::Color;
@@ -47,11 +45,8 @@ fn create_normal(width: Size, teeth: Size) -> Mouth {
     Mouth::Normal {
         width,
         color: None,
-        teeth: HumanoidTeeth {
-            teeth: TeethType::Rectangle,
-            special: SpecialTeeth::LowerFangs(teeth),
-            color: TeethColor::White,
-        },
+        teeth: SpecialTeeth::LowerFangs(teeth),
+        teeth_color: TeethColor::White,
     }
 }
 

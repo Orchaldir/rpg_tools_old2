@@ -30,6 +30,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             width,
             color,
             teeth,
+            teeth_color,
         } => {
             let width = get_width(head_width_factor, *width);
             let distance_between_fangs = width * 0.6;
@@ -38,7 +39,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
 
             render_normal_mouth(renderer, config, aabb, width, *color);
 
-            match teeth.special {
+            match teeth {
                 SpecialTeeth::UpperFangs(size) => {
                     render_2_fangs(
                         renderer,
@@ -46,8 +47,8 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
                         &aabb,
                         down,
                         distance_between_fangs,
-                        size,
-                        TeethColor::White,
+                        *size,
+                        *teeth_color,
                     );
                 }
                 SpecialTeeth::LowerFangs(size) => {
@@ -57,8 +58,8 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
                         &aabb,
                         up,
                         distance_between_fangs,
-                        size,
-                        TeethColor::White,
+                        *size,
+                        *teeth_color,
                     );
                 }
                 _ => {}
@@ -128,7 +129,7 @@ pub fn render_circular_mouth(
     let n = 16;
     let step = Orientation::split(n);
     let mut orientation = Orientation::from_degree(0.0);
-    let fang_height = 0.4 * radius as f32;
+    let fang_height = 0.5 * radius as f32;
 
     for _i in 0..n {
         render_fang(

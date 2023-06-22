@@ -15,25 +15,9 @@ pub enum Mouth {
         width: Size,
         /// Are the lips painted?
         color: Option<Color>,
-        teeth: HumanoidTeeth,
+        teeth: SpecialTeeth,
+        teeth_color: TeethColor,
     },
-}
-
-/// How does the teeth of a humanoid look like?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub struct HumanoidTeeth {
-    pub teeth: TeethType,
-    pub special: SpecialTeeth,
-    pub color: TeethColor,
-}
-
-/// How do the teeth look like?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum TeethType {
-    Needle,
-    Rectangle,
-    Round,
-    Triangle,
 }
 
 /// Does the character have special teeth?
