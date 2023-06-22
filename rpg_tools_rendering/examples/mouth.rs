@@ -39,19 +39,17 @@ fn main() {
 fn create_circle(size: Size, color: TeethColor) -> Mouth {
     Mouth::Circle {
         size,
-        teeth: TeethType::Rectangle,
         teeth_color: color,
     }
 }
 
-fn create_normal(width: Size, height: Size) -> Mouth {
+fn create_normal(width: Size, teeth: Size) -> Mouth {
     Mouth::Normal {
         width,
-        height,
         color: None,
         teeth: HumanoidTeeth {
             teeth: TeethType::Rectangle,
-            special: SpecialTeeth::LowerFangs(height),
+            special: SpecialTeeth::LowerFangs(teeth),
             color: TeethColor::White,
         },
     }

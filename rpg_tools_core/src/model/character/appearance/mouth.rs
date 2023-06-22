@@ -8,13 +8,11 @@ pub enum Mouth {
     /// Like a lamprey's mouth.
     Circle {
         size: Size,
-        teeth: TeethType,
         teeth_color: TeethColor,
     },
     /// Like a human's mouth.
     Normal {
         width: Size,
-        height: Size,
         /// Are the lips painted?
         color: Option<Color>,
         teeth: HumanoidTeeth,

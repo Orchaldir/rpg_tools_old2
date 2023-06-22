@@ -17,11 +17,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
 
     match &head.mouth {
         Mouth::None => {}
-        Mouth::Circle {
-            size,
-            teeth,
-            teeth_color,
-        } => {
+        Mouth::Circle { size, teeth_color } => {
             let free_y = aabb.calculate_from_height(1.0 - config.head.y_eye);
             let max_free_space = head_width.min(free_y);
             let center = aabb.get_point(0.5, config.head.y_mouth);
@@ -31,7 +27,6 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
         }
         Mouth::Normal {
             width,
-            height,
             color,
             teeth,
         } => {
@@ -40,7 +35,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             let down = Orientation::from_degree(90.0);
             let up = Orientation::from_degree(270.0);
 
-            render_normal_mouth(renderer, config, aabb, width, height);
+            render_normal_mouth(renderer, config, aabb, width);
 
             match teeth.special {
                 SpecialTeeth::UpperFangs(size) => {
@@ -119,14 +114,6 @@ fn get_width(head_width: f32, size: Size) -> f32 {
         }
 }
 
-fn get_thickness(size: Size) -> f32 {
-    match size {
-        Size::Low => 0.4,
-        Size::Medium => 0.6,
-        Size::High => 0.8,
-    }
-}
-
 pub fn render_circular_mouth(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
@@ -161,9 +148,8 @@ fn render_normal_mouth(
     config: &RenderConfig,
     aabb: &AABB,
     width: f32,
-    height: &Size,
 ) {
-    let options = config.get_line_options(get_thickness(*height));
+    let options = config.get_line_options(0.6);
     let line: Line2d = aabb.get_mirrored_points(width, config.head.y_mouth).into();
     renderer.render_line(&line, &options);
 }
