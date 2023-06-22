@@ -25,7 +25,7 @@ pub struct RenderConfig {
 impl RenderConfig {
     pub fn without_line(&self, color: Color) -> RenderOptions {
         let web_color = WebColor::from_color(color);
-        RenderOptions::new(web_color.clone(), web_color, 0)
+        RenderOptions::no_line(web_color)
     }
 
     pub fn get_line_options(&self, width_factor: f32) -> RenderOptions {

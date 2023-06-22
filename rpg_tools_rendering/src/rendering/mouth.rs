@@ -3,10 +3,11 @@ use crate::math::line2d::Line2d;
 use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
-use crate::renderer::Renderer;
+use crate::renderer::color::WebColor;
+use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::head::Head;
-use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth};
+use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::Size;
 use rpg_tools_core::model::color::Color;
 
@@ -26,7 +27,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             let center = aabb.get_point(0.5, config.head.y_mouth);
             let radius = get_circle_radius(max_free_space, *size);
 
-            render_circular_mouth(renderer, config, &center, radius);
+            render_circular_mouth(renderer, config, &center, radius, *teeth_color);
         }
         Mouth::Normal {
             width,
@@ -43,10 +44,26 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
 
             match teeth.special {
                 SpecialTeeth::UpperFangs(size) => {
-                    render_2_fangs(renderer, &config, &aabb, down, distance_between_fangs, size);
+                    render_2_fangs(
+                        renderer,
+                        &config,
+                        &aabb,
+                        down,
+                        distance_between_fangs,
+                        size,
+                        TeethColor::White,
+                    );
                 }
                 SpecialTeeth::LowerFangs(size) => {
-                    render_2_fangs(renderer, &config, &aabb, up, distance_between_fangs, size);
+                    render_2_fangs(
+                        renderer,
+                        &config,
+                        &aabb,
+                        up,
+                        distance_between_fangs,
+                        size,
+                        TeethColor::White,
+                    );
                 }
                 _ => {}
             }
@@ -61,6 +78,7 @@ fn render_2_fangs(
     down: Orientation,
     distance_between_fangs: f32,
     size: Size,
+    color: TeethColor,
 ) {
     let head_height = aabb.size().height();
     let fang_height = 2.0 * get_fang_width(size) * head_height as f32;
@@ -71,6 +89,7 @@ fn render_2_fangs(
         fang_height,
         &aabb.get_point(0.5 - distance_between_fangs / 2.0, config.head.y_mouth),
         down,
+        color,
     );
     render_fang(
         renderer,
@@ -78,6 +97,7 @@ fn render_2_fangs(
         fang_height,
         &aabb.get_point(0.5 + distance_between_fangs / 2.0, config.head.y_mouth),
         down,
+        color,
     );
 }
 
@@ -112,11 +132,12 @@ pub fn render_circular_mouth(
     config: &RenderConfig,
     center: &Point2d,
     radius: u32,
+    color: TeethColor,
 ) {
     let options = config.without_line(Color::Black);
     renderer.render_circle(center, radius, &options);
 
-    let n = 12;
+    let n = 16;
     let step = Orientation::split(n);
     let mut orientation = Orientation::from_degree(0.0);
     let fang_height = 0.4 * radius as f32;
@@ -128,6 +149,7 @@ pub fn render_circular_mouth(
             fang_height,
             &center.calculate_polar(radius as f32, orientation),
             orientation.inverse(),
+            color,
         );
 
         orientation = orientation + step;
@@ -152,6 +174,7 @@ fn render_fang(
     fang_height: f32,
     point: &Point2d,
     orientation: Orientation,
+    teeth_color: TeethColor,
 ) {
     let fang_width = fang_height * 0.5;
     let fang_half = fang_width * 0.5;
@@ -163,7 +186,7 @@ fn render_fang(
     let tip = point.calculate_polar(fang_height, orientation);
     let polygon = Polygon2d::new(vec![left, tip, right]);
 
-    let options = config.without_line(Color::White);
+    let options = RenderOptions::no_line(get_teeth_color(teeth_color));
 
     renderer.render_polygon(&polygon, &options);
 }
@@ -173,5 +196,14 @@ fn get_fang_width(size: Size) -> f32 {
         Size::Low => 0.04,
         Size::Medium => 0.06,
         Size::High => 0.08,
+    }
+}
+
+fn get_teeth_color(color: TeethColor) -> WebColor {
+    match color {
+        TeethColor::White => WebColor::from_rgb(255, 255, 255),
+        TeethColor::Yellow => WebColor::from_rgb(249, 232, 158),
+        TeethColor::Brown => WebColor::Name("brown".to_string()),
+        TeethColor::Black => WebColor::from_rgb(0, 0, 0),
     }
 }

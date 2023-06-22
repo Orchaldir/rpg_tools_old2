@@ -22,6 +22,14 @@ impl RenderOptions {
             line_width,
         }
     }
+
+    pub fn no_line(color: WebColor) -> Self {
+        Self {
+            fill_color: color.clone(),
+            line_color: color,
+            line_width: 0,
+        }
+    }
 }
 
 pub trait Renderer {
