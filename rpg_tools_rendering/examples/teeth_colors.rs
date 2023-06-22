@@ -3,10 +3,9 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::eye::Eyes;
-use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
-use rpg_tools_core::model::character::appearance::skin::Skin;
+use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::{Appearance, Size};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
@@ -21,12 +20,20 @@ fn main() {
         TeethColor::Brown,
         TeethColor::Black,
     ];
-    let faces = vec![Oval];
+    let skin = vec![
+        Skin::Skin(SkinColor::Fair),
+        Skin::Skin(SkinColor::Light),
+        Skin::Skin(SkinColor::Medium),
+        Skin::Skin(SkinColor::Tan),
+        Skin::Skin(SkinColor::Dark),
+        Skin::Skin(SkinColor::VeryDark),
+        Skin::Skin(SkinColor::Exotic(Color::Green)),
+    ];
 
-    render_2_sets("teeth_colors.svg", faces, teeth_colors, create_appearance);
+    render_2_sets("teeth_colors.svg", skin, teeth_colors, create_appearance);
 }
 
-fn create_appearance(height: Length, face: &RealisticHeadShape, color: &TeethColor) -> Appearance {
+fn create_appearance(height: Length, skin: &Skin, color: &TeethColor) -> Appearance {
     Appearance::head(
         Head {
             eyes: Eyes::None,
@@ -36,8 +43,8 @@ fn create_appearance(height: Length, face: &RealisticHeadShape, color: &TeethCol
                 teeth: SpecialTeeth::LowerFangs(High),
                 teeth_color: *color,
             },
-            shape: HeadShape::Realistic(*face),
-            skin: Skin::Scales(Color::Green),
+            shape: HeadShape::Realistic(RealisticHeadShape::Oval),
+            skin: *skin,
         },
         height,
     )
