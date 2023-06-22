@@ -10,6 +10,7 @@ use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::Size;
 use rpg_tools_core::model::color::Color;
+use Color::Black;
 
 pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     let head_width_factor = config.head.get_mouth_width(head.shape);
@@ -35,7 +36,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             let down = Orientation::from_degree(90.0);
             let up = Orientation::from_degree(270.0);
 
-            render_normal_mouth(renderer, config, aabb, width);
+            render_normal_mouth(renderer, config, aabb, width, *color);
 
             match teeth.special {
                 SpecialTeeth::UpperFangs(size) => {
@@ -121,7 +122,7 @@ pub fn render_circular_mouth(
     radius: u32,
     color: TeethColor,
 ) {
-    let options = config.without_line(Color::Black);
+    let options = config.without_line(Black);
     renderer.render_circle(center, radius, &options);
 
     let n = 16;
@@ -148,8 +149,9 @@ fn render_normal_mouth(
     config: &RenderConfig,
     aabb: &AABB,
     width: f32,
+    color: Option<Color>,
 ) {
-    let options = config.get_line_options(0.6);
+    let options = config.line_with_color(color.unwrap_or(Black), 0.6);
     let line: Line2d = aabb.get_mirrored_points(width, config.head.y_mouth).into();
     renderer.render_line(&line, &options);
 }

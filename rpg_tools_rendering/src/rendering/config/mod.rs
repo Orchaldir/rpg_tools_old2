@@ -29,9 +29,15 @@ impl RenderConfig {
     }
 
     pub fn get_line_options(&self, width_factor: f32) -> RenderOptions {
-        RenderOptions::new(
+        RenderOptions::line(
             self.line_color.clone(),
-            self.line_color.clone(),
+            (self.line_width as f32 * width_factor) as u32,
+        )
+    }
+
+    pub fn line_with_color(&self, color: Color, width_factor: f32) -> RenderOptions {
+        RenderOptions::line(
+            WebColor::from_color(color),
             (self.line_width as f32 * width_factor) as u32,
         )
     }
