@@ -54,7 +54,7 @@ impl Point2d {
         (self.x as f32 - point.x as f32).hypot(self.y as f32 - point.y as f32)
     }
 
-    /// Calculates a new point  using polar coordinates.
+    /// Calculates a new point using polar coordinates.
     /// See https://en.wikipedia.org/wiki/Polar_coordinate_system.
     ///
     /// ```

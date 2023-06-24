@@ -5,6 +5,7 @@ use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::head::HeadConfig;
 use crate::rendering::config::mouth::MouthConfig;
 use anyhow::Result;
+use rpg_tools_core::model::character::appearance::mouth::TeethColor;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::color::Color;
 
@@ -50,6 +51,14 @@ impl RenderConfig {
             self.get_color(skin),
             self.line_color.clone(),
             self.line_width,
+        )
+    }
+
+    pub fn get_teeth_options(&self, color: TeethColor) -> RenderOptions {
+        RenderOptions::new(
+            self.mouth.get_teeth_color(color),
+            WebColor::from_color(Color::Black),
+            self.line_width / 10,
         )
     }
 

@@ -3,7 +3,7 @@ use crate::math::line2d::Line2d;
 use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
-use crate::renderer::{RenderOptions, Renderer};
+use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
@@ -159,8 +159,7 @@ fn render_fang(
     let tip = point.calculate_polar(fang_height, orientation);
     let polygon = Polygon2d::new(vec![left, tip, right]);
 
-    let color = config.mouth.get_teeth_color(teeth_color);
-    let options = RenderOptions::no_line(color);
+    let options = config.get_teeth_options(teeth_color);
 
     renderer.render_polygon(&polygon, &options);
 }
