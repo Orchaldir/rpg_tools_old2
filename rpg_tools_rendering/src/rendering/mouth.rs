@@ -31,8 +31,8 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             teeth,
             teeth_color,
         } => {
-            let width = get_width(head_width_factor, *width);
-            let distance_between_fangs = width * 0.6;
+            let width = config.mouth.get_mouth_width(head_width_factor, *width);
+            let distance_between_fangs = config.mouth.get_distance_between_fangs(width);
             let down = Orientation::from_degree(90.0);
             let up = Orientation::from_degree(270.0);
 
@@ -104,15 +104,6 @@ fn get_circle_radius(head_width: u32, size: Size) -> u32 {
             Size::Medium => 0.25,
             Size::High => 0.3,
         }) as u32
-}
-
-fn get_width(head_width: f32, size: Size) -> f32 {
-    head_width
-        * match size {
-            Size::Low => 0.4,
-            Size::Medium => 0.5,
-            Size::High => 0.6,
-        }
 }
 
 pub fn render_circular_mouth(
