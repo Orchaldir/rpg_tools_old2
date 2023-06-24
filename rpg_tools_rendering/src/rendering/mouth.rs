@@ -110,7 +110,7 @@ pub fn render_circular_mouth(
     let n = 16;
     let step = Orientation::split(n);
     let mut orientation = Orientation::from_degree(0.0);
-    let fang_height = 0.5 * radius as f32;
+    let fang_height = config.mouth.get_circular_fang_height(radius);
 
     for _i in 0..n {
         render_fang(

@@ -66,6 +66,7 @@ pub fn create_mouth_config() -> MouthConfig {
         mouth_radius_medium: 0.25,
         mouth_radius_high: 0.3,
         distance_between_fangs: 0.6,
+        circular_fang_height: 0.5,
         fang_height_low: 0.08,
         fang_height_medium: 0.12,
         fang_height_high: 0.16,
