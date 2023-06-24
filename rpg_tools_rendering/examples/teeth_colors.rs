@@ -14,12 +14,7 @@ use Size::High;
 pub mod utils;
 
 fn main() {
-    let teeth_colors = vec![
-        TeethColor::White,
-        TeethColor::Yellow,
-        TeethColor::Brown,
-        TeethColor::Black,
-    ];
+    let teeth_colors = vec![TeethColor::White, TeethColor::Yellow, TeethColor::Brown];
     let skin = vec![
         Skin::Skin(SkinColor::Fair),
         Skin::Skin(SkinColor::Light),

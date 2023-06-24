@@ -30,11 +30,10 @@ pub enum SpecialTeeth {
     UpperFangs(Size),
 }
 
-/// The color of the the teeth.
+/// The color of the teeth.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum TeethColor {
     White,
     Yellow,
     Brown,
-    Black,
 }

@@ -43,7 +43,6 @@ impl MouthConfig {
             TeethColor::White => WebColor::from_rgb(255, 255, 255),
             TeethColor::Yellow => WebColor::from_rgb(249, 232, 158),
             TeethColor::Brown => WebColor::Name("brown".to_string()),
-            TeethColor::Black => WebColor::from_rgb(0, 0, 0),
         }
     }
 }
