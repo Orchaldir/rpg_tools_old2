@@ -31,10 +31,15 @@ use rpg_tools_core::model::character::appearance::head::{
 /// ```
 #[derive(Debug, PartialEq)]
 pub struct HeadConfig {
+    /// The width at forehead, eye or mouth level, if wide.
     pub width_wide: f32,
+    /// The width at forehead, eye or mouth level, if narrow.
     pub width_narrow: f32,
+    /// The width at top & chin level, if that end is square.
     pub width_square: f32,
+    /// The width at top & chin level, if that end is round.
     pub width_round: f32,
+    /// The width at top & chin level, if that end is sharp.
     pub width_sharp: f32,
     pub y_forehead: f32,
     pub y_eye: f32,

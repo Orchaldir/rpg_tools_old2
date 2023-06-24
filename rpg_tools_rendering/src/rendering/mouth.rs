@@ -3,7 +3,6 @@ use crate::math::line2d::Line2d;
 use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
-use crate::renderer::color::WebColor;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::head::Head;
@@ -78,7 +77,7 @@ fn render_2_fangs(
     color: TeethColor,
 ) {
     let head_height = aabb.size().height();
-    let fang_height = 2.0 * get_fang_width(size) * head_height as f32;
+    let fang_height = config.mouth.get_fang_height(head_height, size);
 
     render_fang(
         renderer,
@@ -175,24 +174,8 @@ fn render_fang(
     let tip = point.calculate_polar(fang_height, orientation);
     let polygon = Polygon2d::new(vec![left, tip, right]);
 
-    let options = RenderOptions::no_line(get_teeth_color(teeth_color));
+    let color = config.mouth.get_teeth_color(teeth_color);
+    let options = RenderOptions::no_line(color);
 
     renderer.render_polygon(&polygon, &options);
-}
-
-fn get_fang_width(size: Size) -> f32 {
-    match size {
-        Size::Low => 0.04,
-        Size::Medium => 0.06,
-        Size::High => 0.08,
-    }
-}
-
-fn get_teeth_color(color: TeethColor) -> WebColor {
-    match color {
-        TeethColor::White => WebColor::from_rgb(255, 255, 255),
-        TeethColor::Yellow => WebColor::from_rgb(249, 232, 158),
-        TeethColor::Brown => WebColor::Name("brown".to_string()),
-        TeethColor::Black => WebColor::from_rgb(0, 0, 0),
-    }
 }

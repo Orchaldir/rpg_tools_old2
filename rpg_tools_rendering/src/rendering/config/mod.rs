@@ -3,12 +3,14 @@ use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::head::HeadConfig;
+use crate::rendering::config::mouth::MouthConfig;
 use anyhow::Result;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::color::Color;
 
 pub mod eye;
 pub mod head;
+pub mod mouth;
 
 #[derive(Debug, PartialEq)]
 pub struct RenderConfig {
@@ -20,6 +22,7 @@ pub struct RenderConfig {
     pub cut_corners_n: u32,
     pub head: HeadConfig,
     pub eye: EyeConfig,
+    pub mouth: MouthConfig,
 }
 
 impl RenderConfig {
