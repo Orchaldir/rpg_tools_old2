@@ -8,6 +8,9 @@ pub struct MouthConfig {
     pub mouth_width_low: f32,
     pub mouth_width_medium: f32,
     pub mouth_width_high: f32,
+    pub mouth_radius_low: f32,
+    pub mouth_radius_medium: f32,
+    pub mouth_radius_high: f32,
     pub distance_between_fangs: f32,
     pub fang_height_low: f32,
     pub fang_height_medium: f32,
@@ -22,6 +25,15 @@ impl MouthConfig {
                 Size::Medium => self.mouth_width_medium,
                 Size::High => self.mouth_width_high,
             }
+    }
+
+    pub fn get_circle_mouth_radius(&self, head_width: u32, size: Size) -> u32 {
+        (head_width as f32
+            * match size {
+                Size::Low => self.mouth_radius_low,
+                Size::Medium => self.mouth_radius_medium,
+                Size::High => self.mouth_radius_high,
+            }) as u32
     }
 
     pub fn get_distance_between_fangs(&self, mouth_width: f32) -> f32 {
