@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::line2d::Line2d;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::color::WebColor;
@@ -21,6 +22,22 @@ impl RenderOptions {
             line_width,
         }
     }
+
+    pub fn line(color: WebColor, width: u32) -> Self {
+        Self {
+            fill_color: color.clone(),
+            line_color: color,
+            line_width: width,
+        }
+    }
+
+    pub fn no_line(color: WebColor) -> Self {
+        Self {
+            fill_color: color.clone(),
+            line_color: color,
+            line_width: 0,
+        }
+    }
 }
 
 pub trait Renderer {
@@ -35,6 +52,9 @@ pub trait Renderer {
         radius_y: u32,
         options: &RenderOptions,
     );
+
+    /// Renders a line.
+    fn render_line(&mut self, line: &Line2d, options: &RenderOptions);
 
     /// Renders a pointed oval,
     /// which is similar to an ellipse with 2 sharp corners at the ends of the longer dimension.
