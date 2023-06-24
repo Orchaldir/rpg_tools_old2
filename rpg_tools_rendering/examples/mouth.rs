@@ -16,9 +16,9 @@ pub mod utils;
 
 fn main() {
     let shape_options = vec![
-        create_circle(Low, TeethColor::White),
-        create_circle(Medium, TeethColor::Yellow),
-        create_circle(High, TeethColor::Brown),
+        create_circle(Low),
+        create_circle(Medium),
+        create_circle(High),
         create_normal(Low, Low),
         create_normal(Low, Medium),
         create_normal(Low, High),
@@ -34,10 +34,10 @@ fn main() {
     render_2_sets("mouth.svg", shape_options, faces, create_appearance);
 }
 
-fn create_circle(size: Size, color: TeethColor) -> Mouth {
+fn create_circle(size: Size) -> Mouth {
     Mouth::Circle {
         size,
-        teeth_color: color,
+        teeth_color: TeethColor::White,
     }
 }
 
