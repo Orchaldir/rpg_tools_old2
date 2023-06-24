@@ -6,7 +6,7 @@ use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::RenderOptions;
 use rpg_tools_rendering::rendering::config::eye::EyeConfig;
 use rpg_tools_rendering::rendering::config::head::HeadConfig;
-use rpg_tools_rendering::rendering::config::mouth::MouthConfig;
+use rpg_tools_rendering::rendering::config::mouth::{CircularMouthConfig, MouthConfig};
 use rpg_tools_rendering::rendering::config::RenderConfig;
 
 pub fn create_border_options() -> RenderOptions {
@@ -62,13 +62,15 @@ pub fn create_mouth_config() -> MouthConfig {
         mouth_width_low: 0.4,
         mouth_width_medium: 0.5,
         mouth_width_high: 0.6,
-        mouth_radius_low: 0.2,
-        mouth_radius_medium: 0.25,
-        mouth_radius_high: 0.3,
         distance_between_fangs: 0.6,
-        circular_fang_height: 0.5,
         fang_height_low: 0.08,
         fang_height_medium: 0.12,
         fang_height_high: 0.16,
+        circular: CircularMouthConfig {
+            radius_low: 0.2,
+            radius_medium: 0.25,
+            radius_high: 0.3,
+            fang_height: 0.5,
+        },
     }
 }

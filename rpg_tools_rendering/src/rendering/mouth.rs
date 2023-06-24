@@ -21,7 +21,10 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             let free_y = aabb.calculate_from_height(1.0 - config.head.y_eye);
             let max_free_space = head_width.min(free_y);
             let center = aabb.get_point(0.5, config.head.y_mouth);
-            let radius = config.mouth.get_circle_mouth_radius(max_free_space, *size);
+            let radius = config
+                .mouth
+                .circular
+                .get_mouth_radius(max_free_space, *size);
 
             render_circular_mouth(renderer, config, &center, radius, *teeth_color);
         }
@@ -110,7 +113,7 @@ pub fn render_circular_mouth(
     let n = 16;
     let step = Orientation::split(n);
     let mut orientation = Orientation::from_degree(0.0);
-    let fang_height = config.mouth.get_circular_fang_height(radius);
+    let fang_height = config.mouth.circular.get_fang_height(radius);
 
     for _i in 0..n {
         render_fang(
