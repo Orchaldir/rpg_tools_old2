@@ -4,6 +4,7 @@ use crate::model::length::Length;
 
 pub mod body;
 pub mod eye;
+pub mod hair;
 pub mod head;
 pub mod mouth;
 pub mod skin;
@@ -14,6 +15,13 @@ pub enum Size {
     Low,
     Medium,
     High,
+}
+
+/// Left or Right?.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Side {
+    Left,
+    Right,
 }
 
 /// How does a [`character`](crate::model::character::Character) look like?
