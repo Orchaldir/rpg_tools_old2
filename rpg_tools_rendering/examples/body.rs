@@ -6,6 +6,7 @@ use rpg_tools_core::model::character::appearance::body::BodyShape::*;
 use rpg_tools_core::model::character::appearance::body::BodyWidth::*;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape, BodyWidth};
 use rpg_tools_core::model::character::appearance::eye::Eyes;
+use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::mouth::Mouth;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
@@ -31,6 +32,7 @@ fn create_appearance(height: Length, width: &BodyWidth, shape: &BodyShape) -> Ap
         },
         Head {
             eyes: Eyes::None,
+            hair: Hair::None,
             mouth: Mouth::None,
             shape: HeadShape::Realistic(RealisticHeadShape::Oval),
             skin,

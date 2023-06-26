@@ -1,4 +1,5 @@
 use crate::model::character::appearance::eye::Eyes;
+use crate::model::character::appearance::hair::Hair;
 use crate::model::character::appearance::mouth::Mouth;
 use crate::model::character::appearance::skin::Skin;
 
@@ -6,6 +7,7 @@ use crate::model::character::appearance::skin::Skin;
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Head {
     pub eyes: Eyes,
+    pub hair: Hair,
     pub mouth: Mouth,
     pub shape: HeadShape,
     pub skin: Skin,
