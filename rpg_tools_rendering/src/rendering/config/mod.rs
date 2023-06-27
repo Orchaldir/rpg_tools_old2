@@ -5,9 +5,11 @@ use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::head::HeadConfig;
 use crate::rendering::config::mouth::MouthConfig;
 use anyhow::Result;
+use rpg_tools_core::model::character::appearance::hair::HairColor;
 use rpg_tools_core::model::character::appearance::mouth::TeethColor;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::color::Color;
+use rpg_tools_core::model::color::Color::White;
 
 pub mod eye;
 pub mod head;
@@ -46,9 +48,17 @@ impl RenderConfig {
         )
     }
 
+    pub fn get_hair_options(&self, hair: HairColor) -> RenderOptions {
+        RenderOptions::new(
+            self.get_hair_color(hair),
+            self.line_color.clone(),
+            self.line_width,
+        )
+    }
+
     pub fn get_skin_options(&self, skin: &Skin) -> RenderOptions {
         RenderOptions::new(
-            self.get_color(skin),
+            self.get_skin_color(skin),
             self.line_color.clone(),
             self.line_width,
         )
@@ -62,7 +72,20 @@ impl RenderConfig {
         )
     }
 
-    pub fn get_color(&self, skin: &Skin) -> WebColor {
+    pub fn get_hair_color(&self, hair: HairColor) -> WebColor {
+        match hair {
+            HairColor::White => WebColor::from_color(White),
+            HairColor::Grey => WebColor::from_rgb(106, 106, 106),
+            HairColor::Blond => WebColor::from_rgb(255, 204, 71),
+            HairColor::Orange => WebColor::from_rgb(255, 147, 33),
+            HairColor::Red => WebColor::from_rgb(255, 0, 0),
+            HairColor::Brown => WebColor::from_rgb(90, 56, 37),
+            HairColor::Black => WebColor::from_rgb(36, 32, 36),
+            HairColor::Exotic(color) => WebColor::from_color(color),
+        }
+    }
+
+    pub fn get_skin_color(&self, skin: &Skin) -> WebColor {
         match skin {
             Skin::Scales(color) => WebColor::from_color(*color),
             Skin::Skin(skin_color) => match skin_color {

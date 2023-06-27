@@ -5,12 +5,17 @@ use crate::model::color::Color;
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Hair {
     None,
-    Short { style: ShortHair, color: HairColor },
+    /// Short normal hair.
+    Short {
+        style: ShortHair,
+        color: HairColor,
+    },
 }
 
 /// Which short hair style?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum ShortHair {
+    /// All hair is equally short.
     BuzzCut,
     CrewCut,
     SidePart(Side),
