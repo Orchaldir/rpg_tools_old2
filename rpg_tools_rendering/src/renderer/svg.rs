@@ -169,7 +169,10 @@ fn path_from_polygon(polygon: &Polygon2d) -> String {
 fn to_style(options: &RenderOptions) -> String {
     format!(
         "fill:{};stroke:{};stroke-width:{}",
-        options.fill_color.to_string().to_lowercase(),
+        match &options.fill_color {
+            None => "none".to_string(),
+            Some(color) => color.to_string().to_lowercase(),
+        },
         options.line_color.to_string().to_lowercase(),
         options.line_width
     )
