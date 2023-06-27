@@ -6,7 +6,12 @@ use rpg_tools_core::model::character::appearance::head::{
     GeometricHeadShape, Head, HeadShape, RealisticHeadShape,
 };
 
-pub fn render_head(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
+pub fn render_head_shape(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    head: &Head,
+) {
     match head.shape {
         HeadShape::Geometric(geometric) => {
             render_geometric(renderer, config, aabb, head, geometric)
