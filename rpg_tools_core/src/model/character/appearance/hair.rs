@@ -18,8 +18,9 @@ pub enum Hair {
 pub enum ShortHair {
     /// All hair is equally short.
     BuzzCut,
-    CrewCut,
+    // Short hair that parts in the middle.
     MiddlePart,
+    // Short hair that parts on one side.
     SidePart(Side),
 }
 

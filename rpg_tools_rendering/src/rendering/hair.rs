@@ -21,9 +21,6 @@ pub fn render_hair(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
                 ShortHair::BuzzCut => {
                     render_buzz_cut_realistic(renderer, config, aabb, realistic, hairline, color)
                 }
-                ShortHair::CrewCut => {
-                    render_crew_cut_realistic(renderer, config, aabb, realistic, hairline, color)
-                }
                 ShortHair::MiddlePart => {
                     render_middle_part_realistic(renderer, config, aabb, realistic, color)
                 }
@@ -47,20 +44,6 @@ fn render_buzz_cut_realistic(
 
     renderer.render_polygon(&polygon, &options);
     render_realistic_with_option(renderer, config, aabb, line, realistic);
-}
-
-fn render_crew_cut_realistic(
-    renderer: &mut dyn Renderer,
-    config: &RenderConfig,
-    aabb: &AABB,
-    realistic: RealisticHeadShape,
-    hairline: Hairline,
-    color: HairColor,
-) {
-    let options = config.get_hair_options(color);
-    let mut polygon = get_cut_realistic(config, aabb, realistic, hairline);
-    polygon = polygon.resize(1.03);
-    renderer.render_polygon(&polygon, &options);
 }
 
 fn render_middle_part_realistic(

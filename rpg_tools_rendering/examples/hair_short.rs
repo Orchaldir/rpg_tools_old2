@@ -3,7 +3,6 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
-use rpg_tools_core::model::character::appearance::hair::ShortHair::MiddlePart;
 use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairline, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
@@ -13,7 +12,7 @@ use rpg_tools_core::model::character::appearance::{Appearance, Side};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use Hairline::{Round, Straight, Triangle, WidowsPeak};
-use ShortHair::{BuzzCut, CrewCut, SidePart};
+use ShortHair::{BuzzCut, MiddlePart, SidePart};
 use Side::{Left, Right};
 
 pub mod utils;
@@ -32,9 +31,6 @@ fn main() {
         create_hair(BuzzCut, WidowsPeak(Low)),
         create_hair(BuzzCut, WidowsPeak(Medium)),
         create_hair(BuzzCut, WidowsPeak(High)),
-        create_hair(CrewCut, Round(Low)),
-        create_hair(CrewCut, Straight(Low)),
-        create_hair(CrewCut, WidowsPeak(Low)),
         create_hair(MiddlePart, Round(Low)),
         create_hair(SidePart(Left), Round(Low)),
         create_hair(SidePart(Right), Round(Low)),
