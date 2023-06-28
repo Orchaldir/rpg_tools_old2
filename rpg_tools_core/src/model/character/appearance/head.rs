@@ -37,3 +37,16 @@ pub enum RealisticHeadShape {
     TriangleDown,
     TriangleUp,
 }
+
+impl RealisticHeadShape {
+    pub fn get_all() -> Vec<Self> {
+        vec![
+            Self::Oval,
+            Self::Rectangle,
+            Self::Round,
+            Self::Square,
+            Self::TriangleDown,
+            Self::TriangleUp,
+        ]
+    }
+}

@@ -1,4 +1,4 @@
-use crate::model::character::appearance::Side;
+use crate::model::character::appearance::{Side, Size};
 use crate::model::color::Color;
 
 /// How does the hair look like?
@@ -23,11 +23,13 @@ pub enum ShortHair {
 }
 
 /// What type of hairline?
+///
+/// The [`size`](Size) defines the y position of the hairline.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Hairline {
-    Round,
-    Straight,
-    WidowsPeak,
+    Round(Size),
+    Straight(Size),
+    WidowsPeak(Size),
 }
 
 /// The color of the hair.

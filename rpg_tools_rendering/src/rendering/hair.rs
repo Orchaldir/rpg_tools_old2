@@ -6,6 +6,7 @@ use crate::rendering::config::RenderConfig;
 use crate::rendering::head::render_realistic_with_option;
 use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairline, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
+use rpg_tools_core::model::character::appearance::Size;
 
 pub fn render_hair(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     match head.shape {
@@ -75,16 +76,18 @@ fn get_cut_realistic(
         config.head.y_eye,
     );
     let mut corners = vec![top_left, forehead_left, bottom_left];
-    let hairline_y = 0.2;
 
     match hairline {
-        Hairline::Round => {
+        Hairline::Round(size) => {
+            let hairline_y = get_hairline_y(size);
             add_hairline(aabb, &mut corners, hairline_y, 0.4);
         }
-        Hairline::Straight => {
+        Hairline::Straight(size) => {
+            let hairline_y = get_hairline_y(size);
             add_hairline(aabb, &mut corners, hairline_y, 0.6);
         }
-        Hairline::WidowsPeak => {
+        Hairline::WidowsPeak(size) => {
+            let hairline_y = get_hairline_y(size);
             let (left, right) = aabb.get_mirrored_points(0.4, hairline_y);
             let center = aabb.get_point(0.5, hairline_y + 0.1);
 
@@ -100,6 +103,14 @@ fn get_cut_realistic(
 
     let polygon = Polygon2d::new(corners);
     config.cut_corners(&polygon).unwrap()
+}
+
+fn get_hairline_y(size: Size) -> f32 {
+    match size {
+        Size::Low => 0.3,
+        Size::Medium => 0.2,
+        Size::High => 0.1,
+    }
 }
 
 fn add_hairline(aabb: &AABB, corners: &mut Vec<Point2d>, hairline_y: f32, width: f32) {
