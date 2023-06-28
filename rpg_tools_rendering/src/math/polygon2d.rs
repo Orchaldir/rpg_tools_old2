@@ -89,4 +89,36 @@ impl Polygon2d {
 
         Ok(Polygon2d::new(new_corners))
     }
+
+    /// Resizes the polygon around the center.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::polygon2d::Polygon2d;
+    /// let polygon = Polygon2d::new(vec![
+    ///   Point2d::new(0, 0),
+    ///   Point2d::new(100, 0),
+    ///   Point2d::new(100, 100),
+    ///   Point2d::new(0, 100),
+    /// ]);
+    /// let result = Polygon2d::new(vec![
+    ///   Point2d::new(-25, -25),
+    ///   Point2d::new(125, -25),
+    ///   Point2d::new(125, 125),
+    ///   Point2d::new(-25, 125),
+    /// ]);
+    /// assert_eq!(polygon.resize(1.5), result);
+    /// ```
+    pub fn resize(&self, factor: f32) -> Polygon2d {
+        let center = self.calculate_center();
+        let corners = self
+            .corners
+            .iter()
+            .map(|c| *c - center)
+            .map(|c| c * factor)
+            .map(|c| c + center)
+            .collect();
+
+        Polygon2d::new(corners)
+    }
 }
