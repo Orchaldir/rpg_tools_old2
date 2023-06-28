@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
@@ -74,18 +75,14 @@ fn get_cut_realistic(
         config.head.y_eye,
     );
     let mut corners = vec![top_left, forehead_left, bottom_left];
-    let hairline_y = 0.1;
+    let hairline_y = 0.2;
 
     match hairline {
         Hairline::Round => {
-            let center = aabb.get_point(0.5, hairline_y);
-            corners.push(center);
+            add_hairline(aabb, &mut corners, hairline_y, 0.4);
         }
         Hairline::Straight => {
-            let (left, right) = aabb.get_mirrored_points(0.4, hairline_y);
-
-            corners.push(left);
-            corners.push(right);
+            add_hairline(aabb, &mut corners, hairline_y, 0.6);
         }
         Hairline::WidowsPeak => {}
     }
@@ -96,4 +93,11 @@ fn get_cut_realistic(
 
     let polygon = Polygon2d::new(corners);
     config.cut_corners(&polygon).unwrap()
+}
+
+fn add_hairline(aabb: &AABB, corners: &mut Vec<Point2d>, hairline_y: f32, width: f32) {
+    let (left, right) = aabb.get_mirrored_points(width, hairline_y);
+
+    corners.push(left);
+    corners.push(right);
 }
