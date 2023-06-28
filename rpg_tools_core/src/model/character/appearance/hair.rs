@@ -24,7 +24,7 @@ pub enum ShortHair {
     SidePart(Side),
 }
 
-/// What type of hairline?
+/// What type of hairline? It is not visible by some hair styles.
 ///
 /// The [`size`](Size) defines the y position of the hairline.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -33,6 +33,17 @@ pub enum Hairline {
     Straight(Size),
     Triangle(Size),
     WidowsPeak(Size),
+}
+
+impl Hairline {
+    pub fn get_y_position(&self) -> Size {
+        match self {
+            Hairline::Round(y) => *y,
+            Hairline::Straight(y) => *y,
+            Hairline::Triangle(y) => *y,
+            Hairline::WidowsPeak(y) => *y,
+        }
+    }
 }
 
 /// The color of the hair.

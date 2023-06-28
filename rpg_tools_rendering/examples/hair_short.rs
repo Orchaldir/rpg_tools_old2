@@ -32,6 +32,8 @@ fn main() {
         create_hair(BuzzCut, WidowsPeak(Medium)),
         create_hair(BuzzCut, WidowsPeak(High)),
         create_hair(MiddlePart, Round(Low)),
+        create_hair(MiddlePart, Round(Medium)),
+        create_hair(MiddlePart, Round(High)),
         create_hair(SidePart(Left), Round(Low)),
         create_hair(SidePart(Right), Round(Low)),
     ];

@@ -22,7 +22,7 @@ pub fn render_hair(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
                     render_buzz_cut_realistic(renderer, config, aabb, realistic, hairline, color)
                 }
                 ShortHair::MiddlePart => {
-                    render_middle_part_realistic(renderer, config, aabb, realistic, color)
+                    render_middle_part_realistic(renderer, config, aabb, realistic, hairline, color)
                 }
                 ShortHair::SidePart(_) => {}
             },
@@ -51,10 +51,11 @@ fn render_middle_part_realistic(
     config: &RenderConfig,
     aabb: &AABB,
     realistic: RealisticHeadShape,
+    hairline: Hairline,
     color: HairColor,
 ) {
     let options = config.get_hair_options(color);
-    let mut polygon = get_middle_part_realistic(config, aabb, realistic);
+    let mut polygon = get_middle_part_realistic(config, aabb, realistic, hairline);
     polygon = polygon.resize(1.03);
     renderer.render_polygon(&polygon, &options);
 }
@@ -112,12 +113,14 @@ fn get_middle_part_realistic(
     config: &RenderConfig,
     aabb: &AABB,
     realistic: RealisticHeadShape,
+    hairline: Hairline,
 ) -> Polygon2d {
+    let hairline_y = get_middle_y(hairline.get_y_position());
     let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(realistic), 0.0);
     let (forehead_left, forehead_right) =
-        aabb.get_mirrored_points(config.head.get_forehead_width(realistic), 0.35);
+        aabb.get_mirrored_points(config.head.get_forehead_width(realistic), hairline_y);
 
-    let (left, right) = aabb.get_mirrored_points(0.0, config.head.y_forehead);
+    let (left, right) = aabb.get_mirrored_points(0.0, hairline_y);
     let center = aabb.get_point(0.5, 0.0);
 
     let mut polygon = Polygon2d::new(vec![
@@ -130,7 +133,7 @@ fn get_middle_part_realistic(
         forehead_right,
         top_right,
     ]);
-    polygon = polygon.resize(1.05);
+    polygon = polygon.resize(1.1);
     config.cut_corners(&polygon).unwrap()
 }
 
@@ -139,6 +142,14 @@ fn get_hairline_y(size: Size) -> f32 {
         Size::Low => 0.3,
         Size::Medium => 0.2,
         Size::High => 0.1,
+    }
+}
+
+fn get_middle_y(size: Size) -> f32 {
+    match size {
+        Size::Low => 0.35,
+        Size::Medium => 0.3,
+        Size::High => 0.25,
     }
 }
 
