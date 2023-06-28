@@ -24,6 +24,9 @@ pub fn render_hair(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
                 ShortHair::CrewCut => {
                     render_crew_cut_realistic(renderer, config, aabb, realistic, hairline, color)
                 }
+                ShortHair::MiddlePart => {
+                    render_middle_part_realistic(renderer, config, aabb, realistic, color)
+                }
                 ShortHair::SidePart(_) => {}
             },
         },
@@ -56,6 +59,19 @@ fn render_crew_cut_realistic(
 ) {
     let options = config.get_hair_options(color);
     let mut polygon = get_cut_realistic(config, aabb, realistic, hairline);
+    polygon = polygon.resize(1.03);
+    renderer.render_polygon(&polygon, &options);
+}
+
+fn render_middle_part_realistic(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    realistic: RealisticHeadShape,
+    color: HairColor,
+) {
+    let options = config.get_hair_options(color);
+    let mut polygon = get_middle_part_realistic(config, aabb, realistic);
     polygon = polygon.resize(1.03);
     renderer.render_polygon(&polygon, &options);
 }
@@ -106,6 +122,32 @@ fn get_cut_realistic(
     corners.push(top_right);
 
     let polygon = Polygon2d::new(corners);
+    config.cut_corners(&polygon).unwrap()
+}
+
+fn get_middle_part_realistic(
+    config: &RenderConfig,
+    aabb: &AABB,
+    realistic: RealisticHeadShape,
+) -> Polygon2d {
+    let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(realistic), 0.0);
+    let (forehead_left, forehead_right) =
+        aabb.get_mirrored_points(config.head.get_forehead_width(realistic), 0.35);
+    let mut corners = vec![top_left, forehead_left];
+
+    let (left, right) = aabb.get_mirrored_points(0.0, config.head.y_forehead);
+    let center = aabb.get_point(0.5, 0.0);
+
+    corners.push(left);
+    corners.push(center);
+    corners.push(center);
+    corners.push(right);
+
+    corners.push(forehead_right);
+    corners.push(top_right);
+
+    let mut polygon = Polygon2d::new(corners);
+    polygon = polygon.resize(1.05);
     config.cut_corners(&polygon).unwrap()
 }
 

@@ -3,6 +3,7 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
+use rpg_tools_core::model::character::appearance::hair::ShortHair::MiddlePart;
 use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairline, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
@@ -34,6 +35,7 @@ fn main() {
         create_hair(CrewCut, Round(Low)),
         create_hair(CrewCut, Straight(Low)),
         create_hair(CrewCut, WidowsPeak(Low)),
+        create_hair(MiddlePart, Round(Low)),
         create_hair(SidePart(Left), Round(Low)),
         create_hair(SidePart(Right), Round(Low)),
     ];

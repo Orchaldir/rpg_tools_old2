@@ -19,6 +19,7 @@ pub enum ShortHair {
     /// All hair is equally short.
     BuzzCut,
     CrewCut,
+    MiddlePart,
     SidePart(Side),
 }
 
