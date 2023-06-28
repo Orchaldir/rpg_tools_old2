@@ -18,7 +18,10 @@ fn main() {
     let eyes_options = vec![
         create_hair(ShortHair::BuzzCut, Hairline::Round),
         create_hair(ShortHair::BuzzCut, Hairline::Straight),
+        create_hair(ShortHair::BuzzCut, Hairline::WidowsPeak),
         create_hair(ShortHair::CrewCut, Hairline::Round),
+        create_hair(ShortHair::CrewCut, Hairline::Straight),
+        create_hair(ShortHair::CrewCut, Hairline::WidowsPeak),
         create_hair(ShortHair::SidePart(Side::Left), Hairline::Round),
         create_hair(ShortHair::SidePart(Side::Right), Hairline::Round),
     ];

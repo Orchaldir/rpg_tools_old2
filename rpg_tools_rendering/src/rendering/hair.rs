@@ -84,7 +84,14 @@ fn get_cut_realistic(
         Hairline::Straight => {
             add_hairline(aabb, &mut corners, hairline_y, 0.6);
         }
-        Hairline::WidowsPeak => {}
+        Hairline::WidowsPeak => {
+            let (left, right) = aabb.get_mirrored_points(0.4, hairline_y);
+            let center = aabb.get_point(0.5, hairline_y + 0.1);
+
+            corners.push(left);
+            corners.push(center);
+            corners.push(right);
+        }
     }
 
     corners.push(bottom_right);
