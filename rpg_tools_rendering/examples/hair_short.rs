@@ -3,7 +3,7 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
-use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, ShortHair};
+use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairline, ShortHair};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
@@ -16,17 +16,26 @@ pub mod utils;
 
 fn main() {
     let eyes_options = vec![
-        ShortHair::BuzzCut,
-        ShortHair::CrewCut,
-        ShortHair::SidePart(Side::Left),
-        ShortHair::SidePart(Side::Right),
+        create_hair(ShortHair::BuzzCut, Hairline::Round),
+        create_hair(ShortHair::BuzzCut, Hairline::Straight),
+        create_hair(ShortHair::CrewCut, Hairline::Round),
+        create_hair(ShortHair::SidePart(Side::Left), Hairline::Round),
+        create_hair(ShortHair::SidePart(Side::Right), Hairline::Round),
     ];
     let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];
 
     render_2_sets("hair_short.svg", eyes_options, faces, create_appearance);
 }
 
-fn create_appearance(height: Length, hair: &ShortHair, face: &RealisticHeadShape) -> Appearance {
+fn create_hair(style: ShortHair, hairline: Hairline) -> Hair {
+    Hair::Short {
+        style,
+        hairline,
+        color: HairColor::Brown,
+    }
+}
+
+fn create_appearance(height: Length, hair: &Hair, face: &RealisticHeadShape) -> Appearance {
     Appearance::head(
         Head {
             eyes: Eyes::Two {
@@ -38,10 +47,7 @@ fn create_appearance(height: Length, hair: &ShortHair, face: &RealisticHeadShape
                 },
                 distance: Size::Medium,
             },
-            hair: Hair::Short {
-                style: *hair,
-                color: HairColor::Brown,
-            },
+            hair: *hair,
             mouth: Mouth::Normal {
                 width: Size::Medium,
                 color: None,

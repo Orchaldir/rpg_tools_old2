@@ -8,6 +8,7 @@ pub enum Hair {
     /// Short normal hair.
     Short {
         style: ShortHair,
+        hairline: Hairline,
         color: HairColor,
     },
 }
@@ -19,6 +20,14 @@ pub enum ShortHair {
     BuzzCut,
     CrewCut,
     SidePart(Side),
+}
+
+/// What type of hairline?
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Hairline {
+    Round,
+    Straight,
+    WidowsPeak,
 }
 
 /// The color of the hair.
