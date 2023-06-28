@@ -29,6 +29,7 @@ pub enum ShortHair {
 pub enum Hairline {
     Round(Size),
     Straight(Size),
+    Triangle(Size),
     WidowsPeak(Size),
 }
 

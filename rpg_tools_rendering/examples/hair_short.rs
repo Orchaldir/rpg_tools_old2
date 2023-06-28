@@ -8,10 +8,10 @@ use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, Realis
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Size::{High, Low, Medium};
-use rpg_tools_core::model::character::appearance::{Appearance, Side, Size};
+use rpg_tools_core::model::character::appearance::{Appearance, Side};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
-use Hairline::{Round, Straight, WidowsPeak};
+use Hairline::{Round, Straight, Triangle, WidowsPeak};
 use ShortHair::{BuzzCut, CrewCut, SidePart};
 use Side::{Left, Right};
 
@@ -25,6 +25,9 @@ fn main() {
         create_hair(BuzzCut, Straight(Low)),
         create_hair(BuzzCut, Straight(Medium)),
         create_hair(BuzzCut, Straight(High)),
+        create_hair(BuzzCut, Triangle(Low)),
+        create_hair(BuzzCut, Triangle(Medium)),
+        create_hair(BuzzCut, Triangle(High)),
         create_hair(BuzzCut, WidowsPeak(Low)),
         create_hair(BuzzCut, WidowsPeak(Medium)),
         create_hair(BuzzCut, WidowsPeak(High)),
