@@ -133,20 +133,20 @@ fn get_middle_part_realistic(
     let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(realistic), 0.0);
     let (forehead_left, forehead_right) =
         aabb.get_mirrored_points(config.head.get_forehead_width(realistic), 0.35);
-    let mut corners = vec![top_left, forehead_left];
 
     let (left, right) = aabb.get_mirrored_points(0.0, config.head.y_forehead);
     let center = aabb.get_point(0.5, 0.0);
 
-    corners.push(left);
-    corners.push(center);
-    corners.push(center);
-    corners.push(right);
-
-    corners.push(forehead_right);
-    corners.push(top_right);
-
-    let mut polygon = Polygon2d::new(corners);
+    let mut polygon = Polygon2d::new(vec![
+        top_left,
+        forehead_left,
+        left,
+        center,
+        center,
+        right,
+        forehead_right,
+        top_right,
+    ]);
     polygon = polygon.resize(1.05);
     config.cut_corners(&polygon).unwrap()
 }
