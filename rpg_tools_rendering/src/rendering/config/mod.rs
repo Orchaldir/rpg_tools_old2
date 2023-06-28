@@ -48,6 +48,14 @@ impl RenderConfig {
         )
     }
 
+    pub fn get_hair_options(&self, hair: HairColor) -> RenderOptions {
+        RenderOptions::new(
+            self.get_hair_color(hair),
+            self.line_color.clone(),
+            self.line_width,
+        )
+    }
+
     pub fn get_skin_options(&self, skin: &Skin) -> RenderOptions {
         RenderOptions::new(
             self.get_skin_color(skin),
