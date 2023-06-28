@@ -48,7 +48,7 @@ fn render_crew_cut_realistic(
 ) {
     let options = config.get_hair_options(color);
     let mut polygon = get_cut_realistic(config, aabb, realistic);
-    polygon = polygon.resize(1.1);
+    polygon = polygon.resize(1.03);
     renderer.render_polygon(&polygon, &options);
 }
 
@@ -62,6 +62,19 @@ fn get_cut_realistic(
         config.head.get_forehead_width(realistic),
         config.head.y_forehead,
     );
-    let polygon = Polygon2d::new(vec![top_left, forehead_left, forehead_right, top_right]);
+    let (bottom_left, bottom_right) = aabb.get_mirrored_points(
+        config.head.get_eye_width_realistic(realistic),
+        config.head.y_eye,
+    );
+    let bottom = aabb.get_point(0.5, 0.1);
+    let polygon = Polygon2d::new(vec![
+        top_left,
+        forehead_left,
+        bottom_left,
+        bottom,
+        bottom_right,
+        forehead_right,
+        top_right,
+    ]);
     config.cut_corners(&polygon).unwrap()
 }
