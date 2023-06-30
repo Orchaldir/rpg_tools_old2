@@ -132,20 +132,31 @@ fn get_middle_part_realistic(
     hairline: Hairline,
 ) -> Polygon2d {
     let hairline_y = get_middle_y(hairline.get_y_position());
+    let bottom_width = config.head.get_eye_width_realistic(realistic);
+    let forehead_width = config.head.get_forehead_width(realistic);
+
     let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(realistic), 0.0);
     let (forehead_left, forehead_right) =
-        aabb.get_mirrored_points(config.head.get_forehead_width(realistic), hairline_y);
-
+        aabb.get_mirrored_points(forehead_width, config.head.y_forehead);
+    let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, config.head.y_eye);
+    let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.8, config.head.y_eye);
+    let (hairline_left, hairline_right) =
+        aabb.get_mirrored_points(forehead_width * 0.6, hairline_y);
     let (left, right) = aabb.get_mirrored_points(0.0, hairline_y);
     let center = aabb.get_point(0.5, 0.0);
 
     let mut polygon = Polygon2d::new(vec![
         top_left,
         forehead_left,
+        bottom_left,
+        inner_left,
+        hairline_left,
         left,
         center,
-        center,
         right,
+        hairline_right,
+        inner_right,
+        bottom_right,
         forehead_right,
         top_right,
     ]);
@@ -170,8 +181,7 @@ fn get_side_part_realistic(
     let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.8, config.head.y_eye);
     let (hairline_left, hairline_right) =
         aabb.get_mirrored_points(forehead_width * 0.6, config.head.y_forehead);
-    let side_part =
-        aabb.get_point(side_part_horizontal, config.head.y_forehead - 0.1);
+    let side_part = aabb.get_point(side_part_horizontal, config.head.y_forehead - 0.1);
 
     let mut corners = vec![
         top_left,
