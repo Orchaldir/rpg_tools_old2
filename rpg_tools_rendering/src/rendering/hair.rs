@@ -161,6 +161,7 @@ fn get_side_part_realistic(
 ) -> Polygon2d {
     let bottom_width = config.head.get_eye_width_realistic(realistic);
     let forehead_width = config.head.get_forehead_width(realistic);
+    let side_part_horizontal = get_side_part_horizontal(side, forehead_width);
 
     let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(realistic), 0.0);
     let (forehead_left, forehead_right) =
@@ -169,6 +170,8 @@ fn get_side_part_realistic(
     let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.8, config.head.y_eye);
     let (hairline_left, hairline_right) =
         aabb.get_mirrored_points(forehead_width * 0.6, config.head.y_forehead);
+    let side_part =
+        aabb.get_point(side_part_horizontal, config.head.y_forehead - 0.1);
 
     let mut corners = vec![
         top_left,
@@ -180,21 +183,14 @@ fn get_side_part_realistic(
 
     match side {
         Side::Left => {
-            let side_part =
-                aabb.get_point(0.5 + forehead_width * 0.3, config.head.y_forehead - 0.1);
             corners.push(hairline_right);
             corners.push(side_part);
         }
         Side::Right => {
-            let side_part =
-                aabb.get_point(0.5 - forehead_width * 0.3, config.head.y_forehead - 0.1);
             corners.push(side_part);
             corners.push(hairline_left);
         }
     }
-
-    // hairline_right,
-    //side_part,
 
     corners.append(&mut vec![
         hairline_right,
@@ -206,6 +202,13 @@ fn get_side_part_realistic(
     let mut polygon = Polygon2d::new(corners);
     polygon = polygon.resize(1.1);
     config.cut_corners(&polygon).unwrap()
+}
+
+fn get_side_part_horizontal(side: Side, forehead_width: f32) -> f32 {
+    match side {
+        Side::Left => 0.5 + forehead_width * 0.3,
+        Side::Right => 0.5 - forehead_width * 0.3,
+    }
 }
 
 fn get_hairline_y(size: Size) -> f32 {
