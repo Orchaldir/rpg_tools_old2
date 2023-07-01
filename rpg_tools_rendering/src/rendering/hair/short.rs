@@ -34,8 +34,7 @@ pub fn render_flat_top_realistic(
     color: HairColor,
 ) {
     let options = config.get_hair_options(color);
-    let mut polygon = get_flat_top_realistic(config, aabb, realistic, hairline, size);
-    polygon = polygon.resize(1.03);
+    let polygon = get_flat_top_realistic(config, aabb, realistic, hairline, size);
     renderer.render_polygon(&polygon, &options);
 }
 
@@ -48,8 +47,7 @@ pub fn render_middle_part_realistic(
     color: HairColor,
 ) {
     let options = config.get_hair_options(color);
-    let mut polygon = get_middle_part_realistic(config, aabb, realistic, hairline);
-    polygon = polygon.resize(1.03);
+    let polygon = get_middle_part_realistic(config, aabb, realistic, hairline);
     renderer.render_polygon(&polygon, &options);
 }
 
@@ -62,8 +60,7 @@ pub fn render_side_part_realistic(
     color: HairColor,
 ) {
     let options = config.get_hair_options(color);
-    let mut polygon = get_side_part_realistic(config, aabb, realistic, side);
-    polygon = polygon.resize(1.03);
+    let polygon = get_side_part_realistic(config, aabb, realistic, side);
     renderer.render_polygon(&polygon, &options);
 }
 

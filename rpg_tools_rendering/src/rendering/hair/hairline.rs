@@ -7,15 +7,15 @@ pub fn add_hairlines(aabb: &AABB, hairline: Hairline, corners: &mut Vec<Point2d>
     match hairline {
         Hairline::Round(size) => {
             let hairline_y = get_hairline_y(size);
-            add_hairline(aabb, corners, hairline_y, 0.4);
+            add_2_points(corners, aabb, hairline_y, 0.4);
         }
         Hairline::Straight(size) => {
             let hairline_y = get_hairline_y(size);
-            add_hairline(aabb, corners, hairline_y, 0.6);
+            add_2_points(corners, aabb, hairline_y, 0.6);
         }
         Hairline::Triangle(size) => {
             let hairline_y = get_hairline_y(size);
-            add_hairline(aabb, corners, hairline_y, 0.2);
+            add_2_points(corners, aabb, hairline_y, 0.2);
         }
         Hairline::WidowsPeak(size) => {
             let hairline_y = get_hairline_y(size);
@@ -29,8 +29,8 @@ pub fn add_hairlines(aabb: &AABB, hairline: Hairline, corners: &mut Vec<Point2d>
     }
 }
 
-fn add_hairline(aabb: &AABB, corners: &mut Vec<Point2d>, hairline_y: f32, width: f32) {
-    let (left, right) = aabb.get_mirrored_points(width, hairline_y);
+fn add_2_points(corners: &mut Vec<Point2d>, aabb: &AABB, y: f32, width: f32) {
+    let (left, right) = aabb.get_mirrored_points(width, y);
 
     corners.push(left);
     corners.push(right);
