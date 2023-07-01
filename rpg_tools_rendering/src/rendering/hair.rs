@@ -21,9 +21,9 @@ pub fn render_hair(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
                 ShortHair::BuzzCut => {
                     render_buzz_cut_realistic(renderer, config, aabb, realistic, hairline, color)
                 }
-                ShortHair::FlatTop(_) => {
-                    render_flat_top_realistic(renderer, config, aabb, realistic, hairline, color)
-                }
+                ShortHair::FlatTop(size) => render_flat_top_realistic(
+                    renderer, config, aabb, realistic, hairline, size, color,
+                ),
                 ShortHair::MiddlePart => {
                     render_middle_part_realistic(renderer, config, aabb, realistic, hairline, color)
                 }
@@ -57,10 +57,11 @@ fn render_flat_top_realistic(
     aabb: &AABB,
     realistic: RealisticHeadShape,
     hairline: Hairline,
+    size: Size,
     color: HairColor,
 ) {
     let options = config.get_hair_options(color);
-    let mut polygon = get_flat_top_realistic(config, aabb, realistic, hairline);
+    let mut polygon = get_flat_top_realistic(config, aabb, realistic, hairline, size);
     polygon = polygon.resize(1.03);
     renderer.render_polygon(&polygon, &options);
 }
@@ -125,17 +126,18 @@ fn get_flat_top_realistic(
     aabb: &AABB,
     realistic: RealisticHeadShape,
     hairline: Hairline,
+    size: Size,
 ) -> Polygon2d {
     let bottom_width = config.head.get_eye_width_realistic(realistic);
     let forehead_width = config.head.get_forehead_width(realistic);
     let top_width = config.head.get_top_width(realistic);
     let flattop_width = forehead_width.max(top_width);
 
-    let (top_left, top_right) = aabb.get_mirrored_points(flattop_width, -0.1);
+    let (top_left, top_right) = aabb.get_mirrored_points(flattop_width, get_flattop_y(size));
     let (forehead_left, forehead_right) =
         aabb.get_mirrored_points(forehead_width, config.head.y_forehead);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, config.head.y_eye);
-    let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.8, config.head.y_eye);
+    let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.9, config.head.y_eye);
 
     let mut corners = vec![top_left, forehead_left, bottom_left, inner_left];
 
@@ -245,6 +247,14 @@ fn get_side_part_horizontal(side: Side, forehead_width: f32) -> f32 {
     match side {
         Side::Left => 0.5 + forehead_width * 0.3,
         Side::Right => 0.5 - forehead_width * 0.3,
+    }
+}
+
+fn get_flattop_y(size: Size) -> f32 {
+    match size {
+        Size::Low => 0.0,
+        Size::Medium => -0.1,
+        Size::High => -0.2,
     }
 }
 

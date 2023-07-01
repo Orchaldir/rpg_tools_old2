@@ -20,6 +20,9 @@ pub mod utils;
 
 fn main() {
     let mut short_options = vec![
+        create_hair(FlatTop(Low), Round(Medium)),
+        create_hair(FlatTop(Medium), Straight(Medium)),
+        create_hair(FlatTop(High), WidowsPeak(Medium)),
         create_hair(MiddlePart, Round(Low)),
         create_hair(MiddlePart, Round(Medium)),
         create_hair(MiddlePart, Round(High)),
@@ -27,7 +30,6 @@ fn main() {
         create_hair(SidePart(Right), Round(Low)),
     ];
     add_all_hairlines(&mut short_options, BuzzCut);
-    add_all_hairlines(&mut short_options, FlatTop(Low));
 
     render_2_sets(
         "hair_short.svg",
