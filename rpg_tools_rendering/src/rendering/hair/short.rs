@@ -24,46 +24,6 @@ pub fn render_buzz_cut_realistic(
     render_realistic_with_option(renderer, config, aabb, line, realistic);
 }
 
-pub fn render_flat_top_realistic(
-    renderer: &mut dyn Renderer,
-    config: &RenderConfig,
-    aabb: &AABB,
-    realistic: RealisticHeadShape,
-    hairline: Hairline,
-    size: Size,
-    color: HairColor,
-) {
-    let options = config.get_hair_options(color);
-    let polygon = get_flat_top_realistic(config, aabb, realistic, hairline, size);
-    renderer.render_polygon(&polygon, &options);
-}
-
-pub fn render_middle_part_realistic(
-    renderer: &mut dyn Renderer,
-    config: &RenderConfig,
-    aabb: &AABB,
-    realistic: RealisticHeadShape,
-    hairline: Hairline,
-    color: HairColor,
-) {
-    let options = config.get_hair_options(color);
-    let polygon = get_middle_part_realistic(config, aabb, realistic, hairline);
-    renderer.render_polygon(&polygon, &options);
-}
-
-pub fn render_side_part_realistic(
-    renderer: &mut dyn Renderer,
-    config: &RenderConfig,
-    aabb: &AABB,
-    realistic: RealisticHeadShape,
-    side: Side,
-    color: HairColor,
-) {
-    let options = config.get_hair_options(color);
-    let polygon = get_side_part_realistic(config, aabb, realistic, side);
-    renderer.render_polygon(&polygon, &options);
-}
-
 fn get_cut_realistic(
     config: &RenderConfig,
     aabb: &AABB,
@@ -91,7 +51,7 @@ fn get_cut_realistic(
     config.cut_corners(&polygon).unwrap()
 }
 
-fn get_flat_top_realistic(
+pub fn get_flat_top_realistic(
     config: &RenderConfig,
     aabb: &AABB,
     realistic: RealisticHeadShape,
@@ -124,7 +84,7 @@ fn get_flat_top_realistic(
     config.cut_corners(&polygon).unwrap()
 }
 
-fn get_middle_part_realistic(
+pub fn get_middle_part_realistic(
     config: &RenderConfig,
     aabb: &AABB,
     realistic: RealisticHeadShape,
@@ -163,7 +123,7 @@ fn get_middle_part_realistic(
     config.cut_corners(&polygon).unwrap()
 }
 
-fn get_side_part_realistic(
+pub fn get_side_part_realistic(
     config: &RenderConfig,
     aabb: &AABB,
     realistic: RealisticHeadShape,
