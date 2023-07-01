@@ -9,7 +9,7 @@ use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, Realis
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Size::{High, Low, Medium};
-use rpg_tools_core::model::character::appearance::{Appearance, Side, Size};
+use rpg_tools_core::model::character::appearance::{Appearance, Side};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use Hairline::{Round, Straight, Triangle, WidowsPeak};

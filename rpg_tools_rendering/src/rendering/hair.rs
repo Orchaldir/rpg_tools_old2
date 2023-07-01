@@ -110,29 +110,7 @@ fn get_cut_realistic(
     );
     let mut corners = vec![top_left, forehead_left, bottom_left];
 
-    match hairline {
-        Hairline::Round(size) => {
-            let hairline_y = get_hairline_y(size);
-            add_hairline(aabb, &mut corners, hairline_y, 0.4);
-        }
-        Hairline::Straight(size) => {
-            let hairline_y = get_hairline_y(size);
-            add_hairline(aabb, &mut corners, hairline_y, 0.6);
-        }
-        Hairline::Triangle(size) => {
-            let hairline_y = get_hairline_y(size);
-            add_hairline(aabb, &mut corners, hairline_y, 0.2);
-        }
-        Hairline::WidowsPeak(size) => {
-            let hairline_y = get_hairline_y(size);
-            let (left, right) = aabb.get_mirrored_points(0.4, hairline_y);
-            let center = aabb.get_point(0.5, hairline_y + 0.1);
-
-            corners.push(left);
-            corners.push(center);
-            corners.push(right);
-        }
-    }
+    add_hairlines(aabb, hairline, &mut corners);
 
     corners.push(bottom_right);
     corners.push(forehead_right);
@@ -148,7 +126,6 @@ fn get_flat_top_realistic(
     realistic: RealisticHeadShape,
     hairline: Hairline,
 ) -> Polygon2d {
-    let hairline_y = get_middle_y(hairline.get_y_position());
     let bottom_width = config.head.get_eye_width_realistic(realistic);
     let forehead_width = config.head.get_forehead_width(realistic);
     let top_width = config.head.get_top_width(realistic);
@@ -159,21 +136,19 @@ fn get_flat_top_realistic(
         aabb.get_mirrored_points(forehead_width, config.head.y_forehead);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, config.head.y_eye);
     let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.8, config.head.y_eye);
-    let (hairline_left, hairline_right) =
-        aabb.get_mirrored_points(forehead_width * 0.6, hairline_y);
 
-    let polygon = Polygon2d::new(vec![
-        top_left,
-        forehead_left,
-        bottom_left,
-        inner_left,
-        hairline_left,
-        hairline_right,
+    let mut corners = vec![top_left, forehead_left, bottom_left, inner_left];
+
+    add_hairlines(aabb, hairline, &mut corners);
+
+    corners.append(&mut vec![
         inner_right,
         bottom_right,
         forehead_right,
         top_right,
     ]);
+
+    let polygon = Polygon2d::new(corners);
     config.cut_corners(&polygon).unwrap()
 }
 
@@ -286,6 +261,32 @@ fn get_middle_y(size: Size) -> f32 {
         Size::Low => 0.35,
         Size::Medium => 0.3,
         Size::High => 0.25,
+    }
+}
+
+fn add_hairlines(aabb: &AABB, hairline: Hairline, corners: &mut Vec<Point2d>) {
+    match hairline {
+        Hairline::Round(size) => {
+            let hairline_y = get_hairline_y(size);
+            add_hairline(aabb, corners, hairline_y, 0.4);
+        }
+        Hairline::Straight(size) => {
+            let hairline_y = get_hairline_y(size);
+            add_hairline(aabb, corners, hairline_y, 0.6);
+        }
+        Hairline::Triangle(size) => {
+            let hairline_y = get_hairline_y(size);
+            add_hairline(aabb, corners, hairline_y, 0.2);
+        }
+        Hairline::WidowsPeak(size) => {
+            let hairline_y = get_hairline_y(size);
+            let (left, right) = aabb.get_mirrored_points(0.4, hairline_y);
+            let center = aabb.get_point(0.5, hairline_y + 0.1);
+
+            corners.push(left);
+            corners.push(center);
+            corners.push(right);
+        }
     }
 }
 
