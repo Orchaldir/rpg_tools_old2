@@ -18,6 +18,7 @@ pub enum Hair {
 pub enum ShortHair {
     /// All hair is equally short.
     BuzzCut,
+    /// The hair on the top of the head is cut and styled upright to form a flat profile.
     FlatTop(Size),
     // Short hair that parts in the middle.
     MiddlePart,
