@@ -21,6 +21,9 @@ pub fn render_hair(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
                 ShortHair::BuzzCut => {
                     render_buzz_cut_realistic(renderer, config, aabb, realistic, hairline, color)
                 }
+                ShortHair::FlatTop(_) => {
+                    render_flat_top_realistic(renderer, config, aabb, realistic, hairline, color)
+                }
                 ShortHair::MiddlePart => {
                     render_middle_part_realistic(renderer, config, aabb, realistic, hairline, color)
                 }
@@ -46,6 +49,20 @@ fn render_buzz_cut_realistic(
 
     renderer.render_polygon(&polygon, &options);
     render_realistic_with_option(renderer, config, aabb, line, realistic);
+}
+
+fn render_flat_top_realistic(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    realistic: RealisticHeadShape,
+    hairline: Hairline,
+    color: HairColor,
+) {
+    let options = config.get_hair_options(color);
+    let mut polygon = get_flat_top_realistic(config, aabb, realistic, hairline);
+    polygon = polygon.resize(1.03);
+    renderer.render_polygon(&polygon, &options);
 }
 
 fn render_middle_part_realistic(
@@ -122,6 +139,41 @@ fn get_cut_realistic(
     corners.push(top_right);
 
     let polygon = Polygon2d::new(corners);
+    config.cut_corners(&polygon).unwrap()
+}
+
+fn get_flat_top_realistic(
+    config: &RenderConfig,
+    aabb: &AABB,
+    realistic: RealisticHeadShape,
+    hairline: Hairline,
+) -> Polygon2d {
+    let hairline_y = get_middle_y(hairline.get_y_position());
+    let bottom_width = config.head.get_eye_width_realistic(realistic);
+    let forehead_width = config.head.get_forehead_width(realistic);
+    let top_width = config.head.get_top_width(realistic);
+    let flattop_width = forehead_width.max(top_width);
+
+    let (top_left, top_right) = aabb.get_mirrored_points(flattop_width, -0.1);
+    let (forehead_left, forehead_right) =
+        aabb.get_mirrored_points(forehead_width, config.head.y_forehead);
+    let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, config.head.y_eye);
+    let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.8, config.head.y_eye);
+    let (hairline_left, hairline_right) =
+        aabb.get_mirrored_points(forehead_width * 0.6, hairline_y);
+
+    let polygon = Polygon2d::new(vec![
+        top_left,
+        forehead_left,
+        bottom_left,
+        inner_left,
+        hairline_left,
+        hairline_right,
+        inner_right,
+        bottom_right,
+        forehead_right,
+        top_right,
+    ]);
     config.cut_corners(&polygon).unwrap()
 }
 

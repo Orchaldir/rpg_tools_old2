@@ -3,12 +3,13 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
+use rpg_tools_core::model::character::appearance::hair::ShortHair::FlatTop;
 use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairline, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Size::{High, Low, Medium};
-use rpg_tools_core::model::character::appearance::{Appearance, Side};
+use rpg_tools_core::model::character::appearance::{Appearance, Side, Size};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use Hairline::{Round, Straight, Triangle, WidowsPeak};
@@ -18,32 +19,39 @@ use Side::{Left, Right};
 pub mod utils;
 
 fn main() {
-    let eyes_options = vec![
-        create_hair(BuzzCut, Round(Low)),
-        create_hair(BuzzCut, Round(Medium)),
-        create_hair(BuzzCut, Round(High)),
-        create_hair(BuzzCut, Straight(Low)),
-        create_hair(BuzzCut, Straight(Medium)),
-        create_hair(BuzzCut, Straight(High)),
-        create_hair(BuzzCut, Triangle(Low)),
-        create_hair(BuzzCut, Triangle(Medium)),
-        create_hair(BuzzCut, Triangle(High)),
-        create_hair(BuzzCut, WidowsPeak(Low)),
-        create_hair(BuzzCut, WidowsPeak(Medium)),
-        create_hair(BuzzCut, WidowsPeak(High)),
+    let mut short_options = vec![
         create_hair(MiddlePart, Round(Low)),
         create_hair(MiddlePart, Round(Medium)),
         create_hair(MiddlePart, Round(High)),
         create_hair(SidePart(Left), Round(Low)),
         create_hair(SidePart(Right), Round(Low)),
     ];
+    add_all_hairlines(&mut short_options, BuzzCut);
+    add_all_hairlines(&mut short_options, FlatTop(Low));
 
     render_2_sets(
         "hair_short.svg",
-        eyes_options,
+        short_options,
         RealisticHeadShape::get_all(),
         create_appearance,
     );
+}
+
+fn add_all_hairlines(short_options: &mut Vec<Hair>, style: ShortHair) {
+    short_options.append(&mut vec![
+        create_hair(style, Round(Low)),
+        create_hair(style, Round(Medium)),
+        create_hair(style, Round(High)),
+        create_hair(style, Straight(Low)),
+        create_hair(style, Straight(Medium)),
+        create_hair(style, Straight(High)),
+        create_hair(style, Triangle(Low)),
+        create_hair(style, Triangle(Medium)),
+        create_hair(style, Triangle(High)),
+        create_hair(style, WidowsPeak(Low)),
+        create_hair(style, WidowsPeak(Medium)),
+        create_hair(style, WidowsPeak(High)),
+    ]);
 }
 
 fn create_hair(style: ShortHair, hairline: Hairline) -> Hair {
