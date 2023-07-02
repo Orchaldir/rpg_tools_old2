@@ -25,6 +25,7 @@ pub fn create_config() -> RenderConfig {
         cut_corners_u: 0.25,
         cut_corners_v: 0.25,
         cut_corners_n: 3,
+        hair: HeadConfig,
         head: create_head_config(),
         eye: create_eye_config(),
         mouth: create_mouth_config(),

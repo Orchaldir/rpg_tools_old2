@@ -2,6 +2,7 @@ use crate::math::polygon2d::Polygon2d;
 use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
 use crate::rendering::config::eye::EyeConfig;
+use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
 use crate::rendering::config::mouth::MouthConfig;
 use anyhow::Result;
@@ -9,9 +10,9 @@ use rpg_tools_core::model::character::appearance::hair::HairColor;
 use rpg_tools_core::model::character::appearance::mouth::TeethColor;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::color::Color::White;
 
 pub mod eye;
+pub mod hair;
 pub mod head;
 pub mod mouth;
 
@@ -23,6 +24,7 @@ pub struct RenderConfig {
     pub cut_corners_u: f32,
     pub cut_corners_v: f32,
     pub cut_corners_n: u32,
+    pub hair: HairConfig,
     pub head: HeadConfig,
     pub eye: EyeConfig,
     pub mouth: MouthConfig,
@@ -50,7 +52,7 @@ impl RenderConfig {
 
     pub fn get_hair_options(&self, hair: HairColor) -> RenderOptions {
         RenderOptions::new(
-            self.get_hair_color(hair),
+            self.hair.get_color(hair),
             self.line_color.clone(),
             self.line_width,
         )
@@ -70,19 +72,6 @@ impl RenderConfig {
             WebColor::from_color(Color::Black),
             self.line_width / 10,
         )
-    }
-
-    pub fn get_hair_color(&self, hair: HairColor) -> WebColor {
-        match hair {
-            HairColor::White => WebColor::from_color(White),
-            HairColor::Grey => WebColor::from_rgb(106, 106, 106),
-            HairColor::Blond => WebColor::from_rgb(255, 204, 71),
-            HairColor::Orange => WebColor::from_rgb(255, 147, 33),
-            HairColor::Red => WebColor::from_rgb(255, 0, 0),
-            HairColor::Brown => WebColor::from_rgb(90, 56, 37),
-            HairColor::Black => WebColor::from_rgb(36, 32, 36),
-            HairColor::Exotic(color) => WebColor::from_color(color),
-        }
     }
 
     pub fn get_skin_color(&self, skin: &Skin) -> WebColor {

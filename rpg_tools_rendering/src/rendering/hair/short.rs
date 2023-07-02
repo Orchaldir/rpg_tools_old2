@@ -16,7 +16,7 @@ pub fn render_buzz_cut_realistic(
     hairline: Hairline,
     color: HairColor,
 ) {
-    let options = RenderOptions::no_line(config.get_hair_color(color));
+    let options = RenderOptions::no_line(config.hair.get_color(color));
     let line = config.get_line_options(1.0);
     let polygon = get_cut_realistic(config, aabb, realistic, hairline);
 
