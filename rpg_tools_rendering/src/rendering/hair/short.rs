@@ -41,7 +41,7 @@ fn get_cut_realistic(
     );
     let mut corners = vec![top_left, forehead_left, bottom_left];
 
-    add_hairlines(aabb, hairline, &mut corners);
+    add_hairlines(config, aabb, hairline, &mut corners);
 
     corners.push(bottom_right);
     corners.push(forehead_right);
@@ -71,7 +71,7 @@ pub fn get_flat_top_realistic(
 
     let mut corners = vec![top_left, forehead_left, bottom_left, inner_left];
 
-    add_hairlines(aabb, hairline, &mut corners);
+    add_hairlines(config, aabb, hairline, &mut corners);
 
     corners.append(&mut vec![
         inner_right,

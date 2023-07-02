@@ -5,6 +5,8 @@ use rpg_tools_core::model::color::Color;
 use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::RenderOptions;
 use rpg_tools_rendering::rendering::config::eye::EyeConfig;
+use rpg_tools_rendering::rendering::config::hair::hairline::HairlineConfig;
+use rpg_tools_rendering::rendering::config::hair::HairConfig;
 use rpg_tools_rendering::rendering::config::head::HeadConfig;
 use rpg_tools_rendering::rendering::config::mouth::{CircularMouthConfig, MouthConfig};
 use rpg_tools_rendering::rendering::config::RenderConfig;
@@ -25,7 +27,18 @@ pub fn create_config() -> RenderConfig {
         cut_corners_u: 0.25,
         cut_corners_v: 0.25,
         cut_corners_n: 3,
-        hair: HeadConfig,
+        hair: HairConfig {
+            hairline: HairlineConfig {
+                width_round: 0.4,
+                width_straight: 0.6,
+                width_triangle: 0.2,
+                width_widows_peak: 0.4,
+                height_widows_peak: 0.1,
+                y_low: 0.25,
+                y_medium: 0.2,
+                y_high: 0.15,
+            },
+        },
         head: create_head_config(),
         eye: create_eye_config(),
         mouth: create_mouth_config(),

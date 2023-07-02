@@ -1,16 +1,21 @@
 use crate::renderer::color::WebColor;
-use crate::rendering::config::hair::hairline::HairlineConfig;
 use rpg_tools_core::model::character::appearance::hair::HairColor;
+use rpg_tools_core::model::character::appearance::Size;
 use rpg_tools_core::model::color::Color::White;
 
-pub mod hairline;
-
 #[derive(Debug, PartialEq)]
-pub struct HairConfig {
-    pub hairline: HairlineConfig,
+pub struct HairlineConfig {
+    pub width_round: f32,
+    pub width_straight: f32,
+    pub width_triangle: f32,
+    pub width_widows_peak: f32,
+    pub height_widows_peak: f32,
+    pub y_low: f32,
+    pub y_medium: f32,
+    pub y_high: f32,
 }
 
-impl HairConfig {
+impl HairlineConfig {
     pub fn get_color(&self, hair: HairColor) -> WebColor {
         match hair {
             HairColor::White => WebColor::from_color(White),
@@ -21,6 +26,14 @@ impl HairConfig {
             HairColor::Brown => WebColor::from_rgb(90, 56, 37),
             HairColor::Black => WebColor::from_rgb(36, 32, 36),
             HairColor::Exotic(color) => WebColor::from_color(color),
+        }
+    }
+
+    pub fn get_y(&self, size: Size) -> f32 {
+        match size {
+            Size::Low => self.y_low,
+            Size::Medium => self.y_medium,
+            Size::High => self.y_high,
         }
     }
 }
