@@ -8,10 +8,11 @@ use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairli
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
+use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::appearance::Size::{High, Low, Medium};
-use rpg_tools_core::model::character::appearance::{Appearance, Side};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
+use rpg_tools_core::model::side::Side;
 use Hairline::{Round, Straight, Triangle, WidowsPeak};
 use ShortHair::{BuzzCut, MiddlePart, SidePart};
 use Side::{Left, Right};
