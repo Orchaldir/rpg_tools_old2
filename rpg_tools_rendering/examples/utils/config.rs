@@ -41,6 +41,12 @@ pub fn create_config() -> RenderConfig {
             },
             short: ShortHairConfig {
                 side_part_offset: 0.3,
+                y_flat_top_low: 0.0,
+                y_flat_top_medium: -0.1,
+                y_flat_top_high: -0.2,
+                y_middle_part_low: 0.35,
+                y_middle_part_medium: 0.3,
+                y_middle_part_high: 0.25,
             },
         },
         head: create_head_config(),

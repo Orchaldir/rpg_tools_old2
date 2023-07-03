@@ -62,8 +62,9 @@ pub fn get_flat_top_realistic(
     let forehead_width = config.head.get_forehead_width(realistic);
     let top_width = config.head.get_top_width(realistic);
     let flattop_width = forehead_width.max(top_width);
+    let flattop_y = config.hair.short.get_flattop_y(size);
 
-    let (top_left, top_right) = aabb.get_mirrored_points(flattop_width, get_flattop_y(size));
+    let (top_left, top_right) = aabb.get_mirrored_points(flattop_width, flattop_y);
     let (forehead_left, forehead_right) =
         aabb.get_mirrored_points(forehead_width, config.head.y_forehead);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, config.head.y_eye);
@@ -90,7 +91,7 @@ pub fn get_middle_part_realistic(
     realistic: RealisticHeadShape,
     hairline: Hairline,
 ) -> Polygon2d {
-    let hairline_y = get_middle_y(hairline.get_y_position());
+    let hairline_y = config.hair.short.get_middle_y(hairline.get_y_position());
     let bottom_width = config.head.get_eye_width_realistic(realistic);
     let forehead_width = config.head.get_forehead_width(realistic);
 
@@ -174,20 +175,4 @@ pub fn get_side_part_realistic(
     let mut polygon = Polygon2d::new(corners);
     polygon = polygon.resize(1.1);
     config.cut_corners(&polygon).unwrap()
-}
-
-fn get_flattop_y(size: Size) -> f32 {
-    match size {
-        Size::Low => 0.0,
-        Size::Medium => -0.1,
-        Size::High => -0.2,
-    }
-}
-
-fn get_middle_y(size: Size) -> f32 {
-    match size {
-        Size::Low => 0.35,
-        Size::Medium => 0.3,
-        Size::High => 0.25,
-    }
 }
