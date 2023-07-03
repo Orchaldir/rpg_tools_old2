@@ -9,6 +9,8 @@ pub struct ShortHairConfig {
     pub y_middle_part_low: f32,
     pub y_middle_part_medium: f32,
     pub y_middle_part_high: f32,
+    pub inner_width: f32,
+    pub hairline_width: f32,
 }
 
 impl ShortHairConfig {

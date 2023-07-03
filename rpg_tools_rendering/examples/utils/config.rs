@@ -47,6 +47,8 @@ pub fn create_config() -> RenderConfig {
                 y_middle_part_low: 0.35,
                 y_middle_part_medium: 0.3,
                 y_middle_part_high: 0.25,
+                inner_width: 0.9,
+                hairline_width: 0.6,
             },
         },
         head: create_head_config(),
