@@ -7,6 +7,7 @@ pub enum Eyes {
     None,
     One(Eye),
     Two {
+        /// Both eyes are identical.
         eye: Eye,
         /// What is the distance between the eyes?
         distance: Size,

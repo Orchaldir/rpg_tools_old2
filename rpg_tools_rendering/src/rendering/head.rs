@@ -1,12 +1,17 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
-use crate::renderer::Renderer;
+use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::head::{
     GeometricHeadShape, Head, HeadShape, RealisticHeadShape,
 };
 
-pub fn render_head(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
+pub fn render_head_shape(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    head: &Head,
+) {
     match head.shape {
         HeadShape::Geometric(geometric) => {
             render_geometric(renderer, config, aabb, head, geometric)
@@ -42,6 +47,16 @@ fn render_realistic(
 ) {
     let options = config.get_skin_options(&head.skin);
 
+    render_realistic_with_option(renderer, config, aabb, options, realistic);
+}
+
+pub fn render_realistic_with_option(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    options: RenderOptions,
+    realistic: RealisticHeadShape,
+) {
     let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(realistic), 0.0);
     let (forehead_left, forehead_right) = aabb.get_mirrored_points(
         config.head.get_forehead_width(realistic),

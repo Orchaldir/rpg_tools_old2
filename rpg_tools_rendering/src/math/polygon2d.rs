@@ -16,12 +16,35 @@ impl Polygon2d {
         Polygon2d { corners }
     }
 
+    /// Calculates the center of the polygon.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::polygon2d::Polygon2d;
+    /// let polygon = Polygon2d::new(vec![
+    ///   Point2d::new(0, 0),
+    ///   Point2d::new(100, 0),
+    ///   Point2d::new(100, 100),
+    ///   Point2d::new(0, 100),
+    /// ]);
+    /// assert_eq!(polygon.calculate_center(), Point2d::new(50, 50));
+    /// ```
+    pub fn calculate_center(&self) -> Point2d {
+        let mut sum = self.corners[0];
+
+        for c in &self.corners[1..] {
+            sum = sum + *c;
+        }
+
+        sum / self.corners.len() as f32
+    }
+
     /// Returns the corners.
     pub fn corners(&self) -> &[Point2d] {
         &self.corners
     }
 
-    /// Execute a simple corner cutting algorithm multiple times.
+    /// Executes a simple corner cutting algorithm multiple times.
     pub fn cut_corners_n(&self, u: f32, v: f32, n: u32) -> Result<Polygon2d> {
         if n == 0 {
             bail!("Parameter n is 0!");
@@ -38,7 +61,7 @@ impl Polygon2d {
         Ok(polygon)
     }
 
-    /// Execute a simple corner cutting algorithm.
+    /// Executes a simple corner cutting algorithm.
     pub fn cut_corners(&self, u: f32, v: f32) -> Result<Polygon2d> {
         if !VALID_RANGE.contains(&u) {
             bail!("Parameter u ({}) is invalid!", u);
@@ -65,5 +88,37 @@ impl Polygon2d {
         }
 
         Ok(Polygon2d::new(new_corners))
+    }
+
+    /// Resizes the polygon around the center.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::polygon2d::Polygon2d;
+    /// let polygon = Polygon2d::new(vec![
+    ///   Point2d::new(0, 0),
+    ///   Point2d::new(100, 0),
+    ///   Point2d::new(100, 100),
+    ///   Point2d::new(0, 100),
+    /// ]);
+    /// let result = Polygon2d::new(vec![
+    ///   Point2d::new(-25, -25),
+    ///   Point2d::new(125, -25),
+    ///   Point2d::new(125, 125),
+    ///   Point2d::new(-25, 125),
+    /// ]);
+    /// assert_eq!(polygon.resize(1.5), result);
+    /// ```
+    pub fn resize(&self, factor: f32) -> Polygon2d {
+        let center = self.calculate_center();
+        let corners = self
+            .corners
+            .iter()
+            .map(|c| *c - center)
+            .map(|c| c * factor)
+            .map(|c| c + center)
+            .collect();
+
+        Polygon2d::new(corners)
     }
 }

@@ -68,7 +68,7 @@ impl HeadConfig {
         }
     }
 
-    fn get_eye_width_realistic(&self, realistic: RealisticHeadShape) -> f32 {
+    pub fn get_eye_width_realistic(&self, realistic: RealisticHeadShape) -> f32 {
         match realistic {
             Round | Square => self.width_wide,
             Oval | Rectangle => self.width_narrow,

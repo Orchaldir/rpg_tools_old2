@@ -2,14 +2,17 @@ use crate::math::polygon2d::Polygon2d;
 use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
 use crate::rendering::config::eye::EyeConfig;
+use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
 use crate::rendering::config::mouth::MouthConfig;
 use anyhow::Result;
+use rpg_tools_core::model::character::appearance::hair::HairColor;
 use rpg_tools_core::model::character::appearance::mouth::TeethColor;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::color::Color;
 
 pub mod eye;
+pub mod hair;
 pub mod head;
 pub mod mouth;
 
@@ -21,6 +24,7 @@ pub struct RenderConfig {
     pub cut_corners_u: f32,
     pub cut_corners_v: f32,
     pub cut_corners_n: u32,
+    pub hair: HairConfig,
     pub head: HeadConfig,
     pub eye: EyeConfig,
     pub mouth: MouthConfig,
@@ -46,9 +50,17 @@ impl RenderConfig {
         )
     }
 
+    pub fn get_hair_options(&self, hair: HairColor) -> RenderOptions {
+        RenderOptions::new(
+            self.hair.get_color(hair),
+            self.line_color.clone(),
+            self.line_width,
+        )
+    }
+
     pub fn get_skin_options(&self, skin: &Skin) -> RenderOptions {
         RenderOptions::new(
-            self.get_color(skin),
+            self.get_skin_color(skin),
             self.line_color.clone(),
             self.line_width,
         )
@@ -62,7 +74,7 @@ impl RenderConfig {
         )
     }
 
-    pub fn get_color(&self, skin: &Skin) -> WebColor {
+    pub fn get_skin_color(&self, skin: &Skin) -> WebColor {
         match skin {
             Skin::Scales(color) => WebColor::from_color(*color),
             Skin::Skin(skin_color) => match skin_color {

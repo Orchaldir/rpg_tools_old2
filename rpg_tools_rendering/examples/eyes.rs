@@ -3,6 +3,7 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes};
+use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
 use rpg_tools_core::model::character::appearance::mouth::Mouth;
@@ -42,6 +43,7 @@ fn create_appearance(height: Length, eyes: &Eyes, face: &RealisticHeadShape) -> 
     Appearance::head(
         Head {
             eyes: eyes.clone(),
+            hair: Hair::None,
             mouth: Mouth::None,
             shape: HeadShape::Realistic(*face),
             skin: Skin::Scales(Color::Red),

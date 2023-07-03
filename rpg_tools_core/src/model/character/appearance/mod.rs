@@ -4,6 +4,7 @@ use crate::model::length::Length;
 
 pub mod body;
 pub mod eye;
+pub mod hair;
 pub mod head;
 pub mod mouth;
 pub mod skin;

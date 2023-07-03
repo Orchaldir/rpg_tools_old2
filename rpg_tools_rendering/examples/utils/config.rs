@@ -5,6 +5,9 @@ use rpg_tools_core::model::color::Color;
 use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::RenderOptions;
 use rpg_tools_rendering::rendering::config::eye::EyeConfig;
+use rpg_tools_rendering::rendering::config::hair::hairline::HairlineConfig;
+use rpg_tools_rendering::rendering::config::hair::short::ShortHairConfig;
+use rpg_tools_rendering::rendering::config::hair::HairConfig;
 use rpg_tools_rendering::rendering::config::head::HeadConfig;
 use rpg_tools_rendering::rendering::config::mouth::{CircularMouthConfig, MouthConfig};
 use rpg_tools_rendering::rendering::config::RenderConfig;
@@ -21,10 +24,33 @@ pub fn create_config() -> RenderConfig {
     RenderConfig {
         border: 500,
         line_color: WebColor::from_color(Color::Black),
-        line_width: 50,
+        line_width: 30,
         cut_corners_u: 0.25,
         cut_corners_v: 0.25,
         cut_corners_n: 3,
+        hair: HairConfig {
+            hairline: HairlineConfig {
+                width_round: 0.4,
+                width_straight: 0.6,
+                width_triangle: 0.2,
+                width_widows_peak: 0.4,
+                height_widows_peak: 0.1,
+                y_low: 0.25,
+                y_medium: 0.2,
+                y_high: 0.15,
+            },
+            short: ShortHairConfig {
+                side_part_offset: 0.3,
+                y_flat_top_low: 0.0,
+                y_flat_top_medium: -0.1,
+                y_flat_top_high: -0.2,
+                y_middle_part_low: 0.35,
+                y_middle_part_medium: 0.3,
+                y_middle_part_high: 0.25,
+                inner_width: 0.9,
+                hairline_width: 0.6,
+            },
+        },
         head: create_head_config(),
         eye: create_eye_config(),
         mouth: create_mouth_config(),

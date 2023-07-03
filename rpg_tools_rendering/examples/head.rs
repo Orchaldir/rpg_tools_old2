@@ -3,6 +3,7 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::config::{create_border_options, create_config};
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
+use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::Mouth;
@@ -33,6 +34,7 @@ fn main() {
                     pupil_color: Color::Black,
                     background_color: Color::White,
                 }),
+                hair: Hair::None,
                 mouth: Mouth::None,
                 shape: HeadShape::Realistic(*realistic),
                 skin: Skin::Scales(Color::Red),

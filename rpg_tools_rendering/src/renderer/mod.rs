@@ -9,7 +9,7 @@ pub mod svg;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RenderOptions {
-    fill_color: WebColor,
+    fill_color: Option<WebColor>,
     line_color: WebColor,
     line_width: u32,
 }
@@ -17,7 +17,7 @@ pub struct RenderOptions {
 impl RenderOptions {
     pub const fn new(fill_color: WebColor, line_color: WebColor, line_width: u32) -> Self {
         Self {
-            fill_color,
+            fill_color: Some(fill_color),
             line_color,
             line_width,
         }
@@ -25,7 +25,7 @@ impl RenderOptions {
 
     pub fn line(color: WebColor, width: u32) -> Self {
         Self {
-            fill_color: color.clone(),
+            fill_color: None,
             line_color: color,
             line_width: width,
         }
@@ -33,7 +33,7 @@ impl RenderOptions {
 
     pub fn no_line(color: WebColor) -> Self {
         Self {
-            fill_color: color.clone(),
+            fill_color: Some(color.clone()),
             line_color: color,
             line_width: 0,
         }
