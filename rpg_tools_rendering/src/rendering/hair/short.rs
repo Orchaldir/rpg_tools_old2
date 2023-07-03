@@ -98,7 +98,7 @@ pub fn get_middle_part_realistic(
     let (forehead_left, forehead_right) =
         aabb.get_mirrored_points(forehead_width, config.head.y_forehead);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, config.head.y_eye);
-    let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.8, config.head.y_eye);
+    let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.9, config.head.y_eye);
     let (hairline_left, hairline_right) =
         aabb.get_mirrored_points(forehead_width * 0.6, hairline_y);
     let (left, right) = aabb.get_mirrored_points(0.0, hairline_y);
@@ -131,13 +131,16 @@ pub fn get_side_part_realistic(
 ) -> Polygon2d {
     let bottom_width = config.head.get_eye_width_realistic(realistic);
     let forehead_width = config.head.get_forehead_width(realistic);
-    let side_part_horizontal = get_side_part_horizontal(side, forehead_width);
+    let side_part_horizontal = config
+        .hair
+        .short
+        .get_side_part_horizontal(side, forehead_width);
 
     let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(realistic), 0.0);
     let (forehead_left, forehead_right) =
         aabb.get_mirrored_points(forehead_width, config.head.y_forehead);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, config.head.y_eye);
-    let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.8, config.head.y_eye);
+    let (inner_left, inner_right) = aabb.get_mirrored_points(bottom_width * 0.9, config.head.y_eye);
     let (hairline_left, hairline_right) =
         aabb.get_mirrored_points(forehead_width * 0.6, config.head.y_forehead);
     let side_part = aabb.get_point(side_part_horizontal, config.head.y_forehead - 0.1);
@@ -171,13 +174,6 @@ pub fn get_side_part_realistic(
     let mut polygon = Polygon2d::new(corners);
     polygon = polygon.resize(1.1);
     config.cut_corners(&polygon).unwrap()
-}
-
-fn get_side_part_horizontal(side: Side, forehead_width: f32) -> f32 {
-    match side {
-        Side::Left => 0.5 + forehead_width * 0.3,
-        Side::Right => 0.5 - forehead_width * 0.3,
-    }
 }
 
 fn get_flattop_y(size: Size) -> f32 {

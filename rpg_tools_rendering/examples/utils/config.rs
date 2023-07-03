@@ -6,6 +6,7 @@ use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::RenderOptions;
 use rpg_tools_rendering::rendering::config::eye::EyeConfig;
 use rpg_tools_rendering::rendering::config::hair::hairline::HairlineConfig;
+use rpg_tools_rendering::rendering::config::hair::short::ShortHairConfig;
 use rpg_tools_rendering::rendering::config::hair::HairConfig;
 use rpg_tools_rendering::rendering::config::head::HeadConfig;
 use rpg_tools_rendering::rendering::config::mouth::{CircularMouthConfig, MouthConfig};
@@ -37,6 +38,9 @@ pub fn create_config() -> RenderConfig {
                 y_low: 0.25,
                 y_medium: 0.2,
                 y_high: 0.15,
+            },
+            short: ShortHairConfig {
+                side_part_offset: 0.3,
             },
         },
         head: create_head_config(),

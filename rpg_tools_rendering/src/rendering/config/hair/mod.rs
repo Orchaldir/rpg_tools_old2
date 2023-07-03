@@ -1,13 +1,16 @@
 use crate::renderer::color::WebColor;
 use crate::rendering::config::hair::hairline::HairlineConfig;
+use crate::rendering::config::hair::short::ShortHairConfig;
 use rpg_tools_core::model::character::appearance::hair::HairColor;
 use rpg_tools_core::model::color::Color::White;
 
 pub mod hairline;
+pub mod short;
 
 #[derive(Debug, PartialEq)]
 pub struct HairConfig {
     pub hairline: HairlineConfig,
+    pub short: ShortHairConfig,
 }
 
 impl HairConfig {
