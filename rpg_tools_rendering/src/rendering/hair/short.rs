@@ -19,13 +19,13 @@ pub fn render_buzz_cut_realistic(
 ) {
     let options = RenderOptions::no_line(config.hair.get_color(color));
     let line = config.get_line_options(1.0);
-    let polygon = get_cut_realistic(config, aabb, realistic, hairline);
+    let polygon = get_buzz_cut_realistic(config, aabb, realistic, hairline);
 
     renderer.render_polygon(&polygon, &options);
     render_realistic_with_option(renderer, config, aabb, line, realistic);
 }
 
-fn get_cut_realistic(
+fn get_buzz_cut_realistic(
     config: &RenderConfig,
     aabb: &AABB,
     realistic: RealisticHeadShape,
