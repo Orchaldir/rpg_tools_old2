@@ -4,6 +4,7 @@ extern crate rpg_tools_rendering;
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::body::BodyShape::*;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
+use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::Eyes;
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
@@ -32,6 +33,7 @@ fn create_appearance(height: Length, width: &Width, shape: &BodyShape) -> Appear
             skin,
         },
         Head {
+            ears: Ears::None,
             eyes: Eyes::None,
             hair: Hair::None,
             mouth: Mouth::None,

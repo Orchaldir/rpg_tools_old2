@@ -3,6 +3,7 @@ use crate::model::character::appearance::head::Head;
 use crate::model::length::Length;
 
 pub mod body;
+pub mod ear;
 pub mod eye;
 pub mod hair;
 pub mod head;
