@@ -35,6 +35,11 @@ pub enum Hairline {
     Round(Size),
     Straight(Size),
     Triangle(Size),
+    /// ```svgbob
+    ///   +----*  *----+
+    ///  /      \/      \
+    ///  |              |
+    /// ```
     WidowsPeak(Size),
 }
 

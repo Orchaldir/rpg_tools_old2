@@ -1,10 +1,12 @@
 use crate::model::character::appearance::skin::Skin;
+use crate::model::width::Width;
 
 /// How does the humanoid body look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Body {
     pub shape: BodyShape,
-    pub width: BodyWidth,
+    /// How wide is the body?
+    pub width: Width,
     pub skin: Skin,
 }
 
@@ -19,12 +21,4 @@ pub enum BodyShape {
     Muscular,
     /// The shoulders, waist & hips are equally wide.
     Rectangle,
-}
-
-/// How wide is the body?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum BodyWidth {
-    Thin,
-    Average,
-    Wide,
 }
