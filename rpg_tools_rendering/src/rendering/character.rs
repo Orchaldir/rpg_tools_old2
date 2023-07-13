@@ -3,6 +3,7 @@ use crate::math::size2d::Size2d;
 use crate::renderer::Renderer;
 use crate::rendering::body::{calculate_head_aabb, render_body};
 use crate::rendering::config::RenderConfig;
+use crate::rendering::ear::render_ears;
 use crate::rendering::eye::render_eyes;
 use crate::rendering::hair::render_hair;
 use crate::rendering::head::render_head_shape;
@@ -40,6 +41,7 @@ pub fn render_character(
 }
 
 fn render_head(renderer: &mut dyn Renderer, config: &RenderConfig, head: &Head, aabb: &AABB) {
+    render_ears(renderer, config, aabb, head);
     render_head_shape(renderer, config, aabb, head);
     render_eyes(renderer, config, aabb, head);
     render_mouth(renderer, config, aabb, head);

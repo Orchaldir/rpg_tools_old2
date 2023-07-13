@@ -14,6 +14,7 @@ use rpg_tools_core::model::character::appearance::Size::{High, Low, Medium};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::side::Side;
+use rpg_tools_core::model::width::Width::Average;
 use Hairline::{Round, Straight, Triangle, WidowsPeak};
 use ShortHair::{BuzzCut, MiddlePart, SidePart};
 use Side::{Left, Right};
@@ -69,7 +70,10 @@ fn create_hair(style: ShortHair, hairline: Hairline) -> Hair {
 fn create_appearance(height: Length, hair: &Hair, face: &RealisticHeadShape) -> Appearance {
     Appearance::head(
         Head {
-            ears: Ears::None,
+            ears: Ears::Normal {
+                size: Medium,
+                width: Average,
+            },
             eyes: Eyes::Two {
                 eye: Eye::Normal {
                     eye_shape: EyeShape::Ellipse,
