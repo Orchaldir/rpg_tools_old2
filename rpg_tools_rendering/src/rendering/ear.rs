@@ -11,7 +11,7 @@ pub fn render_ears(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     match &head.ears {
         Ears::None => {}
-        Ears::Normal { size, width } => {
+        Ears::Normal { shape } => {
             render_normal_ears(renderer, config, &options, aabb, head);
         }
     }
@@ -63,7 +63,7 @@ pub fn render_normal_ear(
     let width = 0.08;
     let sign = side.get_sign();
     let top_inner_x = half_eye * sign;
-    let top_outer_x = (half_eye + width) * sign;
+    let top_outer_x = (half_eye + width + 0.02) * sign;
     let bottom_inner_x = half_mouth * sign;
     let bottom_outer_x = (half_mouth + width) * sign;
 
