@@ -2,7 +2,7 @@ use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::ear::Ears;
+use rpg_tools_core::model::character::appearance::ear::{EarShape, Ears};
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::side::Side;
 
@@ -11,13 +11,28 @@ pub fn render_ears(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     match &head.ears {
         Ears::None => {}
-        Ears::Normal { shape } => {
-            render_normal_ears(renderer, config, &options, aabb, head);
-        }
+        Ears::Normal { shape } => match shape {
+            EarShape::Round => render_round_ears(renderer, config, &options, aabb, head),
+            EarShape::Square => render_square_ears(renderer, config, &options, aabb, head),
+        },
     }
 }
 
-pub fn render_normal_ears(
+pub fn render_round_ears(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    options: &RenderOptions,
+    aabb: &AABB,
+    head: &Head,
+) {
+    let width_eyes = config.head.get_eye_width(head.shape);
+
+    render_round_ear(renderer, config, options, aabb, Side::Left, width_eyes);
+
+    render_round_ear(renderer, config, options, aabb, Side::Right, width_eyes);
+}
+
+pub fn render_square_ears(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     options: &RenderOptions,
@@ -27,7 +42,7 @@ pub fn render_normal_ears(
     let width_eyes = config.head.get_eye_width(head.shape);
     let width_mouth = config.head.get_mouth_width(head.shape);
 
-    render_normal_ear(
+    render_square_ear(
         renderer,
         config,
         options,
@@ -37,7 +52,7 @@ pub fn render_normal_ears(
         width_mouth,
     );
 
-    render_normal_ear(
+    render_square_ear(
         renderer,
         config,
         options,
@@ -48,7 +63,24 @@ pub fn render_normal_ears(
     );
 }
 
-pub fn render_normal_ear(
+pub fn render_round_ear(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    options: &RenderOptions,
+    aabb: &AABB,
+    side: Side,
+    head_width: f32,
+) {
+    let half = head_width / 2.0;
+    let radius = (aabb.size().height() as f32 / 10.0) as u32;
+    let sign = side.get_sign();
+
+    let center = aabb.get_point(0.5 + half * sign, config.head.y_eye);
+
+    renderer.render_circle(&center, radius, options);
+}
+
+pub fn render_square_ear(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     options: &RenderOptions,
