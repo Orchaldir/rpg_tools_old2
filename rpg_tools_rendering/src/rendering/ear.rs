@@ -12,30 +12,40 @@ pub fn render_ears(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     match &head.ears {
         Ears::None => {}
         Ears::Normal { size, width } => {
-            let width_eyes = config.head.get_eye_width(head.shape);
-            let width_mouth = config.head.get_mouth_width(head.shape);
-
-            render_normal_ear(
-                renderer,
-                config,
-                &options,
-                aabb,
-                Side::Left,
-                width_eyes,
-                width_mouth,
-            );
-
-            render_normal_ear(
-                renderer,
-                config,
-                &options,
-                aabb,
-                Side::Right,
-                width_eyes,
-                width_mouth,
-            );
+            render_normal_ears(renderer, config, &options, aabb, head);
         }
     }
+}
+
+pub fn render_normal_ears(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    options: &RenderOptions,
+    aabb: &AABB,
+    head: &Head,
+) {
+    let width_eyes = config.head.get_eye_width(head.shape);
+    let width_mouth = config.head.get_mouth_width(head.shape);
+
+    render_normal_ear(
+        renderer,
+        config,
+        options,
+        aabb,
+        Side::Left,
+        width_eyes,
+        width_mouth,
+    );
+
+    render_normal_ear(
+        renderer,
+        config,
+        options,
+        aabb,
+        Side::Right,
+        width_eyes,
+        width_mouth,
+    );
 }
 
 pub fn render_normal_ear(
