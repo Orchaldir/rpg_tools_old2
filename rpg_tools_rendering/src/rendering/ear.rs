@@ -13,7 +13,7 @@ pub fn render_ears(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
         Ears::None => {}
         Ears::Normal { shape } => match shape {
             EarShape::Round => render_round_ears(renderer, config, &options, aabb, head),
-            EarShape::Square => render_square_ears(renderer, config, &options, aabb, head),
+            _ => render_normal_ears(renderer, config, &options, aabb, head, *shape),
         },
     }
 }
@@ -32,31 +32,34 @@ pub fn render_round_ears(
     render_round_ear(renderer, config, options, aabb, Side::Right, width_eyes);
 }
 
-pub fn render_square_ears(
+pub fn render_normal_ears(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     options: &RenderOptions,
     aabb: &AABB,
     head: &Head,
+    shape: EarShape,
 ) {
     let width_eyes = config.head.get_eye_width(head.shape);
     let width_mouth = config.head.get_mouth_width(head.shape);
 
-    render_square_ear(
+    render_normal_ear(
         renderer,
         config,
         options,
         aabb,
+        shape,
         Side::Left,
         width_eyes,
         width_mouth,
     );
 
-    render_square_ear(
+    render_normal_ear(
         renderer,
         config,
         options,
         aabb,
+        shape,
         Side::Right,
         width_eyes,
         width_mouth,
@@ -80,11 +83,12 @@ pub fn render_round_ear(
     renderer.render_circle(&center, radius, options);
 }
 
-pub fn render_square_ear(
+pub fn render_normal_ear(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     options: &RenderOptions,
     aabb: &AABB,
+    shape: EarShape,
     side: Side,
     head_eye: f32,
     head_mouth: f32,
@@ -104,13 +108,21 @@ pub fn render_square_ear(
     let bottom_inner = aabb.get_point(0.5 + bottom_inner_x, config.head.y_mouth);
     let bottom_outer = aabb.get_point(0.5 + bottom_outer_x, config.head.y_mouth);
 
-    let polygon = Polygon2d::new(vec![
+    let mut corners = vec![
         top_inner,
         bottom_inner,
         bottom_inner,
         bottom_outer,
         top_outer,
-    ]);
+    ];
+
+    if shape == EarShape::Pointed {
+        let point = aabb.get_point(0.5 + top_outer_x, config.head.y_eye - 0.1);
+
+        corners.push(point);
+    }
+
+    let polygon = Polygon2d::new(corners);
     let cut = config.cut_corners(&polygon).unwrap();
 
     renderer.render_polygon(&cut, options);

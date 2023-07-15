@@ -11,6 +11,8 @@ pub enum Ears {
 /// How many ears does the character have?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum EarShape {
+    /// Like an elf's ears.
+    Pointed,
     Round,
     Square,
 }

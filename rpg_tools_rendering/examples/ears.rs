@@ -16,7 +16,7 @@ use rpg_tools_core::model::length::Length;
 pub mod utils;
 
 fn main() {
-    let shape_options = vec![EarShape::Round, EarShape::Square];
+    let shape_options = vec![EarShape::Pointed, EarShape::Round, EarShape::Square];
     let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];
 
     render_2_sets("ears.svg", shape_options, faces, create_appearance);
