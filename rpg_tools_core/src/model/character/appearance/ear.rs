@@ -1,3 +1,5 @@
+use crate::model::character::appearance::Size;
+
 /// How many ears does the character have?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Ears {
@@ -12,7 +14,7 @@ pub enum Ears {
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum EarShape {
     /// Like an elf's ears.
-    Pointed,
+    Pointed(Size),
     Round,
     Square,
 }
