@@ -10,14 +10,6 @@ pub mod head;
 pub mod mouth;
 pub mod skin;
 
-/// The relative size of an appearance feature.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum Size {
-    Low,
-    Medium,
-    High,
-}
-
 /// How does a [`character`](crate::model::character::Character) look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Appearance {

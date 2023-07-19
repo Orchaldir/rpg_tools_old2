@@ -1,4 +1,4 @@
-use crate::model::character::appearance::Size;
+use crate::model::size::Size;
 
 /// How many ears does the character have?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

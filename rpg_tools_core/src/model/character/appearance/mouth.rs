@@ -1,5 +1,5 @@
-use crate::model::character::appearance::Size;
 use crate::model::color::Color;
+use crate::model::size::Size;
 
 /// How does the mouth look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

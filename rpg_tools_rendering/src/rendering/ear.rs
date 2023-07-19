@@ -4,8 +4,8 @@ use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::ear::{EarShape, Ears};
 use rpg_tools_core::model::character::appearance::head::Head;
-use rpg_tools_core::model::character::appearance::Size;
 use rpg_tools_core::model::side::Side;
+use rpg_tools_core::model::size::Size;
 
 pub fn render_ears(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     let options = config.get_skin_options(&head.skin);
@@ -91,12 +91,12 @@ pub fn render_normal_ear(
     aabb: &AABB,
     shape: EarShape,
     side: Side,
-    head_eye: f32,
-    head_mouth: f32,
+    eye_width: f32,
+    mouth_width: f32,
 ) {
     let offset = 0.02;
-    let half_eye = head_eye / 2.0 - offset;
-    let half_mouth = head_mouth / 2.0 - offset;
+    let half_eye = eye_width / 2.0 - offset;
+    let half_mouth = mouth_width / 2.0 - offset;
     let width = 0.08;
     let sign = side.get_sign();
     let top_inner_x = half_eye * sign;

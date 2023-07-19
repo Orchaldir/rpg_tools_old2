@@ -7,8 +7,8 @@ use crate::rendering::hair::hairline::add_hairlines;
 use crate::rendering::head::render_realistic_with_option;
 use rpg_tools_core::model::character::appearance::hair::{HairColor, Hairline};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape;
-use rpg_tools_core::model::character::appearance::Size;
 use rpg_tools_core::model::side::Side;
+use rpg_tools_core::model::size::Size;
 
 pub fn render_buzz_cut_realistic(
     renderer: &mut dyn Renderer,

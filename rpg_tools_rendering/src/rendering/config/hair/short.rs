@@ -1,5 +1,5 @@
-use rpg_tools_core::model::character::appearance::Size;
 use rpg_tools_core::model::side::Side;
+use rpg_tools_core::model::size::Size;
 
 #[derive(Debug, PartialEq)]
 pub struct ShortHairConfig {

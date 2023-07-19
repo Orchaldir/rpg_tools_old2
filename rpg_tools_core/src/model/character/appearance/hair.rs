@@ -1,6 +1,6 @@
-use crate::model::character::appearance::Size;
 use crate::model::color::Color;
 use crate::model::side::Side;
+use crate::model::size::Size;
 
 /// How does the hair look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]

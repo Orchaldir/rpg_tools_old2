@@ -1,4 +1,5 @@
-use rpg_tools_core::model::character::appearance::Size;
+use rpg_tools_core::model::size::Size;
+
 #[derive(Debug, PartialEq)]
 pub struct HairlineConfig {
     pub width_round: f32,
