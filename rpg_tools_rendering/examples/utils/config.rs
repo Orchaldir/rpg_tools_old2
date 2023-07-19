@@ -36,9 +36,11 @@ pub fn create_config() -> RenderConfig {
                 width_triangle: 0.2,
                 width_widows_peak: 0.4,
                 height_widows_peak: 0.1,
-                y_low: 0.25,
-                y_medium: 0.2,
-                y_high: 0.15,
+                y: SizeConfig {
+                    low: 0.25,
+                    medium: 0.2,
+                    high: 0.15,
+                },
             },
             short: ShortHairConfig {
                 side_part_offset: 0.3,
@@ -47,9 +49,11 @@ pub fn create_config() -> RenderConfig {
                     medium: -0.1,
                     high: -0.2,
                 },
-                y_middle_part_low: 0.35,
-                y_middle_part_medium: 0.3,
-                y_middle_part_high: 0.25,
+                y_middle_part: SizeConfig {
+                    low: 0.35,
+                    medium: 0.3,
+                    high: 0.25,
+                },
                 inner_width: 0.9,
                 hairline_width: 0.6,
             },
@@ -78,9 +82,11 @@ pub fn create_eye_config() -> EyeConfig {
         radius: 0.125,
         half_height_almond: 0.7,
         half_height_ellipse: 0.75,
-        low_distance: 0.35,
-        medium_distance: 0.4,
-        high_distance: 0.45,
+        distance_between_eyes: SizeConfig {
+            low: 0.35,
+            medium: 0.4,
+            high: 0.45,
+        },
         circle_radius: 0.5,
         slit_width: 0.2,
     }
@@ -88,17 +94,23 @@ pub fn create_eye_config() -> EyeConfig {
 
 pub fn create_mouth_config() -> MouthConfig {
     MouthConfig {
-        mouth_width_low: 0.4,
-        mouth_width_medium: 0.5,
-        mouth_width_high: 0.6,
+        mouth_width: SizeConfig {
+            low: 0.4,
+            medium: 0.5,
+            high: 0.6,
+        },
         distance_between_fangs: 0.6,
-        fang_height_low: 0.08,
-        fang_height_medium: 0.12,
-        fang_height_high: 0.16,
+        fang_height: SizeConfig {
+            low: 0.08,
+            medium: 0.1,
+            high: 0.16,
+        },
         circular: CircularMouthConfig {
-            radius_low: 0.2,
-            radius_medium: 0.25,
-            radius_high: 0.3,
+            radius: SizeConfig {
+                low: 0.2,
+                medium: 0.25,
+                high: 0.3,
+            },
             fang_height: 0.5,
         },
     }

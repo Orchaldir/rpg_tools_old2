@@ -93,7 +93,11 @@ pub fn get_middle_part_realistic(
     realistic: RealisticHeadShape,
     hairline: Hairline,
 ) -> Polygon2d {
-    let hairline_y = config.hair.short.get_middle_y(hairline.get_y_position());
+    let hairline_y = config
+        .hair
+        .short
+        .y_middle_part
+        .convert(hairline.get_y_position());
     let bottom_width = config.head.get_eye_width_realistic(realistic);
     let forehead_width = config.head.get_forehead_width(realistic);
 

@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::rendering::config::size::SizeConfig;
 use rpg_tools_core::model::character::appearance::eye::EyeShape;
 use rpg_tools_core::model::size::Size;
 
@@ -8,9 +9,7 @@ pub struct EyeConfig {
     pub radius: f32,
     pub half_height_almond: f32,
     pub half_height_ellipse: f32,
-    pub low_distance: f32,
-    pub medium_distance: f32,
-    pub high_distance: f32,
+    pub distance_between_eyes: SizeConfig,
     pub circle_radius: f32,
     pub slit_width: f32,
 }
@@ -45,11 +44,6 @@ impl EyeConfig {
 
     /// Calculates the distance between the center of 2 eyes.
     pub fn get_distance_between_eyes(&self, distance: Size, head_width_factor: f32) -> f32 {
-        head_width_factor
-            * match distance {
-                Size::Low => self.low_distance,
-                Size::Medium => self.medium_distance,
-                Size::High => self.high_distance,
-            }
+        head_width_factor * self.distance_between_eyes.convert(distance)
     }
 }
