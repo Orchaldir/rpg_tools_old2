@@ -10,6 +10,7 @@ use rpg_tools_rendering::rendering::config::hair::short::ShortHairConfig;
 use rpg_tools_rendering::rendering::config::hair::HairConfig;
 use rpg_tools_rendering::rendering::config::head::HeadConfig;
 use rpg_tools_rendering::rendering::config::mouth::{CircularMouthConfig, MouthConfig};
+use rpg_tools_rendering::rendering::config::size::SizeConfig;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 
 pub fn create_border_options() -> RenderOptions {
@@ -41,9 +42,11 @@ pub fn create_config() -> RenderConfig {
             },
             short: ShortHairConfig {
                 side_part_offset: 0.3,
-                y_flat_top_low: 0.0,
-                y_flat_top_medium: -0.1,
-                y_flat_top_high: -0.2,
+                y_flat_top: SizeConfig {
+                    low: 0.0,
+                    medium: -0.1,
+                    high: -0.2,
+                },
                 y_middle_part_low: 0.35,
                 y_middle_part_medium: 0.3,
                 y_middle_part_high: 0.25,

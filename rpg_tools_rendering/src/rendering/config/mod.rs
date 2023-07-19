@@ -15,6 +15,7 @@ pub mod eye;
 pub mod hair;
 pub mod head;
 pub mod mouth;
+pub mod size;
 
 #[derive(Debug, PartialEq)]
 pub struct RenderConfig {

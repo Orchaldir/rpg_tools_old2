@@ -64,7 +64,7 @@ pub fn get_flat_top_realistic(
     let forehead_width = config.head.get_forehead_width(realistic);
     let top_width = config.head.get_top_width(realistic);
     let flattop_width = forehead_width.max(top_width);
-    let flattop_y = config.hair.short.get_flattop_y(size);
+    let flattop_y = config.hair.short.y_flat_top.convert(size);
 
     let (top_left, top_right) = aabb.get_mirrored_points(flattop_width, flattop_y);
     let (forehead_left, forehead_right) =
