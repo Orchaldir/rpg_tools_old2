@@ -7,8 +7,8 @@ use crate::rendering::hair::hairline::add_hairlines;
 use crate::rendering::head::render_realistic_with_option;
 use rpg_tools_core::model::character::appearance::hair::{HairColor, Hairline};
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape;
-use rpg_tools_core::model::character::appearance::Size;
 use rpg_tools_core::model::side::Side;
+use rpg_tools_core::model::size::Size;
 
 pub fn render_buzz_cut_realistic(
     renderer: &mut dyn Renderer,
@@ -64,7 +64,7 @@ pub fn get_flat_top_realistic(
     let forehead_width = config.head.get_forehead_width(realistic);
     let top_width = config.head.get_top_width(realistic);
     let flattop_width = forehead_width.max(top_width);
-    let flattop_y = config.hair.short.get_flattop_y(size);
+    let flattop_y = config.hair.short.y_flat_top.convert(size);
 
     let (top_left, top_right) = aabb.get_mirrored_points(flattop_width, flattop_y);
     let (forehead_left, forehead_right) =
@@ -93,7 +93,11 @@ pub fn get_middle_part_realistic(
     realistic: RealisticHeadShape,
     hairline: Hairline,
 ) -> Polygon2d {
-    let hairline_y = config.hair.short.get_middle_y(hairline.get_y_position());
+    let hairline_y = config
+        .hair
+        .short
+        .y_middle_part
+        .convert(hairline.get_y_position());
     let bottom_width = config.head.get_eye_width_realistic(realistic);
     let forehead_width = config.head.get_forehead_width(realistic);
 

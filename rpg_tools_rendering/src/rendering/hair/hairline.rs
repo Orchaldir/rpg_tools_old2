@@ -9,7 +9,7 @@ pub fn add_hairlines(
     hairline: Hairline,
     corners: &mut Vec<Point2d>,
 ) {
-    let hairline_y = config.hair.hairline.get_y(hairline.get_y_position());
+    let hairline_y = config.hair.hairline.y.convert(hairline.get_y_position());
 
     match hairline {
         Hairline::Round(_) => {

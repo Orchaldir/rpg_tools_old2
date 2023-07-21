@@ -2,6 +2,7 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::config::{create_border_options, create_config};
+use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
@@ -28,6 +29,7 @@ fn main() {
     {
         let appearance = Appearance::head(
             Head {
+                ears: Ears::None,
                 eyes: Eyes::One(Eye::Normal {
                     eye_shape: EyeShape::Circle,
                     pupil_shape: PupilShape::VerticalSlit,

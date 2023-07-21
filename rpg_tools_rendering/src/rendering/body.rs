@@ -2,7 +2,8 @@ use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::body::{Body, BodyShape, BodyWidth};
+use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
+use rpg_tools_core::model::width::Width;
 use std::ops::Mul;
 
 pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, body: &Body) {
@@ -132,9 +133,9 @@ pub fn calculate_head_aabb(aabb: &AABB) -> AABB {
 
 fn get_width_factor(body: &Body) -> f32 {
     match body.width {
-        BodyWidth::Thin => 0.8,
-        BodyWidth::Average => 1.0,
-        BodyWidth::Wide => 1.2,
+        Width::Thin => 0.8,
+        Width::Average => 1.0,
+        Width::Wide => 1.2,
     }
 }
 

@@ -7,8 +7,8 @@ use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
-use rpg_tools_core::model::character::appearance::Size;
 use rpg_tools_core::model::color::Color;
+use rpg_tools_core::model::size::Size;
 use Color::Black;
 
 pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
