@@ -14,7 +14,7 @@ pub struct MouthConfig {
 
 impl MouthConfig {
     pub fn get_mouth_width(&self, head_width: f32, size: Size) -> f32 {
-        head_width + self.mouth_width.convert(size)
+        head_width * self.mouth_width.convert(size)
     }
 
     pub fn get_distance_between_fangs(&self, mouth_width: f32) -> f32 {
