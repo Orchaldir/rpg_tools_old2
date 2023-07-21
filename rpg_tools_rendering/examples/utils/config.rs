@@ -4,6 +4,7 @@ extern crate rpg_tools_rendering;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_rendering::renderer::color::WebColor;
 use rpg_tools_rendering::renderer::RenderOptions;
+use rpg_tools_rendering::rendering::config::ear::EarConfig;
 use rpg_tools_rendering::rendering::config::eye::EyeConfig;
 use rpg_tools_rendering::rendering::config::hair::hairline::HairlineConfig;
 use rpg_tools_rendering::rendering::config::hair::short::ShortHairConfig;
@@ -59,6 +60,7 @@ pub fn create_config() -> RenderConfig {
             },
         },
         head: create_head_config(),
+        ear: create_ear_config(),
         eye: create_eye_config(),
         mouth: create_mouth_config(),
     }
@@ -74,6 +76,16 @@ pub fn create_head_config() -> HeadConfig {
         y_forehead: 0.25,
         y_eye: 0.5,
         y_mouth: 0.75,
+    }
+}
+
+pub fn create_ear_config() -> EarConfig {
+    EarConfig {
+        pointed_ear_length: SizeConfig {
+            low: 0.1,
+            medium: 0.2,
+            high: 0.3,
+        },
     }
 }
 

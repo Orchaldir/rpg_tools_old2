@@ -1,6 +1,7 @@
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
+use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
@@ -11,6 +12,7 @@ use rpg_tools_core::model::character::appearance::mouth::TeethColor;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::color::Color;
 
+pub mod ear;
 pub mod eye;
 pub mod hair;
 pub mod head;
@@ -27,6 +29,7 @@ pub struct RenderConfig {
     pub cut_corners_n: u32,
     pub hair: HairConfig,
     pub head: HeadConfig,
+    pub ear: EarConfig,
     pub eye: EyeConfig,
     pub mouth: MouthConfig,
 }

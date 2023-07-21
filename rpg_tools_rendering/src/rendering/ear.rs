@@ -5,7 +5,6 @@ use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::ear::{EarShape, Ears};
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::side::Side;
-use rpg_tools_core::model::size::Size;
 
 pub fn render_ears(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     let options = config.get_skin_options(&head.skin);
@@ -118,7 +117,7 @@ pub fn render_normal_ear(
     ];
 
     if let EarShape::Pointed(size) = shape {
-        let length = get_pointed_ear_length(size);
+        let length = config.ear.get_pointed_ear_length(size);
         let point = aabb.get_point(0.5 + top_outer_x, config.head.y_eye - length);
 
         corners.push(point);
@@ -128,12 +127,4 @@ pub fn render_normal_ear(
     let cut = config.cut_corners(&polygon).unwrap();
 
     renderer.render_polygon(&cut, options);
-}
-
-fn get_pointed_ear_length(size: Size) -> f32 {
-    match size {
-        Size::Low => 0.1,
-        Size::Medium => 0.2,
-        Size::High => 0.3,
-    }
 }
