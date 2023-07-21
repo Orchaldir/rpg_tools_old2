@@ -34,6 +34,11 @@ impl Size2d {
     }
 
     /// Returns a size with equal width & height.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::size2d::Size2d;
+    /// assert_eq!(Size2d::square(2), Size2d::new(2, 2));
+    /// ```
     pub const fn square(size: u32) -> Self {
         Size2d::new(size, size)
     }
