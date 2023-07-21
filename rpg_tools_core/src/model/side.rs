@@ -6,7 +6,15 @@ pub enum Side {
 }
 
 impl Side {
-    pub fn get_sign(&self) -> f32 {
+    /// Get the sign along the x-axis if viewed from the front.
+    /// The right side is on the left and so the sign is negative.
+    ///
+    /// ```
+    ///# use rpg_tools_core::model::side::Side;
+    /// assert_eq!(Side::Left.get_sign_from_front(), 1.0);
+    /// assert_eq!(Side::Right.get_sign_from_front(), -1.0);
+    /// ```
+    pub fn get_sign_from_front(&self) -> f32 {
         match self {
             Side::Left => 1.0,
             Side::Right => -1.0,

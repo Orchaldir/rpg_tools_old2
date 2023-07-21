@@ -12,6 +12,6 @@ pub struct ShortHairConfig {
 
 impl ShortHairConfig {
     pub fn get_side_part_horizontal(&self, side: Side, forehead_width: f32) -> f32 {
-        0.5 + forehead_width * self.side_part_offset * side.get_sign()
+        0.5 + forehead_width * self.side_part_offset * side.get_sign_from_front()
     }
 }
