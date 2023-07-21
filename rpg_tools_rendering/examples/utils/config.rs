@@ -81,11 +81,15 @@ pub fn create_head_config() -> HeadConfig {
 
 pub fn create_ear_config() -> EarConfig {
     EarConfig {
-        pointed_ear_length: SizeConfig {
+        normal_offset: 0.02,
+        normal_top_x: 0.02,
+        normal_width: 0.08,
+        pointed_length: SizeConfig {
             low: 0.1,
             medium: 0.2,
             high: 0.3,
         },
+        round_factor: 0.1,
     }
 }
 
