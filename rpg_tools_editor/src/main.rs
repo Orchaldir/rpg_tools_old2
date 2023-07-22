@@ -74,6 +74,7 @@ fn get_character(data: &State<EditorData>, id: usize) -> Option<Template> {
             context! {
                 id: id,
                 name: character.name(),
+                gender: format!("{:?}", character.gender()),
             },
         )
     })

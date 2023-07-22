@@ -1,6 +1,8 @@
 use crate::model::character::appearance::Appearance;
+use crate::model::character::gender::Gender;
 
 pub mod appearance;
+pub mod gender;
 pub mod manager;
 
 /// The unique identifier of a [`character`](Character).
@@ -22,6 +24,7 @@ impl CharacterId {
 pub struct Character {
     id: CharacterId,
     name: String,
+    gender: Gender,
     appearance: Appearance,
 }
 
@@ -30,6 +33,7 @@ impl Character {
         Character {
             id,
             name: format!("Character {}", id.0),
+            gender: Gender::default(),
             appearance: Appearance::default(),
         }
     }
@@ -44,6 +48,14 @@ impl Character {
 
     pub fn set_name(&mut self, name: String) {
         self.name = name;
+    }
+
+    pub fn gender(&self) -> Gender {
+        self.gender
+    }
+
+    pub fn set_gender(&mut self, gender: Gender) {
+        self.gender = gender;
     }
 
     pub fn appearance(&self) -> &Appearance {
