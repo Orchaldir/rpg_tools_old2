@@ -29,13 +29,32 @@ fn home(data: &State<EditorData>) -> Template {
     )
 }
 
+#[get("/character")]
+fn get_characters(data: &State<EditorData>) -> Template {
+    let data = data.data.lock().expect("lock shared data");
+    let characters: Vec<(usize, &str)> = data
+        .get_all()
+        .iter()
+        .map(|c| (c.id().id(), c.name()))
+        .collect();
+    let total = characters.len();
+
+    Template::render(
+        "characters",
+        context! {
+            characters: characters,
+            total: total,
+        },
+    )
+}
+
 #[rocket::main]
 async fn main() -> Result<()> {
     if let Err(e) = rocket::build()
         .manage(EditorData {
             data: Mutex::new(init()),
         })
-        .mount("/", routes![home])
+        .mount("/", routes![home, get_characters])
         .attach(Template::fairing())
         .launch()
         .await
@@ -49,7 +68,7 @@ async fn main() -> Result<()> {
 fn init() -> CharacterMgr {
     let mut manager = CharacterMgr::default();
 
-    for skin in vec![
+    for skin in &[
         Skin::Skin(SkinColor::Fair),
         Skin::Skin(SkinColor::Light),
         Skin::Skin(SkinColor::Medium),
@@ -65,7 +84,7 @@ fn init() -> CharacterMgr {
             Body {
                 shape: BodyShape::Rectangle,
                 width: Width::Average,
-                skin,
+                skin: *skin,
             },
             Head::default(),
             Length::from_metre(1.5),
