@@ -6,3 +6,13 @@ pub enum Gender {
     Genderless,
     Male,
 }
+
+impl From<&str> for Gender {
+    fn from(gender: &str) -> Self {
+        match gender {
+            "Female" => Gender::Female,
+            "Male" => Gender::Male,
+            _ => Gender::Genderless,
+        }
+    }
+}
