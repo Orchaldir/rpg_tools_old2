@@ -5,11 +5,15 @@
     <p><b>Id:</b> {{ id }}</p>
     {{ __tera_context }}
     <form action="/appearance/{{ id }}/update" method="post">
-      <b>Body Type:</b>
-      <select id="body_type" name="body_type"">
-        <option value="HeadOnly"{% if appearance.HeadOnly %} selected{% endif %}>HeadOnly</option>
-        <option value="Humanoid"{% if appearance.Humanoid %} selected{% endif %}>Humanoid</option>
-      </select>
+      <ul>
+        <li>
+          <b>Body Type:</b>
+          <select id="body_type" name="body_type"">
+            <option value="HeadOnly"{% if appearance.HeadOnly %} selected{% endif %}>HeadOnly</option>
+            <option value="Humanoid"{% if appearance.Humanoid %} selected{% endif %}>Humanoid</option>
+          </select>
+        </li>
+      </ul>
     </form>
     <p><a href="/character/{{ id }}">Back</a></p>
 {% endblock content %}
