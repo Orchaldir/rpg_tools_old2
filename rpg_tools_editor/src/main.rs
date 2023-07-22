@@ -110,7 +110,7 @@ fn update_character(
 
     data.get_mut(CharacterId::new(id))
         .map(|character| {
-            character.set_name(update.name.to_string());
+            character.set_name(update.name.trim().to_string());
             character.set_gender(update.gender.into());
             character
         })
