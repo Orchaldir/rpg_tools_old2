@@ -7,6 +7,18 @@
   {{ self::write_skin(skin=body.skin, level=level+1) }}
 {% endmacro write_body %}
 
+{% macro write_head(head, level) %}
+  <h{{ level }}>Head</h{{ level }}>
+
+  {% if head.shape.Geometric %}
+    <p><b>Geometric Shape:</b> {{ head.shape.Geometric }}</p>
+  {% elif head.shape.Realistic %}
+    <p><b>Realistic Shape:</b> {{ head.shape.Realistic }}</p>
+  {% endif %}
+
+  {{ self::write_skin(skin=head.skin, level=level+1) }}
+{% endmacro write_body %}
+
 {% macro write_skin(skin, level) %}
   <h{{ level }}>Skin</h{{ level }}>
 
@@ -30,8 +42,9 @@
     {{ __tera_context }}
     {% if appearance.Humanoid %}
       {{ self::write_body(body=appearance.Humanoid.body, level=3) }}
-    {% else %}
-      is Head
+      {{ self::write_head(head=appearance.Humanoid.head, level=3) }}
+    {% elif appearance.HeadOnly %}
+      {{ self::write_head(head=appearance.HeadOnly.head, level=3) }}
     {% endif %}
     <p><h2>Front View</h2></p>
     <img src = "/character/{{ id }}/front.svg" alt="Front View of the Character" width="20%"/>
