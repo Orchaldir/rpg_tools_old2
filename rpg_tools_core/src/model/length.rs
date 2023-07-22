@@ -1,8 +1,10 @@
+use serde::Serialize;
+
 const METRE_FACTOR: f32 = 1000.0;
 const CENTIMETRE_FACTOR: f32 = 10.0;
 
 /// A length or distance. The internal unit is millimetre.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub struct Length {
     millimetre: u32,
 }

@@ -1,5 +1,7 @@
+use serde::Serialize;
+
 /// Left or Right? From the [`character's`](crate::model::character::Character) perspective.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum Side {
     Left,
     Right,

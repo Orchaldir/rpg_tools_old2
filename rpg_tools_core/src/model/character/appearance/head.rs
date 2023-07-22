@@ -3,9 +3,10 @@ use crate::model::character::appearance::eye::Eyes;
 use crate::model::character::appearance::hair::Hair;
 use crate::model::character::appearance::mouth::Mouth;
 use crate::model::character::appearance::skin::Skin;
+use serde::Serialize;
 
 /// How does the head look like?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub struct Head {
     pub ears: Ears,
     pub eyes: Eyes,
@@ -29,7 +30,7 @@ impl Default for Head {
 }
 
 /// What is the shape of the head?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum HeadShape {
     Geometric(GeometricHeadShape),
     Realistic(RealisticHeadShape),
@@ -42,14 +43,14 @@ impl Default for HeadShape {
 }
 
 /// What geometric shape does the head have?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum GeometricHeadShape {
     Circle,
     Square,
 }
 
 /// What geometric shape does the head have?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum RealisticHeadShape {
     Oval,
     Rectangle,

@@ -1,6 +1,7 @@
 use crate::model::character::appearance::body::Body;
 use crate::model::character::appearance::head::Head;
 use crate::model::length::Length;
+use serde::Serialize;
 
 pub mod body;
 pub mod ear;
@@ -11,7 +12,7 @@ pub mod mouth;
 pub mod skin;
 
 /// How does a [`character`](crate::model::character::Character) look like?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum Appearance {
     /// The [`character`](crate::model::character::Character) consists only of a head. E.g. a floating skull
     HeadOnly { head: Head, height: Length },

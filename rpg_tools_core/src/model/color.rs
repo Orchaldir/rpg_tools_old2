@@ -1,8 +1,9 @@
+use serde::Serialize;
 use std::fmt;
 
 /// A color defined by a name.
 /// See https://en.wikipedia.org/wiki/Web_colors.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum Color {
     Aqua,
     Black,

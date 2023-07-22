@@ -1,8 +1,9 @@
 use crate::model::character::appearance::skin::Skin;
 use crate::model::width::Width;
+use serde::Serialize;
 
 /// How does the humanoid body look like?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub struct Body {
     pub shape: BodyShape,
     /// How wide is the body?
@@ -21,7 +22,7 @@ impl Default for Body {
 }
 
 /// The body shape is defined by the ratio between shoulders, waist & hips.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum BodyShape {
     /// The body gets wider from the shoulders to the hips.
     Fat,
