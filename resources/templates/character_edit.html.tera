@@ -9,7 +9,7 @@
       <br>
       <br>
       <b><label for="gender">Gender:</label></b>
-      <select id="gender" name="gender" value="{{ gender }}">
+      <select id="gender" name="gender">
         {% for g in genders %}
           <option value="{{ g }}"{% if g == gender %} selected{% endif %}>{{ g }}</option>
         {% endfor %}

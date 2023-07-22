@@ -147,6 +147,7 @@ fn edit_appearance(data: &State<EditorData>, id: usize) -> Option<Template> {
             context! {
                 id: id,
                 name: character.name(),
+                appearance: character.appearance(),
             },
         )
     })

@@ -3,16 +3,13 @@
 {% block content %}
     <p><h1>Edit appearance of {{ name }}</h1></p>
     <p><b>Id:</b> {{ id }}</p>
+    {{ __tera_context }}
     <form action="/appearance/{{ id }}/update" method="post">
-      <div id="tree-container">
-        <div id="q-container">
-          <ul id="tree">
-            <li>What is the body plan?</li>
-            <li><input name="lvl1" type="radio">Head Only</li>
-            <li><input name="lvl1" type="radio">Humanoid</li>
-          </ul>
-        </div>
-      </div>
+      <b>Body Type:</b>
+      <select id="body_type" name="body_type"">
+        <option value="HeadOnly"{% if appearance.HeadOnly %} selected{% endif %}>HeadOnly</option>
+        <option value="Humanoid"{% if appearance.Humanoid %} selected{% endif %}>Humanoid</option>
+      </select>
     </form>
     <p><a href="/character/{{ id }}">Back</a></p>
 {% endblock content %}
