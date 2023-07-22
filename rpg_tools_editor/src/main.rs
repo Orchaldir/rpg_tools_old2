@@ -102,6 +102,7 @@ fn edit_character(data: &State<EditorData>, id: usize) -> Option<Template> {
 #[derive(FromForm, Debug)]
 struct CharacterUpdate<'r> {
     name: &'r str,
+    gender: &'r str,
 }
 
 #[post("/character/<id>/update", data = "<update>")]

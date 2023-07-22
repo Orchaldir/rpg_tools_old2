@@ -6,8 +6,13 @@
     <form action="/character/{{ id }}/update" method="post">
       <label for="name">Name:</label><input type="text" id="name" name="name" value="{{ name }}"><br>
       <br>
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" value="{{ gender }}">
+        <option value="Female">Female</option>
+        <option value="Genderless">Genderless</option>
+        <option value="Male">Male</option>
+      </select>
       <input type="submit" value="Submit">
     </form>
-    <p><b>Gender:</b> {{ gender }}</p>
     <p><a href="/character/{{ id }}">Back</a></p>
 {% endblock content %}
