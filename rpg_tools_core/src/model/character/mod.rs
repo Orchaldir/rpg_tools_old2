@@ -1,6 +1,7 @@
 use crate::model::character::appearance::Appearance;
 
 pub mod appearance;
+pub mod manager;
 
 /// The unique identifier of a [`character`](Character).
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
