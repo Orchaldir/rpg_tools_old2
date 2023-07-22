@@ -3,6 +3,7 @@
 {% block content %}
     <p><h1>Characters</h1></p>
     <p><b>Total:</b> {{ total }}</p>
+    <p><a href="/character/new">Add</a></p>
     <div class="grid-container">
     {% for c in characters %}
       <div class="grid-item">

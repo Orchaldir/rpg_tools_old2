@@ -2,6 +2,7 @@
 extern crate rocket;
 
 use anyhow::Result;
+use rocket::form::Form;
 use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
@@ -14,7 +15,7 @@ use rpg_tools_core::model::character::appearance::mouth::Mouth;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::manager::CharacterMgr;
-use rpg_tools_core::model::character::CharacterId;
+use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::width::Width;
@@ -65,18 +66,55 @@ fn get_characters(data: &State<EditorData>) -> Template {
     )
 }
 
+#[get("/character/new")]
+fn add_character(data: &State<EditorData>) -> Option<Template> {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    let id = data.create();
+
+    println!("Create character {}", id.id());
+
+    data.get_mut(id)
+        .map(|character| edit_character_template(id.id(), character))
+}
+
 #[get("/character/<id>")]
 fn get_character(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
-    data.get(CharacterId::new(id)).map(|character| {
-        Template::render(
-            "character",
-            context! {
-                id: id,
-                name: character.name(),
-            },
-        )
-    })
+    data.get(CharacterId::new(id))
+        .map(|character| show_character_template(id, character))
+}
+
+#[get("/character/<id>/edit")]
+fn edit_character(data: &State<EditorData>, id: usize) -> Option<Template> {
+    let data = data.data.lock().expect("lock shared data");
+    data.get(CharacterId::new(id))
+        .map(|character| edit_character_template(id, character))
+}
+
+#[derive(FromForm, Debug)]
+struct CharacterUpdate<'r> {
+    name: &'r str,
+    gender: &'r str,
+}
+
+#[post("/character/<id>/update", data = "<update>")]
+fn update_character(
+    data: &State<EditorData>,
+    id: usize,
+    update: Form<CharacterUpdate<'_>>,
+) -> Option<Template> {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!("Update character {} with {:?}", id, update);
+
+    data.get_mut(CharacterId::new(id))
+        .map(|character| {
+            character.set_name(update.name.trim().to_string());
+            character.set_gender(update.gender.into());
+            character
+        })
+        .map(|character| show_character_template(id, character))
 }
 
 #[get("/character/<id>/front.svg")]
@@ -100,6 +138,29 @@ fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
     })
 }
 
+fn show_character_template(id: usize, character: &Character) -> Template {
+    Template::render(
+        "character",
+        context! {
+            id: id,
+            name: character.name(),
+            gender: format!("{:?}", character.gender()),
+        },
+    )
+}
+
+fn edit_character_template(id: usize, character: &Character) -> Template {
+    Template::render(
+        "character_edit",
+        context! {
+            id: id,
+            name: character.name(),
+            genders: vec!["Female", "Genderless", "Male"],
+            gender: format!("{:?}", character.gender()),
+        },
+    )
+}
+
 #[rocket::main]
 async fn main() -> Result<()> {
     if let Err(e) = rocket::build()
@@ -108,7 +169,18 @@ async fn main() -> Result<()> {
             data: Mutex::new(init()),
         })
         .mount("/static", FileServer::from("rpg_tools_editor/static/"))
-        .mount("/", routes![home, get_characters, get_character, get_front])
+        .mount(
+            "/",
+            routes![
+                home,
+                get_characters,
+                add_character,
+                get_character,
+                edit_character,
+                update_character,
+                get_front
+            ],
+        )
         .attach(Template::fairing())
         .launch()
         .await
