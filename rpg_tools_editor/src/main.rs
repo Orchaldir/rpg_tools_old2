@@ -138,6 +138,20 @@ fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
     })
 }
 
+#[get("/appearance/<id>/edit")]
+fn edit_appearance(data: &State<EditorData>, id: usize) -> Option<Template> {
+    let data = data.data.lock().expect("lock shared data");
+    data.get(CharacterId::new(id)).map(|character| {
+        Template::render(
+            "appearance_edit",
+            context! {
+                id: id,
+                name: character.name(),
+            },
+        )
+    })
+}
+
 fn show_character_template(id: usize, character: &Character) -> Template {
     Template::render(
         "character",
@@ -178,6 +192,7 @@ async fn main() -> Result<()> {
                 get_character,
                 edit_character,
                 update_character,
+                edit_appearance,
                 get_front
             ],
         )

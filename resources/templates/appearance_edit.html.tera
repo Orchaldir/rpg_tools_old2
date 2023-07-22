@@ -1,0 +1,18 @@
+{% extends "base" %}
+
+{% block content %}
+    <p><h1>Edit appearance of {{ name }}</h1></p>
+    <p><b>Id:</b> {{ id }}</p>
+    <form action="/appearance/{{ id }}/update" method="post">
+      <div id="tree-container">
+        <div id="q-container">
+          <ul id="tree">
+            <li>What is the body plan?</li>
+            <li><input name="lvl1" type="radio">Head Only</li>
+            <li><input name="lvl1" type="radio">Humanoid</li>
+          </ul>
+        </div>
+      </div>
+    </form>
+    <p><a href="/character/{{ id }}">Back</a></p>
+{% endblock content %}
