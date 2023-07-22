@@ -166,7 +166,11 @@ fn update_appearance(
 
     println!("Update appearance of character {} with {:?}", id, update);
 
-    data.get(CharacterId::new(id))
+    data.get_mut(CharacterId::new(id))
+        .map(|character| {
+            character.set_appearance(update.apply(character.appearance()));
+            character
+        })
         .map(|character| show_character_template(id, character))
 }
 
