@@ -1,10 +1,23 @@
 {% extends "base" %}
 
-{% macro write_body(body) %}
-  <h3>Body</h3>
+{% macro write_body(body, level) %}
+  <h{{ level }}>Body</h{{ level }}>
   <p><b>Shape:</b> {{ body.shape }}</p>
   <p><b>Width:</b> {{ body.width }}</p>
+  {{ self::write_skin(skin=body.skin, level=level+1) }}
 {% endmacro write_body %}
+
+{% macro write_skin(skin, level) %}
+  <h{{ level }}>Skin</h{{ level }}>
+
+  {% if skin.Skin.Exotic %}
+      <p><b>Exotic Color:</b> {{ skin.Skin.Exotic }}</p>
+  {% elif skin.Skin %}
+    <p><b>Color:</b> {{ skin.Skin }}</p>
+  {% elif skin.Scales %}
+      <p><b>Color:</b> {{ skin.Scales }}</p>
+  {% endif %}
+{% endmacro write_skin %}
 
 {% block content %}
     <p><h1>{{ name }}</h1></p>
@@ -16,7 +29,7 @@
     <p><h2>Appearance</h2></p>
     {{ __tera_context }}
     {% if appearance.Humanoid %}
-      {{ self::write_body(body=appearance.Humanoid.body) }}
+      {{ self::write_body(body=appearance.Humanoid.body, level=3) }}
     {% else %}
       is Head
     {% endif %}
