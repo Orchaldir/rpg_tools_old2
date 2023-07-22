@@ -41,7 +41,15 @@ impl Character {
         &self.name
     }
 
+    pub fn set_name(&mut self, name: String) {
+        self.name = name;
+    }
+
     pub fn appearance(&self) -> &Appearance {
         &self.appearance
+    }
+
+    pub fn set_appearance(&mut self, appearance: Appearance) {
+        self.appearance = appearance;
     }
 }
