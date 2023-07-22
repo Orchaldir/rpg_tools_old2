@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate rocket;
 
+use crate::appearance::AppearanceUpdate;
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
@@ -26,6 +27,8 @@ use rpg_tools_rendering::rendering::character::{calculate_character_size, render
 use rpg_tools_rendering::rendering::config::example::{create_border_options, create_config};
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::sync::Mutex;
+
+pub mod appearance;
 
 struct EditorData {
     config: RenderConfig,
@@ -151,12 +154,6 @@ fn edit_appearance(data: &State<EditorData>, id: usize) -> Option<Template> {
             },
         )
     })
-}
-
-#[derive(FromForm, Debug)]
-struct AppearanceUpdate<'r> {
-    body_type: &'r str,
-    height: u32,
 }
 
 #[post("/appearance/<id>/update", data = "<update>")]
