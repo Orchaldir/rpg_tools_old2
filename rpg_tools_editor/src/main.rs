@@ -9,6 +9,7 @@ use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::manager::CharacterMgr;
+use rpg_tools_core::model::character::CharacterId;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::width::Width;
@@ -48,13 +49,27 @@ fn get_characters(data: &State<EditorData>) -> Template {
     )
 }
 
+#[get("/character/<id>")]
+fn get_character(data: &State<EditorData>, id: usize) -> Option<Template> {
+    let data = data.data.lock().expect("lock shared data");
+    data.get(CharacterId::new(id)).map(|character| {
+        Template::render(
+            "character",
+            context! {
+                id: id,
+                name: character.name(),
+            },
+        )
+    })
+}
+
 #[rocket::main]
 async fn main() -> Result<()> {
     if let Err(e) = rocket::build()
         .manage(EditorData {
             data: Mutex::new(init()),
         })
-        .mount("/", routes![home, get_characters])
+        .mount("/", routes![home, get_characters, get_character])
         .attach(Template::fairing())
         .launch()
         .await

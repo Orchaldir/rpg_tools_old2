@@ -29,7 +29,7 @@ impl Character {
     pub fn new(id: CharacterId) -> Self {
         Character {
             id,
-            name: id.0.to_string(),
+            name: format!("Character {}", id.0),
             appearance: Appearance::default(),
         }
     }

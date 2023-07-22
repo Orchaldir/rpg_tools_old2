@@ -1,0 +1,7 @@
+{% extends "base" %}
+
+{% block content %}
+    <p><h1>{{ name }}</h1></p>
+    <p><b>Id:</b> {{ id }}</p>
+    <p><a href="/">Back</a></p>
+{% endblock content %}
