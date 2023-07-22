@@ -4,14 +4,18 @@
     <p><h1>Edit data of {{ name }}</h1></p>
     <p><b>Id:</b> {{ id }}</p>
     <form action="/character/{{ id }}/update" method="post">
-      <label for="name">Name:</label><input type="text" id="name" name="name" value="{{ name }}"><br>
+      <b><label for="name">Name:</label></b>
+      <input type="text" id="name" name="name" value="{{ name }}">
       <br>
-      <label for="gender">Gender:</label>
+      <br>
+      <b><label for="gender">Gender:</label></b>
       <select id="gender" name="gender" value="{{ gender }}">
         {% for g in genders %}
           <option value="{{ g }}"{% if g == gender %} selected{% endif %}>{{ g }}</option>
         {% endfor %}
       </select>
+      <br>
+      <br>
       <input type="submit" value="Submit">
     </form>
     <p><a href="/character/{{ id }}">Back</a></p>
