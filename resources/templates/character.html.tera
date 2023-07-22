@@ -3,5 +3,7 @@
 {% block content %}
     <p><h1>{{ name }}</h1></p>
     <p><b>Id:</b> {{ id }}</p>
-    <p><a href="/">Back</a></p>
+    <p><h2>Front View</h2></p>
+    <img src = "/character/{{ id }}/front.svg" alt="Front View of the Character" width="20%"/>
+    <p><a href="/character">Back</a></p>
 {% endblock content %}

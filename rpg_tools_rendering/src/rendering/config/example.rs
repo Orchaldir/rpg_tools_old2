@@ -1,18 +1,17 @@
 extern crate rpg_tools_core;
-extern crate rpg_tools_rendering;
 
+use crate::renderer::color::WebColor;
+use crate::renderer::RenderOptions;
+use crate::rendering::config::ear::EarConfig;
+use crate::rendering::config::eye::EyeConfig;
+use crate::rendering::config::hair::hairline::HairlineConfig;
+use crate::rendering::config::hair::short::ShortHairConfig;
+use crate::rendering::config::hair::HairConfig;
+use crate::rendering::config::head::HeadConfig;
+use crate::rendering::config::mouth::{CircularMouthConfig, MouthConfig};
+use crate::rendering::config::size::SizeConfig;
+use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::color::Color;
-use rpg_tools_rendering::renderer::color::WebColor;
-use rpg_tools_rendering::renderer::RenderOptions;
-use rpg_tools_rendering::rendering::config::ear::EarConfig;
-use rpg_tools_rendering::rendering::config::eye::EyeConfig;
-use rpg_tools_rendering::rendering::config::hair::hairline::HairlineConfig;
-use rpg_tools_rendering::rendering::config::hair::short::ShortHairConfig;
-use rpg_tools_rendering::rendering::config::hair::HairConfig;
-use rpg_tools_rendering::rendering::config::head::HeadConfig;
-use rpg_tools_rendering::rendering::config::mouth::{CircularMouthConfig, MouthConfig};
-use rpg_tools_rendering::rendering::config::size::SizeConfig;
-use rpg_tools_rendering::rendering::config::RenderConfig;
 
 pub fn create_border_options() -> RenderOptions {
     RenderOptions::new(

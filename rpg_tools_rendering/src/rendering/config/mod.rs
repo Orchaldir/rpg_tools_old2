@@ -13,6 +13,7 @@ use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::color::Color;
 
 pub mod ear;
+pub mod example;
 pub mod eye;
 pub mod hair;
 pub mod head;
