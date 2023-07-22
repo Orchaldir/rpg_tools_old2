@@ -10,6 +10,16 @@ pub struct Body {
     pub skin: Skin,
 }
 
+impl Default for Body {
+    fn default() -> Self {
+        Self {
+            shape: BodyShape::Rectangle,
+            width: Width::Average,
+            skin: Skin::default(),
+        }
+    }
+}
+
 /// The body shape is defined by the ratio between shoulders, waist & hips.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum BodyShape {
