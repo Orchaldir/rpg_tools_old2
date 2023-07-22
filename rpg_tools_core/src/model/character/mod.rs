@@ -32,4 +32,16 @@ impl Character {
             appearance: Appearance::default(),
         }
     }
+
+    pub fn id(&self) -> &CharacterId {
+        &self.id
+    }
+
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    pub fn appearance(&self) -> &Appearance {
+        &self.appearance
+    }
 }
