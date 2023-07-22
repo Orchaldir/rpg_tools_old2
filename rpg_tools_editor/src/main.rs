@@ -159,6 +159,7 @@ fn show_character_template(id: usize, character: &Character) -> Template {
             id: id,
             name: character.name(),
             gender: character.gender(),
+            appearance: character.appearance(),
         },
     )
 }

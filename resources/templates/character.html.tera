@@ -1,5 +1,11 @@
 {% extends "base" %}
 
+{% macro write_body(body) %}
+  <h3>Body</h3>
+  <p><b>Shape:</b> {{ body.shape }}</p>
+  <p><b>Width:</b> {{ body.width }}</p>
+{% endmacro write_body %}
+
 {% block content %}
     <p><h1>{{ name }}</h1></p>
     <p><h2>Data</h2></p>
@@ -7,6 +13,13 @@
     <p><b>Gender:</b> {{ gender }}</p>
     <p><a href="/character/{{ id }}/edit">Edit Data</a></p>
     <p><a href="/appearance/{{ id }}/edit">Edit Appearance</a></p>
+    <p><h2>Appearance</h2></p>
+    {{ __tera_context }}
+    {% if appearance.Humanoid %}
+      {{ self::write_body(body=appearance.Humanoid.body) }}
+    {% else %}
+      is Head
+    {% endif %}
     <p><h2>Front View</h2></p>
     <img src = "/character/{{ id }}/front.svg" alt="Front View of the Character" width="20%"/>
     <p><a href="/character">Back</a></p>
