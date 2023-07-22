@@ -1,5 +1,12 @@
 {% extends "base" %}
 
+{% macro edit_height(height) %}
+  <li>
+    <b>Height in mm:</b>
+    <input type="number" step="1" id="height" value="{{ height.millimetre }}">
+  </li>
+{% endmacro edit_height %}
+
 {% block content %}
     <p><h1>Edit appearance of {{ name }}</h1></p>
     <p><b>Id:</b> {{ id }}</p>
@@ -13,7 +20,13 @@
             <option value="Humanoid"{% if appearance.Humanoid %} selected{% endif %}>Humanoid</option>
           </select>
         </li>
+        {% if appearance.Humanoid %}
+          {{ self::edit_height(height=appearance.Humanoid.height) }}
+        {% elif appearance.HeadOnly %}
+          {{ self::edit_height(height=appearance.HeadOnly.height) }}
+        {% endif %}
       </ul>
+      <input type="submit" value="Submit">
     </form>
     <p><a href="/character/{{ id }}">Back</a></p>
 {% endblock content %}
