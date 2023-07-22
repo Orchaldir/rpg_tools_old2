@@ -2,6 +2,7 @@
 extern crate rocket;
 
 use anyhow::Result;
+use rocket::form::Form;
 use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
@@ -14,7 +15,7 @@ use rpg_tools_core::model::character::appearance::mouth::Mouth;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::manager::CharacterMgr;
-use rpg_tools_core::model::character::CharacterId;
+use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::width::Width;
@@ -68,16 +69,19 @@ fn get_characters(data: &State<EditorData>) -> Template {
 #[get("/character/<id>")]
 fn get_character(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
-    data.get(CharacterId::new(id)).map(|character| {
-        Template::render(
-            "character",
-            context! {
-                id: id,
-                name: character.name(),
-                gender: format!("{:?}", character.gender()),
-            },
-        )
-    })
+    data.get(CharacterId::new(id))
+        .map(|character| show_character(id, character))
+}
+
+fn show_character(id: usize, character: &Character) -> Template {
+    Template::render(
+        "character",
+        context! {
+            id: id,
+            name: character.name(),
+            gender: format!("{:?}", character.gender()),
+        },
+    )
 }
 
 #[get("/character/<id>/edit")]
@@ -93,6 +97,29 @@ fn edit_character(data: &State<EditorData>, id: usize) -> Option<Template> {
             },
         )
     })
+}
+
+#[derive(FromForm, Debug)]
+struct CharacterUpdate<'r> {
+    name: &'r str,
+}
+
+#[post("/character/<id>/update", data = "<update>")]
+fn update_character(
+    data: &State<EditorData>,
+    id: usize,
+    update: Form<CharacterUpdate<'_>>,
+) -> Option<Template> {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!("Update character {} with {:?}", id, update);
+
+    data.get_mut(CharacterId::new(id))
+        .map(|character| {
+            character.set_name(update.name.to_string());
+            character
+        })
+        .map(|character| show_character(id, character))
 }
 
 #[get("/character/<id>/front.svg")]
@@ -131,6 +158,7 @@ async fn main() -> Result<()> {
                 get_characters,
                 get_character,
                 edit_character,
+                update_character,
                 get_front
             ],
         )

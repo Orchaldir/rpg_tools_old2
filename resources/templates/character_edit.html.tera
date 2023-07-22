@@ -3,6 +3,11 @@
 {% block content %}
     <p><h1>Edit data of {{ name }}</h1></p>
     <p><b>Id:</b> {{ id }}</p>
+    <form action="/character/{{ id }}/update" method="post">
+      <label for="name">Name:</label><input type="text" id="name" name="name" value="{{ name }}"><br>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
     <p><b>Gender:</b> {{ gender }}</p>
     <p><a href="/character/{{ id }}">Back</a></p>
 {% endblock content %}
