@@ -2,3 +2,15 @@ h1 {
   text-align: center;
   color: blue;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  position: relative;
+}
+
+.grid-item {
+  overflow: hidden;
+}

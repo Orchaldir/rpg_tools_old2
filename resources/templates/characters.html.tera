@@ -7,8 +7,8 @@
     {% for c in characters %}
       <div class="grid-item">
         <a href="/character/{{ c.0 }}">
-          <img src = "/character/{{ c.0 }}/front.svg" alt="Character c.0" width="10%"/>
           <div class="content">{{ c.1 }}</div>
+          <img src = "/character/{{ c.0 }}/front.svg" alt="Character {{ c.0 }}"/>
         </a>
       </div>
     {% endfor %}
