@@ -76,7 +76,7 @@ pub fn render_round_ear(
 ) {
     let half = head_width / 2.0;
     let radius = config.ear.get_round_ear_radius(aabb);
-    let sign = side.get_sign();
+    let sign = side.get_sign_from_front();
 
     let center = aabb.get_point(0.5 + half * sign, config.head.y_eye);
 
@@ -97,7 +97,7 @@ pub fn render_normal_ear(
     let half_eye = eye_width / 2.0 - offset;
     let half_mouth = mouth_width / 2.0 - offset;
     let width = config.ear.normal_width;
-    let sign = side.get_sign();
+    let sign = side.get_sign_from_front();
     let top_inner_x = half_eye * sign;
     let top_outer_x = (half_eye + width + config.ear.normal_top_x) * sign;
     let bottom_inner_x = half_mouth * sign;

@@ -1,0 +1,16 @@
+[package]
+name = "rpg_tools_editor"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0"
+rocket = "0.5.0-rc.3"
+rpg_tools_core = { path = "../rpg_tools_core" }
+rpg_tools_rendering = { path = "../rpg_tools_rendering" }
+
+[dependencies.rocket_dyn_templates]
+version = "0.1.0-rc.3"
+features = ["tera"]

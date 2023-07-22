@@ -8,7 +8,7 @@ pub struct Length {
 }
 
 impl Length {
-    /// Creates a length from metres.
+    /// Creates a length from meters.
     ///
     /// ```
     ///# use rpg_tools_core::model::length::Length;

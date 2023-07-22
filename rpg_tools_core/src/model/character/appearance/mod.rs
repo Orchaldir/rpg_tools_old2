@@ -39,3 +39,13 @@ impl Appearance {
         }
     }
 }
+
+impl Default for Appearance {
+    fn default() -> Self {
+        Appearance::Humanoid {
+            body: Body::default(),
+            head: Head::default(),
+            height: Length::from_metre(1.5),
+        }
+    }
+}

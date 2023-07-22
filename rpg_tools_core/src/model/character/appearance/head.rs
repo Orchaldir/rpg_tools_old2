@@ -15,11 +15,30 @@ pub struct Head {
     pub skin: Skin,
 }
 
+impl Default for Head {
+    fn default() -> Self {
+        Self {
+            ears: Ears::None,
+            eyes: Eyes::None,
+            hair: Hair::None,
+            mouth: Mouth::None,
+            shape: HeadShape::default(),
+            skin: Skin::default(),
+        }
+    }
+}
+
 /// What is the shape of the head?
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum HeadShape {
     Geometric(GeometricHeadShape),
     Realistic(RealisticHeadShape),
+}
+
+impl Default for HeadShape {
+    fn default() -> Self {
+        Self::Geometric(GeometricHeadShape::Circle)
+    }
 }
 
 /// What geometric shape does the head have?

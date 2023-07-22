@@ -92,6 +92,17 @@ impl AxisAlignedBoundingBox {
         AxisAlignedBoundingBox { start, end, size }
     }
 
+    /// Returns a new axis aligned bounding box from a center & radii.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::size2d::Size2d;
+    /// let center = Point2d::new(100, 200);
+    /// let size = Size2d::new(20, 40);
+    /// let start = Point2d::new(90, 180);
+    /// assert_eq!(AABB::with_radii(center, 10, 20), AABB::new(start, size));
+    /// ```
     pub fn with_radii(center: Point2d, radius_x: u32, radius_y: u32) -> Self {
         let size = Size2d::new(radius_x, radius_y) * 2.0;
         AABB::with_center(center, size)
