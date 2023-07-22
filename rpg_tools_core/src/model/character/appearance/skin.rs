@@ -6,11 +6,12 @@ use serde::Serialize;
 pub enum Skin {
     Scales(Color),
     Skin(SkinColor),
+    ExoticSkin(Color),
 }
 
 impl Default for Skin {
     fn default() -> Self {
-        Self::Skin(SkinColor::Exotic(Color::Aqua))
+        Self::ExoticSkin(Color::Aqua)
     }
 }
 
@@ -23,5 +24,4 @@ pub enum SkinColor {
     Tan,
     Dark,
     VeryDark,
-    Exotic(Color),
 }

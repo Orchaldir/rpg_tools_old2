@@ -240,7 +240,7 @@ fn init() -> CharacterMgr {
         Skin::Skin(SkinColor::Tan),
         Skin::Skin(SkinColor::Dark),
         Skin::Skin(SkinColor::VeryDark),
-        Skin::Skin(SkinColor::Exotic(Color::Green)),
+        Skin::ExoticSkin(Color::Green),
     ] {
         let id = manager.create();
         let character = manager.get_mut(id).unwrap();

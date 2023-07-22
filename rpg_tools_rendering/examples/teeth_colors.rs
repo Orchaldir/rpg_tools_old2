@@ -25,7 +25,7 @@ fn main() {
         Skin::Skin(SkinColor::Tan),
         Skin::Skin(SkinColor::Dark),
         Skin::Skin(SkinColor::VeryDark),
-        Skin::Skin(SkinColor::Exotic(Color::Green)),
+        Skin::ExoticSkin(Color::Green),
     ];
 
     render_2_sets("teeth_colors.svg", skin, teeth_colors, create_appearance);

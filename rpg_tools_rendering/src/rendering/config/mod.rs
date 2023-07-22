@@ -89,8 +89,8 @@ impl RenderConfig {
                 SkinColor::Tan => WebColor::from_rgb(156, 89, 60),
                 SkinColor::Dark => WebColor::from_rgb(122, 68, 44),
                 SkinColor::VeryDark => WebColor::from_rgb(58, 26, 13),
-                SkinColor::Exotic(color) => WebColor::from_color(*color),
             },
+            Skin::ExoticSkin(color) => WebColor::from_color(*color),
         }
     }
 
