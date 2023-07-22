@@ -158,7 +158,7 @@ fn show_character_template(id: usize, character: &Character) -> Template {
         context! {
             id: id,
             name: character.name(),
-            gender: format!("{:?}", character.gender()),
+            gender: character.gender(),
         },
     )
 }
@@ -170,7 +170,7 @@ fn edit_character_template(id: usize, character: &Character) -> Template {
             id: id,
             name: character.name(),
             genders: vec!["Female", "Genderless", "Male"],
-            gender: format!("{:?}", character.gender()),
+            gender: character.gender(),
         },
     )
 }
