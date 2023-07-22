@@ -8,9 +8,9 @@
       <br>
       <label for="gender">Gender:</label>
       <select id="gender" name="gender" value="{{ gender }}">
-        <option value="Female">Female</option>
-        <option value="Genderless">Genderless</option>
-        <option value="Male">Male</option>
+        {% for g in genders %}
+          <option value="{{ g }}"{% if g == gender %} selected{% endif %}>{{ g }}</option>
+        {% endfor %}
       </select>
       <input type="submit" value="Submit">
     </form>
