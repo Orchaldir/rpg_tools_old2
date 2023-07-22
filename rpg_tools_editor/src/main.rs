@@ -2,6 +2,7 @@
 extern crate rocket;
 
 use anyhow::Result;
+use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
@@ -106,6 +107,7 @@ async fn main() -> Result<()> {
             config: create_config(),
             data: Mutex::new(init()),
         })
+        .mount("/static", FileServer::from("rpg_tools_editor/static/"))
         .mount("/", routes![home, get_characters, get_character, get_front])
         .attach(Template::fairing())
         .launch()
