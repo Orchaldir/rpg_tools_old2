@@ -22,7 +22,7 @@ impl Default for Head {
             eyes: Eyes::None,
             hair: Hair::None,
             mouth: Mouth::None,
-            shape: HeadShape::Geometric(GeometricHeadShape::Circle),
+            shape: HeadShape::default(),
             skin: Skin::default(),
         }
     }
@@ -33,6 +33,12 @@ impl Default for Head {
 pub enum HeadShape {
     Geometric(GeometricHeadShape),
     Realistic(RealisticHeadShape),
+}
+
+impl Default for HeadShape {
+    fn default() -> Self {
+        Self::Geometric(GeometricHeadShape::Circle)
+    }
 }
 
 /// What geometric shape does the head have?

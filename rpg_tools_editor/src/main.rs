@@ -5,7 +5,11 @@ use anyhow::Result;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
-use rpg_tools_core::model::character::appearance::head::Head;
+use rpg_tools_core::model::character::appearance::ear::Ears;
+use rpg_tools_core::model::character::appearance::eye::Eyes;
+use rpg_tools_core::model::character::appearance::hair::Hair;
+use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
+use rpg_tools_core::model::character::appearance::mouth::Mouth;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::manager::CharacterMgr;
@@ -134,7 +138,14 @@ fn init() -> CharacterMgr {
                 width: Width::Average,
                 skin: *skin,
             },
-            Head::default(),
+            Head {
+                ears: Ears::None,
+                eyes: Eyes::None,
+                hair: Hair::None,
+                mouth: Mouth::None,
+                shape: HeadShape::default(),
+                skin: *skin,
+            },
             Length::from_metre(1.5),
         ))
     }
