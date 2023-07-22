@@ -3,7 +3,7 @@
 {% macro edit_height(height) %}
   <li>
     <b>Height in mm:</b>
-    <input type="number" step="1" id="height" value="{{ height.millimetre }}">
+    <input type="number" step="1" id="height" name="height" value="{{ height.millimetre }}">
   </li>
 {% endmacro edit_height %}
 
@@ -15,7 +15,7 @@
       <ul>
         <li>
           <b>Body Type:</b>
-          <select id="body_type" name="body_type"">
+          <select id="body_type" name="body_type">
             <option value="HeadOnly"{% if appearance.HeadOnly %} selected{% endif %}>HeadOnly</option>
             <option value="Humanoid"{% if appearance.Humanoid %} selected{% endif %}>Humanoid</option>
           </select>

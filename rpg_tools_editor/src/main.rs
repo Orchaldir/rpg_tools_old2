@@ -153,6 +153,26 @@ fn edit_appearance(data: &State<EditorData>, id: usize) -> Option<Template> {
     })
 }
 
+#[derive(FromForm, Debug)]
+struct AppearanceUpdate<'r> {
+    body_type: &'r str,
+    height: u32,
+}
+
+#[post("/appearance/<id>/update", data = "<update>")]
+fn update_appearance(
+    data: &State<EditorData>,
+    id: usize,
+    update: Form<AppearanceUpdate<'_>>,
+) -> Option<Template> {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!("Update appearance of character {} with {:?}", id, update);
+
+    data.get(CharacterId::new(id))
+        .map(|character| show_character_template(id, character))
+}
+
 fn show_character_template(id: usize, character: &Character) -> Template {
     Template::render(
         "character",
@@ -195,6 +215,7 @@ async fn main() -> Result<()> {
                 edit_character,
                 update_character,
                 edit_appearance,
+                update_appearance,
                 get_front
             ],
         )
