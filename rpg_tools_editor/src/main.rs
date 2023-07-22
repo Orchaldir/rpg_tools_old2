@@ -80,6 +80,21 @@ fn get_character(data: &State<EditorData>, id: usize) -> Option<Template> {
     })
 }
 
+#[get("/character/<id>/edit")]
+fn edit_character(data: &State<EditorData>, id: usize) -> Option<Template> {
+    let data = data.data.lock().expect("lock shared data");
+    data.get(CharacterId::new(id)).map(|character| {
+        Template::render(
+            "character_edit",
+            context! {
+                id: id,
+                name: character.name(),
+                gender: format!("{:?}", character.gender()),
+            },
+        )
+    })
+}
+
 #[get("/character/<id>/front.svg")]
 fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
     let data = state.data.lock().expect("lock shared data");
@@ -109,7 +124,16 @@ async fn main() -> Result<()> {
             data: Mutex::new(init()),
         })
         .mount("/static", FileServer::from("rpg_tools_editor/static/"))
-        .mount("/", routes![home, get_characters, get_character, get_front])
+        .mount(
+            "/",
+            routes![
+                home,
+                get_characters,
+                get_character,
+                edit_character,
+                get_front
+            ],
+        )
         .attach(Template::fairing())
         .launch()
         .await

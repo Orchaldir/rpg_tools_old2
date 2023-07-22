@@ -1,0 +1,8 @@
+{% extends "base" %}
+
+{% block content %}
+    <p><h1>Edit data of {{ name }}</h1></p>
+    <p><b>Id:</b> {{ id }}</p>
+    <p><b>Gender:</b> {{ gender }}</p>
+    <p><a href="/character/{{ id }}">Back</a></p>
+{% endblock content %}
