@@ -1,16 +1,16 @@
 {% extends "base" %}
 
-{% macro write_body(body, level) %}
+{% macro write_body(body) %}
   <li><span class="caret">Body</span>
     <ul class="nested">
       <li><b>Shape:</b> {{ body.shape }}</li>
       <li><b>Width:</b> {{ body.width }}</li>
-      {{ self::write_skin(skin=body.skin, level=level+1) }}
+      {{ self::write_skin(skin=body.skin) }}
     </ul>
   </li>
 {% endmacro write_body %}
 
-{% macro write_head(head, level) %}
+{% macro write_head(head) %}
   <li><span class="caret">Head</span>
     <ul class="nested">
       <li>
@@ -20,12 +20,16 @@
           <b>Realistic Shape:</b> {{ head.shape.Realistic }}
         {% endif %}
       </li>
-      {{ self::write_skin(skin=head.skin, level=level+1) }}
+      {{ self::write_skin(skin=head.skin) }}
     </ul>
   </li>
 {% endmacro write_body %}
 
-{% macro write_skin(skin, level) %}
+{% macro write_height(height) %}
+  <li><b>Height:</b> {{ height.millimetre / 10 }} cm</li>
+{% endmacro write_body %}
+
+{% macro write_skin(skin) %}
   <li><span class="caret">Skin</span>
     <ul class="nested">
       <li>
@@ -47,17 +51,19 @@
     <p><b>Id:</b> {{ id }}</p>
     <p><b>Gender:</b> {{ gender }}</p>
     <p><a href="/character/{{ id }}/edit">Edit Data</a></p>
-    <p><a href="/appearance/{{ id }}/edit">Edit Appearance</a></p>
     <p><h2>Appearance</h2></p>
-    {{ __tera_context }}
+    {# __tera_context #}
     <ul id="myUL">
       {% if appearance.Humanoid %}
-        {{ self::write_body(body=appearance.Humanoid.body, level=3) }}
-        {{ self::write_head(head=appearance.Humanoid.head, level=3) }}
+        {{ self::write_body(body=appearance.Humanoid.body) }}
+        {{ self::write_head(head=appearance.Humanoid.head) }}
+        {{ self::write_height(height=appearance.Humanoid.height) }}
       {% elif appearance.HeadOnly %}
-        {{ self::write_head(head=appearance.HeadOnly.head, level=3) }}
+        {{ self::write_head(head=appearance.HeadOnly.head) }}
+        {{ self::write_height(height=appearance.HeadOnly.height) }}
       {% endif %}
     </ul>
+    <p><a href="/appearance/{{ id }}/edit">Edit Appearance</a></p>
     <p><h2>Front View</h2></p>
     <img src = "/character/{{ id }}/front.svg" alt="Front View of the Character" width="20%"/>
     <p><a href="/character">Back</a></p>
