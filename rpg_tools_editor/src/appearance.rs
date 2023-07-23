@@ -103,21 +103,21 @@ pub fn render_to_svg(config: &RenderConfig, appearance: &Appearance) -> RawSvg {
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub struct AppearanceOptions {
-    body_type: Vec<String>,
+    body_types: Vec<String>,
     colors: Vec<String>,
     colors_skin: Vec<String>,
-    head_shape: Vec<String>,
-    skin_type: Vec<String>,
+    head_shapes: Vec<String>,
+    skin_types: Vec<String>,
 }
 
 impl AppearanceOptions {
     pub fn new() -> Self {
         Self {
-            body_type: vec!["HeadOnly".to_string(), "Humanoid".to_string()],
+            body_types: vec!["HeadOnly".to_string(), "Humanoid".to_string()],
             colors: Color::get_all().iter().map(|c| c.to_string()).collect(),
             colors_skin: SkinColor::get_all().iter().map(|c| c.to_string()).collect(),
-            head_shape: HeadShape::get_all().iter().map(|c| c.to_string()).collect(),
-            skin_type: vec![
+            head_shapes: HeadShape::get_all().iter().map(|c| c.to_string()).collect(),
+            skin_types: vec![
                 "Scales".to_string(),
                 "Skin".to_string(),
                 "ExoticSkin".to_string(),

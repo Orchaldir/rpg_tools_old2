@@ -5,7 +5,7 @@
     <ul class="nested">
       <li>
         <b>Shape:</b>
-        {{ macros::add_select(name="head_shape", options=options.head_shape, selected=head.shape.t, update=true) }}
+        {{ macros::add_select(name="head_shape", options=options.head_shapes, selected=head.shape.t, update=true) }}
       </li>
       {{ self::edit_skin(skin=head.skin, options=options) }}
     </ul>
@@ -23,15 +23,14 @@
   <li><span class="caret">Skin</span>
     <ul class="nested">
       <li>
-        {{ macros::add_select(name="skin", options=options.skin_type, selected=skin.t, update=true) }}
+        {{ macros::add_select(name="skin", options=options.skin_types, selected=skin.t, update=true) }}
       </li>
       <li>
-        {% if skin.t == "ExoticSkin" %}
-          <b>Exotic Color:</b> {{ skin.c }}
-        {% elif skin.t == "Skin" %}
-          <b>Color:</b> {{ skin.c }}
-        {% elif skin.t == "Scales" %}
-          <b>Color:</b> {{ skin.c }}
+        <b>Color:</b>
+        {% if skin.t == "ExoticSkin" or skin.t == "Scales" %}
+          {{ macros::add_select(name="skin_color", options=options.colors, selected=skin.c, update=true) }}
+        {% else %}
+          {{ macros::add_select(name="skin_color", options=options.colors_skin, selected=skin.c, update=true) }}
         {% endif %}
       </li>
     </ul>
@@ -46,7 +45,7 @@
       <ul>
         <li>
           <b>Body Type:</b>
-          {{ macros::add_select(name="type", options=options.body_type, selected=appearance.type, update=true) }}
+          {{ macros::add_select(name="type", options=options.body_types, selected=appearance.type, update=true) }}
         </li>
         {% if appearance.type == "Humanoid" %}
           {{ self::edit_head(head=appearance.head, options=options) }}
