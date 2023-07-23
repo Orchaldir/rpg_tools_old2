@@ -15,7 +15,8 @@
       <ul>
         <li>
           <b>Body Type:</b>
-          {{ macros::add_select(name="body_type", options=options.body_type, selected="{% if appearance.HeadOnly %}HeadOnly{% else %}Humanoid{% endif %}") }}
+          {% if appearance.HeadOnly %}{% set body_type="HeadOnly" %}{% else %}{% set body_type="Humanoid" %}{% endif %}
+          {{ macros::add_select(name="body_type", options=options.body_type, selected=body_type) }}
         </li>
         {% if appearance.Humanoid %}
           {{ self::edit_height(height=appearance.Humanoid.height) }}
