@@ -3,7 +3,7 @@
 {% macro edit_height(height) %}
   <li>
     <b>Height in mm:</b>
-    <input type="number" step="1" id="height" name="height" value="{{ height.millimetre }}">
+    <input type="number" step="1" id="height" name="height" value="{{ height.millimetre }}" min="200" max="10000">
   </li>
 {% endmacro edit_height %}
 
