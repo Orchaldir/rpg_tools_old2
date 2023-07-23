@@ -120,8 +120,8 @@ fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
         .map(|character| render_to_svg(&state.config, character.appearance()))
 }
 
-#[get("/appearance/preview/<time>/front.svg")]
-fn get_appearance_preview(state: &State<EditorData>, time: usize) -> RawSvg {
+#[get("/appearance/preview/front.svg")]
+fn get_appearance_preview(state: &State<EditorData>) -> RawSvg {
     let preview = state.preview.lock().expect("lock shared preview");
     render_to_svg(&state.config, &preview)
 }

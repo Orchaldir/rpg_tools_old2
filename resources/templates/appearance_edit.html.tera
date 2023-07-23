@@ -76,5 +76,5 @@
       <button formaction="/appearance/{{ id }}/update" formmethod="post">Submit</button>
     </form>
     <p><a href="/character/{{ id }}">Back</a></p>
-    <img id="preview" src="/appearance/preview/0/front.svg" alt="Preview" width="20%"/>
+    <img id="preview" src="/appearance/preview/front.svg" alt="Preview" width="20%"/>
 {% endblock content %}
