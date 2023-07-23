@@ -12,7 +12,7 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::size::Size;
-use Size::High;
+use Size::Large;
 
 pub mod utils;
 
@@ -42,13 +42,13 @@ fn create_appearance(height: Length, skin: &Skin, color: &TeethColor) -> Appeara
                     pupil_color: Color::Blue,
                     background_color: Color::White,
                 },
-                distance: Size::Low,
+                distance: Size::Small,
             },
             hair: Hair::None,
             mouth: Mouth::Normal {
-                width: High,
+                width: Large,
                 color: None,
-                teeth: SpecialTeeth::LowerFangs(High),
+                teeth: SpecialTeeth::LowerFangs(Large),
                 teeth_color: *color,
             },
             shape: HeadShape::Oval,

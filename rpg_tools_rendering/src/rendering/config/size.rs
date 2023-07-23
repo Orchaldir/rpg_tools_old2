@@ -11,9 +11,9 @@ pub struct SizeConfig {
 impl SizeConfig {
     pub fn convert(&self, size: Size) -> f32 {
         match size {
-            Size::Low => self.low,
+            Size::Small => self.low,
             Size::Medium => self.medium,
-            Size::High => self.high,
+            Size::Large => self.high,
         }
     }
 }

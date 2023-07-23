@@ -24,7 +24,7 @@ fn main() {
         Eyes::One(eye),
         Eyes::Two {
             eye,
-            distance: Size::Low,
+            distance: Size::Small,
         },
         Eyes::Two {
             eye,
@@ -32,7 +32,7 @@ fn main() {
         },
         Eyes::Two {
             eye,
-            distance: Size::High,
+            distance: Size::Large,
         },
     ];
     let faces = HeadShape::get_all();

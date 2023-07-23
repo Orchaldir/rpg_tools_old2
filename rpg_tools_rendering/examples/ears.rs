@@ -18,9 +18,9 @@ pub mod utils;
 
 fn main() {
     let shape_options = vec![
-        EarShape::Pointed(Size::Low),
+        EarShape::Pointed(Size::Small),
         EarShape::Pointed(Size::Medium),
-        EarShape::Pointed(Size::High),
+        EarShape::Pointed(Size::Large),
         EarShape::Round,
         EarShape::Square,
     ];

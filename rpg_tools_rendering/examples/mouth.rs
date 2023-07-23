@@ -12,24 +12,24 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::size::Size;
-use Size::{High, Low, Medium};
+use Size::{Large, Medium, Small};
 
 pub mod utils;
 
 fn main() {
     let shape_options = vec![
-        create_circle(Low),
+        create_circle(Small),
         create_circle(Medium),
-        create_circle(High),
-        create_normal(Low, Low),
-        create_normal(Low, Medium),
-        create_normal(Low, High),
-        create_normal(Medium, Low),
+        create_circle(Large),
+        create_normal(Small, Small),
+        create_normal(Small, Medium),
+        create_normal(Small, Large),
+        create_normal(Medium, Small),
         create_normal(Medium, Medium),
-        create_normal(Medium, High),
-        create_normal(High, Low),
-        create_normal(High, Medium),
-        create_normal(High, High),
+        create_normal(Medium, Large),
+        create_normal(Large, Small),
+        create_normal(Large, Medium),
+        create_normal(Large, Large),
     ];
     let faces = HeadShape::get_all();
 

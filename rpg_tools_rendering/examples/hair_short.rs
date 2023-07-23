@@ -13,7 +13,7 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::side::Side;
-use rpg_tools_core::model::size::Size::{High, Low, Medium};
+use rpg_tools_core::model::size::Size::{Large, Medium, Small};
 use Hairline::{Round, Straight, Triangle, WidowsPeak};
 use ShortHair::{BuzzCut, MiddlePart, SidePart};
 use Side::{Left, Right};
@@ -22,14 +22,14 @@ pub mod utils;
 
 fn main() {
     let mut short_options = vec![
-        create_hair(FlatTop(Low), Round(Medium)),
+        create_hair(FlatTop(Small), Round(Medium)),
         create_hair(FlatTop(Medium), Straight(Medium)),
-        create_hair(FlatTop(High), WidowsPeak(Medium)),
-        create_hair(MiddlePart, Round(Low)),
+        create_hair(FlatTop(Large), WidowsPeak(Medium)),
+        create_hair(MiddlePart, Round(Small)),
         create_hair(MiddlePart, Round(Medium)),
-        create_hair(MiddlePart, Round(High)),
-        create_hair(SidePart(Left), Round(Low)),
-        create_hair(SidePart(Right), Round(Low)),
+        create_hair(MiddlePart, Round(Large)),
+        create_hair(SidePart(Left), Round(Small)),
+        create_hair(SidePart(Right), Round(Small)),
     ];
     add_all_hairlines(&mut short_options, BuzzCut);
 
@@ -43,18 +43,18 @@ fn main() {
 
 fn add_all_hairlines(short_options: &mut Vec<Hair>, style: ShortHair) {
     short_options.append(&mut vec![
-        create_hair(style, Round(Low)),
+        create_hair(style, Round(Small)),
         create_hair(style, Round(Medium)),
-        create_hair(style, Round(High)),
-        create_hair(style, Straight(Low)),
+        create_hair(style, Round(Large)),
+        create_hair(style, Straight(Small)),
         create_hair(style, Straight(Medium)),
-        create_hair(style, Straight(High)),
-        create_hair(style, Triangle(Low)),
+        create_hair(style, Straight(Large)),
+        create_hair(style, Triangle(Small)),
         create_hair(style, Triangle(Medium)),
-        create_hair(style, Triangle(High)),
-        create_hair(style, WidowsPeak(Low)),
+        create_hair(style, Triangle(Large)),
+        create_hair(style, WidowsPeak(Small)),
         create_hair(style, WidowsPeak(Medium)),
-        create_hair(style, WidowsPeak(High)),
+        create_hair(style, WidowsPeak(Large)),
     ]);
 }
 
