@@ -4,7 +4,7 @@ use crate::math::polygon2d::Polygon2d;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
 use crate::rendering::hair::hairline::add_hairlines;
-use crate::rendering::head::render_realistic_with_option;
+use crate::rendering::head::render_head_shape_with_option;
 use rpg_tools_core::model::character::appearance::hair::{HairColor, Hairline};
 use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::side::Side;
@@ -23,7 +23,7 @@ pub fn render_buzz_cut_realistic(
     let polygon = get_buzz_cut_realistic(config, aabb, head_shape, hairline);
 
     renderer.render_polygon(&polygon, &options);
-    render_realistic_with_option(renderer, config, aabb, line, head_shape);
+    render_head_shape_with_option(renderer, config, aabb, line, head_shape);
 }
 
 fn get_buzz_cut_realistic(

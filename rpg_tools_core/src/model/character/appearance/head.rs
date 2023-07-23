@@ -33,31 +33,27 @@ impl Default for Head {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 #[serde(tag = "t", content = "c")]
 pub enum HeadShape {
-    Circle,
     Oval,
     Round,
     RoundedRectangle,
     RoundedSquare,
-    Square,
     TriangleDown,
     TriangleUp,
 }
 
 impl Default for HeadShape {
     fn default() -> Self {
-        Self::Circle
+        Self::Round
     }
 }
 
 impl HeadShape {
     pub fn get_all() -> Vec<Self> {
         vec![
-            Self::Circle,
             Self::Oval,
             Self::Round,
             Self::RoundedRectangle,
             Self::RoundedSquare,
-            Self::Square,
             Self::TriangleDown,
             Self::TriangleUp,
         ]
