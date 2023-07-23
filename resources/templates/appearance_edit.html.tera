@@ -3,13 +3,7 @@
 {% macro edit_head(head, options) %}
   <li><span class="caret">Head</span>
     <ul class="nested">
-      <li>
-        {% if head.shape.t == "Geometric" %}
-          <b>Geometric Shape:</b> {{ head.shape.c.t }}
-        {% elif head.shape.t == "Realistic" %}
-          <b>Realistic Shape:</b> {{ head.shape.c.t }}
-        {% endif %}
-      </li>
+      <li><b>Shape:</b> {{ head.shape.t }}</li>
     </ul>
   </li>
 {% endmacro %}
