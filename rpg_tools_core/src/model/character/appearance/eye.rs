@@ -4,6 +4,7 @@ use serde::Serialize;
 
 /// How many eyes does the character have?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "t", content = "c")]
 pub enum Eyes {
     None,
     One(Eye),
@@ -17,6 +18,7 @@ pub enum Eyes {
 
 /// How does the eye look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "type")]
 pub enum Eye {
     Simple {
         eye_shape: EyeShape,

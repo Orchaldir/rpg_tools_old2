@@ -14,10 +14,10 @@
   <li><span class="caret">Head</span>
     <ul class="nested">
       <li>
-        {% if head.shape.Geometric %}
-          <b>Geometric Shape:</b> {{ head.shape.Geometric }}
-        {% elif head.shape.Realistic %}
-          <b>Realistic Shape:</b> {{ head.shape.Realistic }}
+        {% if head.shape.t == "Geometric" %}
+          <b>Geometric Shape:</b> {{ head.shape.c.t }}
+        {% elif head.shape.t == "Realistic" %}
+          <b>Realistic Shape:</b> {{ head.shape.c.t }}
         {% endif %}
       </li>
       {{ self::write_skin(skin=head.skin) }}
@@ -33,12 +33,12 @@
   <li><span class="caret">Skin</span>
     <ul class="nested">
       <li>
-        {% if skin.ExoticSkin %}
-          <b>Exotic Color:</b> {{ skin.ExoticSkin }}
-        {% elif skin.Skin %}
-          <b>Color:</b> {{ skin.Skin }}
-        {% elif skin.Scales %}
-          <b>Color:</b> {{ skin.Scales }}
+        {% if skin.t == "ExoticSkin" %}
+          <b>Exotic Color:</b> {{ skin.c }}
+        {% elif skin.t == "Skin" %}
+          <b>Color:</b> {{ skin.c }}
+        {% elif skin.t == "Scales" %}
+          <b>Color:</b> {{ skin.c }}
         {% endif %}
       </li>
     </ul>
@@ -52,15 +52,15 @@
     <p><b>Gender:</b> {{ gender }}</p>
     <p><a href="/character/{{ id }}/edit">Edit Data</a></p>
     <p><h2>Appearance</h2></p>
-    {# __tera_context #}
+    {{ __tera_context }}
     <ul id="myUL">
-      {% if appearance.Humanoid %}
-        {{ self::write_body(body=appearance.Humanoid.body) }}
-        {{ self::write_head(head=appearance.Humanoid.head) }}
-        {{ self::write_height(height=appearance.Humanoid.height) }}
-      {% elif appearance.HeadOnly %}
-        {{ self::write_head(head=appearance.HeadOnly.head) }}
-        {{ self::write_height(height=appearance.HeadOnly.height) }}
+      {% if appearance.type == "Humanoid" %}
+        {{ self::write_body(body=appearance.body) }}
+        {{ self::write_head(head=appearance.head) }}
+        {{ self::write_height(height=appearance.height) }}
+      {% elif appearance.type == "HeadOnly" %}
+        {{ self::write_head(head=appearance.head) }}
+        {{ self::write_height(height=appearance.height) }}
       {% endif %}
     </ul>
     <p><a href="/appearance/{{ id }}/edit">Edit Appearance</a></p>

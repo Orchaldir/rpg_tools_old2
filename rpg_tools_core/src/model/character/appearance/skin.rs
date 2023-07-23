@@ -4,6 +4,7 @@ use std::fmt;
 
 /// The skin of a [`Character`](crate::model::character::Character).
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "t", content = "c")]
 pub enum Skin {
     Scales(Color),
     Skin(SkinColor),

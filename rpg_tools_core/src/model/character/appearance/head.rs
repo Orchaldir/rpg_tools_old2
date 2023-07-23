@@ -31,6 +31,7 @@ impl Default for Head {
 
 /// What is the shape of the head?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "t", content = "c")]
 pub enum HeadShape {
     Geometric(GeometricHeadShape),
     Realistic(RealisticHeadShape),
@@ -44,6 +45,7 @@ impl Default for HeadShape {
 
 /// What geometric shape does the head have?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "t", content = "c")]
 pub enum GeometricHeadShape {
     Circle,
     Square,
