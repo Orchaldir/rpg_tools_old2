@@ -5,8 +5,7 @@ use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::ear::{EarShape, Ears};
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairline, ShortHair};
-use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
+use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
@@ -25,19 +24,12 @@ fn main() {
         EarShape::Round,
         EarShape::Square,
     ];
-    let faces = vec![
-        Oval,
-        RoundedRectangle,
-        Round,
-        RoundedSquare,
-        TriangleDown,
-        TriangleUp,
-    ];
+    let faces = HeadShape::get_all();
 
     render_2_sets("ears.svg", shape_options, faces, create_appearance);
 }
 
-fn create_appearance(height: Length, shape: &EarShape, face: &RealisticHeadShape) -> Appearance {
+fn create_appearance(height: Length, shape: &EarShape, face: &HeadShape) -> Appearance {
     Appearance::head(
         Head {
             ears: Ears::Normal { shape: *shape },
@@ -61,7 +53,7 @@ fn create_appearance(height: Length, shape: &EarShape, face: &RealisticHeadShape
                 teeth: SpecialTeeth::None,
                 teeth_color: TeethColor::White,
             },
-            shape: HeadShape::Realistic(*face),
+            shape: *face,
             skin: Skin::Skin(SkinColor::Light),
         },
         height,

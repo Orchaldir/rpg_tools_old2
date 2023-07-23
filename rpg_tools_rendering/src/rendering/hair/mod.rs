@@ -7,37 +7,34 @@ use crate::rendering::hair::short::{
     render_buzz_cut_realistic,
 };
 use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, ShortHair};
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
+use rpg_tools_core::model::character::appearance::head::Head;
 
 pub mod hairline;
 pub mod short;
 
 pub fn render_hair(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
-    match head.shape {
-        HeadShape::Geometric(_) => {}
-        HeadShape::Realistic(realistic) => match head.hair {
-            Hair::None => {}
-            Hair::Short {
-                style,
-                hairline,
-                color,
-            } => match style {
-                ShortHair::BuzzCut => {
-                    render_buzz_cut_realistic(renderer, config, aabb, realistic, hairline, color)
-                }
-                ShortHair::FlatTop(size) => {
-                    let polygon = get_flat_top_realistic(config, aabb, realistic, hairline, size);
-                    render_hair_polygon(renderer, config, &polygon, color);
-                }
-                ShortHair::MiddlePart => {
-                    let polygon = get_middle_part_realistic(config, aabb, realistic, hairline);
-                    render_hair_polygon(renderer, config, &polygon, color);
-                }
-                ShortHair::SidePart(side) => {
-                    let polygon = get_side_part_realistic(config, aabb, realistic, side);
-                    render_hair_polygon(renderer, config, &polygon, color);
-                }
-            },
+    match head.hair {
+        Hair::None => {}
+        Hair::Short {
+            style,
+            hairline,
+            color,
+        } => match style {
+            ShortHair::BuzzCut => {
+                render_buzz_cut_realistic(renderer, config, aabb, head.shape, hairline, color)
+            }
+            ShortHair::FlatTop(size) => {
+                let polygon = get_flat_top_realistic(config, aabb, head.shape, hairline, size);
+                render_hair_polygon(renderer, config, &polygon, color);
+            }
+            ShortHair::MiddlePart => {
+                let polygon = get_middle_part_realistic(config, aabb, head.shape, hairline);
+                render_hair_polygon(renderer, config, &polygon, color);
+            }
+            ShortHair::SidePart(side) => {
+                let polygon = get_side_part_realistic(config, aabb, head.shape, side);
+                render_hair_polygon(renderer, config, &polygon, color);
+            }
         },
     }
 }

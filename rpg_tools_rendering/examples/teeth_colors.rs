@@ -5,7 +5,7 @@ use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::hair::Hair;
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
+use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
@@ -51,7 +51,7 @@ fn create_appearance(height: Length, skin: &Skin, color: &TeethColor) -> Appeara
                 teeth: SpecialTeeth::LowerFangs(High),
                 teeth_color: *color,
             },
-            shape: HeadShape::Realistic(RealisticHeadShape::Oval),
+            shape: HeadShape::Oval,
             skin: *skin,
         },
         height,

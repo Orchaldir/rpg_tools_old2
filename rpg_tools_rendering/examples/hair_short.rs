@@ -6,7 +6,7 @@ use rpg_tools_core::model::character::appearance::ear::{EarShape, Ears};
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::hair::ShortHair::FlatTop;
 use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairline, ShortHair};
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
+use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
@@ -36,7 +36,7 @@ fn main() {
     render_2_sets(
         "hair_short.svg",
         short_options,
-        RealisticHeadShape::get_all(),
+        HeadShape::get_all(),
         create_appearance,
     );
 }
@@ -66,7 +66,7 @@ fn create_hair(style: ShortHair, hairline: Hairline) -> Hair {
     }
 }
 
-fn create_appearance(height: Length, hair: &Hair, face: &RealisticHeadShape) -> Appearance {
+fn create_appearance(height: Length, hair: &Hair, face: &HeadShape) -> Appearance {
     Appearance::head(
         Head {
             ears: Ears::Normal {
@@ -88,7 +88,7 @@ fn create_appearance(height: Length, hair: &Hair, face: &RealisticHeadShape) -> 
                 teeth: SpecialTeeth::None,
                 teeth_color: TeethColor::White,
             },
-            shape: HeadShape::Realistic(*face),
+            shape: *face,
             skin: Skin::Skin(SkinColor::Light),
         },
         height,

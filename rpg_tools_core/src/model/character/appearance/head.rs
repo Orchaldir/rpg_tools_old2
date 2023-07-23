@@ -33,42 +33,31 @@ impl Default for Head {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 #[serde(tag = "t", content = "c")]
 pub enum HeadShape {
-    Geometric(GeometricHeadShape),
-    Realistic(RealisticHeadShape),
-}
-
-impl Default for HeadShape {
-    fn default() -> Self {
-        Self::Geometric(GeometricHeadShape::Circle)
-    }
-}
-
-/// What geometric shape does the head have?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
-#[serde(tag = "t", content = "c")]
-pub enum GeometricHeadShape {
     Circle,
-    Square,
-}
-
-/// What geometric shape does the head have?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
-pub enum RealisticHeadShape {
     Oval,
     Round,
     RoundedRectangle,
     RoundedSquare,
+    Square,
     TriangleDown,
     TriangleUp,
 }
 
-impl RealisticHeadShape {
+impl Default for HeadShape {
+    fn default() -> Self {
+        Self::Circle
+    }
+}
+
+impl HeadShape {
     pub fn get_all() -> Vec<Self> {
         vec![
+            Self::Circle,
             Self::Oval,
             Self::Round,
             Self::RoundedRectangle,
             Self::RoundedSquare,
+            Self::Square,
             Self::TriangleDown,
             Self::TriangleUp,
         ]

@@ -1,7 +1,5 @@
-use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
-use rpg_tools_core::model::character::appearance::head::{
-    GeometricHeadShape, HeadShape, RealisticHeadShape,
-};
+use rpg_tools_core::model::character::appearance::head::HeadShape;
+use rpg_tools_core::model::character::appearance::head::HeadShape::*;
 
 /// The rendering config of the [`head`](rpg_tools_core::model::character::appearance::head::Head).
 ///
@@ -47,15 +45,17 @@ pub struct HeadConfig {
 }
 
 impl HeadConfig {
-    pub fn get_top_width(&self, realistic: RealisticHeadShape) -> f32 {
+    pub fn get_top_width(&self, realistic: HeadShape) -> f32 {
         match realistic {
+            Circle | Square => 1.0,
             RoundedRectangle | RoundedSquare => self.width_square,
             _ => self.width_round,
         }
     }
 
-    pub fn get_forehead_width(&self, realistic: RealisticHeadShape) -> f32 {
+    pub fn get_forehead_width(&self, realistic: HeadShape) -> f32 {
         match realistic {
+            Circle | Square => 1.0,
             Round | RoundedSquare | TriangleDown => self.width_wide,
             _ => self.width_narrow,
         }
@@ -63,13 +63,7 @@ impl HeadConfig {
 
     pub fn get_eye_width(&self, shape: HeadShape) -> f32 {
         match shape {
-            HeadShape::Geometric(_) => 1.0,
-            HeadShape::Realistic(realistic) => self.get_eye_width_realistic(realistic),
-        }
-    }
-
-    pub fn get_eye_width_realistic(&self, realistic: RealisticHeadShape) -> f32 {
-        match realistic {
+            Circle | Square => 1.0,
             Round | RoundedSquare => self.width_wide,
             Oval | RoundedRectangle => self.width_narrow,
             _ => (self.width_narrow + self.width_wide) / 2.0,
@@ -78,27 +72,16 @@ impl HeadConfig {
 
     pub fn get_mouth_width(&self, shape: HeadShape) -> f32 {
         match shape {
-            HeadShape::Geometric(geometric) => self.get_mouth_width_geometric(geometric),
-            HeadShape::Realistic(realistic) => self.get_mouth_width_realistic(realistic),
-        }
-    }
-
-    pub fn get_mouth_width_geometric(&self, geometric: GeometricHeadShape) -> f32 {
-        match geometric {
-            GeometricHeadShape::Circle => 1.0,
-            GeometricHeadShape::Square => get_circle_width(self.y_mouth),
-        }
-    }
-
-    pub fn get_mouth_width_realistic(&self, realistic: RealisticHeadShape) -> f32 {
-        match realistic {
+            Circle => 1.0,
             Round | RoundedSquare | TriangleUp => self.width_wide,
+            Square => get_circle_width(self.y_mouth),
             _ => self.width_narrow,
         }
     }
 
-    pub fn get_chin_width(&self, realistic: RealisticHeadShape) -> f32 {
+    pub fn get_chin_width(&self, realistic: HeadShape) -> f32 {
         match realistic {
+            Circle | Square => 1.0,
             RoundedRectangle | RoundedSquare | TriangleUp => self.width_square,
             Round => self.width_round,
             _ => self.width_sharp,

@@ -4,7 +4,6 @@ extern crate rpg_tools_rendering;
 use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::hair::Hair;
-use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::Mouth;
 use rpg_tools_core::model::character::appearance::skin::Skin;
@@ -23,17 +22,7 @@ fn main() {
     let config = create_config();
     let options = create_border_options();
 
-    for (i, realistic) in [
-        Oval,
-        RoundedRectangle,
-        Round,
-        RoundedSquare,
-        TriangleDown,
-        TriangleUp,
-    ]
-    .iter()
-    .enumerate()
-    {
+    for (i, shape) in HeadShape::get_all().iter().enumerate() {
         let appearance = Appearance::head(
             Head {
                 ears: Ears::None,
@@ -45,7 +34,7 @@ fn main() {
                 }),
                 hair: Hair::None,
                 mouth: Mouth::None,
-                shape: HeadShape::Realistic(*realistic),
+                shape: *shape,
                 skin: Skin::Scales(Color::Red),
             },
             Length::from_metre(1.0),
@@ -57,6 +46,6 @@ fn main() {
         svg_builder.render_rectangle(&aabb, &options);
         render_character(&mut svg_builder, &config, &aabb, &appearance);
         let svg = svg_builder.finish();
-        svg.save(&format!("{}-{:?}.svg", i, realistic)).unwrap();
+        svg.save(&format!("{}-{:?}.svg", i, shape)).unwrap();
     }
 }

@@ -6,7 +6,7 @@ use crate::rendering::config::RenderConfig;
 use crate::rendering::hair::hairline::add_hairlines;
 use crate::rendering::head::render_realistic_with_option;
 use rpg_tools_core::model::character::appearance::hair::{HairColor, Hairline};
-use rpg_tools_core::model::character::appearance::head::RealisticHeadShape;
+use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::side::Side;
 use rpg_tools_core::model::size::Size;
 
@@ -14,33 +14,32 @@ pub fn render_buzz_cut_realistic(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
-    realistic: RealisticHeadShape,
+    head_shape: HeadShape,
     hairline: Hairline,
     color: HairColor,
 ) {
     let options = RenderOptions::no_line(config.hair.get_color(color));
     let line = config.get_line_options(1.0);
-    let polygon = get_buzz_cut_realistic(config, aabb, realistic, hairline);
+    let polygon = get_buzz_cut_realistic(config, aabb, head_shape, hairline);
 
     renderer.render_polygon(&polygon, &options);
-    render_realistic_with_option(renderer, config, aabb, line, realistic);
+    render_realistic_with_option(renderer, config, aabb, line, head_shape);
 }
 
 fn get_buzz_cut_realistic(
     config: &RenderConfig,
     aabb: &AABB,
-    realistic: RealisticHeadShape,
+    head_shape: HeadShape,
     hairline: Hairline,
 ) -> Polygon2d {
-    let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(realistic), 0.0);
+    let (top_left, top_right) =
+        aabb.get_mirrored_points(config.head.get_top_width(head_shape), 0.0);
     let (forehead_left, forehead_right) = aabb.get_mirrored_points(
-        config.head.get_forehead_width(realistic),
+        config.head.get_forehead_width(head_shape),
         config.head.y_forehead,
     );
-    let (bottom_left, bottom_right) = aabb.get_mirrored_points(
-        config.head.get_eye_width_realistic(realistic),
-        config.head.y_eye,
-    );
+    let (bottom_left, bottom_right) =
+        aabb.get_mirrored_points(config.head.get_eye_width(head_shape), config.head.y_eye);
     let mut corners = vec![top_left, forehead_left, bottom_left];
 
     add_hairlines(config, aabb, hairline, &mut corners);
@@ -56,13 +55,13 @@ fn get_buzz_cut_realistic(
 pub fn get_flat_top_realistic(
     config: &RenderConfig,
     aabb: &AABB,
-    realistic: RealisticHeadShape,
+    head_shape: HeadShape,
     hairline: Hairline,
     size: Size,
 ) -> Polygon2d {
-    let bottom_width = config.head.get_eye_width_realistic(realistic);
-    let forehead_width = config.head.get_forehead_width(realistic);
-    let top_width = config.head.get_top_width(realistic);
+    let bottom_width = config.head.get_eye_width(head_shape);
+    let forehead_width = config.head.get_forehead_width(head_shape);
+    let top_width = config.head.get_top_width(head_shape);
     let flattop_width = forehead_width.max(top_width);
     let flattop_y = config.hair.short.y_flat_top.convert(size);
 
@@ -90,7 +89,7 @@ pub fn get_flat_top_realistic(
 pub fn get_middle_part_realistic(
     config: &RenderConfig,
     aabb: &AABB,
-    realistic: RealisticHeadShape,
+    head_shape: HeadShape,
     hairline: Hairline,
 ) -> Polygon2d {
     let hairline_y = config
@@ -98,10 +97,11 @@ pub fn get_middle_part_realistic(
         .short
         .y_middle_part
         .convert(hairline.get_y_position());
-    let bottom_width = config.head.get_eye_width_realistic(realistic);
-    let forehead_width = config.head.get_forehead_width(realistic);
+    let bottom_width = config.head.get_eye_width(head_shape);
+    let forehead_width = config.head.get_forehead_width(head_shape);
 
-    let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(realistic), 0.0);
+    let (top_left, top_right) =
+        aabb.get_mirrored_points(config.head.get_top_width(head_shape), 0.0);
     let (forehead_left, forehead_right) =
         aabb.get_mirrored_points(forehead_width, config.head.y_forehead);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, config.head.y_eye);
@@ -133,17 +133,18 @@ pub fn get_middle_part_realistic(
 pub fn get_side_part_realistic(
     config: &RenderConfig,
     aabb: &AABB,
-    realistic: RealisticHeadShape,
+    head_shape: HeadShape,
     side: Side,
 ) -> Polygon2d {
-    let bottom_width = config.head.get_eye_width_realistic(realistic);
-    let forehead_width = config.head.get_forehead_width(realistic);
+    let bottom_width = config.head.get_eye_width(head_shape);
+    let forehead_width = config.head.get_forehead_width(head_shape);
     let side_part_horizontal = config
         .hair
         .short
         .get_side_part_horizontal(side, forehead_width);
 
-    let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(realistic), 0.0);
+    let (top_left, top_right) =
+        aabb.get_mirrored_points(config.head.get_top_width(head_shape), 0.0);
     let (forehead_left, forehead_right) =
         aabb.get_mirrored_points(forehead_width, config.head.y_forehead);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, config.head.y_eye);
