@@ -3,8 +3,8 @@
 {% macro edit_body(body, options) %}
   <li><span class="caret">Body</span>
     <ul class="nested">
-      <li><b>Shape:</b> {{ body.shape }}</li>
-      <li><b>Width:</b> {{ body.width }}</li>
+      <li>Shape: {{ body.shape }}</li>
+      <li>Width: {{ body.width }}</li>
       {{ self::edit_skin(skin=body.skin, path="body", options=options) }}
     </ul>
   </li>
@@ -14,7 +14,7 @@
   <li><span class="caret">Head</span>
     <ul class="nested">
       <li>
-        <b>Shape:</b>
+        Shape:
         {{ macros::add_select(name="head_shape", options=options.head_shapes, selected=head.shape.t, update=true) }}
       </li>
       {{ self::edit_skin(skin=head.skin, path="head", options=options) }}
@@ -24,7 +24,7 @@
 
 {% macro edit_height(height) %}
   <li>
-    <b>Height in mm:</b>
+    Height in mm:
     <input type="number" step="1" id="height" name="height" value="{{ height.millimetre }}" min="200" max="10000" onchange="updateAppearancePreview();">
   </li>
 {% endmacro %}
@@ -36,7 +36,7 @@
         {{ macros::add_select(name=path ~ ".skin", options=options.skin_types, selected=skin.t, update=true) }}
       </li>
       <li>
-        <b>Color:</b>
+        Color:
         {% if skin.t == "ExoticSkin" or skin.t == "Scales" %}
           {{ macros::add_select(name=path ~ ".skin_color", options=options.colors, selected=skin.c, update=true) }}
         {% else %}
@@ -49,12 +49,12 @@
 
 {% block content %}
     <p><h1>Edit appearance of {{ name }}</h1></p>
-    <p><b>Id:</b> {{ id }}</p>
+    <p>Id: {{ id }}</p>
     {{ __tera_context }}
     <form id="appearanceForm" action="/appearance/{{ id }}/preview" method="post">
       <ul>
         <li>
-          <b>Body Type:</b>
+          Type:
           {{ macros::add_select(name="type", options=options.body_types, selected=appearance.type, update=true) }}
         </li>
         {% if appearance.type == "Humanoid" %}
