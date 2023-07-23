@@ -47,36 +47,36 @@ pub struct HeadConfig {
 impl HeadConfig {
     pub fn get_top_width(&self, realistic: HeadShape) -> f32 {
         match realistic {
-            RoundedRectangle | RoundedSquare => self.width_square,
+            Rectangle | Square => self.width_square,
             _ => self.width_round,
         }
     }
 
     pub fn get_forehead_width(&self, realistic: HeadShape) -> f32 {
         match realistic {
-            Round | RoundedSquare | TriangleDown => self.width_wide,
+            Round | Square | TriangleDown => self.width_wide,
             _ => self.width_narrow,
         }
     }
 
     pub fn get_eye_width(&self, shape: HeadShape) -> f32 {
         match shape {
-            Round | RoundedSquare => self.width_wide,
-            Oval | RoundedRectangle => self.width_narrow,
+            Round | Square => self.width_wide,
+            Oval | Rectangle => self.width_narrow,
             _ => (self.width_narrow + self.width_wide) / 2.0,
         }
     }
 
     pub fn get_mouth_width(&self, shape: HeadShape) -> f32 {
         match shape {
-            Round | RoundedSquare | TriangleUp => self.width_wide,
+            Round | Square | TriangleUp => self.width_wide,
             _ => self.width_narrow,
         }
     }
 
     pub fn get_chin_width(&self, realistic: HeadShape) -> f32 {
         match realistic {
-            RoundedRectangle | RoundedSquare | TriangleUp => self.width_square,
+            Rectangle | Square | TriangleUp => self.width_square,
             Round => self.width_round,
             _ => self.width_sharp,
         }

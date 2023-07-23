@@ -39,7 +39,7 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
                                 update_head(head, &data),
                                 height,
                             ),
-                            Humanoid { body, head, .. } => Appearance::humanoid(
+                            Humanoid { head, .. } => Appearance::humanoid(
                                 update_body(&data),
                                 update_head(head, &data),
                                 height,

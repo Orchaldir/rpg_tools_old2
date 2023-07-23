@@ -35,9 +35,9 @@ impl Default for Head {
 #[serde(tag = "t", content = "c")]
 pub enum HeadShape {
     Oval,
+    Rectangle,
     Round,
-    RoundedRectangle,
-    RoundedSquare,
+    Square,
     TriangleDown,
     TriangleUp,
 }
@@ -53,8 +53,8 @@ impl HeadShape {
         vec![
             Self::Oval,
             Self::Round,
-            Self::RoundedRectangle,
-            Self::RoundedSquare,
+            Self::Rectangle,
+            Self::Square,
             Self::TriangleDown,
             Self::TriangleUp,
         ]
@@ -71,8 +71,8 @@ impl From<&str> for HeadShape {
     fn from(shape: &str) -> Self {
         match shape {
             "Oval" => Self::Oval,
-            "RoundedRectangle" => Self::RoundedRectangle,
-            "RoundedSquare" => Self::RoundedSquare,
+            "Rectangle" => Self::Rectangle,
+            "Square" => Self::Square,
             "TriangleDown" => Self::TriangleDown,
             "TriangleUp" => Self::TriangleUp,
             _ => Self::Round,
