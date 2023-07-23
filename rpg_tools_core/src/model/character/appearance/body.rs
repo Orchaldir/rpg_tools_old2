@@ -1,6 +1,7 @@
 use crate::model::character::appearance::skin::Skin;
 use crate::model::width::Width;
 use serde::Serialize;
+use std::fmt;
 
 /// How does the humanoid body look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
@@ -32,4 +33,45 @@ pub enum BodyShape {
     Muscular,
     /// The shoulders, waist & hips are equally wide.
     Rectangle,
+}
+
+impl BodyShape {
+    pub fn get_all() -> Vec<Self> {
+        vec![
+            BodyShape::Fat,
+            BodyShape::Hourglass,
+            BodyShape::Muscular,
+            BodyShape::Rectangle,
+        ]
+    }
+}
+
+impl fmt::Display for BodyShape {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
+impl From<&str> for BodyShape {
+    fn from(shape: &str) -> Self {
+        match shape {
+            "Fat" => BodyShape::Fat,
+            "Hourglass" => BodyShape::Hourglass,
+            "Muscular" => BodyShape::Muscular,
+            _ => Self::Rectangle,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_conversion() {
+        for shape in BodyShape::get_all() {
+            let string = shape.to_string();
+            assert_eq!(shape, BodyShape::from(&*string));
+        }
+    }
 }

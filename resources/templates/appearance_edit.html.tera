@@ -3,7 +3,10 @@
 {% macro edit_body(body, options) %}
   <li><span class="caret">Body</span>
     <ul class="nested">
-      <li>Shape: {{ body.shape }}</li>
+      <li>
+        Shape:
+        {{ macros::add_select(name="body.shape", options=options.body_shapes, selected=body.shape, update=true) }}
+      </li>
       <li>
         Width:
         {{ macros::add_select(name="body.width", options=options.widths, selected=body.width, update=true) }}

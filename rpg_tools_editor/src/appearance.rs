@@ -1,4 +1,4 @@
-use rpg_tools_core::model::character::appearance::body::Body;
+use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
@@ -40,7 +40,7 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
                                 height,
                             ),
                             Humanoid { body, head, .. } => Appearance::humanoid(
-                                update_body(body, &data),
+                                update_body(&data),
                                 update_head(head, &data),
                                 height,
                             ),
@@ -55,15 +55,18 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
     Appearance::default()
 }
 
-fn update_body(body: &Body, data: &UrlEncodedData) -> Body {
+fn update_body(data: &UrlEncodedData) -> Body {
     if let Some(width) = data.get_first("body.width") {
-        let width: Width = width.into();
+        if let Some(shape) = data.get_first("body.shape") {
+            let width: Width = width.into();
+            let shape: BodyShape = shape.into();
 
-        return Body {
-            width,
-            skin: update_skin("body", data),
-            ..*body
-        };
+            return Body {
+                shape,
+                width,
+                skin: update_skin("body", data),
+            };
+        }
     }
 
     Body::default()
@@ -121,6 +124,7 @@ pub fn render_to_svg(config: &RenderConfig, appearance: &Appearance) -> RawSvg {
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub struct AppearanceOptions {
     body_types: Vec<String>,
+    body_shapes: Vec<String>,
     colors: Vec<String>,
     colors_skin: Vec<String>,
     head_shapes: Vec<String>,
@@ -132,6 +136,7 @@ impl AppearanceOptions {
     pub fn new() -> Self {
         Self {
             body_types: vec!["HeadOnly".to_string(), "Humanoid".to_string()],
+            body_shapes: BodyShape::get_all().iter().map(|c| c.to_string()).collect(),
             colors: Color::get_all().iter().map(|c| c.to_string()).collect(),
             colors_skin: SkinColor::get_all().iter().map(|c| c.to_string()).collect(),
             head_shapes: HeadShape::get_all().iter().map(|c| c.to_string()).collect(),
