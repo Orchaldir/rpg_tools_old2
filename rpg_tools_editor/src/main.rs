@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate rocket;
 
-use crate::appearance::AppearanceUpdate;
+use crate::appearance::{render_to_svg, AppearanceUpdate, RawSvg};
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
@@ -20,11 +20,7 @@ use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::width::Width;
-use rpg_tools_rendering::math::aabb2d::AABB;
-use rpg_tools_rendering::renderer::svg::SvgBuilder;
-use rpg_tools_rendering::renderer::Renderer;
-use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character};
-use rpg_tools_rendering::rendering::config::example::{create_border_options, create_config};
+use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::sync::Mutex;
 
@@ -34,10 +30,6 @@ struct EditorData {
     config: RenderConfig,
     data: Mutex<CharacterMgr>,
 }
-
-#[derive(Responder)]
-#[response(status = 200, content_type = "image/svg+xml")]
-struct RawSvg(String);
 
 #[get("/")]
 fn home(data: &State<EditorData>) -> Template {
@@ -123,22 +115,8 @@ fn update_character(
 #[get("/character/<id>/front.svg")]
 fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
     let data = state.data.lock().expect("lock shared data");
-    data.get(CharacterId::new(id)).map(|character| {
-        let size = calculate_character_size(&state.config, character.appearance());
-        let aabb = AABB::with_size(size);
-        let options = create_border_options();
-        let mut svg_builder = SvgBuilder::new(size);
-
-        svg_builder.render_rectangle(&aabb, &options);
-        render_character(
-            &mut svg_builder,
-            &state.config,
-            &aabb,
-            character.appearance(),
-        );
-        let svg = svg_builder.finish();
-        RawSvg(svg.export())
-    })
+    data.get(CharacterId::new(id))
+        .map(|character| render_to_svg(&state.config, character.appearance()))
 }
 
 #[get("/appearance/<id>/edit")]
