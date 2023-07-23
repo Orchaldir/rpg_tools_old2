@@ -1,3 +1,4 @@
+use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::character::appearance::skin::SkinColor;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
@@ -9,24 +10,38 @@ use rpg_tools_rendering::rendering::character::{calculate_character_size, render
 use rpg_tools_rendering::rendering::config::example::create_border_options;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use serde::Serialize;
+use url_encoded_data::UrlEncodedData;
 
-#[derive(FromForm, Debug)]
-pub struct AppearanceUpdate<'r> {
-    body_type: &'r str,
-    height: u32,
-}
+pub fn apply_appearance_update(appearance: &Appearance, update: &str) -> Appearance {
+    let data = UrlEncodedData::parse_str(update);
 
-impl<'r> AppearanceUpdate<'r> {
-    pub fn apply(&self, appearance: &Appearance) -> Appearance {
-        match appearance {
-            Appearance::HeadOnly { head, .. } => {
-                Appearance::head(*head, Length::from_millimetre(self.height))
-            }
-            Appearance::Humanoid { body, head, .. } => {
-                Appearance::humanoid(*body, *head, Length::from_millimetre(self.height))
+    if let Some(t) = data.get_first("type") {
+        if let Some(height) = data.get_first("height") {
+            if let Ok(height) = height.parse::<u32>().map(Length::from_millimetre) {
+                match t {
+                    "HeadOnly" => {
+                        return match appearance {
+                            Appearance::HeadOnly { head, .. } => Appearance::head(*head, height),
+                            Appearance::Humanoid { head, .. } => Appearance::head(*head, height),
+                        }
+                    }
+                    "Humanoid" => {
+                        return match appearance {
+                            Appearance::HeadOnly { head, .. } => {
+                                Appearance::humanoid(Body::default(), *head, height)
+                            }
+                            Appearance::Humanoid { body, head, .. } => {
+                                Appearance::humanoid(*body, *head, height)
+                            }
+                        }
+                    }
+                    _ => {}
+                }
             }
         }
     }
+
+    Appearance::default()
 }
 
 #[derive(Responder)]

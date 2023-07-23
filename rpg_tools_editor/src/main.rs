@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate rocket;
 
-use crate::appearance::{render_to_svg, AppearanceOptions, AppearanceUpdate, RawSvg};
+use crate::appearance::{apply_appearance_update, render_to_svg, AppearanceOptions, RawSvg};
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
@@ -148,34 +148,28 @@ fn edit_appearance(state: &State<EditorData>, id: usize) -> Option<Template> {
 }
 
 #[post("/appearance/<id>/update", data = "<update>")]
-fn update_appearance(
-    data: &State<EditorData>,
-    id: usize,
-    update: Form<AppearanceUpdate<'_>>,
-) -> Option<Template> {
+fn update_appearance(data: &State<EditorData>, id: usize, update: String) -> Option<Template> {
     let mut data = data.data.lock().expect("lock shared data");
 
     println!("Update appearance of character {} with {:?}", id, update);
 
     data.get_mut(CharacterId::new(id))
         .map(|character| {
-            character.set_appearance(update.apply(character.appearance()));
+            character.set_appearance(apply_appearance_update(character.appearance(), &update));
             character
         })
         .map(|character| show_character_template(id, character))
 }
 
 #[post("/appearance/<id>/preview", data = "<update>")]
-fn update_appearance_preview(
-    state: &State<EditorData>,
-    id: usize,
-    update: Form<AppearanceUpdate<'_>>,
-) -> Status {
+fn update_appearance_preview(state: &State<EditorData>, id: usize, update: String) -> Status {
     let mut data = state.data.lock().expect("lock shared data");
     let mut preview = state.preview.lock().expect("lock shared preview");
 
+    println!("Preview appearance of character {} with {:?}", id, update);
+
     data.get_mut(CharacterId::new(id)).map(|character| {
-        *preview = update.apply(character.appearance());
+        *preview = apply_appearance_update(character.appearance(), &update);
         character
     });
 
