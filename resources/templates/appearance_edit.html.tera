@@ -4,7 +4,10 @@
   <li><span class="caret">Body</span>
     <ul class="nested">
       <li>Shape: {{ body.shape }}</li>
-      <li>Width: {{ body.width }}</li>
+      <li>
+        Width:
+        {{ macros::add_select(name="body.width", options=options.widths, selected=body.width, update=true) }}
+      </li>
       {{ self::edit_skin(skin=body.skin, path="body", options=options) }}
     </ul>
   </li>

@@ -4,6 +4,7 @@ use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
+use rpg_tools_core::model::width::Width;
 use rpg_tools_rendering::math::aabb2d::AABB;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
 use rpg_tools_rendering::renderer::Renderer;
@@ -55,10 +56,17 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
 }
 
 fn update_body(body: &Body, data: &UrlEncodedData) -> Body {
-    Body {
-        skin: update_skin("body", data),
-        ..*body
+    if let Some(width) = data.get_first("body.width") {
+        let width: Width = width.into();
+
+        return Body {
+            width,
+            skin: update_skin("body", data),
+            ..*body
+        };
     }
+
+    Body::default()
 }
 
 fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
@@ -117,6 +125,7 @@ pub struct AppearanceOptions {
     colors_skin: Vec<String>,
     head_shapes: Vec<String>,
     skin_types: Vec<String>,
+    widths: Vec<String>,
 }
 
 impl AppearanceOptions {
@@ -131,6 +140,7 @@ impl AppearanceOptions {
                 "Skin".to_string(),
                 "ExoticSkin".to_string(),
             ],
+            widths: Width::get_all().iter().map(|c| c.to_string()).collect(),
         }
     }
 }
