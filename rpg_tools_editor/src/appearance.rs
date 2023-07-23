@@ -11,6 +11,7 @@ use rpg_tools_rendering::rendering::config::example::create_border_options;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use serde::Serialize;
 use url_encoded_data::UrlEncodedData;
+use Appearance::{HeadOnly, Humanoid};
 
 pub fn apply_appearance_update(appearance: &Appearance, update: &str) -> Appearance {
     let data = UrlEncodedData::parse_str(update);
@@ -21,16 +22,16 @@ pub fn apply_appearance_update(appearance: &Appearance, update: &str) -> Appeara
                 match t {
                     "HeadOnly" => {
                         return match appearance {
-                            Appearance::HeadOnly { head, .. } => Appearance::head(*head, height),
-                            Appearance::Humanoid { head, .. } => Appearance::head(*head, height),
+                            HeadOnly { head, .. } => Appearance::head(*head, height),
+                            Humanoid { head, .. } => Appearance::head(*head, height),
                         }
                     }
                     "Humanoid" => {
                         return match appearance {
-                            Appearance::HeadOnly { head, .. } => {
+                            HeadOnly { head, .. } => {
                                 Appearance::humanoid(Body::default(), *head, height)
                             }
-                            Appearance::Humanoid { body, head, .. } => {
+                            Humanoid { body, head, .. } => {
                                 Appearance::humanoid(*body, *head, height)
                             }
                         }
