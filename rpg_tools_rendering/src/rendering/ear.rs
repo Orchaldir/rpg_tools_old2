@@ -13,7 +13,7 @@ pub fn render_ears(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     match &head.ears {
         Ears::None => {}
         Ears::Normal { shape, size } => match shape {
-            EarShape::Round => render_round_ears(renderer, config, &options, aabb, head),
+            EarShape::Round => render_round_ears(renderer, config, &options, aabb, head, *size),
             _ => render_normal_ears(renderer, config, &options, aabb, head, *shape, *size),
         },
     }
@@ -25,9 +25,10 @@ pub fn render_round_ears(
     options: &RenderOptions,
     aabb: &AABB,
     head: &Head,
+    size: Size,
 ) {
     let width_eyes = config.head.get_eye_width(head.shape);
-    let radius = config.ear.get_round_ear_radius(aabb);
+    let radius = config.ear.get_round_ear_radius(aabb, size);
     let (left, right) = aabb.get_mirrored_points(width_eyes, config.head.y_eye);
 
     renderer.render_circle(&left, radius, options);

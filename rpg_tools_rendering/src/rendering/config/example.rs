@@ -88,7 +88,11 @@ pub fn create_ear_config() -> EarConfig {
             medium: 0.2,
             high: 0.3,
         },
-        round_factor: 0.1,
+        round_factor: SizeConfig {
+            low: 0.1,
+            medium: 0.125,
+            high: 0.15,
+        },
     }
 }
 

@@ -14,16 +14,19 @@ use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::side::Side::Left;
 use rpg_tools_core::model::size::Size;
 use EarShape::*;
+use Size::*;
 
 pub mod utils;
 
 fn main() {
     let shape_options = vec![
-        create(Pointed, Size::Small),
-        create(Pointed, Size::Medium),
-        create(Pointed, Size::Large),
-        create(Round, Size::Medium),
-        create(Square, Size::Medium),
+        create(Pointed, Small),
+        create(Pointed, Medium),
+        create(Pointed, Large),
+        create(Round, Small),
+        create(Round, Medium),
+        create(Round, Large),
+        create(Square, Medium),
     ];
     let faces = HeadShape::get_all();
 
