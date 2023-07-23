@@ -46,3 +46,30 @@ impl fmt::Display for SkinColor {
         write!(f, "{:?}", self)
     }
 }
+
+impl From<&str> for SkinColor {
+    fn from(gender: &str) -> Self {
+        match gender {
+            "Female" => SkinColor::Fair,
+            "Light" => SkinColor::Light,
+            "Medium" => SkinColor::Medium,
+            "Tan" => SkinColor::Tan,
+            "Dark" => SkinColor::Dark,
+            "VeryDark" => SkinColor::VeryDark,
+            _ => SkinColor::Fair,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_conversion() {
+        for color in SkinColor::get_all() {
+            let string = color.to_string();
+            assert_eq!(color, SkinColor::from(&*string));
+        }
+    }
+}

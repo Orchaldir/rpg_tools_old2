@@ -1,6 +1,6 @@
 use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
-use rpg_tools_core::model::character::appearance::skin::SkinColor;
+use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
@@ -57,8 +57,32 @@ fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
 
     Head {
         shape,
+        skin: update_skin(data),
         ..*head
     }
+}
+
+fn update_skin(data: &UrlEncodedData) -> Skin {
+    if let Some(t) = data.get_first("skin") {
+        if let Some(c) = data.get_first("skin_color") {
+            return match t {
+                "Scales" => {
+                    let color = Color::from(c);
+                    Skin::Scales(color)
+                }
+                "ExoticSkin" => {
+                    let color = Color::from(c);
+                    Skin::ExoticSkin(color)
+                }
+                _ => {
+                    let color = SkinColor::from(c);
+                    Skin::Skin(color)
+                }
+            };
+        }
+    }
+
+    Skin::default()
 }
 
 #[derive(Responder)]
@@ -83,6 +107,7 @@ pub struct AppearanceOptions {
     colors: Vec<String>,
     colors_skin: Vec<String>,
     head_shape: Vec<String>,
+    skin_type: Vec<String>,
 }
 
 impl AppearanceOptions {
@@ -92,6 +117,11 @@ impl AppearanceOptions {
             colors: Color::get_all().iter().map(|c| c.to_string()).collect(),
             colors_skin: SkinColor::get_all().iter().map(|c| c.to_string()).collect(),
             head_shape: HeadShape::get_all().iter().map(|c| c.to_string()).collect(),
+            skin_type: vec![
+                "Scales".to_string(),
+                "Skin".to_string(),
+                "ExoticSkin".to_string(),
+            ],
         }
     }
 }

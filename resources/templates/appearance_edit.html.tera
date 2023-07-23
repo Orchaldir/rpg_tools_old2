@@ -7,6 +7,7 @@
         <b>Shape:</b>
         {{ macros::add_select(name="head_shape", options=options.head_shape, selected=head.shape.t, update=true) }}
       </li>
+      {{ self::edit_skin(skin=head.skin, options=options) }}
     </ul>
   </li>
 {% endmacro %}
@@ -15,6 +16,25 @@
   <li>
     <b>Height in mm:</b>
     <input type="number" step="1" id="height" name="height" value="{{ height.millimetre }}" min="200" max="10000" onchange="updateAppearancePreview();">
+  </li>
+{% endmacro %}
+
+{% macro edit_skin(skin, options) %}
+  <li><span class="caret">Skin</span>
+    <ul class="nested">
+      <li>
+        {{ macros::add_select(name="skin", options=options.skin_type, selected=skin.t, update=true) }}
+      </li>
+      <li>
+        {% if skin.t == "ExoticSkin" %}
+          <b>Exotic Color:</b> {{ skin.c }}
+        {% elif skin.t == "Skin" %}
+          <b>Color:</b> {{ skin.c }}
+        {% elif skin.t == "Scales" %}
+          <b>Color:</b> {{ skin.c }}
+        {% endif %}
+      </li>
+    </ul>
   </li>
 {% endmacro %}
 

@@ -79,3 +79,16 @@ impl From<&str> for HeadShape {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_conversion() {
+        for shape in HeadShape::get_all() {
+            let string = shape.to_string();
+            assert_eq!(shape, HeadShape::from(&*string));
+        }
+    }
+}

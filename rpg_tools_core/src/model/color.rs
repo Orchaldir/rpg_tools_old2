@@ -53,3 +53,40 @@ impl fmt::Display for Color {
         write!(f, "{:?}", self)
     }
 }
+
+impl From<&str> for Color {
+    fn from(shape: &str) -> Self {
+        match shape {
+            "Aqua" => Color::Aqua,
+            "Black" => Color::Black,
+            "Blue" => Color::Blue,
+            "Fuchsia" => Color::Fuchsia,
+            "Gray" => Color::Gray,
+            "Green" => Color::Green,
+            "Lime" => Color::Lime,
+            "Maroon" => Color::Maroon,
+            "Navy" => Color::Navy,
+            "Olive" => Color::Olive,
+            "Orange" => Color::Orange,
+            "Red" => Color::Red,
+            "Silver" => Color::Silver,
+            "Teal" => Color::Teal,
+            "White" => Color::White,
+            "Yellow" => Color::Yellow,
+            _ => Self::Purple,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_conversion() {
+        for color in Color::get_all() {
+            let string = color.to_string();
+            assert_eq!(color, Color::from(&*string));
+        }
+    }
+}
