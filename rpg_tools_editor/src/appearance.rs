@@ -1,4 +1,5 @@
 use rpg_tools_core::model::character::appearance::body::Body;
+use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::skin::SkinColor;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
@@ -13,7 +14,7 @@ use serde::Serialize;
 use url_encoded_data::UrlEncodedData;
 use Appearance::{HeadOnly, Humanoid};
 
-pub fn apply_appearance_update(appearance: &Appearance, update: &str) -> Appearance {
+pub fn update_appearance(appearance: &Appearance, update: &str) -> Appearance {
     let data = UrlEncodedData::parse_str(update);
 
     if let Some(t) = data.get_first("type") {
@@ -22,17 +23,23 @@ pub fn apply_appearance_update(appearance: &Appearance, update: &str) -> Appeara
                 match t {
                     "HeadOnly" => {
                         return match appearance {
-                            HeadOnly { head, .. } => Appearance::head(*head, height),
-                            Humanoid { head, .. } => Appearance::head(*head, height),
+                            HeadOnly { head, .. } => {
+                                Appearance::head(update_head(head, &data), height)
+                            }
+                            Humanoid { head, .. } => {
+                                Appearance::head(update_head(head, &data), height)
+                            }
                         }
                     }
                     "Humanoid" => {
                         return match appearance {
-                            HeadOnly { head, .. } => {
-                                Appearance::humanoid(Body::default(), *head, height)
-                            }
+                            HeadOnly { head, .. } => Appearance::humanoid(
+                                Body::default(),
+                                update_head(head, &data),
+                                height,
+                            ),
                             Humanoid { body, head, .. } => {
-                                Appearance::humanoid(*body, *head, height)
+                                Appearance::humanoid(*body, update_head(head, &data), height)
                             }
                         }
                     }
@@ -43,6 +50,10 @@ pub fn apply_appearance_update(appearance: &Appearance, update: &str) -> Appeara
     }
 
     Appearance::default()
+}
+
+fn update_head(head: &head, data: &UrlEncodedData) -> Head {
+    Head::default()
 }
 
 #[derive(Responder)]

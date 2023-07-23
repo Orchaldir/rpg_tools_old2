@@ -1,5 +1,5 @@
-{% macro add_select(name, options, selected) %}
-  <select id="{{ name }}" name="{{ name }}">
+{% macro add_select(name, options, selected, update=false) %}
+  <select id="{{ name }}" name="{{ name }}" {% if update %}onchange="updateAppearancePreview();"{% endif %}>
     {% for o in options %}
       <option value="{{ o }}"{% if o == selected %} selected{% endif %}>{{ o }}</option>
     {% endfor %}
