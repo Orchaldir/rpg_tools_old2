@@ -47,6 +47,7 @@ pub fn render_to_svg(config: &RenderConfig, appearance: &Appearance) -> RawSvg {
 
 #[derive(Clone, Debug, PartialEq, Eq, Serialize)]
 pub struct AppearanceOptions {
+    body_type: Vec<String>,
     colors: Vec<String>,
     colors_skin: Vec<String>,
 }
@@ -54,6 +55,7 @@ pub struct AppearanceOptions {
 impl AppearanceOptions {
     pub fn new() -> Self {
         Self {
+            body_type: vec!["HeadOnly".to_string(), "Humanoid".to_string()],
             colors: Color::get_all().iter().map(|c| c.to_string()).collect(),
             colors_skin: SkinColor::get_all().iter().map(|c| c.to_string()).collect(),
         }

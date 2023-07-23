@@ -15,10 +15,7 @@
       <ul>
         <li>
           <b>Body Type:</b>
-          <select id="body_type" name="body_type">
-            <option value="HeadOnly"{% if appearance.HeadOnly %} selected{% endif %}>HeadOnly</option>
-            <option value="Humanoid"{% if appearance.Humanoid %} selected{% endif %}>Humanoid</option>
-          </select>
+          {{ self::add_select(name="body_type", options=options.body_type, selected={% if appearance.HeadOnly %}"HeadOnly"{% else %}"Humanoid"{% endif %}) }}
         </li>
         {% if appearance.Humanoid %}
           {{ self::edit_height(height=appearance.Humanoid.height) }}

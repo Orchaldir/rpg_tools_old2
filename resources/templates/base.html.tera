@@ -10,3 +10,11 @@
     {% block content %}{% endblock content %}
   </body>
 </html>
+
+{% macro add_select(name, options, selected) %}
+  <select id="{{ name }}" name="{{ name }}">
+    {% for o in options %}
+      <option value="{{ o }}"{% if o == selected %} selected{% endif %}>{{ o }}</option>
+    {% endfor %}
+  </select>
+{% endmacro add_select %}
