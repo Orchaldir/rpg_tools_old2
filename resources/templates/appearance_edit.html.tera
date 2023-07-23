@@ -3,7 +3,7 @@
 {% macro edit_height(height) %}
   <li>
     <b>Height in mm:</b>
-    <input type="number" step="1" id="height" name="height" value="{{ height.millimetre }}" min="200" max="10000">
+    <input type="number" step="1" id="height" name="height" value="{{ height.millimetre }}" min="200" max="10000" onchange="updateAppearancePreview();">
   </li>
 {% endmacro edit_height %}
 
@@ -11,7 +11,7 @@
     <p><h1>Edit appearance of {{ name }}</h1></p>
     <p><b>Id:</b> {{ id }}</p>
     {{ __tera_context }}
-    <form action="/appearance/{{ id }}/update" method="post">
+    <form id="appearanceForm" action="/appearance/{{ id }}/preview" method="post">
       <ul>
         <li>
           <b>Body Type:</b>
@@ -26,8 +26,8 @@
           {{ self::edit_height(height=appearance.HeadOnly.height) }}
         {% endif %}
       </ul>
-      <input type="submit" value="Submit">
+      <button formaction="/appearance/{{ id }}/update" formmethod="post">Submit</button>
     </form>
     <p><a href="/character/{{ id }}">Back</a></p>
-    <img src = "/appearance/preview/front.svg" alt="Preview" width="20%"/>
+    <img id="preview" src="/appearance/preview/0/front.svg" alt="Preview" width="20%"/>
 {% endblock content %}

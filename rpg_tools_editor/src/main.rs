@@ -23,6 +23,7 @@ use rpg_tools_core::model::width::Width;
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::sync::Mutex;
+use rocket::http::Status;
 
 pub mod appearance;
 
@@ -120,8 +121,8 @@ fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
         .map(|character| render_to_svg(&state.config, character.appearance()))
 }
 
-#[get("/appearance/preview/front.svg")]
-fn get_appearance_preview(state: &State<EditorData>) -> RawSvg {
+#[get("/appearance/preview/<time>/front.svg")]
+fn get_appearance_preview(state: &State<EditorData>, time: usize) -> RawSvg {
     let preview = state.preview.lock().expect("lock shared preview");
     render_to_svg(&state.config, &preview)
 }
@@ -168,7 +169,7 @@ fn update_appearance_preview(
     state: &State<EditorData>,
     id: usize,
     update: Form<AppearanceUpdate<'_>>,
-) -> &'static str {
+) -> Status {
     let mut data = state.data.lock().expect("lock shared data");
     let mut preview = state.preview.lock().expect("lock shared preview");
 
@@ -177,7 +178,7 @@ fn update_appearance_preview(
         character
     });
 
-    "Updated"
+    Status::NoContent
 }
 
 fn show_character_template(id: usize, character: &Character) -> Template {
