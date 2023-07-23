@@ -5,7 +5,7 @@
     <ul class="nested">
       <li><b>Shape:</b> {{ body.shape }}</li>
       <li><b>Width:</b> {{ body.width }}</li>
-      {{ self::edit_skin(skin=body.skin, options=options) }}
+      {{ self::edit_skin(skin=body.skin, path="body", options=options) }}
     </ul>
   </li>
 {% endmacro %}
@@ -17,7 +17,7 @@
         <b>Shape:</b>
         {{ macros::add_select(name="head_shape", options=options.head_shapes, selected=head.shape.t, update=true) }}
       </li>
-      {{ self::edit_skin(skin=head.skin, options=options) }}
+      {{ self::edit_skin(skin=head.skin, path="head", options=options) }}
     </ul>
   </li>
 {% endmacro %}
@@ -29,18 +29,18 @@
   </li>
 {% endmacro %}
 
-{% macro edit_skin(skin, options) %}
+{% macro edit_skin(skin, path, options) %}
   <li><span class="caret">Skin</span>
     <ul class="nested">
       <li>
-        {{ macros::add_select(name="skin", options=options.skin_types, selected=skin.t, update=true) }}
+        {{ macros::add_select(name=path ~ ".skin", options=options.skin_types, selected=skin.t, update=true) }}
       </li>
       <li>
         <b>Color:</b>
         {% if skin.t == "ExoticSkin" or skin.t == "Scales" %}
-          {{ macros::add_select(name="skin_color", options=options.colors, selected=skin.c, update=true) }}
+          {{ macros::add_select(name=path ~ ".skin_color", options=options.colors, selected=skin.c, update=true) }}
         {% else %}
-          {{ macros::add_select(name="skin_color", options=options.colors_skin, selected=skin.c, update=true) }}
+          {{ macros::add_select(name=path ~ ".skin_color", options=options.colors_skin, selected=skin.c, update=true) }}
         {% endif %}
       </li>
     </ul>

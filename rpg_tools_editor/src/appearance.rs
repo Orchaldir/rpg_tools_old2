@@ -56,7 +56,7 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
 
 fn update_body(body: &Body, data: &UrlEncodedData) -> Body {
     Body {
-        skin: update_skin(data),
+        skin: update_skin("body", data),
         ..*body
     }
 }
@@ -66,14 +66,14 @@ fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
 
     Head {
         shape,
-        skin: update_skin(data),
+        skin: update_skin("head", data),
         ..*head
     }
 }
 
-fn update_skin(data: &UrlEncodedData) -> Skin {
-    if let Some(t) = data.get_first("skin") {
-        if let Some(c) = data.get_first("skin_color") {
+fn update_skin(path: &str, data: &UrlEncodedData) -> Skin {
+    if let Some(t) = data.get_first(&format!("{}.skin", path)) {
+        if let Some(c) = data.get_first(&format!("{}.skin_color", path)) {
             return match t {
                 "Scales" => {
                     let color = Color::from(c);
