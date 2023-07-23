@@ -4,6 +4,7 @@ use crate::model::character::appearance::hair::Hair;
 use crate::model::character::appearance::mouth::Mouth;
 use crate::model::character::appearance::skin::Skin;
 use serde::Serialize;
+use std::fmt;
 
 /// How does the head look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
@@ -57,5 +58,24 @@ impl HeadShape {
             Self::TriangleDown,
             Self::TriangleUp,
         ]
+    }
+}
+
+impl fmt::Display for HeadShape {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
+impl From<&str> for HeadShape {
+    fn from(shape: &str) -> Self {
+        match shape {
+            "Oval" => Self::Oval,
+            "RoundedRectangle" => Self::RoundedRectangle,
+            "RoundedSquare" => Self::RoundedSquare,
+            "TriangleDown" => Self::TriangleDown,
+            "TriangleUp" => Self::TriangleUp,
+            _ => Self::Round,
+        }
     }
 }

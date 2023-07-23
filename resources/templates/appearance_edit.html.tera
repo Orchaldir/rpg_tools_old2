@@ -3,7 +3,10 @@
 {% macro edit_head(head, options) %}
   <li><span class="caret">Head</span>
     <ul class="nested">
-      <li><b>Shape:</b> {{ head.shape.t }}</li>
+      <li>
+        <b>Shape:</b>
+        {{ macros::add_select(name="head_shape", options=options.head_shape, selected=head.shape.t, update=true) }}
+      </li>
     </ul>
   </li>
 {% endmacro %}

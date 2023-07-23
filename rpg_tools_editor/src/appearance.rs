@@ -1,5 +1,5 @@
 use rpg_tools_core::model::character::appearance::body::Body;
-use rpg_tools_core::model::character::appearance::head::Head;
+use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::skin::SkinColor;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
@@ -53,7 +53,12 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
 }
 
 fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
-    Head::default()
+    let shape: HeadShape = data.get_first("head_shape").unwrap_or("").into();
+
+    Head {
+        shape,
+        ..*head
+    }
 }
 
 #[derive(Responder)]
@@ -77,6 +82,7 @@ pub struct AppearanceOptions {
     body_type: Vec<String>,
     colors: Vec<String>,
     colors_skin: Vec<String>,
+    head_shape: Vec<String>,
 }
 
 impl AppearanceOptions {
@@ -85,6 +91,7 @@ impl AppearanceOptions {
             body_type: vec!["HeadOnly".to_string(), "Humanoid".to_string()],
             colors: Color::get_all().iter().map(|c| c.to_string()).collect(),
             colors_skin: SkinColor::get_all().iter().map(|c| c.to_string()).collect(),
+            head_shape: HeadShape::get_all().iter().map(|c| c.to_string()).collect(),
         }
     }
 }
