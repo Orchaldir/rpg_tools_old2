@@ -9,7 +9,7 @@
       <br>
       <br>
       <b><label for="gender">Gender:</label></b>
-      {{ self::add_select(name="gender", options=genders, selected=gender) }}
+      {{ macros::add_select(name="gender", options=genders, selected=gender) }}
       <br>
       <br>
       <input type="submit" value="Submit">

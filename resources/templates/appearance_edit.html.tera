@@ -5,7 +5,7 @@
     <b>Height in mm:</b>
     <input type="number" step="1" id="height" name="height" value="{{ height.millimetre }}" min="200" max="10000" onchange="updateAppearancePreview();">
   </li>
-{% endmacro edit_height %}
+{% endmacro %}
 
 {% block content %}
     <p><h1>Edit appearance of {{ name }}</h1></p>
@@ -15,7 +15,7 @@
       <ul>
         <li>
           <b>Body Type:</b>
-          {{ self::add_select(name="body_type", options=options.body_type, selected={% if appearance.HeadOnly %}"HeadOnly"{% else %}"Humanoid"{% endif %}) }}
+          {{ macros::add_select(name="body_type", options=options.body_type, selected="{% if appearance.HeadOnly %}HeadOnly{% else %}Humanoid{% endif %}") }}
         </li>
         {% if appearance.Humanoid %}
           {{ self::edit_height(height=appearance.Humanoid.height) }}

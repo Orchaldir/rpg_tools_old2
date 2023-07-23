@@ -8,7 +8,7 @@
       {{ self::write_skin(skin=body.skin) }}
     </ul>
   </li>
-{% endmacro write_body %}
+{% endmacro %}
 
 {% macro write_head(head) %}
   <li><span class="caret">Head</span>
@@ -23,11 +23,11 @@
       {{ self::write_skin(skin=head.skin) }}
     </ul>
   </li>
-{% endmacro write_body %}
+{% endmacro %}
 
 {% macro write_height(height) %}
   <li><b>Height:</b> {{ height.millimetre / 10 }} cm</li>
-{% endmacro write_body %}
+{% endmacro %}
 
 {% macro write_skin(skin) %}
   <li><span class="caret">Skin</span>
@@ -43,7 +43,7 @@
       </li>
     </ul>
   </li>
-{% endmacro write_skin %}
+{% endmacro %}
 
 {% block content %}
     <p><h1>{{ name }}</h1></p>
