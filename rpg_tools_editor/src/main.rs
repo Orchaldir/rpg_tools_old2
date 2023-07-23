@@ -1,10 +1,11 @@
 #[macro_use]
 extern crate rocket;
 
-use crate::appearance::{render_to_svg, AppearanceUpdate, RawSvg};
+use crate::appearance::{render_to_svg, AppearanceOptions, AppearanceUpdate, RawSvg};
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
+use rocket::http::Status;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
@@ -23,7 +24,6 @@ use rpg_tools_core::model::width::Width;
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::sync::Mutex;
-use rocket::http::Status;
 
 pub mod appearance;
 
@@ -141,6 +141,7 @@ fn edit_appearance(state: &State<EditorData>, id: usize) -> Option<Template> {
                 id: id,
                 name: character.name(),
                 appearance: character.appearance(),
+                options: AppearanceOptions::new(),
             },
         )
     })

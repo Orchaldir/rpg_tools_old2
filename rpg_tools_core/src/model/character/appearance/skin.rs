@@ -1,5 +1,6 @@
 use crate::model::color::Color;
 use serde::Serialize;
+use std::fmt;
 
 /// The skin of a [`Character`](crate::model::character::Character).
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
@@ -24,4 +25,23 @@ pub enum SkinColor {
     Tan,
     Dark,
     VeryDark,
+}
+
+impl SkinColor {
+    pub fn get_all() -> Vec<SkinColor> {
+        vec![
+            SkinColor::Fair,
+            SkinColor::Light,
+            SkinColor::Medium,
+            SkinColor::Tan,
+            SkinColor::Dark,
+            SkinColor::VeryDark,
+        ]
+    }
+}
+
+impl fmt::Display for SkinColor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
 }

@@ -1,4 +1,6 @@
+use rpg_tools_core::model::character::appearance::skin::SkinColor;
 use rpg_tools_core::model::character::appearance::Appearance;
+use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_rendering::math::aabb2d::AABB;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
@@ -6,6 +8,7 @@ use rpg_tools_rendering::renderer::Renderer;
 use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character};
 use rpg_tools_rendering::rendering::config::example::create_border_options;
 use rpg_tools_rendering::rendering::config::RenderConfig;
+use serde::Serialize;
 
 #[derive(FromForm, Debug)]
 pub struct AppearanceUpdate<'r> {
@@ -40,4 +43,19 @@ pub fn render_to_svg(config: &RenderConfig, appearance: &Appearance) -> RawSvg {
     render_character(&mut svg_builder, config, &aabb, appearance);
     let svg = svg_builder.finish();
     RawSvg(svg.export())
+}
+
+#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
+pub struct AppearanceOptions {
+    colors: Vec<String>,
+    colors_skin: Vec<String>,
+}
+
+impl AppearanceOptions {
+    pub fn new() -> Self {
+        Self {
+            colors: Color::get_all().iter().map(|c| c.to_string()).collect(),
+            colors_skin: SkinColor::get_all().iter().map(|c| c.to_string()).collect(),
+        }
+    }
 }
