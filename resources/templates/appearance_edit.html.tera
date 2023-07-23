@@ -1,5 +1,15 @@
 {% extends "base" %}
 
+{% macro edit_body(body, options) %}
+  <li><span class="caret">Body</span>
+    <ul class="nested">
+      <li><b>Shape:</b> {{ body.shape }}</li>
+      <li><b>Width:</b> {{ body.width }}</li>
+      {{ self::edit_skin(skin=body.skin, options=options) }}
+    </ul>
+  </li>
+{% endmacro %}
+
 {% macro edit_head(head, options) %}
   <li><span class="caret">Head</span>
     <ul class="nested">
@@ -48,6 +58,7 @@
           {{ macros::add_select(name="type", options=options.body_types, selected=appearance.type, update=true) }}
         </li>
         {% if appearance.type == "Humanoid" %}
+          {{ self::edit_body(body=appearance.body, options=options) }}
           {{ self::edit_head(head=appearance.head, options=options) }}
           {{ self::edit_height(height=appearance.height) }}
         {% elif appearance.type == "HeadOnly" %}

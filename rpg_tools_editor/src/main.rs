@@ -5,7 +5,6 @@ use crate::appearance::{apply_update_to_appearance, render_to_svg, AppearanceOpt
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
-use rocket::http::Status;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};

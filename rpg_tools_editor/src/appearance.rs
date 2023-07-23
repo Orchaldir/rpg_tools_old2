@@ -38,9 +38,11 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
                                 update_head(head, &data),
                                 height,
                             ),
-                            Humanoid { body, head, .. } => {
-                                Appearance::humanoid(*body, update_head(head, &data), height)
-                            }
+                            Humanoid { body, head, .. } => Appearance::humanoid(
+                                update_body(body, &data),
+                                update_head(head, &data),
+                                height,
+                            ),
                         }
                     }
                     _ => {}
@@ -50,6 +52,13 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
     }
 
     Appearance::default()
+}
+
+fn update_body(body: &Body, data: &UrlEncodedData) -> Body {
+    Body {
+        skin: update_skin(data),
+        ..*body
+    }
 }
 
 fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
