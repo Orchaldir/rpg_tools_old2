@@ -29,6 +29,7 @@ pub mod appearance;
 struct EditorData {
     config: RenderConfig,
     data: Mutex<CharacterMgr>,
+    preview: Mutex<Appearance>,
 }
 
 #[get("/")]
@@ -119,10 +120,20 @@ fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
         .map(|character| render_to_svg(&state.config, character.appearance()))
 }
 
+#[get("/appearance/preview/front.svg")]
+fn get_appearance_preview(state: &State<EditorData>) -> RawSvg {
+    let preview = state.preview.lock().expect("lock shared preview");
+    render_to_svg(&state.config, &preview)
+}
+
 #[get("/appearance/<id>/edit")]
-fn edit_appearance(data: &State<EditorData>, id: usize) -> Option<Template> {
-    let data = data.data.lock().expect("lock shared data");
+fn edit_appearance(state: &State<EditorData>, id: usize) -> Option<Template> {
+    let data = state.data.lock().expect("lock shared data");
+    let mut preview = state.preview.lock().expect("lock shared preview");
+
     data.get(CharacterId::new(id)).map(|character| {
+        *preview = *character.appearance();
+
         Template::render(
             "appearance_edit",
             context! {
@@ -150,6 +161,23 @@ fn update_appearance(
             character
         })
         .map(|character| show_character_template(id, character))
+}
+
+#[post("/appearance/<id>/preview", data = "<update>")]
+fn update_appearance_preview(
+    state: &State<EditorData>,
+    id: usize,
+    update: Form<AppearanceUpdate<'_>>,
+) -> &'static str {
+    let mut data = state.data.lock().expect("lock shared data");
+    let mut preview = state.preview.lock().expect("lock shared preview");
+
+    data.get_mut(CharacterId::new(id)).map(|character| {
+        *preview = update.apply(character.appearance());
+        character
+    });
+
+    "Updated"
 }
 
 fn show_character_template(id: usize, character: &Character) -> Template {
@@ -182,6 +210,7 @@ async fn main() -> Result<()> {
         .manage(EditorData {
             config: create_config(),
             data: Mutex::new(init()),
+            preview: Mutex::new(Appearance::default()),
         })
         .mount("/static", FileServer::from("rpg_tools_editor/static/"))
         .mount(
@@ -195,6 +224,8 @@ async fn main() -> Result<()> {
                 update_character,
                 edit_appearance,
                 update_appearance,
+                get_appearance_preview,
+                update_appearance_preview,
                 get_front
             ],
         )
