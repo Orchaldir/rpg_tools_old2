@@ -135,15 +135,7 @@ fn edit_appearance(state: &State<EditorData>, id: usize) -> Option<Template> {
     data.get(CharacterId::new(id)).map(|character| {
         *preview = *character.appearance();
 
-        Template::render(
-            "appearance_edit",
-            context! {
-                id: id,
-                name: character.name(),
-                appearance: character.appearance(),
-                options: AppearanceOptions::new(),
-            },
-        )
+        edit_appearance_template(character, &preview)
     })
 }
 
@@ -162,7 +154,11 @@ fn update_appearance(data: &State<EditorData>, id: usize, update: String) -> Opt
 }
 
 #[post("/appearance/<id>/preview", data = "<update>")]
-fn update_appearance_preview(state: &State<EditorData>, id: usize, update: String) -> Status {
+fn update_appearance_preview(
+    state: &State<EditorData>,
+    id: usize,
+    update: String,
+) -> Option<Template> {
     let mut data = state.data.lock().expect("lock shared data");
     let mut preview = state.preview.lock().expect("lock shared preview");
 
@@ -170,10 +166,9 @@ fn update_appearance_preview(state: &State<EditorData>, id: usize, update: Strin
 
     data.get_mut(CharacterId::new(id)).map(|character| {
         *preview = apply_update_to_appearance(character.appearance(), &update);
-        character
-    });
 
-    Status::NoContent
+        edit_appearance_template(character, &preview)
+    })
 }
 
 fn show_character_template(id: usize, character: &Character) -> Template {
@@ -196,6 +191,18 @@ fn edit_character_template(id: usize, character: &Character) -> Template {
             name: character.name(),
             genders: vec!["Female", "Genderless", "Male"],
             gender: character.gender(),
+        },
+    )
+}
+
+fn edit_appearance_template(character: &Character, appearance: &Appearance) -> Template {
+    Template::render(
+        "appearance_edit",
+        context! {
+            id: character.id().id(),
+            name: character.name(),
+            appearance: appearance,
+            options: AppearanceOptions::new(),
         },
     )
 }

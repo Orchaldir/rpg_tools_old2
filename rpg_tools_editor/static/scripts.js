@@ -1,8 +1,6 @@
 function updateAppearancePreview() {
   console.log("Update appearance preview");
   document.getElementById("appearanceForm").submit();
-  const sleep = time => new Promise(res => setTimeout(res, time, "done sleeping"));
-  sleep(100).then(msg => reloadAppearancePreview());
 }
 
 function reloadAppearancePreview() {
