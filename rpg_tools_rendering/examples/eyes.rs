@@ -36,7 +36,14 @@ fn main() {
             distance: Size::High,
         },
     ];
-    let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];
+    let faces = vec![
+        Oval,
+        RoundedRectangle,
+        Round,
+        RoundedSquare,
+        TriangleDown,
+        TriangleUp,
+    ];
 
     render_2_sets("eyes.svg", eyes_options, faces, create_appearance);
 }

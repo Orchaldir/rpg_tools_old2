@@ -23,9 +23,16 @@ fn main() {
     let config = create_config();
     let options = create_border_options();
 
-    for (i, realistic) in [Oval, Rectangle, Round, Square, TriangleDown, TriangleUp]
-        .iter()
-        .enumerate()
+    for (i, realistic) in [
+        Oval,
+        RoundedRectangle,
+        Round,
+        RoundedSquare,
+        TriangleDown,
+        TriangleUp,
+    ]
+    .iter()
+    .enumerate()
     {
         let appearance = Appearance::head(
             Head {

@@ -32,7 +32,14 @@ fn main() {
         create_normal(High, Medium),
         create_normal(High, High),
     ];
-    let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];
+    let faces = vec![
+        Oval,
+        RoundedRectangle,
+        Round,
+        RoundedSquare,
+        TriangleDown,
+        TriangleUp,
+    ];
 
     render_2_sets("mouth.svg", shape_options, faces, create_appearance);
 }

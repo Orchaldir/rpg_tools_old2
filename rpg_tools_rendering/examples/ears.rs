@@ -25,7 +25,14 @@ fn main() {
         EarShape::Round,
         EarShape::Square,
     ];
-    let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];
+    let faces = vec![
+        Oval,
+        RoundedRectangle,
+        Round,
+        RoundedSquare,
+        TriangleDown,
+        TriangleUp,
+    ];
 
     render_2_sets("ears.svg", shape_options, faces, create_appearance);
 }

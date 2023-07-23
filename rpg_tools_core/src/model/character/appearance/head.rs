@@ -55,9 +55,9 @@ pub enum GeometricHeadShape {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum RealisticHeadShape {
     Oval,
-    Rectangle,
     Round,
-    Square,
+    RoundedRectangle,
+    RoundedSquare,
     TriangleDown,
     TriangleUp,
 }
@@ -66,9 +66,9 @@ impl RealisticHeadShape {
     pub fn get_all() -> Vec<Self> {
         vec![
             Self::Oval,
-            Self::Rectangle,
             Self::Round,
-            Self::Square,
+            Self::RoundedRectangle,
+            Self::RoundedSquare,
             Self::TriangleDown,
             Self::TriangleUp,
         ]
