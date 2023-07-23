@@ -30,11 +30,12 @@
 {% endmacro %}
 
 {% macro edit_skin(skin, path, options) %}
-  <li><span class="caret">Skin</span>
+  <li>
+    <span class="caret">
+      Skin:
+      {{ macros::add_select(name=path ~ ".skin", options=options.skin_types, selected=skin.t, update=true) }}
+    </span>
     <ul class="nested">
-      <li>
-        {{ macros::add_select(name=path ~ ".skin", options=options.skin_types, selected=skin.t, update=true) }}
-      </li>
       <li>
         Color:
         {% if skin.t == "ExoticSkin" or skin.t == "Scales" %}
