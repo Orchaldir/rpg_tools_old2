@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate rocket;
 
-use crate::appearance::{render_to_svg, update_appearance, AppearanceOptions, RawSvg};
+use crate::appearance::{apply_update_to_appearance, render_to_svg, AppearanceOptions, RawSvg};
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
@@ -155,7 +155,7 @@ fn update_appearance(data: &State<EditorData>, id: usize, update: String) -> Opt
 
     data.get_mut(CharacterId::new(id))
         .map(|character| {
-            character.set_appearance(update_appearance(character.appearance(), &update));
+            character.set_appearance(apply_update_to_appearance(character.appearance(), &update));
             character
         })
         .map(|character| show_character_template(id, character))
@@ -169,7 +169,7 @@ fn update_appearance_preview(state: &State<EditorData>, id: usize, update: Strin
     println!("Preview appearance of character {} with {:?}", id, update);
 
     data.get_mut(CharacterId::new(id)).map(|character| {
-        *preview = update_appearance(character.appearance(), &update);
+        *preview = apply_update_to_appearance(character.appearance(), &update);
         character
     });
 

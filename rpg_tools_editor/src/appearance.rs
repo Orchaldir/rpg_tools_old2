@@ -14,7 +14,7 @@ use serde::Serialize;
 use url_encoded_data::UrlEncodedData;
 use Appearance::{HeadOnly, Humanoid};
 
-pub fn update_appearance(appearance: &Appearance, update: &str) -> Appearance {
+pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appearance {
     let data = UrlEncodedData::parse_str(update);
 
     if let Some(t) = data.get_first("type") {
@@ -52,7 +52,7 @@ pub fn update_appearance(appearance: &Appearance, update: &str) -> Appearance {
     Appearance::default()
 }
 
-fn update_head(head: &head, data: &UrlEncodedData) -> Head {
+fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
     Head::default()
 }
 
