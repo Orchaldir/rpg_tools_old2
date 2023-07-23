@@ -1,5 +1,19 @@
 {% extends "base" %}
 
+{% macro edit_head(head, options) %}
+  <li><span class="caret">Head</span>
+    <ul class="nested">
+      <li>
+        {% if head.shape.t == "Geometric" %}
+          <b>Geometric Shape:</b> {{ head.shape.c.t }}
+        {% elif head.shape.t == "Realistic" %}
+          <b>Realistic Shape:</b> {{ head.shape.c.t }}
+        {% endif %}
+      </li>
+    </ul>
+  </li>
+{% endmacro %}
+
 {% macro edit_height(height) %}
   <li>
     <b>Height in mm:</b>
@@ -18,8 +32,10 @@
           {{ macros::add_select(name="type", options=options.body_type, selected=appearance.type, update=true) }}
         </li>
         {% if appearance.type == "Humanoid" %}
+          {{ self::edit_head(head=appearance.head, options=options) }}
           {{ self::edit_height(height=appearance.height) }}
         {% elif appearance.type == "HeadOnly" %}
+          {{ self::edit_head(head=appearance.head, options=options) }}
           {{ self::edit_height(height=appearance.height) }}
         {% endif %}
       </ul>
