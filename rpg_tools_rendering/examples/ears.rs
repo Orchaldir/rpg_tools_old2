@@ -13,26 +13,31 @@ use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::side::Side::Left;
 use rpg_tools_core::model::size::Size;
+use EarShape::*;
 
 pub mod utils;
 
 fn main() {
     let shape_options = vec![
-        EarShape::Pointed(Size::Small),
-        EarShape::Pointed(Size::Medium),
-        EarShape::Pointed(Size::Large),
-        EarShape::Round,
-        EarShape::Square,
+        create(Pointed, Size::Small),
+        create(Pointed, Size::Medium),
+        create(Pointed, Size::Large),
+        create(Round, Size::Medium),
+        create(Square, Size::Medium),
     ];
     let faces = HeadShape::get_all();
 
     render_2_sets("ears.svg", shape_options, faces, create_appearance);
 }
 
-fn create_appearance(height: Length, shape: &EarShape, face: &HeadShape) -> Appearance {
+fn create(shape: EarShape, size: Size) -> Ears {
+    Ears::Normal { shape, size }
+}
+
+fn create_appearance(height: Length, ears: &Ears, face: &HeadShape) -> Appearance {
     Appearance::head(
         Head {
-            ears: Ears::Normal { shape: *shape },
+            ears: *ears,
             eyes: Eyes::Two {
                 eye: Eye::Normal {
                     eye_shape: EyeShape::Circle,

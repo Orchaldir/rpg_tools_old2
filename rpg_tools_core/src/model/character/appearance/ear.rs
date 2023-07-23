@@ -9,15 +9,15 @@ pub enum Ears {
     /// Like a human's ears.
     Normal {
         shape: EarShape,
+        size: Size,
     },
 }
 
 /// How many ears does the character have?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
-#[serde(tag = "t", content = "c")]
 pub enum EarShape {
     /// Like an elf's ears.
-    Pointed(Size),
+    Pointed,
     Round,
     Square,
 }
