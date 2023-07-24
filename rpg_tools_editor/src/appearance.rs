@@ -1,5 +1,6 @@
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
+use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
@@ -76,13 +77,30 @@ fn update_body(data: &UrlEncodedData) -> Body {
 }
 
 fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
-    let shape: HeadShape = data.get_first("head_shape").unwrap_or("").into();
+    let shape: HeadShape = data.get_first("head.shape").unwrap_or("").into();
 
     Head {
         shape,
+        ears: update_ears(data),
         skin: update_skin("head", data),
         ..*head
     }
+}
+
+fn update_ears(data: &UrlEncodedData) -> Ears {
+    if let Some(t) = data.get_first("ears") {
+        return match t {
+            "Normal" => {
+                let shape = data.get_first("ears.shape").unwrap_or("").into();
+                let size = data.get_first("ears.size").unwrap_or("").into();
+
+                Ears::Normal { shape, size }
+            }
+            _ => Ears::None,
+        };
+    }
+
+    Ears::None
 }
 
 fn update_skin(path: &str, data: &UrlEncodedData) -> Skin {
@@ -130,6 +148,7 @@ pub struct AppearanceOptions {
     body_shapes: Vec<String>,
     colors: Vec<String>,
     colors_skin: Vec<String>,
+    ears: Vec<String>,
     ear_shape: Vec<String>,
     head_shapes: Vec<String>,
     sizes: Vec<String>,
@@ -144,6 +163,7 @@ impl AppearanceOptions {
             body_shapes: convert(BodyShape::get_all()),
             colors: convert(Color::get_all()),
             colors_skin: convert(SkinColor::get_all()),
+            ears: vec!["None".to_string(), "Normal".to_string()],
             ear_shape: convert(EarShape::get_all()),
             head_shapes: convert(HeadShape::get_all()),
             sizes: convert(Size::get_all()),

@@ -16,13 +16,35 @@
   </li>
 {% endmacro %}
 
+{% macro edit_ears(ears, options) %}
+  <li>
+    <span class="caret">
+      Ears:
+      {{ macros::add_select(name="ears", options=options.ears, selected=ears.type, update=true) }}
+    </span>
+    {% if ears.type == "Normal" %}
+      <ul class="nested">
+        <li>
+          Shape:
+          {{ macros::add_select(name="ears.shape", options=options.ear_shape, selected=ears.shape, update=true) }}
+        </li>
+        <li>
+          Size:
+          {{ macros::add_select(name="ears.size", options=options.sizes, selected=ears.size, update=true) }}
+        </li>
+      </ul>
+    {% endif %}
+  </li>
+{% endmacro %}
+
 {% macro edit_head(head, options) %}
   <li><span class="caret">Head</span>
     <ul class="nested">
       <li>
         Shape:
-        {{ macros::add_select(name="head_shape", options=options.head_shapes, selected=head.shape.t, update=true) }}
+        {{ macros::add_select(name="head.shape", options=options.head_shapes, selected=head.shape.t, update=true) }}
       </li>
+      {{ self::edit_ears(ears=head.ears, options=options) }}
       {{ self::edit_skin(skin=head.skin, path="head", options=options) }}
     </ul>
   </li>
@@ -76,5 +98,5 @@
       <button formaction="/appearance/{{ id }}/update" formmethod="post">Submit</button>
     </form>
     <p><a href="/character/{{ id }}">Back</a></p>
-    <img id="preview" src="/appearance/preview/front.svg" alt="Preview" width="20%"/>
+    <img id="preview" src="/appearance/preview/front.svg" alt="Preview" width="30%"/>
 {% endblock content %}
