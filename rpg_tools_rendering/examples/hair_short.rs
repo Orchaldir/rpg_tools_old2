@@ -2,7 +2,8 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
-use rpg_tools_core::model::character::appearance::ear::{EarShape, Ears};
+use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
+use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
 use rpg_tools_core::model::character::appearance::hair::ShortHair::FlatTop;
 use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairline, ShortHair};
@@ -13,6 +14,7 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::side::Side;
+use rpg_tools_core::model::size::Size;
 use rpg_tools_core::model::size::Size::{Large, Medium, Small};
 use Hairline::{Round, Straight, Triangle, WidowsPeak};
 use ShortHair::{BuzzCut, MiddlePart, SidePart};
@@ -71,6 +73,7 @@ fn create_appearance(height: Length, hair: &Hair, face: &HeadShape) -> Appearanc
         Head {
             ears: Ears::Normal {
                 shape: EarShape::Round,
+                size: Medium,
             },
             eyes: Eyes::Two {
                 eye: Eye::Normal {

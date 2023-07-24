@@ -1,5 +1,5 @@
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
-use rpg_tools_core::model::character::appearance::ear::EarShape;
+use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
