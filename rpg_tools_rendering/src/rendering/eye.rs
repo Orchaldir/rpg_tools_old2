@@ -12,7 +12,7 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     match &head.eyes {
         Eyes::None => {}
-        Eyes::One(eye) => {
+        Eyes::One { eye } => {
             let center = aabb.get_point(0.5, config.head.y_eye);
             render_eye(renderer, config, &center, radius, eye);
         }

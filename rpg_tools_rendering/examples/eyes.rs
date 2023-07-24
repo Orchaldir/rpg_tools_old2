@@ -21,7 +21,7 @@ fn main() {
         color: Color::Yellow,
     };
     let eyes_options = vec![
-        Eyes::One(eye),
+        Eyes::One { eye },
         Eyes::Two {
             eye,
             distance: Size::Small,

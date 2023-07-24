@@ -4,10 +4,12 @@ use serde::Serialize;
 
 /// How many eyes does the character have?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
-#[serde(tag = "t", content = "c")]
+#[serde(tag = "type")]
 pub enum Eyes {
     None,
-    One(Eye),
+    One {
+        eye: Eye,
+    },
     Two {
         /// Both eyes are identical.
         eye: Eye,
