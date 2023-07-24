@@ -1,4 +1,5 @@
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
+use rpg_tools_core::model::character::appearance::ear::EarShape;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
@@ -128,6 +129,7 @@ pub struct AppearanceOptions {
     body_shapes: Vec<String>,
     colors: Vec<String>,
     colors_skin: Vec<String>,
+    ear_shape: Vec<String>,
     head_shapes: Vec<String>,
     sizes: Vec<String>,
     skin_types: Vec<String>,
@@ -141,6 +143,7 @@ impl AppearanceOptions {
             body_shapes: BodyShape::get_all().iter().map(|c| c.to_string()).collect(),
             colors: Color::get_all().iter().map(|c| c.to_string()).collect(),
             colors_skin: SkinColor::get_all().iter().map(|c| c.to_string()).collect(),
+            ear_shape: EarShape::get_all().iter().map(|c| c.to_string()).collect(),
             head_shapes: HeadShape::get_all().iter().map(|c| c.to_string()).collect(),
             sizes: Size::get_all().iter().map(|c| c.to_string()).collect(),
             skin_types: vec![
