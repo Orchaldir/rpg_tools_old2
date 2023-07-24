@@ -38,3 +38,12 @@ pub enum Eye {
         background_color: Color,
     },
 }
+
+impl Default for Eye {
+    fn default() -> Self {
+        Self::Simple {
+            eye_shape: EyeShape::default(),
+            color: Color::default(),
+        }
+    }
+}

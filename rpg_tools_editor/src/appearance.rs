@@ -1,6 +1,9 @@
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
 use rpg_tools_core::model::character::appearance::ear::Ears;
+use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
+use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
+use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
@@ -82,6 +85,7 @@ fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
     Head {
         shape,
         ears: update_ears(data),
+        eyes: update_eyes(data),
         skin: update_skin("head", data),
         ..*head
     }
@@ -101,6 +105,31 @@ fn update_ears(data: &UrlEncodedData) -> Ears {
     }
 
     Ears::None
+}
+
+fn update_eyes(data: &UrlEncodedData) -> Eyes {
+    if let Some(t) = data.get_first("eyes") {
+        return match t {
+            "One" => Eyes::One {
+                eye: update_eye(data),
+            },
+            "Two" => {
+                let distance = data.get_first("eyes.distance").unwrap_or("").into();
+
+                Eyes::Two {
+                    eye: update_eye(data),
+                    distance,
+                }
+            }
+            _ => Eyes::None,
+        };
+    }
+
+    Eyes::None
+}
+
+fn update_eye(data: &UrlEncodedData) -> Eye {
+    Eye::default()
 }
 
 fn update_skin(path: &str, data: &UrlEncodedData) -> Skin {
@@ -150,7 +179,11 @@ pub struct AppearanceOptions {
     colors_skin: Vec<String>,
     ears: Vec<String>,
     ear_shape: Vec<String>,
+    eyes: Vec<String>,
+    eye_shape: Vec<String>,
+    eye: Vec<String>,
     head_shapes: Vec<String>,
+    pupil_shape: Vec<String>,
     sizes: Vec<String>,
     skin_types: Vec<String>,
     widths: Vec<String>,
@@ -165,7 +198,11 @@ impl AppearanceOptions {
             colors_skin: convert(SkinColor::get_all()),
             ears: vec!["None".to_string(), "Normal".to_string()],
             ear_shape: convert(EarShape::get_all()),
+            eyes: vec!["None".to_string(), "One".to_string(), "Two".to_string()],
+            eye_shape: convert(EyeShape::get_all()),
+            eye: vec!["Normal".to_string(), "Simple".to_string()],
             head_shapes: convert(HeadShape::get_all()),
+            pupil_shape: convert(PupilShape::get_all()),
             sizes: convert(Size::get_all()),
             skin_types: vec![
                 "Scales".to_string(),

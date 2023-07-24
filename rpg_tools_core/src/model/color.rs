@@ -4,7 +4,7 @@ use Color::*;
 
 /// A color defined by a name.
 /// See https://en.wikipedia.org/wiki/Web_colors.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(Default, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum Color {
     Aqua,
     Black,
@@ -17,6 +17,7 @@ pub enum Color {
     Navy,
     Olive,
     Orange,
+    #[default]
     Purple,
     Red,
     SaddleBrown,
@@ -77,7 +78,7 @@ impl From<&str> for Color {
             "Teal" => Teal,
             "White" => White,
             "Yellow" => Yellow,
-            _ => Purple,
+            _ => Color::default(),
         }
     }
 }

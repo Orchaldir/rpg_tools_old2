@@ -37,6 +37,37 @@
   </li>
 {% endmacro %}
 
+{% macro edit_eyes(eyes, options) %}
+  <li>
+    <span class="caret">
+      Eyes:
+      {{ macros::add_select(name="eyes", options=options.eyes, selected=eyes.type, update=true) }}
+    </span>
+    {% if eyes.type == "One" %}
+      <ul class="nested">
+        {{ self::edit_eye(eye=eyes.eye, options=options) }}
+      </ul>
+    {% elif eyes.type == "Two" %}
+      <ul class="nested">
+        {{ self::edit_eye(eye=eyes.eye, options=options) }}
+        <li>
+          Distance between eyes:
+          {{ macros::add_select(name="eyes.distance", options=options.sizes, selected=eyes.distance, update=true) }}
+        </li>
+      </ul>
+    {% endif %}
+  </li>
+{% endmacro %}
+
+{% macro edit_eye(eye, options) %}
+  <li>
+    <span class="caret">
+      Eye:
+      {{ macros::add_select(name="eye", options=options.eye, selected=eye.type, update=true) }}
+    </span>
+  </li>
+{% endmacro %}
+
 {% macro edit_head(head, options) %}
   <li><span class="caret">Head</span>
     <ul class="nested">
@@ -45,6 +76,7 @@
         {{ macros::add_select(name="head.shape", options=options.head_shapes, selected=head.shape.t, update=true) }}
       </li>
       {{ self::edit_ears(ears=head.ears, options=options) }}
+      {{ self::edit_eyes(eyes=head.eyes, options=options) }}
       {{ self::edit_skin(skin=head.skin, path="head", options=options) }}
     </ul>
   </li>
