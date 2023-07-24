@@ -4,6 +4,7 @@ use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
+use rpg_tools_core::model::size::Size;
 use rpg_tools_core::model::width::Width;
 use rpg_tools_rendering::math::aabb2d::AABB;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
@@ -128,6 +129,7 @@ pub struct AppearanceOptions {
     colors: Vec<String>,
     colors_skin: Vec<String>,
     head_shapes: Vec<String>,
+    sizes: Vec<String>,
     skin_types: Vec<String>,
     widths: Vec<String>,
 }
@@ -140,6 +142,7 @@ impl AppearanceOptions {
             colors: Color::get_all().iter().map(|c| c.to_string()).collect(),
             colors_skin: SkinColor::get_all().iter().map(|c| c.to_string()).collect(),
             head_shapes: HeadShape::get_all().iter().map(|c| c.to_string()).collect(),
+            sizes: Size::get_all().iter().map(|c| c.to_string()).collect(),
             skin_types: vec![
                 "Scales".to_string(),
                 "Skin".to_string(),
@@ -147,5 +150,11 @@ impl AppearanceOptions {
             ],
             widths: Width::get_all().iter().map(|c| c.to_string()).collect(),
         }
+    }
+}
+
+impl Default for AppearanceOptions {
+    fn default() -> Self {
+        Self::new()
     }
 }
