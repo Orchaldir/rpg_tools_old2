@@ -26,7 +26,7 @@
       <ul class="nested">
         <li>
           Shape:
-          {{ macros::add_select(name="ears.shape", options=options.ear_shape, selected=ears.shape, update=true) }}
+          {{ macros::add_select(name="ears.shape", options=options.ear_shapes, selected=ears.shape, update=true) }}
         </li>
         <li>
           Size:
@@ -65,6 +65,37 @@
       Eye:
       {{ macros::add_select(name="eye", options=options.eye, selected=eye.type, update=true) }}
     </span>
+    {% if eye.type == "Simple" %}
+      <ul class="nested">
+        <li>
+          Eye Shape:
+          {{ macros::add_select(name="eye.shape", options=options.eye_shapes, selected=eye.eye_shape, update=true) }}
+        </li>
+        <li>
+          Color:
+          {{ macros::add_select(name="eye.color", options=options.colors, selected=eye.color, update=true) }}
+        </li>
+      </ul>
+    {% elif eye.type == "Normal" %}
+      <ul class="nested">
+        <li>
+          Eye Shape:
+          {{ macros::add_select(name="eye.shape", options=options.eye_shapes, selected=eye.eye_shape, update=true) }}
+        </li>
+        <li>
+          Pupil Shape:
+          {{ macros::add_select(name="eye.pupil_shape", options=options.pupil_shapes, selected=eye.pupil_shape, update=true) }}
+        </li>
+        <li>
+          Pupil Color:
+          {{ macros::add_select(name="eye.pupil_color", options=options.colors, selected=eye.pupil_color, update=true) }}
+        </li>
+        <li>
+          Background Color:
+          {{ macros::add_select(name="eye.background_color", options=options.colors, selected=eye.background_color, update=true) }}
+        </li>
+      </ul>
+    {% endif %}
   </li>
 {% endmacro %}
 

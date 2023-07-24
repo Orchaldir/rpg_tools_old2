@@ -129,6 +129,31 @@ fn update_eyes(data: &UrlEncodedData) -> Eyes {
 }
 
 fn update_eye(data: &UrlEncodedData) -> Eye {
+    if let Some(t) = data.get_first("eye") {
+        let eye_shape = data.get_first("eye.shape").unwrap_or("").into();
+
+        return match t {
+            "Simple" => {
+                let color = data.get_first("eye.color").unwrap_or("").into();
+
+                Eye::Simple { eye_shape, color }
+            }
+            "Normal" => {
+                let pupil_shape = data.get_first("eye.pupil_shape").unwrap_or("").into();
+                let pupil_color = data.get_first("eye.pupil_color").unwrap_or("").into();
+                let background_color = data.get_first("eye.background_color").unwrap_or("").into();
+
+                Eye::Normal {
+                    eye_shape,
+                    pupil_shape,
+                    pupil_color,
+                    background_color,
+                }
+            }
+            _ => Eye::default(),
+        };
+    }
+
     Eye::default()
 }
 
@@ -178,12 +203,12 @@ pub struct AppearanceOptions {
     colors: Vec<String>,
     colors_skin: Vec<String>,
     ears: Vec<String>,
-    ear_shape: Vec<String>,
+    ear_shapes: Vec<String>,
     eyes: Vec<String>,
-    eye_shape: Vec<String>,
+    eye_shapes: Vec<String>,
     eye: Vec<String>,
     head_shapes: Vec<String>,
-    pupil_shape: Vec<String>,
+    pupil_shapes: Vec<String>,
     sizes: Vec<String>,
     skin_types: Vec<String>,
     widths: Vec<String>,
@@ -197,12 +222,12 @@ impl AppearanceOptions {
             colors: convert(Color::get_all()),
             colors_skin: convert(SkinColor::get_all()),
             ears: vec!["None".to_string(), "Normal".to_string()],
-            ear_shape: convert(EarShape::get_all()),
+            ear_shapes: convert(EarShape::get_all()),
             eyes: vec!["None".to_string(), "One".to_string(), "Two".to_string()],
-            eye_shape: convert(EyeShape::get_all()),
+            eye_shapes: convert(EyeShape::get_all()),
             eye: vec!["Normal".to_string(), "Simple".to_string()],
             head_shapes: convert(HeadShape::get_all()),
-            pupil_shape: convert(PupilShape::get_all()),
+            pupil_shapes: convert(PupilShape::get_all()),
             sizes: convert(Size::get_all()),
             skin_types: vec![
                 "Scales".to_string(),
