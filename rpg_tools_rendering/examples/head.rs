@@ -2,7 +2,9 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use rpg_tools_core::model::character::appearance::ear::Ears;
-use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
+use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
+use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
+use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::Mouth;
@@ -26,12 +28,14 @@ fn main() {
         let appearance = Appearance::head(
             Head {
                 ears: Ears::None,
-                eyes: Eyes::One(Eye::Normal {
-                    eye_shape: EyeShape::Circle,
-                    pupil_shape: PupilShape::VerticalSlit,
-                    pupil_color: Color::Black,
-                    background_color: Color::White,
-                }),
+                eyes: Eyes::One {
+                    eye: Eye::Normal {
+                        eye_shape: EyeShape::Circle,
+                        pupil_shape: PupilShape::VerticalSlit,
+                        pupil_color: Color::Black,
+                        background_color: Color::White,
+                    },
+                },
                 hair: Hair::None,
                 mouth: Mouth::None,
                 shape: *shape,

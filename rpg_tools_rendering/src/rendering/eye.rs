@@ -2,7 +2,9 @@ use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
+use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
+use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
+use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::color::Color;
 

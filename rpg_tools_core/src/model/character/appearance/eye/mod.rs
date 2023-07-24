@@ -1,6 +1,11 @@
+use crate::model::character::appearance::eye::pupil::PupilShape;
+use crate::model::character::appearance::eye::shape::EyeShape;
 use crate::model::color::Color;
 use crate::model::size::Size;
 use serde::Serialize;
+
+pub mod pupil;
+pub mod shape;
 
 /// How many eyes does the character have?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
@@ -32,20 +37,4 @@ pub enum Eye {
         pupil_color: Color,
         background_color: Color,
     },
-}
-
-/// What is the shape of the eye?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
-pub enum EyeShape {
-    Almond,
-    Circle,
-    Ellipse,
-}
-
-/// What is the shape of the pupil?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
-pub enum PupilShape {
-    Circle,
-    VerticalSlit,
-    HorizontalSlit,
 }

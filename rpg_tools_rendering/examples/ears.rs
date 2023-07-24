@@ -4,7 +4,9 @@ extern crate rpg_tools_rendering;
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
 use rpg_tools_core::model::character::appearance::ear::Ears;
-use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
+use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
+use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
+use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairline, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
@@ -49,15 +51,15 @@ fn create_appearance(height: Length, ears: &Ears, face: &HeadShape) -> Appearanc
                     pupil_color: Color::Gray,
                     background_color: Color::White,
                 },
-                distance: Size::Medium,
+                distance: Medium,
             },
             hair: Hair::Short {
                 style: ShortHair::SidePart(Left),
-                hairline: Hairline::Round(Size::Medium),
+                hairline: Hairline::Round(Medium),
                 color: HairColor::Blond,
             },
             mouth: Mouth::Normal {
-                width: Size::Medium,
+                width: Medium,
                 color: None,
                 teeth: SpecialTeeth::None,
                 teeth_color: TeethColor::White,

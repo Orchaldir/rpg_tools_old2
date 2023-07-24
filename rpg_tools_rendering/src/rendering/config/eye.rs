@@ -1,6 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::rendering::config::size::SizeConfig;
-use rpg_tools_core::model::character::appearance::eye::EyeShape;
+use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::size::Size;
 
 /// The rendering config of the [`eyes`](rpg_tools_core::model::character::appearance::eye::Eyes).
