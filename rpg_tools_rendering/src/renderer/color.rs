@@ -1,11 +1,16 @@
 use rpg_tools_core::model::color::Color;
 use std::fmt::{Display, Formatter};
 
-/// A valid [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
+/// A color supported by svg.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum WebColor {
+    /// See https://en.wikipedia.org/wiki/Web_colors.
     Name(String),
-    RBG { r: u8, g: u8, b: u8 },
+    RBG {
+        r: u8,
+        g: u8,
+        b: u8,
+    },
 }
 
 impl WebColor {

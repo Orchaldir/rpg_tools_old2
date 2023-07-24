@@ -1,5 +1,6 @@
 use serde::Serialize;
 use std::fmt;
+use Color::*;
 
 /// A color defined by a name.
 /// See https://en.wikipedia.org/wiki/Web_colors.
@@ -18,6 +19,7 @@ pub enum Color {
     Orange,
     Purple,
     Red,
+    SaddleBrown,
     Silver,
     Teal,
     White,
@@ -27,23 +29,24 @@ pub enum Color {
 impl Color {
     pub fn get_all() -> Vec<Color> {
         vec![
-            Color::Aqua,
-            Color::Black,
-            Color::Blue,
-            Color::Fuchsia,
-            Color::Gray,
-            Color::Green,
-            Color::Lime,
-            Color::Maroon,
-            Color::Navy,
-            Color::Olive,
-            Color::Orange,
-            Color::Purple,
-            Color::Red,
-            Color::Silver,
-            Color::Teal,
-            Color::White,
-            Color::Yellow,
+            Aqua,
+            Black,
+            Blue,
+            SaddleBrown,
+            Fuchsia,
+            Gray,
+            Green,
+            Lime,
+            Maroon,
+            Navy,
+            Olive,
+            Orange,
+            Purple,
+            Red,
+            Silver,
+            Teal,
+            White,
+            Yellow,
         ]
     }
 }
@@ -57,23 +60,24 @@ impl fmt::Display for Color {
 impl From<&str> for Color {
     fn from(shape: &str) -> Self {
         match shape {
-            "Aqua" => Color::Aqua,
-            "Black" => Color::Black,
-            "Blue" => Color::Blue,
-            "Fuchsia" => Color::Fuchsia,
-            "Gray" => Color::Gray,
-            "Green" => Color::Green,
-            "Lime" => Color::Lime,
-            "Maroon" => Color::Maroon,
-            "Navy" => Color::Navy,
-            "Olive" => Color::Olive,
-            "Orange" => Color::Orange,
-            "Red" => Color::Red,
-            "Silver" => Color::Silver,
-            "Teal" => Color::Teal,
-            "White" => Color::White,
-            "Yellow" => Color::Yellow,
-            _ => Self::Purple,
+            "Aqua" => Aqua,
+            "Black" => Black,
+            "Blue" => Blue,
+            "Fuchsia" => Fuchsia,
+            "Gray" => Gray,
+            "Green" => Green,
+            "Lime" => Lime,
+            "Maroon" => Maroon,
+            "Navy" => Navy,
+            "Olive" => Olive,
+            "Orange" => Orange,
+            "Red" => Red,
+            "SaddleBrown" => SaddleBrown,
+            "Silver" => Silver,
+            "Teal" => Teal,
+            "White" => White,
+            "Yellow" => Yellow,
+            _ => Purple,
         }
     }
 }
