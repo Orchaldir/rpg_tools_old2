@@ -14,6 +14,7 @@ use rpg_tools_rendering::rendering::character::{calculate_character_size, render
 use rpg_tools_rendering::rendering::config::example::create_border_options;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use serde::Serialize;
+use std::fmt;
 use url_encoded_data::UrlEncodedData;
 use Appearance::{HeadOnly, Humanoid};
 
@@ -140,18 +141,18 @@ impl AppearanceOptions {
     pub fn new() -> Self {
         Self {
             body_types: vec!["HeadOnly".to_string(), "Humanoid".to_string()],
-            body_shapes: BodyShape::get_all().iter().map(|c| c.to_string()).collect(),
-            colors: Color::get_all().iter().map(|c| c.to_string()).collect(),
-            colors_skin: SkinColor::get_all().iter().map(|c| c.to_string()).collect(),
-            ear_shape: EarShape::get_all().iter().map(|c| c.to_string()).collect(),
-            head_shapes: HeadShape::get_all().iter().map(|c| c.to_string()).collect(),
-            sizes: Size::get_all().iter().map(|c| c.to_string()).collect(),
+            body_shapes: convert(BodyShape::get_all()),
+            colors: convert(Color::get_all()),
+            colors_skin: convert(SkinColor::get_all()),
+            ear_shape: convert(EarShape::get_all()),
+            head_shapes: convert(HeadShape::get_all()),
+            sizes: convert(Size::get_all()),
             skin_types: vec![
                 "Scales".to_string(),
                 "Skin".to_string(),
                 "ExoticSkin".to_string(),
             ],
-            widths: Width::get_all().iter().map(|c| c.to_string()).collect(),
+            widths: convert(Width::get_all()),
         }
     }
 }
@@ -160,4 +161,8 @@ impl Default for AppearanceOptions {
     fn default() -> Self {
         Self::new()
     }
+}
+
+fn convert(options: Vec<impl fmt::Display>) -> Vec<String> {
+    options.iter().map(|c| c.to_string()).collect()
 }
