@@ -65,23 +65,17 @@
       Eye:
       {{ macros::add_select(name="eye", options=options.eye, selected=eye.type, update=true) }}
     </span>
-    {% if eye.type == "Simple" %}
-      <ul class="nested">
-        <li>
-          Eye Shape:
-          {{ macros::add_select(name="eye.shape", options=options.eye_shapes, selected=eye.eye_shape, update=true) }}
-        </li>
+    <ul class="nested">
+      <li>
+        Eye Shape:
+        {{ macros::add_select(name="eye.shape", options=options.eye_shapes, selected=eye.eye_shape, update=true) }}
+      </li>
+      {% if eye.type == "Simple" %}
         <li>
           Color:
           {{ macros::add_select(name="eye.color", options=options.colors, selected=eye.color, update=true) }}
         </li>
-      </ul>
-    {% elif eye.type == "Normal" %}
-      <ul class="nested">
-        <li>
-          Eye Shape:
-          {{ macros::add_select(name="eye.shape", options=options.eye_shapes, selected=eye.eye_shape, update=true) }}
-        </li>
+      {% elif eye.type == "Normal" %}
         <li>
           Pupil Shape:
           {{ macros::add_select(name="eye.pupil_shape", options=options.pupil_shapes, selected=eye.pupil_shape, update=true) }}
@@ -94,8 +88,8 @@
           Background Color:
           {{ macros::add_select(name="eye.background_color", options=options.colors, selected=eye.background_color, update=true) }}
         </li>
-      </ul>
-    {% endif %}
+      {% endif %}
+    </ul>
   </li>
 {% endmacro %}
 
