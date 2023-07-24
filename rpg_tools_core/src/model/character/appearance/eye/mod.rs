@@ -23,6 +23,15 @@ pub enum Eyes {
     },
 }
 
+impl Default for Eyes {
+    fn default() -> Self {
+        Self::Two {
+            eye: Eye::default(),
+            distance: Size::Medium,
+        }
+    }
+}
+
 /// How does the eye look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 #[serde(tag = "type")]
@@ -41,9 +50,11 @@ pub enum Eye {
 
 impl Default for Eye {
     fn default() -> Self {
-        Self::Simple {
+        Self::Normal {
             eye_shape: EyeShape::default(),
-            color: Color::default(),
+            pupil_shape: PupilShape::Circle,
+            pupil_color: Color::Blue,
+            background_color: Color::White,
         }
     }
 }

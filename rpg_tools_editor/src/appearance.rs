@@ -141,7 +141,10 @@ fn update_eye(data: &UrlEncodedData) -> Eye {
             "Normal" => {
                 let pupil_shape = data.get_first("eye.pupil_shape").unwrap_or("").into();
                 let pupil_color = data.get_first("eye.pupil_color").unwrap_or("").into();
-                let background_color = data.get_first("eye.background_color").unwrap_or("").into();
+                let background_color = data
+                    .get_first("eye.background_color")
+                    .unwrap_or("White")
+                    .into();
 
                 Eye::Normal {
                     eye_shape,

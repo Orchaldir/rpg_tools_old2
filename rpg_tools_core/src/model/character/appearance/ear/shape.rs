@@ -3,11 +3,12 @@ use std::fmt;
 use EarShape::*;
 
 /// How many ears does the character have?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(Default, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum EarShape {
     /// Like an elf's ears.
     Pointed,
     Round,
+    #[default]
     Square,
 }
 

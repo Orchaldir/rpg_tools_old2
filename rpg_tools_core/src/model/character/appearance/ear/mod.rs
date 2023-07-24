@@ -15,3 +15,12 @@ pub enum Ears {
         size: Size,
     },
 }
+
+impl Default for Ears {
+    fn default() -> Self {
+        Self::Normal {
+            shape: EarShape::default(),
+            size: Size::Medium,
+        }
+    }
+}

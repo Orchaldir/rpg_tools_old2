@@ -263,8 +263,8 @@ fn init() -> CharacterMgr {
                 skin: *skin,
             },
             Head {
-                ears: Ears::None,
-                eyes: Eyes::None,
+                ears: Ears::default(),
+                eyes: Eyes::default(),
                 hair: Hair::None,
                 mouth: Mouth::None,
                 shape: HeadShape::default(),
