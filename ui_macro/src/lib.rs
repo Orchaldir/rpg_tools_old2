@@ -54,8 +54,5 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
 }
 
 fn is_integer(field: &Field) -> bool {
-    match &field.ty {
-        Type::Path(type_path) if type_path.clone().into_token_stream().to_string() == "u32" => true,
-        _ => false,
-    }
+    matches!(&field.ty, Type::Path(type_path) if type_path.clone().into_token_stream().to_string() == "u32")
 }
