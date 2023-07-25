@@ -2,6 +2,7 @@ use crate::model::character::appearance::skin::Skin;
 use crate::model::width::Width;
 use serde::Serialize;
 use std::fmt;
+use BodyShape::*;
 
 /// How does the humanoid body look like?
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
@@ -15,7 +16,7 @@ pub struct Body {
 impl Default for Body {
     fn default() -> Self {
         Self {
-            shape: BodyShape::Rectangle,
+            shape: Rectangle,
             width: Width::Average,
             skin: Skin::default(),
         }
@@ -37,12 +38,7 @@ pub enum BodyShape {
 
 impl BodyShape {
     pub fn get_all() -> Vec<Self> {
-        vec![
-            BodyShape::Fat,
-            BodyShape::Hourglass,
-            BodyShape::Muscular,
-            BodyShape::Rectangle,
-        ]
+        vec![Fat, Hourglass, Muscular, Rectangle]
     }
 }
 
@@ -55,10 +51,10 @@ impl fmt::Display for BodyShape {
 impl From<&str> for BodyShape {
     fn from(shape: &str) -> Self {
         match shape {
-            "Fat" => BodyShape::Fat,
-            "Hourglass" => BodyShape::Hourglass,
-            "Muscular" => BodyShape::Muscular,
-            _ => Self::Rectangle,
+            "Fat" => Fat,
+            "Hourglass" => Hourglass,
+            "Muscular" => Muscular,
+            _ => Rectangle,
         }
     }
 }
