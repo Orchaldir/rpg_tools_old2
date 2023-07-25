@@ -1,8 +1,10 @@
 use crate::model::color::Color;
 use crate::model::size::Size;
+use serde::Serialize;
 
 /// How does the mouth look like?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "type")]
 pub enum Mouth {
     None,
     /// Like a lamprey's mouth.
@@ -21,7 +23,8 @@ pub enum Mouth {
 }
 
 /// Does the character have special teeth?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "t", content = "c")]
 pub enum SpecialTeeth {
     None,
     /// The 2 lower canine teeth are longer. e.g. orcs
@@ -31,7 +34,7 @@ pub enum SpecialTeeth {
 }
 
 /// The color of the teeth.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum TeethColor {
     White,
     Yellow,

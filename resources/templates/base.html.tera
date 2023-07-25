@@ -1,8 +1,11 @@
+{% import "macros" as macros %}
+
 <!DOCTYPE html>
 <html>
   <head>
     <link rel="stylesheet" href="/static/style.css">
     <meta charset="utf-8" />
+    <script src="/static/scripts.js" charset="utf-8" defer></script>
     <title>RPG Tools - Editor</title>
   </head>
   <body>

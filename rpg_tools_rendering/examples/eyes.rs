@@ -3,10 +3,10 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::ear::Ears;
-use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes};
+use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
+use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::Hair;
-use rpg_tools_core::model::character::appearance::head::RealisticHeadShape::*;
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
+use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::Mouth;
 use rpg_tools_core::model::character::appearance::skin::Skin;
 use rpg_tools_core::model::character::appearance::Appearance;
@@ -22,10 +22,10 @@ fn main() {
         color: Color::Yellow,
     };
     let eyes_options = vec![
-        Eyes::One(eye),
+        Eyes::One { eye },
         Eyes::Two {
             eye,
-            distance: Size::Low,
+            distance: Size::Small,
         },
         Eyes::Two {
             eye,
@@ -33,22 +33,22 @@ fn main() {
         },
         Eyes::Two {
             eye,
-            distance: Size::High,
+            distance: Size::Large,
         },
     ];
-    let faces = vec![Oval, Rectangle, Round, Square, TriangleDown, TriangleUp];
+    let faces = HeadShape::get_all();
 
     render_2_sets("eyes.svg", eyes_options, faces, create_appearance);
 }
 
-fn create_appearance(height: Length, eyes: &Eyes, face: &RealisticHeadShape) -> Appearance {
+fn create_appearance(height: Length, eyes: &Eyes, face: &HeadShape) -> Appearance {
     Appearance::head(
         Head {
             ears: Ears::None,
             eyes: eyes.clone(),
             hair: Hair::None,
             mouth: Mouth::None,
-            shape: HeadShape::Realistic(*face),
+            shape: *face,
             skin: Skin::Scales(Color::Red),
         },
         height,

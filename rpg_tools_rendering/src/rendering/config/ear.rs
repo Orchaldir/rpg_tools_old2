@@ -9,7 +9,7 @@ pub struct EarConfig {
     pub normal_top_x: f32,
     pub normal_width: f32,
     pub pointed_length: SizeConfig,
-    pub round_factor: f32,
+    pub round_factor: SizeConfig,
 }
 
 impl EarConfig {
@@ -17,7 +17,7 @@ impl EarConfig {
         self.pointed_length.convert(size)
     }
 
-    pub fn get_round_ear_radius(&self, head: &AABB) -> u32 {
-        (head.size().height() as f32 * self.round_factor) as u32
+    pub fn get_round_ear_radius(&self, head: &AABB, size: Size) -> u32 {
+        (head.size().height() as f32 * self.round_factor.convert(size)) as u32
     }
 }

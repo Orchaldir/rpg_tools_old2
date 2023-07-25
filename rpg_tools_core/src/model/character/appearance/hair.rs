@@ -1,9 +1,11 @@
 use crate::model::color::Color;
 use crate::model::side::Side;
 use crate::model::size::Size;
+use serde::Serialize;
 
 /// How does the hair look like?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "type")]
 pub enum Hair {
     None,
     /// Short normal hair.
@@ -15,7 +17,8 @@ pub enum Hair {
 }
 
 /// Which short hair style?
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "t", content = "c")]
 pub enum ShortHair {
     /// All hair is equally short.
     BuzzCut,
@@ -30,7 +33,8 @@ pub enum ShortHair {
 /// What type of hairline? It is not visible by some hair styles.
 ///
 /// The [`size`](Size) defines the y position of the hairline.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "t", content = "c")]
 pub enum Hairline {
     Round(Size),
     Straight(Size),
@@ -55,7 +59,8 @@ impl Hairline {
 }
 
 /// The color of the hair.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "t", content = "c")]
 pub enum HairColor {
     White,
     Grey,

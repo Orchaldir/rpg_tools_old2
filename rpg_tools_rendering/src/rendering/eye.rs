@@ -2,7 +2,9 @@ use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
+use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
+use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
+use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::color::Color;
 
@@ -12,7 +14,7 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     match &head.eyes {
         Eyes::None => {}
-        Eyes::One(eye) => {
+        Eyes::One { eye } => {
             let center = aabb.get_point(0.5, config.head.y_eye);
             render_eye(renderer, config, &center, radius, eye);
         }

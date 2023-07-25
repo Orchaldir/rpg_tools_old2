@@ -3,16 +3,18 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::ear::Ears;
-use rpg_tools_core::model::character::appearance::eye::{Eye, EyeShape, Eyes, PupilShape};
+use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
+use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
+use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::Hair;
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape, RealisticHeadShape};
+use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::size::Size;
-use Size::High;
+use Size::Large;
 
 pub mod utils;
 
@@ -25,7 +27,7 @@ fn main() {
         Skin::Skin(SkinColor::Tan),
         Skin::Skin(SkinColor::Dark),
         Skin::Skin(SkinColor::VeryDark),
-        Skin::Skin(SkinColor::Exotic(Color::Green)),
+        Skin::ExoticSkin(Color::Green),
     ];
 
     render_2_sets("teeth_colors.svg", skin, teeth_colors, create_appearance);
@@ -42,16 +44,16 @@ fn create_appearance(height: Length, skin: &Skin, color: &TeethColor) -> Appeara
                     pupil_color: Color::Blue,
                     background_color: Color::White,
                 },
-                distance: Size::Low,
+                distance: Size::Small,
             },
             hair: Hair::None,
             mouth: Mouth::Normal {
-                width: High,
+                width: Large,
                 color: None,
-                teeth: SpecialTeeth::LowerFangs(High),
+                teeth: SpecialTeeth::LowerFangs(Large),
                 teeth_color: *color,
             },
-            shape: HeadShape::Realistic(RealisticHeadShape::Oval),
+            shape: HeadShape::Oval,
             skin: *skin,
         },
         height,

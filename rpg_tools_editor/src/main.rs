@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate rocket;
 
+use crate::appearance::{apply_update_to_appearance, render_to_svg, AppearanceOptions, RawSvg};
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
@@ -19,22 +20,17 @@ use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::width::Width;
-use rpg_tools_rendering::math::aabb2d::AABB;
-use rpg_tools_rendering::renderer::svg::SvgBuilder;
-use rpg_tools_rendering::renderer::Renderer;
-use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character};
-use rpg_tools_rendering::rendering::config::example::{create_border_options, create_config};
+use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::sync::Mutex;
+
+pub mod appearance;
 
 struct EditorData {
     config: RenderConfig,
     data: Mutex<CharacterMgr>,
+    preview: Mutex<Appearance>,
 }
-
-#[derive(Responder)]
-#[response(status = 200, content_type = "image/svg+xml")]
-struct RawSvg(String);
 
 #[get("/")]
 fn home(data: &State<EditorData>) -> Template {
@@ -120,21 +116,57 @@ fn update_character(
 #[get("/character/<id>/front.svg")]
 fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
     let data = state.data.lock().expect("lock shared data");
-    data.get(CharacterId::new(id)).map(|character| {
-        let size = calculate_character_size(&state.config, character.appearance());
-        let aabb = AABB::with_size(size);
-        let options = create_border_options();
-        let mut svg_builder = SvgBuilder::new(size);
+    data.get(CharacterId::new(id))
+        .map(|character| render_to_svg(&state.config, character.appearance()))
+}
 
-        svg_builder.render_rectangle(&aabb, &options);
-        render_character(
-            &mut svg_builder,
-            &state.config,
-            &aabb,
-            character.appearance(),
-        );
-        let svg = svg_builder.finish();
-        RawSvg(svg.export())
+#[get("/appearance/preview/front.svg")]
+fn get_appearance_preview(state: &State<EditorData>) -> RawSvg {
+    let preview = state.preview.lock().expect("lock shared preview");
+    render_to_svg(&state.config, &preview)
+}
+
+#[get("/appearance/<id>/edit")]
+fn edit_appearance(state: &State<EditorData>, id: usize) -> Option<Template> {
+    let data = state.data.lock().expect("lock shared data");
+    let mut preview = state.preview.lock().expect("lock shared preview");
+
+    data.get(CharacterId::new(id)).map(|character| {
+        *preview = *character.appearance();
+
+        edit_appearance_template(character, &preview)
+    })
+}
+
+#[post("/appearance/<id>/update", data = "<update>")]
+fn update_appearance(data: &State<EditorData>, id: usize, update: String) -> Option<Template> {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!("Update appearance of character {} with {:?}", id, update);
+
+    data.get_mut(CharacterId::new(id))
+        .map(|character| {
+            character.set_appearance(apply_update_to_appearance(character.appearance(), &update));
+            character
+        })
+        .map(|character| show_character_template(id, character))
+}
+
+#[post("/appearance/<id>/preview", data = "<update>")]
+fn update_appearance_preview(
+    state: &State<EditorData>,
+    id: usize,
+    update: String,
+) -> Option<Template> {
+    let mut data = state.data.lock().expect("lock shared data");
+    let mut preview = state.preview.lock().expect("lock shared preview");
+
+    println!("Preview appearance of character {} with {:?}", id, update);
+
+    data.get_mut(CharacterId::new(id)).map(|character| {
+        *preview = apply_update_to_appearance(character.appearance(), &update);
+
+        edit_appearance_template(character, &preview)
     })
 }
 
@@ -144,7 +176,8 @@ fn show_character_template(id: usize, character: &Character) -> Template {
         context! {
             id: id,
             name: character.name(),
-            gender: format!("{:?}", character.gender()),
+            gender: character.gender(),
+            appearance: character.appearance(),
         },
     )
 }
@@ -156,7 +189,19 @@ fn edit_character_template(id: usize, character: &Character) -> Template {
             id: id,
             name: character.name(),
             genders: vec!["Female", "Genderless", "Male"],
-            gender: format!("{:?}", character.gender()),
+            gender: character.gender(),
+        },
+    )
+}
+
+fn edit_appearance_template(character: &Character, appearance: &Appearance) -> Template {
+    Template::render(
+        "appearance_edit",
+        context! {
+            id: character.id().id(),
+            name: character.name(),
+            appearance: appearance,
+            options: AppearanceOptions::new(),
         },
     )
 }
@@ -167,6 +212,7 @@ async fn main() -> Result<()> {
         .manage(EditorData {
             config: create_config(),
             data: Mutex::new(init()),
+            preview: Mutex::new(Appearance::default()),
         })
         .mount("/static", FileServer::from("rpg_tools_editor/static/"))
         .mount(
@@ -178,6 +224,10 @@ async fn main() -> Result<()> {
                 get_character,
                 edit_character,
                 update_character,
+                edit_appearance,
+                update_appearance,
+                get_appearance_preview,
+                update_appearance_preview,
                 get_front
             ],
         )
@@ -201,7 +251,7 @@ fn init() -> CharacterMgr {
         Skin::Skin(SkinColor::Tan),
         Skin::Skin(SkinColor::Dark),
         Skin::Skin(SkinColor::VeryDark),
-        Skin::Skin(SkinColor::Exotic(Color::Green)),
+        Skin::ExoticSkin(Color::Green),
     ] {
         let id = manager.create();
         let character = manager.get_mut(id).unwrap();
@@ -213,8 +263,8 @@ fn init() -> CharacterMgr {
                 skin: *skin,
             },
             Head {
-                ears: Ears::None,
-                eyes: Eyes::None,
+                ears: Ears::default(),
+                eyes: Eyes::default(),
                 hair: Hair::None,
                 mouth: Mouth::None,
                 shape: HeadShape::default(),
