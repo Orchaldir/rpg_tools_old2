@@ -1,8 +1,7 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn;
 
-#[proc_macro_derive(UI)]
+#[proc_macro_derive(ui)]
 pub fn ui_macro_derive(input: TokenStream) -> TokenStream {
     // Construct a representation of Rust code as a syntax tree
     // that we can manipulate
@@ -17,13 +16,14 @@ fn impl_ui_macro(ast: &syn::DeriveInput) -> TokenStream {
 
     let name = &ast.ident;
 
+    println!("name={:?}", name);
+
     let gen = quote! {
-        /*
-        impl HelloMacro for #name {
-            fn hello_macro() {
-                println!("Hello, Macro! My name is {}!", stringify!(#name));
+        impl UI for #name {
+            fn create_viewer(&self, path: &str) {
+                println!("Create Viewer for {} with path '{}'!", stringify!(#name), path);
             }
-        }*/
+        }
     };
     gen.into()
 }
