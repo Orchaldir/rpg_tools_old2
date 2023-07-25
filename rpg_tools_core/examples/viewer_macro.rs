@@ -13,8 +13,8 @@ struct InnerStruct {
 
 #[derive(ui)]
 struct OuterStruct {
-    inner: InnerStruct,
     number_d: u32,
+    inner: InnerStruct,
     number_e: u32,
 }
 

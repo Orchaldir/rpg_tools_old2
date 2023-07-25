@@ -27,14 +27,12 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
         }) => {
             let field_quotes: TokenStream2 = fields.named.iter().map(|field| {
                 let field_name = &field.ident;
-                let field_type = &field.ty;
-                let field_type = quote! { #field_type }.to_string();
 
                 if is_integer(field) {
                     quote! {  println!("Add integer {}!", stringify!(#field_name)); }
                 }
                 else {
-                    quote! {  println!("Add field {} of type {}!", stringify!(#field_name), stringify!(#field_type)); }
+                    quote! {  self.#field_name.create_viewer(&format!("{}.{}", path, stringify!(#field_name))); }
                 }
             }).collect();
 
@@ -43,6 +41,7 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
                     fn create_viewer(&self, path: &str) {
                         println!("Create Viewer for {} with path '{}'!", stringify!(#name), path);
                         #field_quotes
+                        println!("Finish Viewer for {} with path '{}'!", stringify!(#name), path);
                     }
                 }
             }
