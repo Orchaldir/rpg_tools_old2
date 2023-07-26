@@ -1,7 +1,7 @@
 use proc_macro::TokenStream;
 use quote::{quote, ToTokens};
 use syn::__private::TokenStream2;
-use syn::{Data, DataStruct, Field, Fields, FieldsNamed, Ident, Type};
+use syn::{Data, DataEnum, DataStruct, Field, Fields, FieldsNamed, Ident, Type};
 
 #[proc_macro_derive(ui)]
 pub fn ui_macro_derive(input: TokenStream) -> TokenStream {
@@ -25,21 +25,23 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
             fields: Fields::Named(fields),
             ..
         }) => handle_struct(name, fields),
-        Data::Enum(data) => {
-            quote! {
-                impl UI for #name {
-                    fn create_viewer(&self, path: &str, spaces: &str) {
-                        println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
-                        let inner_spaces = format!("  {}", spaces);
-                        println!("{}Finish Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
-                    }
-                }
-            }
-        }
+        Data::Enum(data) => handle_enum(name, data),
         _ => panic!("Expected a struct with named fields"),
     };
 
     gen.into()
+}
+
+fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
+    quote! {
+        impl UI for #name {
+            fn create_viewer(&self, path: &str, spaces: &str) {
+                println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
+                let inner_spaces = format!("  {}", spaces);
+                println!("{}Finish Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
+            }
+        }
+    }
 }
 
 fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
