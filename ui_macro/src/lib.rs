@@ -41,6 +41,16 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
                 }
             }
         };
+    } else if is_tuple_enum(data) {
+        return quote! {
+            impl UI for #name {
+                fn create_viewer(&self, path: &str, spaces: &str) {
+                    println!("{}Create Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
+                    let inner_spaces = format!("  {}", spaces);
+                    println!("{}Finish Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
+                }
+            }
+        };
     }
 
     quote! {
@@ -89,4 +99,14 @@ fn is_simple_enum(data: &DataEnum) -> bool {
     }
 
     true
+}
+
+fn is_tuple_enum(data: &DataEnum) -> bool {
+    for variant in &data.variants {
+        if let Fields::Unnamed(..) = variant.fields {
+            return true;
+        }
+    }
+
+    false
 }
