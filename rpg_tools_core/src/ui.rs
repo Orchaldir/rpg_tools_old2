@@ -68,6 +68,7 @@ impl UiVisitor for ViewerVisitor {
             ));
             self.first_variant = false;
         } else {
+            self.leave();
             self.lines.push(format!(
                 "{}{{% elif {}.type == \"{}\" %}}",
                 self.spaces,
@@ -75,9 +76,11 @@ impl UiVisitor for ViewerVisitor {
                 name
             ));
         }
+        self.enter();
     }
 
     fn leave_enum(&mut self) {
+        self.leave();
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
         self.leave_struct();
     }

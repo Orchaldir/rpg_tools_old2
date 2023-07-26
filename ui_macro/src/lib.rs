@@ -140,9 +140,16 @@ fn handle_field(field: &Field) -> TokenStream2 {
 
 fn handle_field_name(field: &Field, field_name: &str) -> TokenStream2 {
     if is_integer(field) {
-        quote! {  println!("{}Add integer '{}'!", &inner_spaces,#field_name); }
+        quote! {
+            println!("{}Add integer '{}'!", &inner_spaces, #field_name);
+            visitor.add_integer(#field_name);
+        }
     } else {
-        quote! {  self.#field_name.create_viewer(visitor, &format!("{}.{}", path,#field_name), &inner_spaces); }
+        quote! {
+            visitor.enter_child(#field_name);
+            self.#field_name.create_viewer(visitor, &format!("{}.{}", path,#field_name), &inner_spaces);
+            visitor.leave_child();
+        }
     }
 }
 
