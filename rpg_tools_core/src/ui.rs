@@ -89,6 +89,8 @@ impl UiVisitor for ViewerVisitor {
     }
 
     fn enter_struct(&mut self) {
+        self.lines
+            .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
         self.lines.push(format!("{}<ul>", self.spaces));
         self.enter();
     }
