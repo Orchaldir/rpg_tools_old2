@@ -1,4 +1,8 @@
 pub trait UiVisitor {
+    fn enter_enum(&mut self);
+    fn enter_tuple_variant(&mut self, name: &str);
+    fn leave_enum(&mut self);
+
     fn enter_struct(&mut self);
     fn leave_struct(&mut self);
 
@@ -10,6 +14,7 @@ pub trait UiVisitor {
 }
 
 pub struct ViewerVisitor {
+    first_variant: bool,
     lines: Vec<String>,
     path: Vec<String>,
     spaces: String,
@@ -18,6 +23,7 @@ pub struct ViewerVisitor {
 impl ViewerVisitor {
     pub fn new(path: String, spaces: String) -> Self {
         Self {
+            first_variant: false,
             lines: vec![],
             path: vec![path],
             spaces,
@@ -47,6 +53,35 @@ impl ViewerVisitor {
 }
 
 impl UiVisitor for ViewerVisitor {
+    fn enter_enum(&mut self) {
+        self.first_variant = true;
+        self.enter_struct();
+    }
+
+    fn enter_tuple_variant(&mut self, name: &str) {
+        if self.first_variant {
+            self.lines.push(format!(
+                "{}{{% if {}.type == \"{}\" %}}",
+                self.spaces,
+                self.get_path(),
+                name
+            ));
+            self.first_variant = false;
+        } else {
+            self.lines.push(format!(
+                "{}{{% elif {}.type == \"{}\" %}}",
+                self.spaces,
+                self.get_path(),
+                name
+            ));
+        }
+    }
+
+    fn leave_enum(&mut self) {
+        self.lines.push(format!("{}{{% endif %}}", self.spaces));
+        self.leave_struct();
+    }
+
     fn enter_struct(&mut self) {
         self.lines.push(format!("{}<ul>", self.spaces));
         self.enter();
@@ -81,7 +116,9 @@ impl UiVisitor for ViewerVisitor {
     fn add_simple_enum(&mut self) {
         self.lines.push(format!(
             "{}<b>{}:</b> {{ {} }}",
-            self.spaces, self.get_name(), self.get_path()
+            self.spaces,
+            self.get_name(),
+            self.get_path()
         ));
     }
 }

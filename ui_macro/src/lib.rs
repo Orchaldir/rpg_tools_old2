@@ -47,8 +47,10 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             impl UI for #name {
                 fn create_viewer(&self, visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                     println!("{}Create Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
+                    visitor.enter_enum();
                     let inner_spaces = format!("  {}", spaces);
                     #field_quotes
+                    visitor.leave_enum();
                     println!("{}Finish Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
                 }
             }
@@ -74,6 +76,7 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
 
     for variant in &data.variants {
         let variant_name = &variant.ident;
+        results.push(quote! {  visitor.enter_tuple_variant(stringify!(#variant_name)); });
 
         match &variant.fields {
             Fields::Named(fields) => {
