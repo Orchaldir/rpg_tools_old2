@@ -36,6 +36,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             impl UI for #name {
                 fn create_viewer(&self, visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                     println!("{}Add simple enum {} with path '{}' & variants '{}'!", spaces, stringify!(#name), path, stringify!(#variants));
+                    visitor.add_simple_enum();
                 }
             }
         };
@@ -126,7 +127,11 @@ fn handle_field(field: &Field) -> TokenStream2 {
             visitor.add_integer(stringify!(#field_name));
         }
     } else {
-        quote! {  self.#field_name.create_viewer(visitor, &format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
+        quote! {
+            visitor.enter_child(stringify!(#field_name));
+            self.#field_name.create_viewer(visitor, &format!("{}.{}", path, stringify!(#field_name)), &inner_spaces);
+            visitor.leave_child();
+        }
     }
 }
 

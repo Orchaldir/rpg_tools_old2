@@ -2,7 +2,11 @@ pub trait UiVisitor {
     fn enter_struct(&mut self);
     fn leave_struct(&mut self);
 
+    fn enter_child(&mut self, name: &str);
+    fn leave_child(&mut self);
+
     fn add_integer(&mut self, name: &str);
+    fn add_simple_enum(&mut self);
 }
 
 pub struct ViewerVisitor {
@@ -24,6 +28,10 @@ impl ViewerVisitor {
         &self.lines
     }
 
+    fn get_name(&self) -> String {
+        self.path.last().unwrap().clone()
+    }
+
     pub fn get_path(&self) -> String {
         self.path.join(".")
     }
@@ -35,6 +43,13 @@ impl ViewerVisitor {
     fn leave(&mut self) {
         self.spaces.pop();
         self.spaces.pop();
+    }
+
+    fn add_field(&mut self, name: &str, path: &str) {
+        self.lines.push(format!(
+            "{}<li><b>{}:</b> {{ {} }}</li>",
+            self.spaces, name, path
+        ));
     }
 }
 
@@ -49,13 +64,20 @@ impl UiVisitor for ViewerVisitor {
         self.lines.push(format!("{}</ul>", self.spaces));
     }
 
+    fn enter_child(&mut self, name: &str) {
+        self.path.push(name.to_string());
+    }
+
+    fn leave_child(&mut self) {
+        self.path.pop();
+    }
+
     fn add_integer(&mut self, name: &str) {
-        self.lines.push(format!(
-            "{0}<li><b>{1}:</b> {{ {2}.{1} }} cm</li>",
-            self.spaces,
-            name,
-            self.get_path()
-        ));
+        self.add_field(name, &format!("{}.{}", self.get_path(), name));
+    }
+
+    fn add_simple_enum(&mut self) {
+        self.add_field(&self.get_name(), &self.get_path());
     }
 }
 

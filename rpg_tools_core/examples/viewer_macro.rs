@@ -37,6 +37,7 @@ struct InnerStruct {
 struct OuterStruct {
     number_d: u32,
     //inner: InnerStruct,
+    simple: SimpleEnum,
     number_e: u32,
 }
 
@@ -53,6 +54,7 @@ fn main() {
             number_c: 0,
         },
         */
+        simple: SimpleEnum::B,
         number_d: 0,
         number_e: 0,
     };
