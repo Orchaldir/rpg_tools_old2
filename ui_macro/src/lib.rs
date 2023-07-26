@@ -147,7 +147,7 @@ fn handle_field_name(field: &Field, field_name: &str) -> TokenStream2 {
     } else {
         quote! {
             visitor.enter_child(#field_name);
-            self.#field_name.create_viewer(visitor, &format!("{}.{}", path,#field_name), &inner_spaces);
+            self.#field_name.create_viewer(visitor, &format!("{}.{}", path, #field_name), &inner_spaces);
             visitor.leave_child();
         }
     }
