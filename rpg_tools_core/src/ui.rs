@@ -1,6 +1,8 @@
 pub trait UiVisitor {
     fn enter_struct(&mut self);
     fn leave_struct(&mut self);
+
+    fn add_integer(&mut self, name: &str);
 }
 
 pub struct ViewerVisitor {
@@ -22,6 +24,10 @@ impl ViewerVisitor {
         &self.lines
     }
 
+    pub fn get_path(&self) -> String {
+        self.path.join(".")
+    }
+
     fn enter(&mut self) {
         self.spaces.push_str("  ");
     }
@@ -41,6 +47,15 @@ impl UiVisitor for ViewerVisitor {
     fn leave_struct(&mut self) {
         self.leave();
         self.lines.push(format!("{}</ul>", self.spaces));
+    }
+
+    fn add_integer(&mut self, name: &str) {
+        self.lines.push(format!(
+            "{0}<li><b>{1}:</b> {{ {2}.{1} }} cm</li>",
+            self.spaces,
+            name,
+            self.get_path()
+        ));
     }
 }
 

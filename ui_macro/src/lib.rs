@@ -121,7 +121,10 @@ fn handle_field(field: &Field) -> TokenStream2 {
     let field_name = &field.ident;
 
     if is_integer(field) {
-        quote! {  println!("{}Add integer '{}'!", &inner_spaces, stringify!(#field_name)); }
+        quote! {
+            println!("{}Add integer '{}'!", &inner_spaces, stringify!(#field_name));
+            visitor.add_integer(stringify!(#field_name));
+        }
     } else {
         quote! {  self.#field_name.create_viewer(visitor, &format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
     }
