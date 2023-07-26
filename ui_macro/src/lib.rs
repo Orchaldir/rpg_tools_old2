@@ -72,8 +72,12 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
     let mut results: Vec<TokenStream2> = Vec::new();
 
     for variant in &data.variants {
+        let variant_name = &variant.ident;
+
         match &variant.fields {
             Fields::Named(fields) => {
+                results.push(quote! {  println!("{}Add named variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
+
                 for field in &fields.named {
                     results.push(handle_field(field));
                 }
@@ -83,9 +87,13 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
                     panic!("Tuple enums are only supported with 1 field!")
                 }
 
+                results.push(quote! {  println!("{}Add unnamed variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
+
                 results.push(handle_field(&fields.unnamed[0]));
             }
-            Fields::Unit => {}
+            Fields::Unit => {
+                results.push(quote! {  println!("{}Add simple variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
+            }
         }
     }
 
