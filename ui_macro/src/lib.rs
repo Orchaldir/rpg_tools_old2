@@ -33,6 +33,16 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
 }
 
 fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
+    if is_simple_enum(data) {
+        return quote! {
+            impl UI for #name {
+                fn create_viewer(&self, path: &str, spaces: &str) {
+                    println!("{}Add simple enum {} with path '{}'!", spaces, stringify!(#name), path);
+                }
+            }
+        };
+    }
+
     quote! {
         impl UI for #name {
             fn create_viewer(&self, path: &str, spaces: &str) {
@@ -69,4 +79,14 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
 
 fn is_integer(field: &Field) -> bool {
     matches!(&field.ty, Type::Path(type_path) if type_path.clone().into_token_stream().to_string() == "u32")
+}
+
+fn is_simple_enum(data: &DataEnum) -> bool {
+    for variant in &data.variants {
+        if variant.fields != Fields::Unit {
+            return false;
+        }
+    }
+
+    true
 }
