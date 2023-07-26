@@ -11,6 +11,7 @@ pub trait UiVisitor {
 
     fn add_integer(&mut self, name: &str);
     fn add_simple_enum(&mut self);
+    fn add_unit_variant(&mut self, name: &str);
 }
 
 pub struct ViewerVisitor {
@@ -124,6 +125,14 @@ impl UiVisitor for ViewerVisitor {
             self.spaces,
             self.get_name(),
             self.get_path()
+        ));
+    }
+
+    fn add_unit_variant(&mut self, name: &str) {
+        self.lines.push(format!(
+            "{}<b>{}</b>",
+            self.spaces,
+            name
         ));
     }
 }

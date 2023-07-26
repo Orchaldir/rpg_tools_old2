@@ -96,7 +96,10 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
                 results.push(handle_field_name(&fields.unnamed[0], "c"));
             }
             Fields::Unit => {
-                results.push(quote! {  println!("{}Add simple variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
+                results.push(quote! {
+                    println!("{}Add simple variant '{}'!", &inner_spaces, stringify!(#variant_name));
+                    visitor.add_unit_variant(stringify!(#variant_name));
+                });
             }
         }
     }
