@@ -39,10 +39,21 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
             quote! {
                 impl UI for #name {
                     fn create_viewer(&self, path: &str, spaces: &str) {
-                        println!("{}Create Viewer for {} with path '{}'!", spaces, stringify!(#name), path);
+                        println!("{}Create Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
                         let inner_spaces = format!("  {}", spaces);
                         #field_quotes
-                        println!("{}Finish Viewer for {} with path '{}'!", spaces, stringify!(#name), path);
+                        println!("{}Finish Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
+                    }
+                }
+            }
+        }
+        Data::Enum(data) => {
+            quote! {
+                impl UI for #name {
+                    fn create_viewer(&self, path: &str, spaces: &str) {
+                        println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
+                        let inner_spaces = format!("  {}", spaces);
+                        println!("{}Finish Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
                     }
                 }
             }

@@ -5,9 +5,16 @@ use rpg_tools_core::ui::UI;
 use ui_macro::ui;
 
 #[derive(ui)]
+enum SimpleEnum {
+    A,
+    B,
+    C,
+}
+
+#[derive(ui)]
 struct InnerStruct {
     number_a: u32,
-    number_b: u32,
+    simple: SimpleEnum,
     number_c: u32,
 }
 
@@ -24,7 +31,7 @@ fn main() {
     let viewer = OuterStruct {
         inner: InnerStruct {
             number_a: 0,
-            number_b: 0,
+            simple: SimpleEnum::B,
             number_c: 0,
         },
         number_d: 0,
