@@ -63,8 +63,10 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         impl UI for #name {
             fn create_viewer(&self, visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                 println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
+                visitor.enter_enum();
                 let inner_spaces = format!("  {}", spaces);
                 #field_quotes
+                visitor.leave_enum();
                 println!("{}Finish Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
             }
         }

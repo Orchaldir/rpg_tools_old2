@@ -55,10 +55,10 @@ impl ViewerVisitor {
 
 impl UiVisitor for ViewerVisitor {
     fn enter_enum(&mut self) {
-        self.first_variant = true;
-        self.enter_struct();
         self.lines
             .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
+        self.first_variant = true;
+        self.enter_struct();
     }
 
     fn enter_tuple_variant(&mut self, name: &str) {
@@ -129,11 +129,8 @@ impl UiVisitor for ViewerVisitor {
     }
 
     fn add_unit_variant(&mut self, name: &str) {
-        self.lines.push(format!(
-            "{}<b>{}</b>",
-            self.spaces,
-            name
-        ));
+        self.lines
+            .push(format!("{}<li><b>{}</b></li>", self.spaces, name));
     }
 }
 

@@ -42,9 +42,7 @@ struct SecondStruct {
 #[derive(ui)]
 struct OuterStruct {
     number_d: u32,
-    //inner: InnerStruct,
-    simple: SimpleEnum,
-    inner: SecondStruct,
+    data: StructEnum,
     tuple: TupleEnum,
     number_e: u32,
 }
@@ -62,8 +60,7 @@ fn main() {
             number_c: 0,
         },
         */
-        simple: SimpleEnum::B,
-        inner: SecondStruct { a: 5, b: 6 },
+        data: StructEnum::DATA { one: 4, two: 5 },
         tuple: TupleEnum::D(99),
         number_d: 0,
         number_e: 0,
