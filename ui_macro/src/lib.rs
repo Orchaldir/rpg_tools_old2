@@ -107,8 +107,10 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
         impl UI for #name {
             fn create_viewer(&self, visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                 println!("{}Create Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
+                visitor.enter_struct();
                 let inner_spaces = format!("  {}", spaces);
                 #field_quotes
+                visitor.leave_struct();
                 println!("{}Finish Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
             }
         }

@@ -4,23 +4,35 @@ pub trait UiVisitor {
 }
 
 pub struct ViewerVisitor {
+    path: Vec<String>,
     spaces: String,
 }
 
 impl ViewerVisitor {
-    pub fn new(spaces: String) -> Self {
-        Self { spaces }
+    pub fn new(path: String, spaces: String) -> Self {
+        Self {
+            path: vec![path],
+            spaces,
+        }
+    }
+
+    fn enter(&mut self) {
+        self.spaces.push_str("  ");
+    }
+
+    fn leave(&mut self) {
+        self.spaces.pop();
+        self.spaces.pop();
     }
 }
 
 impl UiVisitor for ViewerVisitor {
     fn enter_struct(&mut self) {
-        self.spaces.push_str("  ");
+        self.enter();
     }
 
     fn leave_struct(&mut self) {
-        self.spaces.pop();
-        self.spaces.pop();
+        self.leave();
     }
 }
 

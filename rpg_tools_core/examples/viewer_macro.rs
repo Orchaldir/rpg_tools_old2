@@ -57,7 +57,7 @@ fn main() {
         number_e: 0,
     };
 
-    let mut visitor = ViewerVisitor::new("".to_string());
+    let mut visitor = ViewerVisitor::new("test".to_string(), "".to_string());
 
     data.create_viewer(&mut visitor, "start", "");
 }
