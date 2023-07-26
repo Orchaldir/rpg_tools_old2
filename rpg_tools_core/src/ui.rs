@@ -4,6 +4,7 @@ pub trait UiVisitor {
 }
 
 pub struct ViewerVisitor {
+    lines: Vec<String>,
     path: Vec<String>,
     spaces: String,
 }
@@ -11,9 +12,14 @@ pub struct ViewerVisitor {
 impl ViewerVisitor {
     pub fn new(path: String, spaces: String) -> Self {
         Self {
+            lines: vec![],
             path: vec![path],
             spaces,
         }
+    }
+
+    pub fn get_lines(&self) -> &[String] {
+        &self.lines
     }
 
     fn enter(&mut self) {
@@ -28,11 +34,13 @@ impl ViewerVisitor {
 
 impl UiVisitor for ViewerVisitor {
     fn enter_struct(&mut self) {
+        self.lines.push(format!("{}<ul>", self.spaces));
         self.enter();
     }
 
     fn leave_struct(&mut self) {
         self.leave();
+        self.lines.push(format!("{}</ul>", self.spaces));
     }
 }
 

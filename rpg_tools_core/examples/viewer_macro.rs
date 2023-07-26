@@ -59,5 +59,11 @@ fn main() {
 
     let mut visitor = ViewerVisitor::new("test".to_string(), "".to_string());
 
+    println!("Start visit");
+
     data.create_viewer(&mut visitor, "start", "");
+
+    println!("Finished visit");
+
+    visitor.get_lines().iter().for_each(|l| println!("{}", l))
 }
