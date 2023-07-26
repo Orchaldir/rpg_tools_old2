@@ -12,9 +12,24 @@ enum SimpleEnum {
 }
 
 #[derive(ui)]
+enum TupleEnum {
+    D(u32),
+    E,
+    F(u32),
+}
+
+#[derive(ui)]
+enum StructEnum {
+    DATA { one: u32, two: u32 },
+    NONE,
+}
+
+#[derive(ui)]
 struct InnerStruct {
     number_a: u32,
     simple: SimpleEnum,
+    tuple: TupleEnum,
+    data: StructEnum,
     number_c: u32,
 }
 
@@ -32,6 +47,8 @@ fn main() {
         inner: InnerStruct {
             number_a: 0,
             simple: SimpleEnum::B,
+            tuple: TupleEnum::D(99),
+            data: StructEnum::DATA { one: 4, two: 5 },
             number_c: 0,
         },
         number_d: 0,
