@@ -1,4 +1,4 @@
 pub trait UI {
     /// Create a viewer ui.
-    fn create_viewer(&self, path: &str);
+    fn create_viewer(&self, path: &str, spaces: &str);
 }

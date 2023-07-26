@@ -29,19 +29,20 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
                 let field_name = &field.ident;
 
                 if is_integer(field) {
-                    quote! {  println!("Add integer {}!", stringify!(#field_name)); }
+                    quote! {  println!("{}Add integer {}!", &inner_spaces, stringify!(#field_name)); }
                 }
                 else {
-                    quote! {  self.#field_name.create_viewer(&format!("{}.{}", path, stringify!(#field_name))); }
+                    quote! {  self.#field_name.create_viewer(&format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
                 }
             }).collect();
 
             quote! {
                 impl UI for #name {
-                    fn create_viewer(&self, path: &str) {
-                        println!("Create Viewer for {} with path '{}'!", stringify!(#name), path);
+                    fn create_viewer(&self, path: &str, spaces: &str) {
+                        println!("{}Create Viewer for {} with path '{}'!", spaces, stringify!(#name), path);
+                        let inner_spaces = format!("  {}", spaces);
                         #field_quotes
-                        println!("Finish Viewer for {} with path '{}'!", stringify!(#name), path);
+                        println!("{}Finish Viewer for {} with path '{}'!", spaces, stringify!(#name), path);
                     }
                 }
             }

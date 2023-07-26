@@ -31,5 +31,5 @@ fn main() {
         number_e: 0,
     };
 
-    viewer.create_viewer("start");
+    viewer.create_viewer("start", "");
 }
