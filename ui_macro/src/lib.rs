@@ -34,7 +34,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         let variants = quote! { #(#variants)* };
         return quote! {
             impl UI for #name {
-                fn create_viewer(&self, path: &str, spaces: &str) {
+                fn create_viewer(&self, visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                     println!("{}Add simple enum {} with path '{}' & variants '{}'!", spaces, stringify!(#name), path, stringify!(#variants));
                 }
             }
@@ -44,7 +44,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
 
         return quote! {
             impl UI for #name {
-                fn create_viewer(&self, path: &str, spaces: &str) {
+                fn create_viewer(&self, visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                     println!("{}Create Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
                     let inner_spaces = format!("  {}", spaces);
                     #field_quotes
@@ -58,7 +58,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
 
     quote! {
         impl UI for #name {
-            fn create_viewer(&self, path: &str, spaces: &str) {
+            fn create_viewer(&self, visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                 println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
                 let inner_spaces = format!("  {}", spaces);
                 #field_quotes
@@ -105,7 +105,7 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
 
     quote! {
         impl UI for #name {
-            fn create_viewer(&self, path: &str, spaces: &str) {
+            fn create_viewer(&self, visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                 println!("{}Create Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
                 let inner_spaces = format!("  {}", spaces);
                 #field_quotes
@@ -121,7 +121,7 @@ fn handle_field(field: &Field) -> TokenStream2 {
     if is_integer(field) {
         quote! {  println!("{}Add integer '{}'!", &inner_spaces, stringify!(#field_name)); }
     } else {
-        quote! {  self.#field_name.create_viewer(&format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
+        quote! {  self.#field_name.create_viewer(visitor, &format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
     }
 }
 
@@ -129,7 +129,7 @@ fn handle_field_name(field: &Field, field_name: &str) -> TokenStream2 {
     if is_integer(field) {
         quote! {  println!("{}Add integer '{}'!", &inner_spaces,#field_name); }
     } else {
-        quote! {  self.#field_name.create_viewer(&format!("{}.{}", path,#field_name), &inner_spaces); }
+        quote! {  self.#field_name.create_viewer(visitor, &format!("{}.{}", path,#field_name), &inner_spaces); }
     }
 }
 

@@ -1,7 +1,7 @@
 extern crate rpg_tools_core;
 extern crate ui_macro;
 
-use rpg_tools_core::ui::UI;
+use rpg_tools_core::ui::{UiVisitor, ViewerVisitor, UI};
 use ui_macro::ui;
 
 #[derive(ui)]
@@ -36,14 +36,15 @@ struct InnerStruct {
 #[derive(ui)]
 struct OuterStruct {
     number_d: u32,
-    inner: InnerStruct,
+    //inner: InnerStruct,
     number_e: u32,
 }
 
 fn main() {
     println!("Generate tera code for viewer");
 
-    let viewer = OuterStruct {
+    let data = OuterStruct {
+        /*
         inner: InnerStruct {
             number_a: 0,
             simple: SimpleEnum::B,
@@ -51,9 +52,12 @@ fn main() {
             data: StructEnum::DATA { one: 4, two: 5 },
             number_c: 0,
         },
+        */
         number_d: 0,
         number_e: 0,
     };
 
-    viewer.create_viewer("start", "");
+    let mut visitor = ViewerVisitor::new("".to_string());
+
+    data.create_viewer(&mut visitor, "start", "");
 }
