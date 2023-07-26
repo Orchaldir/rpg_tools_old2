@@ -1,7 +1,7 @@
 use proc_macro::TokenStream;
 use quote::{quote, ToTokens};
 use syn::__private::TokenStream2;
-use syn::{Data, DataStruct, Field, Fields, Type};
+use syn::{Data, DataStruct, Field, Fields, FieldsNamed, Ident, Type};
 
 #[proc_macro_derive(ui)]
 pub fn ui_macro_derive(input: TokenStream) -> TokenStream {
@@ -24,29 +24,7 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
         Data::Struct(DataStruct {
             fields: Fields::Named(fields),
             ..
-        }) => {
-            let field_quotes: TokenStream2 = fields.named.iter().map(|field| {
-                let field_name = &field.ident;
-
-                if is_integer(field) {
-                    quote! {  println!("{}Add integer {}!", &inner_spaces, stringify!(#field_name)); }
-                }
-                else {
-                    quote! {  self.#field_name.create_viewer(&format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
-                }
-            }).collect();
-
-            quote! {
-                impl UI for #name {
-                    fn create_viewer(&self, path: &str, spaces: &str) {
-                        println!("{}Create Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
-                        let inner_spaces = format!("  {}", spaces);
-                        #field_quotes
-                        println!("{}Finish Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
-                    }
-                }
-            }
-        }
+        }) => handle_struct(name, fields),
         Data::Enum(data) => {
             quote! {
                 impl UI for #name {
@@ -62,6 +40,29 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
     };
 
     gen.into()
+}
+
+fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
+    let field_quotes: TokenStream2 = fields.named.iter().map(|field| {
+        let field_name = &field.ident;
+
+        if is_integer(field) {
+            quote! {  println!("{}Add integer {}!", &inner_spaces, stringify!(#field_name)); }
+        } else {
+            quote! {  self.#field_name.create_viewer(&format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
+        }
+    }).collect();
+
+    quote! {
+        impl UI for #name {
+            fn create_viewer(&self, path: &str, spaces: &str) {
+                println!("{}Create Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
+                let inner_spaces = format!("  {}", spaces);
+                #field_quotes
+                println!("{}Finish Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
+            }
+        }
+    }
 }
 
 fn is_integer(field: &Field) -> bool {
