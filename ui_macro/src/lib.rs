@@ -38,38 +38,64 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             }
         };
     } else if is_tuple_enum(data) {
+        let field_quotes = handle_enum_variants(data);
+
         return quote! {
             impl UI for #name {
                 fn create_viewer(&self, path: &str, spaces: &str) {
                     println!("{}Create Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
                     let inner_spaces = format!("  {}", spaces);
+                    #field_quotes
                     println!("{}Finish Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
                 }
             }
         };
     }
 
+    let field_quotes = handle_enum_variants(data);
+
     quote! {
         impl UI for #name {
             fn create_viewer(&self, path: &str, spaces: &str) {
                 println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
                 let inner_spaces = format!("  {}", spaces);
+                #field_quotes
                 println!("{}Finish Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
             }
         }
     }
 }
 
-fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
-    let field_quotes: TokenStream2 = fields.named.iter().map(|field| {
-        let field_name = &field.ident;
+fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
+    let mut results: Vec<TokenStream2> = Vec::new();
 
-        if is_integer(field) {
-            quote! {  println!("{}Add integer {}!", &inner_spaces, stringify!(#field_name)); }
-        } else {
-            quote! {  self.#field_name.create_viewer(&format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
+    for variant in &data.variants {
+        match &variant.fields {
+            Fields::Named(fields) => {
+                for field in &fields.named {
+                    results.push(handle_field(field));
+                }
+            }
+            Fields::Unnamed(fields) => {
+                if fields.unnamed.len() != 1 {
+                    panic!("Tuple enums are only supported with 1 field!")
+                }
+
+                results.push(handle_field(&fields.unnamed[0]));
+            }
+            Fields::Unit => {}
         }
-    }).collect();
+    }
+
+    quote! { #(#results)*}
+}
+
+fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
+    let field_quotes: TokenStream2 = fields
+        .named
+        .iter()
+        .map(handle_field)
+        .collect();
 
     quote! {
         impl UI for #name {
@@ -80,6 +106,16 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
                 println!("{}Finish Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
             }
         }
+    }
+}
+
+fn handle_field(field: &Field) -> TokenStream2 {
+    let field_name = &field.ident;
+
+    if is_integer(field) {
+        quote! {  println!("{}Add integer {}!", &inner_spaces, stringify!(#field_name)); }
+    } else {
+        quote! {  self.#field_name.create_viewer(&format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
     }
 }
 
