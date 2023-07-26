@@ -30,10 +30,12 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
 
 fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     if is_simple_enum(data) {
+        let variants: Vec<Ident> = data.variants.iter().map(|v| v.ident.clone()).collect();
+        let variants = quote! { #(#variants)* };
         return quote! {
             impl UI for #name {
                 fn create_viewer(&self, path: &str, spaces: &str) {
-                    println!("{}Add simple enum {} with path '{}'!", spaces, stringify!(#name), path);
+                    println!("{}Add simple enum {} with path '{}' & variants '{}'!", spaces, stringify!(#name), path, stringify!(#variants));
                 }
             }
         };
@@ -87,15 +89,11 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
         }
     }
 
-    quote! { #(#results)*}
+    quote! { #(#results)* }
 }
 
 fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
-    let field_quotes: TokenStream2 = fields
-        .named
-        .iter()
-        .map(handle_field)
-        .collect();
+    let field_quotes: TokenStream2 = fields.named.iter().map(handle_field).collect();
 
     quote! {
         impl UI for #name {
@@ -113,7 +111,7 @@ fn handle_field(field: &Field) -> TokenStream2 {
     let field_name = &field.ident;
 
     if is_integer(field) {
-        quote! {  println!("{}Add integer {}!", &inner_spaces, stringify!(#field_name)); }
+        quote! {  println!("{}Add integer '{}'!", &inner_spaces, stringify!(#field_name)); }
     } else {
         quote! {  self.#field_name.create_viewer(&format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
     }
