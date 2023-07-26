@@ -2,6 +2,7 @@ extern crate rpg_tools_core;
 extern crate ui_macro;
 
 use rpg_tools_core::ui::{UiVisitor, ViewerVisitor, UI};
+use serde::Serialize;
 use ui_macro::ui;
 
 #[derive(ui)]
@@ -11,7 +12,8 @@ enum SimpleEnum {
     C,
 }
 
-#[derive(ui)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "t", content = "c")]
 enum TupleEnum {
     D(u32),
     E,
@@ -39,11 +41,9 @@ struct SecondStruct {
     b: u32,
 }
 
-#[derive(ui)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 struct OuterStruct {
     number_d: u32,
-    inner: InnerStruct,
-    data: StructEnum,
     tuple: TupleEnum,
     number_e: u32,
 }
@@ -52,6 +52,7 @@ fn main() {
     println!("Generate tera code for viewer");
 
     let data = OuterStruct {
+        /*
         inner: InnerStruct {
             number_a: 0,
             simple: SimpleEnum::B,
@@ -59,7 +60,8 @@ fn main() {
             data: StructEnum::DATA { one: 4, two: 5 },
             number_c: 0,
         },
-        data: StructEnum::DATA { one: 4, two: 5 },
+        */
+        //data: StructEnum::DATA { one: 4, two: 5 },
         tuple: TupleEnum::D(99),
         number_d: 0,
         number_e: 0,

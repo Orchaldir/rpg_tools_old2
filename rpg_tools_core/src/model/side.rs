@@ -1,7 +1,9 @@
+use crate::ui::{UiVisitor, UI};
 use serde::Serialize;
+use ui_macro::ui;
 
 /// Left or Right? From the [`character's`](crate::model::character::Character) perspective.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum Side {
     Left,
     Right,
