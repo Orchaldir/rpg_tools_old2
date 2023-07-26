@@ -106,7 +106,7 @@ impl UiVisitor for ViewerVisitor {
 
     fn add_integer(&mut self, name: &str) {
         self.lines.push(format!(
-            "{0}<li><b>{1}:</b> {{ {2}.{1} }}</li>",
+            "{0}<li><b>{1}:</b> {{{{ {2}.{1} }}}}</li>",
             self.spaces,
             name,
             self.get_path()
@@ -115,7 +115,7 @@ impl UiVisitor for ViewerVisitor {
 
     fn add_simple_enum(&mut self) {
         self.lines.push(format!(
-            "{}<b>{}:</b> {{ {} }}",
+            "{}<b>{}:</b> {{{{ {} }}}}",
             self.spaces,
             self.get_name(),
             self.get_path()
