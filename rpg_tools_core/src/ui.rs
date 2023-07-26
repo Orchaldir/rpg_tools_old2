@@ -44,13 +44,6 @@ impl ViewerVisitor {
         self.spaces.pop();
         self.spaces.pop();
     }
-
-    fn add_field(&mut self, name: &str, path: &str) {
-        self.lines.push(format!(
-            "{}<li><b>{}:</b> {{ {} }}</li>",
-            self.spaces, name, path
-        ));
-    }
 }
 
 impl UiVisitor for ViewerVisitor {
@@ -65,19 +58,31 @@ impl UiVisitor for ViewerVisitor {
     }
 
     fn enter_child(&mut self, name: &str) {
+        self.lines.push(format!("{}<li>", self.spaces));
+        self.enter();
         self.path.push(name.to_string());
     }
 
     fn leave_child(&mut self) {
         self.path.pop();
+        self.leave();
+        self.lines.push(format!("{}</li>", self.spaces));
     }
 
     fn add_integer(&mut self, name: &str) {
-        self.add_field(name, &format!("{}.{}", self.get_path(), name));
+        self.lines.push(format!(
+            "{0}<li><b>{1}:</b> {{ {2}.{1} }}</li>",
+            self.spaces,
+            name,
+            self.get_path()
+        ));
     }
 
     fn add_simple_enum(&mut self) {
-        self.add_field(&self.get_name(), &self.get_path());
+        self.lines.push(format!(
+            "{}<b>{}:</b> {{ {} }}",
+            self.spaces, self.get_name(), self.get_path()
+        ));
     }
 }
 

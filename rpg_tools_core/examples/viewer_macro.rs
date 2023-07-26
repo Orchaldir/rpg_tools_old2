@@ -33,13 +33,23 @@ struct InnerStruct {
     number_c: u32,
 }
 
+
+
+#[derive(ui)]
+struct SecondStruct {
+    a: u32,
+    b: u32,
+}
+
 #[derive(ui)]
 struct OuterStruct {
     number_d: u32,
     //inner: InnerStruct,
     simple: SimpleEnum,
+    inner: SecondStruct,
     number_e: u32,
 }
+
 
 fn main() {
     println!("Generate tera code for viewer");
@@ -55,6 +65,10 @@ fn main() {
         },
         */
         simple: SimpleEnum::B,
+        inner: SecondStruct{
+            a: 5,
+            b: 6,
+        },
         number_d: 0,
         number_e: 0,
     };
