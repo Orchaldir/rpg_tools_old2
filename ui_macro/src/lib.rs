@@ -89,7 +89,7 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
 
                 results.push(quote! {  println!("{}Add unnamed variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
 
-                results.push(handle_field(&fields.unnamed[0]));
+                results.push(handle_field_name(&fields.unnamed[0], "c"));
             }
             Fields::Unit => {
                 results.push(quote! {  println!("{}Add simple variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
@@ -122,6 +122,14 @@ fn handle_field(field: &Field) -> TokenStream2 {
         quote! {  println!("{}Add integer '{}'!", &inner_spaces, stringify!(#field_name)); }
     } else {
         quote! {  self.#field_name.create_viewer(&format!("{}.{}", path, stringify!(#field_name)), &inner_spaces); }
+    }
+}
+
+fn handle_field_name(field: &Field, field_name: &str) -> TokenStream2 {
+    if is_integer(field) {
+        quote! {  println!("{}Add integer '{}'!", &inner_spaces,#field_name); }
+    } else {
+        quote! {  self.#field_name.create_viewer(&format!("{}.{}", path,#field_name), &inner_spaces); }
     }
 }
 
