@@ -10,9 +10,16 @@ use rpg_tools_core::ui::{UiVisitor, UI};
 use ui_macro::ui;
 
 #[derive(ui)]
+pub enum EnumTest {
+    VALUE,
+    NAME,
+}
+
+#[derive(ui)]
 pub struct Test {
     a: u32,
     b: u32,
+    simple: EnumTest,
 }
 
 fn main() {

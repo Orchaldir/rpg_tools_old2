@@ -27,12 +27,11 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
 fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     if is_simple_enum(data) {
         let variants: Vec<Ident> = data.variants.iter().map(|v| v.ident.clone()).collect();
-        let variants = quote! { #(#variants)* };
         return quote! {
             impl UI for #name {
                 fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
-                    println!("{}Add simple enum {} with path '{}' & variants '{}'!", spaces, stringify!(#name), path, stringify!(#variants));
-                    visitor.add_simple_enum();
+                    println!("{}Add simple enum {} with path '{}'!", spaces, stringify!(#name), path);
+                    visitor.add_simple_enum(&vec![#(stringify!(#variants).to_string()),*]);
                 }
             }
         };

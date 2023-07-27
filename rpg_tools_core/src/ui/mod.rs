@@ -13,7 +13,7 @@ pub trait UiVisitor {
     fn leave_child(&mut self);
 
     fn add_integer(&mut self, name: &str);
-    fn add_simple_enum(&mut self);
+    fn add_simple_enum(&mut self, variants: &Vec<String>);
     fn add_unit_variant(&mut self, name: &str);
 }
 

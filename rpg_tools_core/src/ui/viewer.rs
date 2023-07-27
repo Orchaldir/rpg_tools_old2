@@ -114,7 +114,7 @@ impl UiVisitor for ViewerVisitor {
         ));
     }
 
-    fn add_simple_enum(&mut self) {
+    fn add_simple_enum(&mut self, _variants: &Vec<String>) {
         self.lines.push(format!(
             "{}<b>{}:</b> {{{{ {} }}}}",
             self.spaces,

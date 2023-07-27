@@ -114,12 +114,13 @@ impl UiVisitor for EditorVisitor {
         ));
     }
 
-    fn add_simple_enum(&mut self) {
+    fn add_simple_enum(&mut self, variants: &Vec<String>) {
         self.lines.push(format!(
-            "{}<b>{}:</b> {{{{ {} }}}}",
+            "{0}<b>{1}:</b> {{{{ macros::add_select(name=\"{2}\", options=[ {3} ], selected={2}, update=true) }}}}",
             self.spaces,
             self.get_name(),
-            self.get_path()
+            self.get_path(),
+            variants.iter().map(|v| format!("\"{}\"", v)).collect::<Vec<_>>().join(","),
         ));
     }
 
