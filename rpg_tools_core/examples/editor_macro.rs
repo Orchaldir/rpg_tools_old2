@@ -18,7 +18,7 @@ pub struct Test {
 fn main() {
     println!("Generate tera code for editor");
 
-    let mut visitor = EditorVisitor::new("appearance".to_string(), "    ".to_string());
+    let mut visitor = EditorVisitor::new("appearance".to_string(), "".to_string());
 
     println!("Start visit");
 

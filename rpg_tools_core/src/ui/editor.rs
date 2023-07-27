@@ -105,12 +105,12 @@ impl UiVisitor for EditorVisitor {
     }
 
     fn add_integer(&mut self, name: &str) {
+        let path = format!("{}.{}", self.get_path(), name);
         self.lines.push(format!(
-            "{}<li><b>{}:</b> {{{{ {}.{} }}}}</li>",
+            "{0}<li><b>{1}:</b> <input type=\"number\" step=\"1\" id=\"{2}\" name=\"{2}\" value=\"{{{{ {2} }}}}\" onchange=\"updateAppearancePreview();\"></li>",
             self.spaces,
             prettify(name),
-            self.get_path(),
-            name
+            path,
         ));
     }
 
