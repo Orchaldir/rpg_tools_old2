@@ -6,7 +6,14 @@ pub mod util;
 use crate::util::write_each;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::ui::editor::EditorVisitor;
-use rpg_tools_core::ui::UI;
+use rpg_tools_core::ui::{UiVisitor, UI};
+use ui_macro::ui;
+
+#[derive(ui)]
+pub struct Test {
+    a: u32,
+    b: u32,
+}
 
 fn main() {
     println!("Generate tera code for editor");
@@ -15,7 +22,7 @@ fn main() {
 
     println!("Start visit");
 
-    Appearance::create_viewer(&mut visitor, "start", "");
+    Test::create_viewer(&mut visitor, "start", "");
 
     println!("Finished visit");
 
