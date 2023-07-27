@@ -1,3 +1,5 @@
+use titlecase::titlecase;
+
 pub trait UiVisitor {
     fn enter_enum(&mut self);
     fn enter_tuple_variant(&mut self, name: &str);
@@ -36,7 +38,7 @@ impl ViewerVisitor {
     }
 
     fn get_name(&self) -> String {
-        self.path.last().unwrap().clone()
+        prettify(self.path.last().unwrap())
     }
 
     pub fn get_path(&self) -> String {
@@ -119,10 +121,11 @@ impl UiVisitor for ViewerVisitor {
 
     fn add_integer(&mut self, name: &str) {
         self.lines.push(format!(
-            "{0}<li><b>{1}:</b> {{{{ {2}.{1} }}}}</li>",
+            "{}<li><b>{}:</b> {{{{ {}.{} }}}}</li>",
             self.spaces,
-            name,
-            self.get_path()
+            prettify(name),
+            self.get_path(),
+            name
         ));
     }
 
@@ -136,6 +139,11 @@ impl UiVisitor for ViewerVisitor {
     }
 
     fn add_unit_variant(&mut self, _name: &str) {}
+}
+
+fn prettify(text: &str) -> String {
+    let with_spaces = text.replace("_", " ");
+    titlecase(&with_spaces)
 }
 
 pub trait UI {
