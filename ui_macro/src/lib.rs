@@ -32,7 +32,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             impl UI for #name {
                 fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                     println!("{}Add simple enum {} with path '{}'!", spaces, stringify!(#name), path);
-                    visitor.add_simple_enum(&vec![#(stringify!(#variants).to_string()),*]);
+                    visitor.add_simple_enum(&[#(stringify!(#variants).to_string()),*]);
                 }
             }
         };
@@ -43,7 +43,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             impl UI for #name {
                 fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                     println!("{}Create Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
-                    visitor.enter_enum(&vec![#(stringify!(#variants).to_string()),*]);
+                    visitor.enter_enum(&[#(stringify!(#variants).to_string()),*]);
                     let inner_spaces = format!("  {}", spaces);
                     #field_quotes
                     visitor.leave_enum();
@@ -59,7 +59,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         impl UI for #name {
             fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                 println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
-                visitor.enter_enum(&vec![#(stringify!(#variants).to_string()),*]);
+                visitor.enter_enum(&[#(stringify!(#variants).to_string()),*]);
                 let inner_spaces = format!("  {}", spaces);
                 #field_quotes
                 visitor.leave_enum();
