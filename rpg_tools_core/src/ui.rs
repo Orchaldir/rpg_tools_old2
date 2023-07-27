@@ -142,7 +142,7 @@ impl UiVisitor for ViewerVisitor {
 }
 
 fn prettify(text: &str) -> String {
-    let with_spaces = text.replace("_", " ");
+    let with_spaces = text.replace('_', " ");
     titlecase(&with_spaces)
 }
 

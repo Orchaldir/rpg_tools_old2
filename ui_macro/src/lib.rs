@@ -10,11 +10,7 @@ pub fn ui_macro_derive(input: TokenStream) -> TokenStream {
 }
 
 fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
-    println!("input={:?}", input);
-
     let name = &input.ident;
-
-    println!("name={:?}", name);
 
     let gen = match &input.data {
         Data::Struct(DataStruct {
