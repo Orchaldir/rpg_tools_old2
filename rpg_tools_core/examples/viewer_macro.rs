@@ -1,6 +1,7 @@
 extern crate rpg_tools_core;
 extern crate ui_macro;
 
+use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::ui::{UiVisitor, ViewerVisitor, UI};
 use ui_macro::ui;
 
@@ -51,11 +52,11 @@ struct OuterStruct {
 fn main() {
     println!("Generate tera code for viewer");
 
-    let mut visitor = ViewerVisitor::new("test".to_string(), "".to_string());
+    let mut visitor = ViewerVisitor::new("appearance".to_string(), "    ".to_string());
 
     println!("Start visit");
 
-    OuterStruct::create_viewer(&mut visitor, "start", "");
+    Appearance::create_viewer(&mut visitor, "start", "");
 
     println!("Finished visit");
 

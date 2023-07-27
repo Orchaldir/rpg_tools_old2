@@ -23,7 +23,7 @@ pub enum Mouth {
 
 /// Does the character have special teeth?
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
-#[serde(tag = "t", content = "c")]
+#[serde(tag = "type", content = "c")]
 pub enum SpecialTeeth {
     None,
     /// The 2 lower canine teeth are longer. e.g. orcs

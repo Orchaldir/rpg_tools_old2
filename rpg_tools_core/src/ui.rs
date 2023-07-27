@@ -55,8 +55,6 @@ impl ViewerVisitor {
 
 impl UiVisitor for ViewerVisitor {
     fn enter_enum(&mut self) {
-        self.lines
-            .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
         self.first_variant = true;
         self.enter_struct();
     }
@@ -64,7 +62,7 @@ impl UiVisitor for ViewerVisitor {
     fn enter_tuple_variant(&mut self, name: &str) {
         if self.first_variant {
             self.lines.push(format!(
-                "{}{{% if {}.t == \"{}\" %}}",
+                "{}{{% if {}.type == \"{}\" %}}",
                 self.spaces,
                 self.get_path(),
                 name
@@ -73,7 +71,7 @@ impl UiVisitor for ViewerVisitor {
         } else {
             self.leave();
             self.lines.push(format!(
-                "{}{{% elif {}.t == \"{}\" %}}",
+                "{}{{% elif {}.type == \"{}\" %}}",
                 self.spaces,
                 self.get_path(),
                 name
