@@ -138,5 +138,5 @@ impl UiVisitor for ViewerVisitor {
 
 pub trait UI {
     /// Create a viewer ui.
-    fn create_viewer(&self, visitor: &mut dyn UiVisitor, path: &str, spaces: &str);
+    fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str);
 }
