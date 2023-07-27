@@ -41,7 +41,7 @@ impl ViewerVisitor {
 }
 
 impl UiVisitor for ViewerVisitor {
-    fn enter_enum(&mut self) {
+    fn enter_enum(&mut self, _variants: &[String]) {
         self.first_variant = true;
         self.lines.push(format!(
             "{}<b>{}</b>: {{{{ {}.type }}}}",
@@ -114,7 +114,7 @@ impl UiVisitor for ViewerVisitor {
         ));
     }
 
-    fn add_simple_enum(&mut self, _variants: &Vec<String>) {
+    fn add_simple_enum(&mut self, _variants: &[String]) {
         self.lines.push(format!(
             "{}<b>{}:</b> {{{{ {} }}}}",
             self.spaces,

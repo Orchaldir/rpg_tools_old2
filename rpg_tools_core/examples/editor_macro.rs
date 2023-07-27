@@ -16,10 +16,24 @@ pub enum EnumTest {
 }
 
 #[derive(ui)]
+pub enum TupleEnum {
+    T(u32),
+    N,
+}
+
+#[derive(ui)]
+pub struct InnerStruct {
+    c: u32,
+    d: u32,
+    tuple: TupleEnum,
+}
+
+#[derive(ui)]
 pub struct Test {
     a: u32,
     b: u32,
     simple: EnumTest,
+    inner: InnerStruct,
 }
 
 fn main() {

@@ -38,17 +38,22 @@ impl EditorVisitor {
         self.spaces.pop();
         self.spaces.pop();
     }
+
+    fn add_selection(&mut self, path: &str, variants: &[String]) {
+        self.lines.push(format!(
+            "{0}<b>{1}:</b> {{{{ macros::add_select(name=\"{2}\", options=[ {3} ], selected={2}, update=true) }}}}",
+            self.spaces,
+            self.get_name(),
+            path,
+            variants.iter().map(|v| format!("\"{}\"", v)).collect::<Vec<_>>().join(","),
+        ));
+    }
 }
 
 impl UiVisitor for EditorVisitor {
-    fn enter_enum(&mut self) {
+    fn enter_enum(&mut self, variants: &[String]) {
         self.first_variant = true;
-        self.lines.push(format!(
-            "{}<b>{}</b>: {{{{ {}.type }}}}",
-            self.spaces,
-            self.get_name(),
-            self.get_path()
-        ));
+        self.add_selection(&format!("{}.type", self.get_path()), variants);
         self.lines.push(format!("{}<ul>", self.spaces));
         self.enter();
     }
@@ -114,14 +119,8 @@ impl UiVisitor for EditorVisitor {
         ));
     }
 
-    fn add_simple_enum(&mut self, variants: &Vec<String>) {
-        self.lines.push(format!(
-            "{0}<b>{1}:</b> {{{{ macros::add_select(name=\"{2}\", options=[ {3} ], selected={2}, update=true) }}}}",
-            self.spaces,
-            self.get_name(),
-            self.get_path(),
-            variants.iter().map(|v| format!("\"{}\"", v)).collect::<Vec<_>>().join(","),
-        ));
+    fn add_simple_enum(&mut self, variants: &[String]) {
+        self.add_selection(&self.get_path(), variants);
     }
 
     fn add_unit_variant(&mut self, _name: &str) {}
