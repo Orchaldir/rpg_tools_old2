@@ -1,11 +1,13 @@
 use crate::model::character::appearance::ear::shape::EarShape;
 use crate::model::size::Size;
+use crate::ui::{UiVisitor, UI};
 use serde::Serialize;
+use ui_macro::ui;
 
 pub mod shape;
 
 /// How many ears does the character have?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 #[serde(tag = "type")]
 pub enum Ears {
     None,

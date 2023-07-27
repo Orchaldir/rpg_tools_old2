@@ -1,9 +1,11 @@
 use crate::model::color::Color;
+use crate::ui::{UiVisitor, UI};
 use serde::Serialize;
 use std::fmt;
+use ui_macro::ui;
 
 /// The skin of a [`Character`](crate::model::character::Character).
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 #[serde(tag = "t", content = "c")]
 pub enum Skin {
     Scales(Color),
@@ -18,7 +20,7 @@ impl Default for Skin {
 }
 
 /// The skin color of a [`Character`](crate::model::character::Character).
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum SkinColor {
     Fair,
     Light,

@@ -1,9 +1,11 @@
+use crate::ui::{UiVisitor, UI};
 use serde::Serialize;
 use std::fmt;
+use ui_macro::ui;
 use PupilShape::*;
 
 /// What is the shape of the pupil?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum PupilShape {
     Circle,
     HorizontalSlit,

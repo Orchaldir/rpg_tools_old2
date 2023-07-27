@@ -30,7 +30,6 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
         }
         Mouth::Normal {
             width,
-            color,
             teeth,
             teeth_color,
         } => {
@@ -39,7 +38,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             let down = Orientation::from_degree(90.0);
             let up = Orientation::from_degree(270.0);
 
-            render_normal_mouth(renderer, config, aabb, width, *color);
+            render_normal_mouth(renderer, config, aabb, width);
 
             match teeth {
                 SpecialTeeth::UpperFangs(size) => {
@@ -134,9 +133,8 @@ fn render_normal_mouth(
     config: &RenderConfig,
     aabb: &AABB,
     width: f32,
-    color: Option<Color>,
 ) {
-    let options = config.line_with_color(color.unwrap_or(Black), 0.6);
+    let options = config.line_with_color(Black, 0.6);
     let line: Line2d = aabb.get_mirrored_points(width, config.head.y_mouth).into();
     renderer.render_line(&line, &options);
 }
