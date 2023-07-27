@@ -3,6 +3,9 @@ extern crate ui_macro;
 
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::ui::{UiVisitor, ViewerVisitor, UI};
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
 use ui_macro::ui;
 
 #[derive(ui)]
@@ -60,5 +63,17 @@ fn main() {
 
     println!("Finished visit");
 
-    visitor.get_lines().iter().for_each(|l| println!("{}", l))
+    write_each("test.txt", visitor.get_lines());
+}
+
+fn write_each(
+    path: impl AsRef<Path>,
+    items: impl IntoIterator<Item = impl AsRef<[u8]>>,
+) -> std::io::Result<()> {
+    let mut file = File::create(path)?;
+    for i in items {
+        file.write_all(i.as_ref())?;
+        file.write_all("\n".as_ref())?;
+    }
+    file.sync_all()
 }

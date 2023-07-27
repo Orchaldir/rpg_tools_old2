@@ -56,7 +56,14 @@ impl ViewerVisitor {
 impl UiVisitor for ViewerVisitor {
     fn enter_enum(&mut self) {
         self.first_variant = true;
-        self.enter_struct();
+        self.lines.push(format!(
+            "{}<b>{}</b>: {{{{ {}.type }}}}",
+            self.spaces,
+            self.get_name(),
+            self.get_path()
+        ));
+        self.lines.push(format!("{}<ul>", self.spaces));
+        self.enter();
     }
 
     fn enter_tuple_variant(&mut self, name: &str) {
@@ -128,10 +135,7 @@ impl UiVisitor for ViewerVisitor {
         ));
     }
 
-    fn add_unit_variant(&mut self, name: &str) {
-        self.lines
-            .push(format!("{}<li><b>{}</b></li>", self.spaces, name));
-    }
+    fn add_unit_variant(&mut self, _name: &str) {}
 }
 
 pub trait UI {
