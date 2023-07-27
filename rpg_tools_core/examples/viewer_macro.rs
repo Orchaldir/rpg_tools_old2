@@ -2,7 +2,8 @@ extern crate rpg_tools_core;
 extern crate ui_macro;
 
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::ui::{ViewerVisitor, UI};
+use rpg_tools_core::ui::viewer::ViewerVisitor;
+use rpg_tools_core::ui::UI;
 use std::fs::File;
 use std::io::Write;
 use std::path::Path;
