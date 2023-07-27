@@ -34,7 +34,6 @@ impl Default for Head {
 
 /// What is the shape of the head?
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
-#[serde(tag = "type", content = "c")]
 pub enum HeadShape {
     Oval,
     Rectangle,
