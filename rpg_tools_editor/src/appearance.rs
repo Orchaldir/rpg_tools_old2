@@ -25,8 +25,8 @@ use Appearance::{HeadOnly, Humanoid};
 pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appearance {
     let data = UrlEncodedData::parse_str(update);
 
-    if let Some(t) = data.get_first("type") {
-        if let Some(height) = data.get_first("height") {
+    if let Some(t) = data.get_first("appearance.type") {
+        if let Some(height) = data.get_first("appearance.height.millimetre") {
             if let Ok(height) = height.parse::<u32>().map(Length::from_millimetre) {
                 match t {
                     "HeadOnly" => {
@@ -63,15 +63,15 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
 }
 
 fn update_body(data: &UrlEncodedData) -> Body {
-    if let Some(width) = data.get_first("body.width") {
-        if let Some(shape) = data.get_first("body.shape") {
+    if let Some(width) = data.get_first("appearance.body.width") {
+        if let Some(shape) = data.get_first("appearance.body.shape") {
             let width: Width = width.into();
             let shape: BodyShape = shape.into();
 
             return Body {
                 shape,
                 width,
-                skin: update_skin("body", data),
+                skin: update_skin("appearance.body", data),
             };
         }
     }
@@ -80,23 +80,29 @@ fn update_body(data: &UrlEncodedData) -> Body {
 }
 
 fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
-    let shape: HeadShape = data.get_first("head.shape").unwrap_or("").into();
+    let shape: HeadShape = data.get_first("appearance.head.shape").unwrap_or("").into();
 
     Head {
         shape,
         ears: update_ears(data),
         eyes: update_eyes(data),
-        skin: update_skin("head", data),
+        skin: update_skin("appearance.head", data),
         ..*head
     }
 }
 
 fn update_ears(data: &UrlEncodedData) -> Ears {
-    if let Some(t) = data.get_first("ears") {
+    if let Some(t) = data.get_first("appearance.head.ears.type") {
         return match t {
             "Normal" => {
-                let shape = data.get_first("ears.shape").unwrap_or("").into();
-                let size = data.get_first("ears.size").unwrap_or("").into();
+                let shape = data
+                    .get_first("appearance.head.ears.shape")
+                    .unwrap_or("")
+                    .into();
+                let size = data
+                    .get_first("appearance.head.ears.size")
+                    .unwrap_or("")
+                    .into();
 
                 Ears::Normal { shape, size }
             }
@@ -108,13 +114,16 @@ fn update_ears(data: &UrlEncodedData) -> Ears {
 }
 
 fn update_eyes(data: &UrlEncodedData) -> Eyes {
-    if let Some(t) = data.get_first("eyes") {
+    if let Some(t) = data.get_first("appearance.head.eyes.type") {
         return match t {
             "One" => Eyes::One {
                 eye: update_eye(data),
             },
             "Two" => {
-                let distance = data.get_first("eyes.distance").unwrap_or("").into();
+                let distance = data
+                    .get_first("appearance.head.eyes.distance")
+                    .unwrap_or("")
+                    .into();
 
                 Eyes::Two {
                     eye: update_eye(data),
@@ -129,20 +138,32 @@ fn update_eyes(data: &UrlEncodedData) -> Eyes {
 }
 
 fn update_eye(data: &UrlEncodedData) -> Eye {
-    if let Some(t) = data.get_first("eye") {
-        let eye_shape = data.get_first("eye.shape").unwrap_or("").into();
+    if let Some(t) = data.get_first("appearance.head.eyes.eye.type") {
+        let eye_shape = data
+            .get_first("appearance.head.eyes.eye.shape")
+            .unwrap_or("")
+            .into();
 
         return match t {
             "Simple" => {
-                let color = data.get_first("eye.color").unwrap_or("").into();
+                let color = data
+                    .get_first("appearance.head.eyes.eye.color")
+                    .unwrap_or("")
+                    .into();
 
                 Eye::Simple { eye_shape, color }
             }
             "Normal" => {
-                let pupil_shape = data.get_first("eye.pupil_shape").unwrap_or("").into();
-                let pupil_color = data.get_first("eye.pupil_color").unwrap_or("").into();
+                let pupil_shape = data
+                    .get_first("appearance.head.eyes.eye.pupil_shape")
+                    .unwrap_or("")
+                    .into();
+                let pupil_color = data
+                    .get_first("appearance.head.eyes.eye.pupil_color")
+                    .unwrap_or("")
+                    .into();
                 let background_color = data
-                    .get_first("eye.background_color")
+                    .get_first("appearance.head.eyes.eye.background_color")
                     .unwrap_or("White")
                     .into();
 
@@ -161,8 +182,8 @@ fn update_eye(data: &UrlEncodedData) -> Eye {
 }
 
 fn update_skin(path: &str, data: &UrlEncodedData) -> Skin {
-    if let Some(t) = data.get_first(&format!("{}.skin", path)) {
-        if let Some(c) = data.get_first(&format!("{}.skin_color", path)) {
+    if let Some(t) = data.get_first(&format!("{}.skin.type", path)) {
+        if let Some(c) = data.get_first(&format!("{}.skin.c", path)) {
             return match t {
                 "Scales" => {
                     let color = Color::from(c);
