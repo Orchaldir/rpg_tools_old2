@@ -98,7 +98,7 @@
     <ul class="nested">
       <li>
         Shape:
-        {{ macros::add_select(name="head.shape", options=options.head_shapes, selected=head.shape.t, update=true) }}
+        {{ macros::add_select(name="head.shape", options=options.head_shapes, selected=head.shape, update=true) }}
       </li>
       {{ self::edit_ears(ears=head.ears, options=options) }}
       {{ self::edit_eyes(eyes=head.eyes, options=options) }}
@@ -118,12 +118,12 @@
   <li>
     <span class="caret">
       Skin:
-      {{ macros::add_select(name=path ~ ".skin", options=options.skin_types, selected=skin.t, update=true) }}
+      {{ macros::add_select(name=path ~ ".skin", options=options.skin_types, selected=skin.type, update=true) }}
     </span>
     <ul class="nested">
       <li>
         Color:
-        {% if skin.t == "ExoticSkin" or skin.t == "Scales" %}
+        {% if skin.type == "ExoticSkin" or skin.type == "Scales" %}
           {{ macros::add_select(name=path ~ ".skin_color", options=options.colors, selected=skin.c, update=true) }}
         {% else %}
           {{ macros::add_select(name=path ~ ".skin_color", options=options.colors_skin, selected=skin.c, update=true) }}

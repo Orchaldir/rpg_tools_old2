@@ -47,14 +47,456 @@
     <p><a href="/character/{{ id }}/edit">Edit Data</a></p>
     <p><h2>Appearance</h2></p>
     {{ __tera_context }}
-    <ul id="myUL">
-      {% if appearance.type == "Humanoid" %}
-        {{ self::write_body(body=appearance.body) }}
-        {{ self::write_head(head=appearance.head) }}
-        {{ self::write_height(height=appearance.height) }}
-      {% elif appearance.type == "HeadOnly" %}
-        {{ self::write_head(head=appearance.head) }}
-        {{ self::write_height(height=appearance.height) }}
+    <ul>
+      {% if appearance.type == "HeadOnly" %}
+        <li>
+          <b>Head</b>
+          <ul>
+            <li>
+              <b>Ears</b>: {{ appearance.head.ears.type }}
+              <ul>
+                {% if appearance.head.ears.type == "None" %}
+                {% elif appearance.head.ears.type == "Normal" %}
+                  <li>
+                    <b>Shape:</b> {{ appearance.head.ears.shape }}
+                  </li>
+                  <li>
+                    <b>Size:</b> {{ appearance.head.ears.size }}
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+            <li>
+              <b>Eyes</b>: {{ appearance.head.eyes.type }}
+              <ul>
+                {% if appearance.head.eyes.type == "None" %}
+                {% elif appearance.head.eyes.type == "One" %}
+                  <li>
+                    <b>Eye</b>: {{ appearance.head.eyes.eye.type }}
+                    <ul>
+                      {% if appearance.head.eyes.eye.type == "Simple" %}
+                        <li>
+                          <b>Eye Shape:</b> {{ appearance.head.eyes.eye.eye_shape }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.eyes.eye.color }}
+                        </li>
+                      {% elif appearance.head.eyes.eye.type == "Normal" %}
+                        <li>
+                          <b>Eye Shape:</b> {{ appearance.head.eyes.eye.eye_shape }}
+                        </li>
+                        <li>
+                          <b>Pupil Shape:</b> {{ appearance.head.eyes.eye.pupil_shape }}
+                        </li>
+                        <li>
+                          <b>Pupil Color:</b> {{ appearance.head.eyes.eye.pupil_color }}
+                        </li>
+                        <li>
+                          <b>Background Color:</b> {{ appearance.head.eyes.eye.background_color }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                {% elif appearance.head.eyes.type == "Two" %}
+                  <li>
+                    <b>Eye</b>: {{ appearance.head.eyes.eye.type }}
+                    <ul>
+                      {% if appearance.head.eyes.eye.type == "Simple" %}
+                        <li>
+                          <b>Eye Shape:</b> {{ appearance.head.eyes.eye.eye_shape }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.eyes.eye.color }}
+                        </li>
+                      {% elif appearance.head.eyes.eye.type == "Normal" %}
+                        <li>
+                          <b>Eye Shape:</b> {{ appearance.head.eyes.eye.eye_shape }}
+                        </li>
+                        <li>
+                          <b>Pupil Shape:</b> {{ appearance.head.eyes.eye.pupil_shape }}
+                        </li>
+                        <li>
+                          <b>Pupil Color:</b> {{ appearance.head.eyes.eye.pupil_color }}
+                        </li>
+                        <li>
+                          <b>Background Color:</b> {{ appearance.head.eyes.eye.background_color }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Distance:</b> {{ appearance.head.eyes.distance }}
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+            <li>
+              <b>Hair</b>: {{ appearance.head.hair.type }}
+              <ul>
+                {% if appearance.head.hair.type == "None" %}
+                {% elif appearance.head.hair.type == "Short" %}
+                  <li>
+                    <b>Style</b>: {{ appearance.head.hair.style.type }}
+                    <ul>
+                      {% if appearance.head.hair.style.type == "BuzzCut" %}
+                      {% elif appearance.head.hair.style.type == "FlatTop" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.style.c }}
+                        </li>
+                      {% elif appearance.head.hair.style.type == "MiddlePart" %}
+                      {% elif appearance.head.hair.style.type == "SidePart" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.style.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Hairline</b>: {{ appearance.head.hair.hairline.type }}
+                    <ul>
+                      {% if appearance.head.hair.hairline.type == "Round" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "Straight" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "Triangle" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Color</b>: {{ appearance.head.hair.color.type }}
+                    <ul>
+                      {% if appearance.head.hair.color.type == "White" %}
+                      {% elif appearance.head.hair.color.type == "Grey" %}
+                      {% elif appearance.head.hair.color.type == "Blond" %}
+                      {% elif appearance.head.hair.color.type == "Orange" %}
+                      {% elif appearance.head.hair.color.type == "Red" %}
+                      {% elif appearance.head.hair.color.type == "Brown" %}
+                      {% elif appearance.head.hair.color.type == "Black" %}
+                      {% elif appearance.head.hair.color.type == "Exotic" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.color.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+            <li>
+              <b>Mouth</b>: {{ appearance.head.mouth.type }}
+              <ul>
+                {% if appearance.head.mouth.type == "None" %}
+                {% elif appearance.head.mouth.type == "Circle" %}
+                  <li>
+                    <b>Size:</b> {{ appearance.head.mouth.size }}
+                  </li>
+                  <li>
+                    <b>Teeth Color:</b> {{ appearance.head.mouth.teeth_color }}
+                  </li>
+                {% elif appearance.head.mouth.type == "Normal" %}
+                  <li>
+                    <b>Width:</b> {{ appearance.head.mouth.width }}
+                  </li>
+                  <li>
+                    <b>Teeth</b>: {{ appearance.head.mouth.teeth.type }}
+                    <ul>
+                      {% if appearance.head.mouth.teeth.type == "None" %}
+                      {% elif appearance.head.mouth.teeth.type == "LowerFangs" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.mouth.teeth.c }}
+                        </li>
+                      {% elif appearance.head.mouth.teeth.type == "UpperFangs" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.mouth.teeth.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Teeth Color:</b> {{ appearance.head.mouth.teeth_color }}
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+            <li>
+              <b>Shape:</b> {{ appearance.head.shape }}
+            </li>
+            <li>
+              <b>Skin</b>: {{ appearance.head.skin.type }}
+              <ul>
+                {% if appearance.head.skin.type == "Scales" %}
+                  <li>
+                    <b>C:</b> {{ appearance.head.skin.c }}
+                  </li>
+                {% elif appearance.head.skin.type == "Skin" %}
+                  <li>
+                    <b>C:</b> {{ appearance.head.skin.c }}
+                  </li>
+                {% elif appearance.head.skin.type == "ExoticSkin" %}
+                  <li>
+                    <b>C:</b> {{ appearance.head.skin.c }}
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <b>Height</b>
+          <ul>
+            <li><b>Millimetre:</b> {{ appearance.height.millimetre }}</li>
+          </ul>
+        </li>
+      {% elif appearance.type == "Humanoid" %}
+        <li>
+          <b>Body</b>
+          <ul>
+            <li>
+              <b>Shape:</b> {{ appearance.body.shape }}
+            </li>
+            <li>
+              <b>Width:</b> {{ appearance.body.width }}
+            </li>
+            <li>
+              <b>Skin</b>: {{ appearance.body.skin.type }}
+              <ul>
+                {% if appearance.body.skin.type == "Scales" %}
+                  <li>
+                    <b>C:</b> {{ appearance.body.skin.c }}
+                  </li>
+                {% elif appearance.body.skin.type == "Skin" %}
+                  <li>
+                    <b>C:</b> {{ appearance.body.skin.c }}
+                  </li>
+                {% elif appearance.body.skin.type == "ExoticSkin" %}
+                  <li>
+                    <b>C:</b> {{ appearance.body.skin.c }}
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <b>Head</b>
+          <ul>
+            <li>
+              <b>Ears</b>: {{ appearance.head.ears.type }}
+              <ul>
+                {% if appearance.head.ears.type == "None" %}
+                {% elif appearance.head.ears.type == "Normal" %}
+                  <li>
+                    <b>Shape:</b> {{ appearance.head.ears.shape }}
+                  </li>
+                  <li>
+                    <b>Size:</b> {{ appearance.head.ears.size }}
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+            <li>
+              <b>Eyes</b>: {{ appearance.head.eyes.type }}
+              <ul>
+                {% if appearance.head.eyes.type == "None" %}
+                {% elif appearance.head.eyes.type == "One" %}
+                  <li>
+                    <b>Eye</b>: {{ appearance.head.eyes.eye.type }}
+                    <ul>
+                      {% if appearance.head.eyes.eye.type == "Simple" %}
+                        <li>
+                          <b>Eye Shape:</b> {{ appearance.head.eyes.eye.eye_shape }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.eyes.eye.color }}
+                        </li>
+                      {% elif appearance.head.eyes.eye.type == "Normal" %}
+                        <li>
+                          <b>Eye Shape:</b> {{ appearance.head.eyes.eye.eye_shape }}
+                        </li>
+                        <li>
+                          <b>Pupil Shape:</b> {{ appearance.head.eyes.eye.pupil_shape }}
+                        </li>
+                        <li>
+                          <b>Pupil Color:</b> {{ appearance.head.eyes.eye.pupil_color }}
+                        </li>
+                        <li>
+                          <b>Background Color:</b> {{ appearance.head.eyes.eye.background_color }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                {% elif appearance.head.eyes.type == "Two" %}
+                  <li>
+                    <b>Eye</b>: {{ appearance.head.eyes.eye.type }}
+                    <ul>
+                      {% if appearance.head.eyes.eye.type == "Simple" %}
+                        <li>
+                          <b>Eye Shape:</b> {{ appearance.head.eyes.eye.eye_shape }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.eyes.eye.color }}
+                        </li>
+                      {% elif appearance.head.eyes.eye.type == "Normal" %}
+                        <li>
+                          <b>Eye Shape:</b> {{ appearance.head.eyes.eye.eye_shape }}
+                        </li>
+                        <li>
+                          <b>Pupil Shape:</b> {{ appearance.head.eyes.eye.pupil_shape }}
+                        </li>
+                        <li>
+                          <b>Pupil Color:</b> {{ appearance.head.eyes.eye.pupil_color }}
+                        </li>
+                        <li>
+                          <b>Background Color:</b> {{ appearance.head.eyes.eye.background_color }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Distance:</b> {{ appearance.head.eyes.distance }}
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+            <li>
+              <b>Hair</b>: {{ appearance.head.hair.type }}
+              <ul>
+                {% if appearance.head.hair.type == "None" %}
+                {% elif appearance.head.hair.type == "Short" %}
+                  <li>
+                    <b>Style</b>: {{ appearance.head.hair.style.type }}
+                    <ul>
+                      {% if appearance.head.hair.style.type == "BuzzCut" %}
+                      {% elif appearance.head.hair.style.type == "FlatTop" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.style.c }}
+                        </li>
+                      {% elif appearance.head.hair.style.type == "MiddlePart" %}
+                      {% elif appearance.head.hair.style.type == "SidePart" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.style.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Hairline</b>: {{ appearance.head.hair.hairline.type }}
+                    <ul>
+                      {% if appearance.head.hair.hairline.type == "Round" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "Straight" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "Triangle" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Color</b>: {{ appearance.head.hair.color.type }}
+                    <ul>
+                      {% if appearance.head.hair.color.type == "White" %}
+                      {% elif appearance.head.hair.color.type == "Grey" %}
+                      {% elif appearance.head.hair.color.type == "Blond" %}
+                      {% elif appearance.head.hair.color.type == "Orange" %}
+                      {% elif appearance.head.hair.color.type == "Red" %}
+                      {% elif appearance.head.hair.color.type == "Brown" %}
+                      {% elif appearance.head.hair.color.type == "Black" %}
+                      {% elif appearance.head.hair.color.type == "Exotic" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.color.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+            <li>
+              <b>Mouth</b>: {{ appearance.head.mouth.type }}
+              <ul>
+                {% if appearance.head.mouth.type == "None" %}
+                {% elif appearance.head.mouth.type == "Circle" %}
+                  <li>
+                    <b>Size:</b> {{ appearance.head.mouth.size }}
+                  </li>
+                  <li>
+                    <b>Teeth Color:</b> {{ appearance.head.mouth.teeth_color }}
+                  </li>
+                {% elif appearance.head.mouth.type == "Normal" %}
+                  <li>
+                    <b>Width:</b> {{ appearance.head.mouth.width }}
+                  </li>
+                  <li>
+                    <b>Teeth</b>: {{ appearance.head.mouth.teeth.type }}
+                    <ul>
+                      {% if appearance.head.mouth.teeth.type == "None" %}
+                      {% elif appearance.head.mouth.teeth.type == "LowerFangs" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.mouth.teeth.c }}
+                        </li>
+                      {% elif appearance.head.mouth.teeth.type == "UpperFangs" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.mouth.teeth.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Teeth Color:</b> {{ appearance.head.mouth.teeth_color }}
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+            <li>
+              <b>Shape:</b> {{ appearance.head.shape }}
+            </li>
+            <li>
+              <b>Skin</b>: {{ appearance.head.skin.type }}
+              <ul>
+                {% if appearance.head.skin.type == "Scales" %}
+                  <li>
+                    <b>C:</b> {{ appearance.head.skin.c }}
+                  </li>
+                {% elif appearance.head.skin.type == "Skin" %}
+                  <li>
+                    <b>C:</b> {{ appearance.head.skin.c }}
+                  </li>
+                {% elif appearance.head.skin.type == "ExoticSkin" %}
+                  <li>
+                    <b>C:</b> {{ appearance.head.skin.c }}
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <b>Height</b>
+          <ul>
+            <li><b>Millimetre:</b> {{ appearance.height.millimetre }}</li>
+          </ul>
+        </li>
       {% endif %}
     </ul>
     <p><a href="/appearance/{{ id }}/edit">Edit Appearance</a></p>

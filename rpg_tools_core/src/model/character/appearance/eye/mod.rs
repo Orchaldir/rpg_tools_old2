@@ -2,13 +2,15 @@ use crate::model::character::appearance::eye::pupil::PupilShape;
 use crate::model::character::appearance::eye::shape::EyeShape;
 use crate::model::color::Color;
 use crate::model::size::Size;
+use crate::ui::{UiVisitor, UI};
 use serde::Serialize;
+use ui_macro::ui;
 
 pub mod pupil;
 pub mod shape;
 
 /// How many eyes does the character have?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 #[serde(tag = "type")]
 pub enum Eyes {
     None,
@@ -33,7 +35,7 @@ impl Default for Eyes {
 }
 
 /// How does the eye look like?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 #[serde(tag = "type")]
 pub enum Eye {
     Simple {

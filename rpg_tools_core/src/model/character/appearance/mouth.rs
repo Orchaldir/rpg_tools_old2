@@ -1,9 +1,10 @@
-use crate::model::color::Color;
 use crate::model::size::Size;
+use crate::ui::{UiVisitor, UI};
 use serde::Serialize;
+use ui_macro::ui;
 
 /// How does the mouth look like?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 #[serde(tag = "type")]
 pub enum Mouth {
     None,
@@ -15,16 +16,14 @@ pub enum Mouth {
     /// Like a human's mouth.
     Normal {
         width: Size,
-        /// Are the lips painted?
-        color: Option<Color>,
         teeth: SpecialTeeth,
         teeth_color: TeethColor,
     },
 }
 
 /// Does the character have special teeth?
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
-#[serde(tag = "t", content = "c")]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[serde(tag = "type", content = "c")]
 pub enum SpecialTeeth {
     None,
     /// The 2 lower canine teeth are longer. e.g. orcs
@@ -34,7 +33,7 @@ pub enum SpecialTeeth {
 }
 
 /// The color of the teeth.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum TeethColor {
     White,
     Yellow,

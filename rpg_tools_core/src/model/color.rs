@@ -1,10 +1,12 @@
+use crate::ui::{UiVisitor, UI};
 use serde::Serialize;
 use std::fmt;
+use ui_macro::ui;
 use Color::*;
 
 /// A color defined by a name.
 /// See https://en.wikipedia.org/wiki/Web_colors.
-#[derive(Default, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Default, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
 pub enum Color {
     Aqua,
     Black,
