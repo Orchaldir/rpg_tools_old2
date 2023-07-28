@@ -174,21 +174,7 @@
                     </ul>
                   </li>
                   <li>
-                    <b>Color</b>: {{ appearance.head.hair.color.type }}
-                    <ul>
-                      {% if appearance.head.hair.color.type == "White" %}
-                      {% elif appearance.head.hair.color.type == "Grey" %}
-                      {% elif appearance.head.hair.color.type == "Blond" %}
-                      {% elif appearance.head.hair.color.type == "Orange" %}
-                      {% elif appearance.head.hair.color.type == "Red" %}
-                      {% elif appearance.head.hair.color.type == "Brown" %}
-                      {% elif appearance.head.hair.color.type == "Black" %}
-                      {% elif appearance.head.hair.color.type == "Exotic" %}
-                        <li>
-                          <b>C:</b> {{ appearance.head.hair.color.c }}
-                        </li>
-                      {% endif %}
-                    </ul>
+                    <b>Color:</b> {{ appearance.head.hair.color }}
                   </li>
                 {% endif %}
               </ul>
@@ -413,21 +399,7 @@
                     </ul>
                   </li>
                   <li>
-                    <b>Color</b>: {{ appearance.head.hair.color.type }}
-                    <ul>
-                      {% if appearance.head.hair.color.type == "White" %}
-                      {% elif appearance.head.hair.color.type == "Grey" %}
-                      {% elif appearance.head.hair.color.type == "Blond" %}
-                      {% elif appearance.head.hair.color.type == "Orange" %}
-                      {% elif appearance.head.hair.color.type == "Red" %}
-                      {% elif appearance.head.hair.color.type == "Brown" %}
-                      {% elif appearance.head.hair.color.type == "Black" %}
-                      {% elif appearance.head.hair.color.type == "Exotic" %}
-                        <li>
-                          <b>C:</b> {{ appearance.head.hair.color.c }}
-                        </li>
-                      {% endif %}
-                    </ul>
+                    <b>Color:</b> {{ appearance.head.hair.color }}
                   </li>
                 {% endif %}
               </ul>

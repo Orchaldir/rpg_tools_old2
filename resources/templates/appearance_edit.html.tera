@@ -1,138 +1,5 @@
 {% extends "base" %}
 
-{% macro edit_body(body, options) %}
-  <li><span class="caret">Body</span>
-    <ul class="nested">
-      <li>
-        Shape:
-        {{ macros::add_select(name="body.shape", options=options.body_shapes, selected=body.shape, update=true) }}
-      </li>
-      <li>
-        Width:
-        {{ macros::add_select(name="body.width", options=options.widths, selected=body.width, update=true) }}
-      </li>
-      {{ self::edit_skin(skin=body.skin, path="body", options=options) }}
-    </ul>
-  </li>
-{% endmacro %}
-
-{% macro edit_ears(ears, options) %}
-  <li>
-    <span class="caret">
-      Ears:
-      {{ macros::add_select(name="ears", options=options.ears, selected=ears.type, update=true) }}
-    </span>
-    {% if ears.type == "Normal" %}
-      <ul class="nested">
-        <li>
-          Shape:
-          {{ macros::add_select(name="ears.shape", options=options.ear_shapes, selected=ears.shape, update=true) }}
-        </li>
-        <li>
-          Size:
-          {{ macros::add_select(name="ears.size", options=options.sizes, selected=ears.size, update=true) }}
-        </li>
-      </ul>
-    {% endif %}
-  </li>
-{% endmacro %}
-
-{% macro edit_eyes(eyes, options) %}
-  <li>
-    <span class="caret">
-      Eyes:
-      {{ macros::add_select(name="eyes", options=options.eyes, selected=eyes.type, update=true) }}
-    </span>
-    {% if eyes.type == "One" %}
-      <ul class="nested">
-        {{ self::edit_eye(eye=eyes.eye, options=options) }}
-      </ul>
-    {% elif eyes.type == "Two" %}
-      <ul class="nested">
-        {{ self::edit_eye(eye=eyes.eye, options=options) }}
-        <li>
-          Distance between eyes:
-          {{ macros::add_select(name="eyes.distance", options=options.sizes, selected=eyes.distance, update=true) }}
-        </li>
-      </ul>
-    {% endif %}
-  </li>
-{% endmacro %}
-
-{% macro edit_eye(eye, options) %}
-  <li>
-    <span class="caret">
-      Eye:
-      {{ macros::add_select(name="eye", options=options.eye, selected=eye.type, update=true) }}
-    </span>
-    <ul class="nested">
-      <li>
-        Eye Shape:
-        {{ macros::add_select(name="eye.shape", options=options.eye_shapes, selected=eye.eye_shape, update=true) }}
-      </li>
-      {% if eye.type == "Simple" %}
-        <li>
-          Color:
-          {{ macros::add_select(name="eye.color", options=options.colors, selected=eye.color, update=true) }}
-        </li>
-      {% elif eye.type == "Normal" %}
-        <li>
-          Pupil Shape:
-          {{ macros::add_select(name="eye.pupil_shape", options=options.pupil_shapes, selected=eye.pupil_shape, update=true) }}
-        </li>
-        <li>
-          Pupil Color:
-          {{ macros::add_select(name="eye.pupil_color", options=options.colors, selected=eye.pupil_color, update=true) }}
-        </li>
-        <li>
-          Background Color:
-          {{ macros::add_select(name="eye.background_color", options=options.colors, selected=eye.background_color, update=true) }}
-        </li>
-      {% endif %}
-    </ul>
-  </li>
-{% endmacro %}
-
-{% macro edit_head(head, options) %}
-  <li><span class="caret">Head</span>
-    <ul class="nested">
-      <li>
-        Shape:
-        {{ macros::add_select(name="head.shape", options=options.head_shapes, selected=head.shape, update=true) }}
-      </li>
-      {{ self::edit_ears(ears=head.ears, options=options) }}
-      {{ self::edit_eyes(eyes=head.eyes, options=options) }}
-      {{ self::edit_skin(skin=head.skin, path="head", options=options) }}
-    </ul>
-  </li>
-{% endmacro %}
-
-{% macro edit_height(height) %}
-  <li>
-    Height in mm:
-    <input type="number" step="1" id="height" name="height" value="{{ height.millimetre }}" min="200" max="10000" onchange="updateAppearancePreview();">
-  </li>
-{% endmacro %}
-
-{% macro edit_skin(skin, path, options) %}
-  <li>
-    <span class="caret">
-      Skin:
-      {{ macros::add_select(name=path ~ ".skin", options=options.skin_types, selected=skin.type, update=true) }}
-    </span>
-    <ul class="nested">
-      <li>
-        Color:
-        {% if skin.type == "ExoticSkin" or skin.type == "Scales" %}
-          {{ macros::add_select(name=path ~ ".skin_color", options=options.colors, selected=skin.c, update=true) }}
-        {% else %}
-          {{ macros::add_select(name=path ~ ".skin_color", options=options.colors_skin, selected=skin.c, update=true) }}
-        {% endif %}
-      </li>
-    </ul>
-  </li>
-{% endmacro %}
-
 {% block content %}
     <p><h1>Edit appearance of {{ name }}</h1></p>
     <p>Id: {{ id }}</p>
@@ -268,21 +135,7 @@
                           </ul>
                         </li>
                         <li>
-                          <b>Color:</b> {{ macros::add_select(name="appearance.head.hair.color.type", options=[ "White","Grey","Blond","Orange","Red","Brown","Black","Exotic" ], selected=appearance.head.hair.color.type, update=true) }}
-                          <ul>
-                            {% if appearance.head.hair.color.type == "White" %}
-                            {% elif appearance.head.hair.color.type == "Grey" %}
-                            {% elif appearance.head.hair.color.type == "Blond" %}
-                            {% elif appearance.head.hair.color.type == "Orange" %}
-                            {% elif appearance.head.hair.color.type == "Red" %}
-                            {% elif appearance.head.hair.color.type == "Brown" %}
-                            {% elif appearance.head.hair.color.type == "Black" %}
-                            {% elif appearance.head.hair.color.type == "Exotic" %}
-                              <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.color.c", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.hair.color.c, update=true) }}
-                              </li>
-                            {% endif %}
-                          </ul>
+                          <b>Color:</b> {{ macros::add_select(name="appearance.head.hair.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.hair.color, update=true) }}
                         </li>
                       {% endif %}
                     </ul>
@@ -507,21 +360,7 @@
                           </ul>
                         </li>
                         <li>
-                          <b>Color:</b> {{ macros::add_select(name="appearance.head.hair.color.type", options=[ "White","Grey","Blond","Orange","Red","Brown","Black","Exotic" ], selected=appearance.head.hair.color.type, update=true) }}
-                          <ul>
-                            {% if appearance.head.hair.color.type == "White" %}
-                            {% elif appearance.head.hair.color.type == "Grey" %}
-                            {% elif appearance.head.hair.color.type == "Blond" %}
-                            {% elif appearance.head.hair.color.type == "Orange" %}
-                            {% elif appearance.head.hair.color.type == "Red" %}
-                            {% elif appearance.head.hair.color.type == "Brown" %}
-                            {% elif appearance.head.hair.color.type == "Black" %}
-                            {% elif appearance.head.hair.color.type == "Exotic" %}
-                              <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.color.c", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.hair.color.c, update=true) }}
-                              </li>
-                            {% endif %}
-                          </ul>
+                          <b>Color:</b> {{ macros::add_select(name="appearance.head.hair.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.hair.color, update=true) }}
                         </li>
                       {% endif %}
                     </ul>
