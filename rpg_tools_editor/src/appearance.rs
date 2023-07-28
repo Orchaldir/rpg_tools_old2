@@ -278,10 +278,7 @@ fn parse_common_mouth(data: &UrlEncodedData) -> (Size, TeethColor) {
 }
 
 fn parse_special_teeth(data: &UrlEncodedData) -> SpecialTeeth {
-    let size = data
-        .get_first("appearance.head.mouth.teeth.c")
-        .unwrap_or("")
-        .into();
+    let size = get_enum(data, "appearance.head.mouth.teeth.c");
 
     if let Some(t) = data.get_first("appearance.head.mouth.teeth.type") {
         return match t {
@@ -292,6 +289,10 @@ fn parse_special_teeth(data: &UrlEncodedData) -> SpecialTeeth {
     }
 
     SpecialTeeth::None
+}
+
+fn get_enum(data: &UrlEncodedData, path: &str) -> Size {
+    data.get_first(path).unwrap_or("").into()
 }
 
 fn update_skin(path: &str, data: &UrlEncodedData) -> Skin {
