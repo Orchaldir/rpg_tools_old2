@@ -28,29 +28,23 @@ use Appearance::{HeadOnly, Humanoid};
 pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appearance {
     let data = UrlEncodedData::parse_str(update);
 
-    if let Some(t) = data.get_first("appearance.type") {
-        if let Some(height) = data.get_first("appearance.height.millimetre") {
-            if let Ok(height) = height.parse::<u32>().map(Length::from_millimetre) {
-                match t {
-                    "HeadOnly" => {
-                        return match appearance {
-                            HeadOnly { .. } => Appearance::head(update_head(&data), height),
-                            Humanoid { .. } => Appearance::head(update_head(&data), height),
-                        }
+    if let Some(height) = data.get_first("appearance.height.millimetre") {
+        if let Ok(height) = height.parse::<u32>().map(Length::from_millimetre) {
+            return match get_type(&data, "appearance.type") {
+                "HeadOnly" => match appearance {
+                    HeadOnly { .. } => Appearance::head(update_head(&data), height),
+                    Humanoid { .. } => Appearance::head(update_head(&data), height),
+                },
+                "Humanoid" => match appearance {
+                    HeadOnly { .. } => {
+                        Appearance::humanoid(Body::default(), update_head(&data), height)
                     }
-                    "Humanoid" => {
-                        return match appearance {
-                            HeadOnly { .. } => {
-                                Appearance::humanoid(Body::default(), update_head(&data), height)
-                            }
-                            Humanoid { .. } => {
-                                Appearance::humanoid(update_body(&data), update_head(&data), height)
-                            }
-                        }
+                    Humanoid { .. } => {
+                        Appearance::humanoid(update_body(&data), update_head(&data), height)
                     }
-                    _ => {}
-                }
-            }
+                },
+                _ => Appearance::default(),
+            };
         }
     }
 
@@ -82,98 +76,79 @@ fn update_head(data: &UrlEncodedData) -> Head {
 }
 
 fn update_ears(data: &UrlEncodedData) -> Ears {
-    if let Some(t) = data.get_first("appearance.head.ears.type") {
-        return match t {
-            "Normal" => {
-                let shape = get_enum(data, "appearance.head.ears.shape");
-                let size = get_enum(data, "appearance.head.ears.size");
+    match get_type(data, "appearance.head.ears.type") {
+        "Normal" => {
+            let shape = get_enum(data, "appearance.head.ears.shape");
+            let size = get_enum(data, "appearance.head.ears.size");
 
-                Ears::Normal { shape, size }
-            }
-            _ => Ears::None,
-        };
+            Ears::Normal { shape, size }
+        }
+        _ => Ears::None,
     }
-
-    Ears::None
 }
 
 fn update_eyes(data: &UrlEncodedData) -> Eyes {
-    if let Some(t) = data.get_first("appearance.head.eyes.type") {
-        return match t {
-            "One" => Eyes::One {
+    match get_type(data, "appearance.head.eyes.type") {
+        "One" => Eyes::One {
+            eye: update_eye(data),
+        },
+        "Two" => {
+            let distance = get_enum(data, "appearance.head.eyes.distance");
+
+            Eyes::Two {
                 eye: update_eye(data),
-            },
-            "Two" => {
-                let distance = get_enum(data, "appearance.head.eyes.distance");
-
-                Eyes::Two {
-                    eye: update_eye(data),
-                    distance,
-                }
+                distance,
             }
-            _ => Eyes::None,
-        };
+        }
+        _ => Eyes::None,
     }
-
-    Eyes::None
 }
 
 fn update_eye(data: &UrlEncodedData) -> Eye {
-    if let Some(t) = data.get_first("appearance.head.eyes.eye.type") {
-        let eye_shape = get_enum(data, "appearance.head.eyes.eye.shape");
+    let eye_shape = get_enum(data, "appearance.head.eyes.eye.shape");
 
-        return match t {
-            "Simple" => {
-                let color = get_enum(data, "appearance.head.eyes.eye.color");
+    match get_type(data, "appearance.head.eyes.eye.type") {
+        "Simple" => {
+            let color = get_enum(data, "appearance.head.eyes.eye.color");
 
-                Eye::Simple { eye_shape, color }
+            Eye::Simple { eye_shape, color }
+        }
+        "Normal" => {
+            let pupil_shape = get_enum(data, "appearance.head.eyes.eye.pupil_shape");
+            let pupil_color = get_enum(data, "appearance.head.eyes.eye.pupil_color");
+            let background_color = data
+                .get_first("appearance.head.eyes.eye.background_color")
+                .unwrap_or("White")
+                .into();
+
+            Eye::Normal {
+                eye_shape,
+                pupil_shape,
+                pupil_color,
+                background_color,
             }
-            "Normal" => {
-                let pupil_shape = get_enum(data, "appearance.head.eyes.eye.pupil_shape");
-                let pupil_color = get_enum(data, "appearance.head.eyes.eye.pupil_color");
-                let background_color = data
-                    .get_first("appearance.head.eyes.eye.background_color")
-                    .unwrap_or("White")
-                    .into();
-
-                Eye::Normal {
-                    eye_shape,
-                    pupil_shape,
-                    pupil_color,
-                    background_color,
-                }
-            }
-            _ => Eye::default(),
-        };
+        }
+        _ => Eye::default(),
     }
-
-    Eye::default()
 }
 
 fn update_hair(data: &UrlEncodedData) -> Hair {
-    if let Some(t) = data.get_first("appearance.head.hair.type") {
-        return match t {
-            "Short" => {
-                let color = get_enum(data, "appearance.head.hair.color");
+    match get_type(data, "appearance.head.hair.type") {
+        "Short" => {
+            let color = get_enum(data, "appearance.head.hair.color");
 
-                Hair::Short {
-                    style: update_short_hair(data),
-                    hairline: get_hairline(data),
-                    color,
-                }
+            Hair::Short {
+                style: update_short_hair(data),
+                hairline: get_hairline(data),
+                color,
             }
-            _ => Hair::None,
-        };
+        }
+        _ => Hair::None,
     }
-
-    Hair::None
 }
 
 fn update_short_hair(data: &UrlEncodedData) -> ShortHair {
-    match data
-        .get_first("appearance.head.hair.style.type")
-        .unwrap_or("")
-    {
+    match get_type(data, "appearance.head.hair.style.type") {
         "FlatTop" => {
             let size = get_enum(data, "appearance.head.hair.style.c");
             ShortHair::FlatTop(size)
@@ -190,10 +165,7 @@ fn update_short_hair(data: &UrlEncodedData) -> ShortHair {
 fn get_hairline(data: &UrlEncodedData) -> Hairline {
     let size = get_enum(data, "appearance.head.hair.hairline.c");
 
-    match data
-        .get_first("appearance.head.hair.hairline.c")
-        .unwrap_or("")
-    {
+    match get_type(data, "appearance.head.hair.hairline.type") {
         "Straight" => Hairline::Straight(size),
         "Triangle" => Hairline::Triangle(size),
         "WidowsPeak" => Hairline::WidowsPeak(size),
@@ -202,27 +174,23 @@ fn get_hairline(data: &UrlEncodedData) -> Hairline {
 }
 
 fn update_mouth(data: &UrlEncodedData) -> Mouth {
-    if let Some(t) = data.get_first("appearance.head.mouth.type") {
-        return match t {
-            "Circle" => {
-                let (size, teeth_color) = parse_common_mouth(data);
+    match get_type(data, "appearance.head.mouth.type") {
+        "Circle" => {
+            let (size, teeth_color) = parse_common_mouth(data);
 
-                Mouth::Circle { size, teeth_color }
-            }
-            "Normal" => {
-                let (width, teeth_color) = parse_common_mouth(data);
+            Mouth::Circle { size, teeth_color }
+        }
+        "Normal" => {
+            let (width, teeth_color) = parse_common_mouth(data);
 
-                Mouth::Normal {
-                    width,
-                    teeth: parse_special_teeth(data),
-                    teeth_color,
-                }
+            Mouth::Normal {
+                width,
+                teeth: parse_special_teeth(data),
+                teeth_color,
             }
-            _ => Mouth::None,
-        };
+        }
+        _ => Mouth::None,
     }
-
-    Mouth::None
 }
 
 fn parse_common_mouth(data: &UrlEncodedData) -> (Size, TeethColor) {
@@ -235,42 +203,38 @@ fn parse_common_mouth(data: &UrlEncodedData) -> (Size, TeethColor) {
 fn parse_special_teeth(data: &UrlEncodedData) -> SpecialTeeth {
     let size = get_enum(data, "appearance.head.mouth.teeth.c");
 
-    if let Some(t) = data.get_first("appearance.head.mouth.teeth.type") {
-        return match t {
-            "LowerFangs" => SpecialTeeth::LowerFangs(size),
-            "UpperFangs" => SpecialTeeth::UpperFangs(size),
-            _ => SpecialTeeth::None,
-        };
+    match get_type(data, "appearance.head.mouth.teeth.type") {
+        "LowerFangs" => SpecialTeeth::LowerFangs(size),
+        "UpperFangs" => SpecialTeeth::UpperFangs(size),
+        _ => SpecialTeeth::None,
     }
+}
 
-    SpecialTeeth::None
+fn update_skin(path: &str, data: &UrlEncodedData) -> Skin {
+    let color = data.get_first(&format!("{}.skin.c", path)).unwrap_or("");
+
+    match get_type(data, &format!("{}.skin.type", path)) {
+        "Scales" => {
+            let color = Color::from(color);
+            Skin::Scales(color)
+        }
+        "ExoticSkin" => {
+            let color = Color::from(color);
+            Skin::ExoticSkin(color)
+        }
+        _ => {
+            let color = SkinColor::from(color);
+            Skin::Skin(color)
+        }
+    }
 }
 
 fn get_enum<'a, T: From<&'a str>>(data: &'a UrlEncodedData, path: &str) -> T {
     data.get_first(path).unwrap_or("").into()
 }
 
-fn update_skin(path: &str, data: &UrlEncodedData) -> Skin {
-    if let Some(t) = data.get_first(&format!("{}.skin.type", path)) {
-        if let Some(c) = data.get_first(&format!("{}.skin.c", path)) {
-            return match t {
-                "Scales" => {
-                    let color = Color::from(c);
-                    Skin::Scales(color)
-                }
-                "ExoticSkin" => {
-                    let color = Color::from(c);
-                    Skin::ExoticSkin(color)
-                }
-                _ => {
-                    let color = SkinColor::from(c);
-                    Skin::Skin(color)
-                }
-            };
-        }
-    }
-
-    Skin::default()
+fn get_type<'a>(data: &'a UrlEncodedData, path: &str) -> &'a str {
+    data.get_first(path).unwrap_or("")
 }
 
 #[derive(Responder)]
