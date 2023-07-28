@@ -9,7 +9,7 @@ use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::hair::ShortHair::FlatTop;
-use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, ShortHair};
+use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
@@ -66,7 +66,7 @@ fn create_hair(style: ShortHair, hairline: Hairline) -> Hair {
     Hair::Short {
         style,
         hairline,
-        color: HairColor::Brown,
+        color: Color::SaddleBrown,
     }
 }
 

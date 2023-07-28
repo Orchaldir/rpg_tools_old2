@@ -17,7 +17,7 @@ pub enum Hair {
     Short {
         style: ShortHair,
         hairline: Hairline,
-        color: HairColor,
+        color: Color,
     },
 }
 
@@ -33,18 +33,4 @@ pub enum ShortHair {
     MiddlePart,
     // Short hair that parts on one side.
     SidePart(Side),
-}
-
-/// The color of the hair.
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
-#[serde(tag = "type", content = "c")]
-pub enum HairColor {
-    White,
-    Grey,
-    Blond,
-    Orange,
-    Red,
-    Brown,
-    Black,
-    Exotic(Color),
 }

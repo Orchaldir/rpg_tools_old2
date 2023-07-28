@@ -7,7 +7,6 @@ use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
 use crate::rendering::config::mouth::MouthConfig;
 use anyhow::Result;
-use rpg_tools_core::model::character::appearance::hair::HairColor;
 use rpg_tools_core::model::character::appearance::mouth::TeethColor;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::color::Color;
@@ -55,9 +54,9 @@ impl RenderConfig {
         )
     }
 
-    pub fn get_hair_options(&self, hair: HairColor) -> RenderOptions {
+    pub fn get_hair_options(&self, color: Color) -> RenderOptions {
         RenderOptions::new(
-            self.hair.get_color(hair),
+            WebColor::from_color(color),
             self.line_color.clone(),
             self.line_width,
         )
