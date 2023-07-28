@@ -5,6 +5,7 @@ use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
+use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
@@ -86,6 +87,7 @@ fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
         shape,
         ears: update_ears(data),
         eyes: update_eyes(data),
+        mouth: update_mouth(data),
         skin: update_skin("appearance.head", data),
         ..*head
     }
@@ -179,6 +181,60 @@ fn update_eye(data: &UrlEncodedData) -> Eye {
     }
 
     Eye::default()
+}
+
+fn update_mouth(data: &UrlEncodedData) -> Mouth {
+    if let Some(t) = data.get_first("appearance.head.mouth.type") {
+        return match t {
+            "Circle" => {
+                let (size, teeth_color) = parse_common_mouth(data);
+
+                Mouth::Circle { size, teeth_color }
+            }
+            "Normal" => {
+                let (width, teeth_color) = parse_common_mouth(data);
+
+                Mouth::Normal {
+                    width,
+                    teeth: parse_special_teeth(data),
+                    teeth_color,
+                }
+            }
+            _ => Mouth::None,
+        };
+    }
+
+    Mouth::None
+}
+
+fn parse_common_mouth(data: &UrlEncodedData) -> (Size, TeethColor) {
+    let size = data
+        .get_first("appearance.head.mouth.size")
+        .unwrap_or("")
+        .into();
+    let color = data
+        .get_first("appearance.head.mouth.teeth_color")
+        .unwrap_or("")
+        .into();
+
+    (size, color)
+}
+
+fn parse_special_teeth(data: &UrlEncodedData) -> SpecialTeeth {
+    let size = data
+        .get_first("appearance.head.mouth.teeth.c")
+        .unwrap_or("")
+        .into();
+
+    if let Some(t) = data.get_first("appearance.head.mouth.teeth.type") {
+        return match t {
+            "LowerFangs" => SpecialTeeth::LowerFangs(size),
+            "UpperFangs" => SpecialTeeth::UpperFangs(size),
+            _ => SpecialTeeth::None,
+        };
+    }
+
+    SpecialTeeth::None
 }
 
 fn update_skin(path: &str, data: &UrlEncodedData) -> Skin {
