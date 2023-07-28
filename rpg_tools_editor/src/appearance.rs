@@ -58,20 +58,14 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
 }
 
 fn update_body(data: &UrlEncodedData) -> Body {
-    if let Some(width) = data.get_first("appearance.body.width") {
-        if let Some(shape) = data.get_first("appearance.body.shape") {
-            let width: Width = width.into();
-            let shape: BodyShape = shape.into();
+    let width: Width = get_enum(data, "appearance.body.width");
+    let shape: BodyShape = get_enum(data, "appearance.body.shape");
 
-            return Body {
-                shape,
-                width,
-                skin: update_skin("appearance.body", data),
-            };
-        }
+    Body {
+        shape,
+        width,
+        skin: update_skin("appearance.body", data),
     }
-
-    Body::default()
 }
 
 fn update_head(data: &UrlEncodedData) -> Head {
