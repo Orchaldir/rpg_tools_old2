@@ -88,7 +88,6 @@ fn create_appearance(height: Length, hair: &Hair, face: &HeadShape) -> Appearanc
             hair: *hair,
             mouth: Mouth::Normal {
                 width: Medium,
-                color: None,
                 teeth: SpecialTeeth::None,
                 teeth_color: TeethColor::White,
             },

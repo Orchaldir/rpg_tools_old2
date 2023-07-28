@@ -60,7 +60,6 @@ fn create_appearance(height: Length, ears: &Ears, face: &HeadShape) -> Appearanc
             },
             mouth: Mouth::Normal {
                 width: Medium,
-                color: None,
                 teeth: SpecialTeeth::None,
                 teeth_color: TeethColor::White,
             },

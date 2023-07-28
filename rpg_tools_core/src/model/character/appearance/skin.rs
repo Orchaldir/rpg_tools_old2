@@ -50,9 +50,8 @@ impl fmt::Display for SkinColor {
 }
 
 impl From<&str> for SkinColor {
-    fn from(gender: &str) -> Self {
-        match gender {
-            "Female" => SkinColor::Fair,
+    fn from(color: &str) -> Self {
+        match color {
             "Light" => SkinColor::Light,
             "Medium" => SkinColor::Medium,
             "Tan" => SkinColor::Tan,
