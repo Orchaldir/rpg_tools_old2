@@ -75,7 +75,7 @@ fn update_body(data: &UrlEncodedData) -> Body {
 }
 
 fn update_head(data: &UrlEncodedData) -> Head {
-    let shape: HeadShape = data.get_first("appearance.head.shape").unwrap_or("").into();
+    let shape: HeadShape = get_enum(data, "appearance.head.shape");
 
     Head {
         shape,
@@ -91,14 +91,8 @@ fn update_ears(data: &UrlEncodedData) -> Ears {
     if let Some(t) = data.get_first("appearance.head.ears.type") {
         return match t {
             "Normal" => {
-                let shape = data
-                    .get_first("appearance.head.ears.shape")
-                    .unwrap_or("")
-                    .into();
-                let size = data
-                    .get_first("appearance.head.ears.size")
-                    .unwrap_or("")
-                    .into();
+                let shape = get_enum(data, "appearance.head.ears.shape");
+                let size = get_enum(data, "appearance.head.ears.size");
 
                 Ears::Normal { shape, size }
             }
@@ -116,10 +110,7 @@ fn update_eyes(data: &UrlEncodedData) -> Eyes {
                 eye: update_eye(data),
             },
             "Two" => {
-                let distance = data
-                    .get_first("appearance.head.eyes.distance")
-                    .unwrap_or("")
-                    .into();
+                let distance = get_enum(data, "appearance.head.eyes.distance");
 
                 Eyes::Two {
                     eye: update_eye(data),
@@ -135,29 +126,17 @@ fn update_eyes(data: &UrlEncodedData) -> Eyes {
 
 fn update_eye(data: &UrlEncodedData) -> Eye {
     if let Some(t) = data.get_first("appearance.head.eyes.eye.type") {
-        let eye_shape = data
-            .get_first("appearance.head.eyes.eye.shape")
-            .unwrap_or("")
-            .into();
+        let eye_shape = get_enum(data, "appearance.head.eyes.eye.shape");
 
         return match t {
             "Simple" => {
-                let color = data
-                    .get_first("appearance.head.eyes.eye.color")
-                    .unwrap_or("")
-                    .into();
+                let color = get_enum(data, "appearance.head.eyes.eye.color");
 
                 Eye::Simple { eye_shape, color }
             }
             "Normal" => {
-                let pupil_shape = data
-                    .get_first("appearance.head.eyes.eye.pupil_shape")
-                    .unwrap_or("")
-                    .into();
-                let pupil_color = data
-                    .get_first("appearance.head.eyes.eye.pupil_color")
-                    .unwrap_or("")
-                    .into();
+                let pupil_shape = get_enum(data, "appearance.head.eyes.eye.pupil_shape");
+                let pupil_color = get_enum(data, "appearance.head.eyes.eye.pupil_color");
                 let background_color = data
                     .get_first("appearance.head.eyes.eye.background_color")
                     .unwrap_or("White")
@@ -181,10 +160,7 @@ fn update_hair(data: &UrlEncodedData) -> Hair {
     if let Some(t) = data.get_first("appearance.head.hair.type") {
         return match t {
             "Short" => {
-                let color = data
-                    .get_first("appearance.head.hair.color")
-                    .unwrap_or("")
-                    .into();
+                let color = get_enum(data, "appearance.head.hair.color");
 
                 Hair::Short {
                     style: update_short_hair(data),
@@ -205,18 +181,12 @@ fn update_short_hair(data: &UrlEncodedData) -> ShortHair {
         .unwrap_or("")
     {
         "FlatTop" => {
-            let size = data
-                .get_first("appearance.head.hair.style.c")
-                .unwrap_or("")
-                .into();
+            let size = get_enum(data, "appearance.head.hair.style.c");
             ShortHair::FlatTop(size)
         }
         "MiddlePart" => ShortHair::MiddlePart,
         "SidePart" => {
-            let side = data
-                .get_first("appearance.head.hair.style.c")
-                .unwrap_or("")
-                .into();
+            let side = get_enum(data, "appearance.head.hair.style.c");
             ShortHair::SidePart(side)
         }
         _ => ShortHair::BuzzCut,
@@ -224,10 +194,7 @@ fn update_short_hair(data: &UrlEncodedData) -> ShortHair {
 }
 
 fn get_hairline(data: &UrlEncodedData) -> Hairline {
-    let size = data
-        .get_first("appearance.head.hair.hairline.c")
-        .unwrap_or("")
-        .into();
+    let size = get_enum(data, "appearance.head.hair.hairline.c");
 
     match data
         .get_first("appearance.head.hair.hairline.c")
@@ -265,14 +232,8 @@ fn update_mouth(data: &UrlEncodedData) -> Mouth {
 }
 
 fn parse_common_mouth(data: &UrlEncodedData) -> (Size, TeethColor) {
-    let size = data
-        .get_first("appearance.head.mouth.size")
-        .unwrap_or("")
-        .into();
-    let color = data
-        .get_first("appearance.head.mouth.teeth_color")
-        .unwrap_or("")
-        .into();
+    let size = get_enum(data, "appearance.head.mouth.size");
+    let color = get_enum(data, "appearance.head.mouth.teeth_color");
 
     (size, color)
 }
@@ -291,7 +252,7 @@ fn parse_special_teeth(data: &UrlEncodedData) -> SpecialTeeth {
     SpecialTeeth::None
 }
 
-fn get_enum(data: &UrlEncodedData, path: &str) -> Size {
+fn get_enum<'a, T: From<&'a str>>(data: &'a UrlEncodedData, path: &str) -> T {
     data.get_first(path).unwrap_or("").into()
 }
 
