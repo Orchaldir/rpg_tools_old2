@@ -1,7 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::hair::Hairline;
+use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 
 pub fn add_hairlines(
     config: &RenderConfig,
