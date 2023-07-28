@@ -6,8 +6,9 @@ use crate::rendering::hair::short::{
     get_flat_top_realistic, get_middle_part_realistic, get_side_part_realistic,
     render_buzz_cut_realistic,
 };
-use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, ShortHair};
+use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
 use rpg_tools_core::model::character::appearance::head::Head;
+use rpg_tools_core::model::color::Color;
 
 pub mod hairline;
 pub mod short;
@@ -43,7 +44,7 @@ pub fn render_hair_polygon(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     polygon: &Polygon2d,
-    color: HairColor,
+    color: Color,
 ) {
     let options = config.get_hair_options(color);
     renderer.render_polygon(polygon, &options);

@@ -1,7 +1,9 @@
 use crate::model::size::Size;
 use crate::ui::{UiVisitor, UI};
 use serde::Serialize;
+use std::fmt;
 use ui_macro::ui;
+use TeethColor::*;
 
 /// How does the mouth look like?
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
@@ -38,4 +40,39 @@ pub enum TeethColor {
     White,
     Yellow,
     Brown,
+}
+
+impl TeethColor {
+    pub fn get_all() -> Vec<TeethColor> {
+        vec![White, Yellow, Brown]
+    }
+}
+
+impl fmt::Display for TeethColor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
+impl From<&str> for TeethColor {
+    fn from(shape: &str) -> Self {
+        match shape {
+            "Brown" => Brown,
+            "Yellow" => Yellow,
+            _ => White,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_conversion() {
+        for color in TeethColor::get_all() {
+            let string = color.to_string();
+            assert_eq!(color, TeethColor::from(&*string));
+        }
+    }
 }

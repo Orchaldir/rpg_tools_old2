@@ -1,12 +1,13 @@
 use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
-use crate::renderer::{RenderOptions, Renderer};
+use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::hair::hairline::add_hairlines;
 use crate::rendering::head::render_head_shape_with_option;
-use rpg_tools_core::model::character::appearance::hair::{HairColor, Hairline};
+use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
+use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::side::Side;
 use rpg_tools_core::model::size::Size;
 
@@ -16,9 +17,9 @@ pub fn render_buzz_cut_realistic(
     aabb: &AABB,
     head_shape: HeadShape,
     hairline: Hairline,
-    color: HairColor,
+    color: Color,
 ) {
-    let options = RenderOptions::no_line(config.hair.get_color(color));
+    let options = config.without_line(color);
     let line = config.get_line_options(1.0);
     let polygon = get_buzz_cut_realistic(config, aabb, head_shape, hairline);
 

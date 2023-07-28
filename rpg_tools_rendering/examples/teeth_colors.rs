@@ -49,7 +49,6 @@ fn create_appearance(height: Length, skin: &Skin, color: &TeethColor) -> Appeara
             hair: Hair::None,
             mouth: Mouth::Normal {
                 width: Large,
-                color: None,
                 teeth: SpecialTeeth::LowerFangs(Large),
                 teeth_color: *color,
             },

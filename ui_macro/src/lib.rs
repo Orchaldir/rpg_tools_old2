@@ -25,14 +25,14 @@ fn impl_ui_macro(input: &syn::DeriveInput) -> TokenStream {
 }
 
 fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
+    let variants: Vec<Ident> = data.variants.iter().map(|v| v.ident.clone()).collect();
+
     if is_simple_enum(data) {
-        let variants: Vec<Ident> = data.variants.iter().map(|v| v.ident.clone()).collect();
-        let variants = quote! { #(#variants)* };
         return quote! {
             impl UI for #name {
                 fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
-                    println!("{}Add simple enum {} with path '{}' & variants '{}'!", spaces, stringify!(#name), path, stringify!(#variants));
-                    visitor.add_simple_enum();
+                    println!("{}Add simple enum {} with path '{}'!", spaces, stringify!(#name), path);
+                    visitor.add_simple_enum(&[#(stringify!(#variants).to_string()),*]);
                 }
             }
         };
@@ -43,7 +43,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             impl UI for #name {
                 fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                     println!("{}Create Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
-                    visitor.enter_enum();
+                    visitor.enter_enum(&[#(stringify!(#variants).to_string()),*]);
                     let inner_spaces = format!("  {}", spaces);
                     #field_quotes
                     visitor.leave_enum();
@@ -59,7 +59,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         impl UI for #name {
             fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                 println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
-                visitor.enter_enum();
+                visitor.enter_enum(&[#(stringify!(#variants).to_string()),*]);
                 let inner_spaces = format!("  {}", spaces);
                 #field_quotes
                 visitor.leave_enum();

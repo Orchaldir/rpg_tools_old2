@@ -7,8 +7,9 @@ use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
+use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::hair::ShortHair::FlatTop;
-use rpg_tools_core::model::character::appearance::hair::{Hair, HairColor, Hairline, ShortHair};
+use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
@@ -65,7 +66,7 @@ fn create_hair(style: ShortHair, hairline: Hairline) -> Hair {
     Hair::Short {
         style,
         hairline,
-        color: HairColor::Brown,
+        color: Color::SaddleBrown,
     }
 }
 
@@ -88,7 +89,6 @@ fn create_appearance(height: Length, hair: &Hair, face: &HeadShape) -> Appearanc
             hair: *hair,
             mouth: Mouth::Normal {
                 width: Medium,
-                color: None,
                 teeth: SpecialTeeth::None,
                 teeth_color: TeethColor::White,
             },

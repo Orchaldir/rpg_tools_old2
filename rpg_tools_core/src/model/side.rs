@@ -1,5 +1,6 @@
 use crate::ui::{UiVisitor, UI};
 use serde::Serialize;
+use std::fmt;
 use ui_macro::ui;
 
 /// Left or Right? From the [`character's`](crate::model::character::Character) perspective.
@@ -10,6 +11,10 @@ pub enum Side {
 }
 
 impl Side {
+    pub fn get_all() -> Vec<Side> {
+        vec![Side::Left, Side::Right]
+    }
+
     /// Get the sign along the x-axis if viewed from the front.
     /// The right side is on the left and so the sign is negative.
     ///
@@ -22,6 +27,34 @@ impl Side {
         match self {
             Side::Left => 1.0,
             Side::Right => -1.0,
+        }
+    }
+}
+
+impl fmt::Display for Side {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self)
+    }
+}
+
+impl From<&str> for Side {
+    fn from(shape: &str) -> Self {
+        match shape {
+            "Left" => Self::Left,
+            _ => Self::Right,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_conversion() {
+        for side in Side::get_all() {
+            let string = side.to_string();
+            assert_eq!(side, Side::from(&*string));
         }
     }
 }

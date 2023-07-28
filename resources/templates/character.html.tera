@@ -1,44 +1,5 @@
 {% extends "base" %}
 
-{% macro write_body(body) %}
-  <li><span class="caret">Body</span>
-    <ul class="nested">
-      <li><b>Shape:</b> {{ body.shape }}</li>
-      <li><b>Width:</b> {{ body.width }}</li>
-      {{ self::write_skin(skin=body.skin) }}
-    </ul>
-  </li>
-{% endmacro %}
-
-{% macro write_head(head) %}
-  <li><span class="caret">Head</span>
-    <ul class="nested">
-      <li><b>Shape:</b> {{ head.shape.t }}</li>
-      {{ self::write_skin(skin=head.skin) }}
-    </ul>
-  </li>
-{% endmacro %}
-
-{% macro write_height(height) %}
-  <li><b>Height:</b> {{ height.millimetre / 10 }} cm</li>
-{% endmacro %}
-
-{% macro write_skin(skin) %}
-  <li><span class="caret">Skin</span>
-    <ul class="nested">
-      <li>
-        {% if skin.t == "ExoticSkin" %}
-          <b>Exotic Color:</b> {{ skin.c }}
-        {% elif skin.t == "Skin" %}
-          <b>Color:</b> {{ skin.c }}
-        {% elif skin.t == "Scales" %}
-          <b>Color:</b> {{ skin.c }}
-        {% endif %}
-      </li>
-    </ul>
-  </li>
-{% endmacro %}
-
 {% block content %}
     <p><h1>{{ name }}</h1></p>
     <p><h2>Data</h2></p>
@@ -174,21 +135,7 @@
                     </ul>
                   </li>
                   <li>
-                    <b>Color</b>: {{ appearance.head.hair.color.type }}
-                    <ul>
-                      {% if appearance.head.hair.color.type == "White" %}
-                      {% elif appearance.head.hair.color.type == "Grey" %}
-                      {% elif appearance.head.hair.color.type == "Blond" %}
-                      {% elif appearance.head.hair.color.type == "Orange" %}
-                      {% elif appearance.head.hair.color.type == "Red" %}
-                      {% elif appearance.head.hair.color.type == "Brown" %}
-                      {% elif appearance.head.hair.color.type == "Black" %}
-                      {% elif appearance.head.hair.color.type == "Exotic" %}
-                        <li>
-                          <b>C:</b> {{ appearance.head.hair.color.c }}
-                        </li>
-                      {% endif %}
-                    </ul>
+                    <b>Color:</b> {{ appearance.head.hair.color }}
                   </li>
                 {% endif %}
               </ul>
@@ -413,21 +360,7 @@
                     </ul>
                   </li>
                   <li>
-                    <b>Color</b>: {{ appearance.head.hair.color.type }}
-                    <ul>
-                      {% if appearance.head.hair.color.type == "White" %}
-                      {% elif appearance.head.hair.color.type == "Grey" %}
-                      {% elif appearance.head.hair.color.type == "Blond" %}
-                      {% elif appearance.head.hair.color.type == "Orange" %}
-                      {% elif appearance.head.hair.color.type == "Red" %}
-                      {% elif appearance.head.hair.color.type == "Brown" %}
-                      {% elif appearance.head.hair.color.type == "Black" %}
-                      {% elif appearance.head.hair.color.type == "Exotic" %}
-                        <li>
-                          <b>C:</b> {{ appearance.head.hair.color.c }}
-                        </li>
-                      {% endif %}
-                    </ul>
+                    <b>Color:</b> {{ appearance.head.hair.color }}
                   </li>
                 {% endif %}
               </ul>

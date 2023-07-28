@@ -1,29 +1,14 @@
+use crate::ui::UiVisitor;
 use titlecase::titlecase;
 
-pub trait UiVisitor {
-    fn enter_enum(&mut self);
-    fn enter_tuple_variant(&mut self, name: &str);
-    fn leave_enum(&mut self);
-
-    fn enter_struct(&mut self);
-    fn leave_struct(&mut self);
-
-    fn enter_child(&mut self, name: &str);
-    fn leave_child(&mut self);
-
-    fn add_integer(&mut self, name: &str);
-    fn add_simple_enum(&mut self);
-    fn add_unit_variant(&mut self, name: &str);
-}
-
-pub struct ViewerVisitor {
+pub struct EditorVisitor {
     first_variant: bool,
     lines: Vec<String>,
     path: Vec<String>,
     spaces: String,
 }
 
-impl ViewerVisitor {
+impl EditorVisitor {
     pub fn new(path: String, spaces: String) -> Self {
         Self {
             first_variant: false,
@@ -53,17 +38,22 @@ impl ViewerVisitor {
         self.spaces.pop();
         self.spaces.pop();
     }
-}
 
-impl UiVisitor for ViewerVisitor {
-    fn enter_enum(&mut self) {
-        self.first_variant = true;
+    fn add_selection(&mut self, path: &str, variants: &[String]) {
         self.lines.push(format!(
-            "{}<b>{}</b>: {{{{ {}.type }}}}",
+            "{0}<b>{1}:</b> {{{{ macros::add_select(name=\"{2}\", options=[ {3} ], selected={2}, update=true) }}}}",
             self.spaces,
             self.get_name(),
-            self.get_path()
+            path,
+            variants.iter().map(|v| format!("\"{}\"", v)).collect::<Vec<_>>().join(","),
         ));
+    }
+}
+
+impl UiVisitor for EditorVisitor {
+    fn enter_enum(&mut self, variants: &[String]) {
+        self.first_variant = true;
+        self.add_selection(&format!("{}.type", self.get_path()), variants);
         self.lines.push(format!("{}<ul>", self.spaces));
         self.enter();
     }
@@ -120,22 +110,17 @@ impl UiVisitor for ViewerVisitor {
     }
 
     fn add_integer(&mut self, name: &str) {
+        let path = format!("{}.{}", self.get_path(), name);
         self.lines.push(format!(
-            "{}<li><b>{}:</b> {{{{ {}.{} }}}}</li>",
+            "{0}<li><b>{1}:</b> <input type=\"number\" step=\"1\" id=\"{2}\" name=\"{2}\" value=\"{{{{ {2} }}}}\" onchange=\"updateAppearancePreview();\"></li>",
             self.spaces,
             prettify(name),
-            self.get_path(),
-            name
+            path,
         ));
     }
 
-    fn add_simple_enum(&mut self) {
-        self.lines.push(format!(
-            "{}<b>{}:</b> {{{{ {} }}}}",
-            self.spaces,
-            self.get_name(),
-            self.get_path()
-        ));
+    fn add_simple_enum(&mut self, variants: &[String]) {
+        self.add_selection(&self.get_path(), variants);
     }
 
     fn add_unit_variant(&mut self, _name: &str) {}
@@ -144,9 +129,4 @@ impl UiVisitor for ViewerVisitor {
 fn prettify(text: &str) -> String {
     let with_spaces = text.replace('_', " ");
     titlecase(&with_spaces)
-}
-
-pub trait UI {
-    /// Create a viewer ui.
-    fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str);
 }
