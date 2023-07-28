@@ -4,6 +4,8 @@ use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
+use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
+use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
@@ -32,26 +34,18 @@ pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appe
                 match t {
                     "HeadOnly" => {
                         return match appearance {
-                            HeadOnly { head, .. } => {
-                                Appearance::head(update_head(head, &data), height)
-                            }
-                            Humanoid { head, .. } => {
-                                Appearance::head(update_head(head, &data), height)
-                            }
+                            HeadOnly { .. } => Appearance::head(update_head(&data), height),
+                            Humanoid { .. } => Appearance::head(update_head(&data), height),
                         }
                     }
                     "Humanoid" => {
                         return match appearance {
-                            HeadOnly { head, .. } => Appearance::humanoid(
-                                Body::default(),
-                                update_head(head, &data),
-                                height,
-                            ),
-                            Humanoid { head, .. } => Appearance::humanoid(
-                                update_body(&data),
-                                update_head(head, &data),
-                                height,
-                            ),
+                            HeadOnly { .. } => {
+                                Appearance::humanoid(Body::default(), update_head(&data), height)
+                            }
+                            Humanoid { .. } => {
+                                Appearance::humanoid(update_body(&data), update_head(&data), height)
+                            }
                         }
                     }
                     _ => {}
@@ -80,16 +74,16 @@ fn update_body(data: &UrlEncodedData) -> Body {
     Body::default()
 }
 
-fn update_head(head: &Head, data: &UrlEncodedData) -> Head {
+fn update_head(data: &UrlEncodedData) -> Head {
     let shape: HeadShape = data.get_first("appearance.head.shape").unwrap_or("").into();
 
     Head {
         shape,
         ears: update_ears(data),
         eyes: update_eyes(data),
+        hair: update_hair(data),
         mouth: update_mouth(data),
         skin: update_skin("appearance.head", data),
-        ..*head
     }
 }
 
@@ -181,6 +175,69 @@ fn update_eye(data: &UrlEncodedData) -> Eye {
     }
 
     Eye::default()
+}
+
+fn update_hair(data: &UrlEncodedData) -> Hair {
+    if let Some(t) = data.get_first("appearance.head.hair.type") {
+        return match t {
+            "Short" => {
+                let color = data
+                    .get_first("appearance.head.hair.color")
+                    .unwrap_or("")
+                    .into();
+
+                Hair::Short {
+                    style: update_short_hair(data),
+                    hairline: get_hairline(data),
+                    color,
+                }
+            }
+            _ => Hair::None,
+        };
+    }
+
+    Hair::None
+}
+
+fn update_short_hair(data: &UrlEncodedData) -> ShortHair {
+    match data
+        .get_first("appearance.head.hair.style.type")
+        .unwrap_or("")
+    {
+        "FlatTop" => {
+            let size = data
+                .get_first("appearance.head.hair.style.c")
+                .unwrap_or("")
+                .into();
+            ShortHair::FlatTop(size)
+        }
+        "MiddlePart" => ShortHair::MiddlePart,
+        "SidePart" => {
+            let side = data
+                .get_first("appearance.head.hair.style.c")
+                .unwrap_or("")
+                .into();
+            ShortHair::SidePart(side)
+        }
+        _ => ShortHair::BuzzCut,
+    }
+}
+
+fn get_hairline(data: &UrlEncodedData) -> Hairline {
+    let size = data
+        .get_first("appearance.head.hair.hairline.c")
+        .unwrap_or("")
+        .into();
+
+    match data
+        .get_first("appearance.head.hair.hairline.c")
+        .unwrap_or("")
+    {
+        "Straight" => Hairline::Straight(size),
+        "Triangle" => Hairline::Triangle(size),
+        "WidowsPeak" => Hairline::WidowsPeak(size),
+        _ => Hairline::Round(size),
+    }
 }
 
 fn update_mouth(data: &UrlEncodedData) -> Mouth {
