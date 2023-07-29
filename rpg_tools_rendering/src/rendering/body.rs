@@ -66,7 +66,10 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let left_arm_start = aabb.get_point(0.5 + torso_width / 2.0, army_y);
     renderer.render_rectangle(&AABB::new(left_arm_start, arm_size), &options);
     let right_arm_start = aabb.get_point(torso_start_x - arm_width, army_y);
-    renderer.render_rectangle(&AABB::new(right_arm_start, arm_size), &options);
+    let right_arm = AABB::new(right_arm_start, arm_size);
+    let polygon = (&right_arm).into();
+    let polygon = config.cut_corners(&polygon).unwrap();
+    renderer.render_polygon(&polygon, &options);
 
     let hand_radius = aabb.calculate_from_height(hands_factor);
     let distance_between_hands = torso_width + arm_width;
@@ -84,8 +87,7 @@ fn render_leg(
     size: Size2d,
 ) {
     let aabb = AABB::new(start, size);
-    let polygon = Polygon2d::new(aabb.corners());
-    let polygon = config.cut_corners(&polygon).unwrap();
+    let polygon = config.cut_corners(&(&aabb).into()).unwrap();
     renderer.render_polygon(&polygon, options);
 }
 

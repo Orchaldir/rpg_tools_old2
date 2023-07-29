@@ -1,3 +1,4 @@
+use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use anyhow::{bail, Result};
 use std::ops::RangeInclusive;
@@ -120,5 +121,11 @@ impl Polygon2d {
             .collect();
 
         Polygon2d::new(corners)
+    }
+}
+
+impl From<&AABB> for Polygon2d {
+    fn from(aabb: &AABB) -> Self {
+        Polygon2d::new(aabb.corners())
     }
 }
