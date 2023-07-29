@@ -63,14 +63,13 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     renderer.render_polygon(&smooth_polygon, &options);
 
     let arm_size = aabb.size().scale(arm_width, arm_height);
-    let left_arm_start = aabb.get_point(0.5 + torso_width / 2.0, army_y);
-    renderer.render_rectangle(&AABB::new(left_arm_start, arm_size), &options);
     let right_arm_start = aabb.get_point(torso_start_x - arm_width, army_y);
     let right_arm = AABB::new(right_arm_start, arm_size);
     let mut polygon: Polygon2d = (&right_arm).into();
     polygon.create_sharp_corner(1);
     let polygon = config.cut_corners(&polygon).unwrap();
     renderer.render_polygon(&polygon, &options);
+    renderer.render_polygon(&aabb.mirrored(&polygon), &options);
 
     let hand_radius = aabb.calculate_from_height(hands_factor);
     let distance_between_hands = torso_width + arm_width;

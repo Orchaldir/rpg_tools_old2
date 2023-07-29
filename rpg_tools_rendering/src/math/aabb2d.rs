@@ -1,4 +1,5 @@
 use crate::math::point2d::Point2d;
+use crate::math::polygon2d::Polygon2d;
 use crate::math::size2d::Size2d;
 
 pub type AABB = AxisAlignedBoundingBox;
@@ -277,6 +278,40 @@ impl AxisAlignedBoundingBox {
         (
             self.get_point(0.5 - half, vertical),
             self.get_point(0.5 + half, vertical),
+        )
+    }
+
+    /// Mirrors a polygon at a line that goes through the box's center along the x-axis.
+    ///
+    /// # Diagram
+    ///
+    /// ```svgbob
+    ///                  center
+    ///   +----------------*-------------> x-axis
+    ///   |                |
+    ///   |   0 *----------*----------*
+    ///   |     |          |          |
+    ///   |     |  *-*     |     *-*  |
+    ///   |     |  | |     |     | |  |
+    ///   |     |  | |     |     | |  |
+    ///   |     |  *-*     |     *-*  |
+    ///   |     |          |          |
+    ///   |   1 *----------*----------*
+    ///   |                |
+    ///   v
+    /// y-axis
+    /// ```
+    pub fn mirrored(&self, polygon: &Polygon2d) -> Polygon2d {
+        let mirror_x = self.start.x + self.size.width() as i32 / 2;
+
+        Polygon2d::new(
+            polygon
+                .corners()
+                .iter()
+                .map(|c| {
+                    Point2d::new( 2 * mirror_x - c.x, c.y)
+                })
+                .collect(),
         )
     }
 }
