@@ -95,12 +95,18 @@ fn create_arm(
     if offset != 0 {
         let corners = polygon.corners_mut();
 
-        corners.get_mut(2).map(|p| p.x -= offset);
-        corners.get_mut(3).map(|p| p.x -= offset);
+        update_corner(corners, 2, offset);
+        update_corner(corners, 3, offset);
     }
 
     polygon.create_sharp_corner(1);
     config.cut_corners(&polygon).unwrap()
+}
+
+fn update_corner(corners: &mut [Point2d], index: usize, offset: i32) {
+    if let Some(p) = corners.get_mut(index) {
+        p.x -= offset;
+    }
 }
 
 fn render_leg(
