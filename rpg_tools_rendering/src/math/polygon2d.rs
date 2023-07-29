@@ -45,6 +45,11 @@ impl Polygon2d {
         &self.corners
     }
 
+    /// Returns the corners.
+    pub fn corners_mut(&mut self) -> &mut [Point2d] {
+        &mut self.corners
+    }
+
     /// Create a sharp corner for the corner cutting by duplicating it.
     ///
     /// ```

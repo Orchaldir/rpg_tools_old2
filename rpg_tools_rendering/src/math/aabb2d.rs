@@ -308,9 +308,7 @@ impl AxisAlignedBoundingBox {
             polygon
                 .corners()
                 .iter()
-                .map(|c| {
-                    Point2d::new( 2 * mirror_x - c.x, c.y)
-                })
+                .map(|c| Point2d::new(2 * mirror_x - c.x, c.y))
                 .collect(),
         )
     }

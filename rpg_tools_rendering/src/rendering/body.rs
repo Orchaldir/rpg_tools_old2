@@ -25,6 +25,12 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let foot_width = 0.19 * width_factor;
 
     let hands_factor = 0.14 * 0.5;
+    let fat_offset_factor = if body.shape == BodyShape::Fat {
+        hip_width - shoulder_width
+    } else {
+        0.0
+    };
+    let fat_offset = aabb.calculate_from_height(fat_offset_factor / 2.0);
 
     let torso_y = 0.21;
     let army_y = torso_y + 0.05;
@@ -53,6 +59,20 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     renderer.render_circle_arc(&left_foot_start, foot_radius, offset, angle, &options);
     renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, &options);
 
+    let arm_size = aabb.size().scale(arm_width, arm_height);
+    let arm_start_x = 0.5 - shoulder_width / 2.0;
+    let right_arm_start = aabb.get_point(arm_start_x - arm_width, army_y);
+    let polygon = create_arm(config, arm_size, right_arm_start, fat_offset as i32);
+    renderer.render_polygon(&polygon, &options);
+    renderer.render_polygon(&aabb.mirrored(&polygon), &options);
+
+    let hand_radius = aabb.calculate_from_height(hands_factor);
+    let distance_between_hands = shoulder_width + arm_width + fat_offset_factor;
+    let (left_hand_center, right_hand_center) =
+        aabb.get_mirrored_points(distance_between_hands, hand_y);
+    renderer.render_circle(&left_hand_center, hand_radius, &options);
+    renderer.render_circle(&right_hand_center, hand_radius, &options);
+
     let polygon = match body.shape {
         BodyShape::Fat => create_fat(&torso_aabb),
         BodyShape::Hourglass => create_hourglass(&torso_aabb),
@@ -61,22 +81,26 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     };
     let smooth_polygon = config.cut_corners(&polygon).unwrap();
     renderer.render_polygon(&smooth_polygon, &options);
+}
 
-    let arm_size = aabb.size().scale(arm_width, arm_height);
-    let right_arm_start = aabb.get_point(torso_start_x - arm_width, army_y);
+fn create_arm(
+    config: &RenderConfig,
+    arm_size: Size2d,
+    right_arm_start: Point2d,
+    offset: i32,
+) -> Polygon2d {
     let right_arm = AABB::new(right_arm_start, arm_size);
     let mut polygon: Polygon2d = (&right_arm).into();
-    polygon.create_sharp_corner(1);
-    let polygon = config.cut_corners(&polygon).unwrap();
-    renderer.render_polygon(&polygon, &options);
-    renderer.render_polygon(&aabb.mirrored(&polygon), &options);
 
-    let hand_radius = aabb.calculate_from_height(hands_factor);
-    let distance_between_hands = torso_width + arm_width;
-    let (left_hand_center, right_hand_center) =
-        aabb.get_mirrored_points(distance_between_hands, hand_y);
-    renderer.render_circle(&left_hand_center, hand_radius, &options);
-    renderer.render_circle(&right_hand_center, hand_radius, &options);
+    if offset != 0 {
+        let corners = polygon.corners_mut();
+
+        corners.get_mut(2).map(|p| p.x -= offset);
+        corners.get_mut(3).map(|p| p.x -= offset);
+    }
+
+    polygon.create_sharp_corner(1);
+    config.cut_corners(&polygon).unwrap()
 }
 
 fn render_leg(
