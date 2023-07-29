@@ -1,7 +1,12 @@
 {% extends "base" %}
 
 {% block content %}
-    <p><h1>Edit appearance of {{ name }}</h1></p>
+<p><h1>Edit appearance of {{ name }}</h1></p>
+<div class="left_right_container">
+  <div class="image">
+    <img id="preview" src="/appearance/preview/front.svg" alt="Preview" width="100%"/>
+  </div>
+  <div class="text">
     <form id="appearanceForm" action="/appearance/{{ id }}/preview" method="post">
       <ul>
         <li>
@@ -435,5 +440,6 @@
       <button formaction="/appearance/{{ id }}/update" formmethod="post">Submit</button>
     </form>
     <p><a href="/character/{{ id }}">Back</a></p>
-    <img id="preview" src="/appearance/preview/front.svg" alt="Preview" width="30%"/>
+  </div>
+</div>
 {% endblock content %}

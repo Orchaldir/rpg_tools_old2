@@ -1,12 +1,17 @@
 {% extends "base" %}
 
 {% block content %}
-    <p><h1>{{ name }}</h1></p>
-    <p><h2>Data</h2></p>
-    <p><b>Id:</b> {{ id }}</p>
-    <p><b>Gender:</b> {{ gender }}</p>
-    <p><a href="/character/{{ id }}/edit">Edit Data</a></p>
-    <p><h2>Appearance</h2></p>
+<div class="left_right_container">
+  <p><h1>{{ name }}</h1></p>
+  <p><h2>Data</h2></p>
+  <p><b>Id:</b> {{ id }}</p>
+  <p><b>Gender:</b> {{ gender }}</p>
+  <p><a href="/character/{{ id }}/edit">Edit Data</a></p>
+  <p><h2>Appearance</h2></p>
+  <div class="image">
+    <img src = "/character/{{ id }}/front.svg" alt="Front View of the Character" width="100%"/>
+  </div>
+  <div class="text">
     <ul>
       {% if appearance.type == "HeadOnly" %}
         <li>
@@ -432,7 +437,7 @@
       {% endif %}
     </ul>
     <p><a href="/appearance/{{ id }}/edit">Edit Appearance</a></p>
-    <p><h2>Front View</h2></p>
-    <img src = "/character/{{ id }}/front.svg" alt="Front View of the Character" width="20%"/>
     <p><a href="/character">Back</a></p>
+  </div>
+</div>
 {% endblock content %}
