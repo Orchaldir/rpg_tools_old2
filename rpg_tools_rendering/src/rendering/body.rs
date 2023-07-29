@@ -17,9 +17,10 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let shoulder_width = get_shoulder_width(body, width_factor);
     let hip_width = get_hip_width(body, width_factor);
     let torso_width = shoulder_width.max(hip_width);
+    let legs_width = shoulder_width.min(hip_width);
     let arm_width = 0.1 * width_factor;
     let leg_width = 0.14 * width_factor;
-    let feet_width = 0.19 * width_factor;
+    let foot_width = 0.19 * width_factor;
 
     let hands_factor = 0.14 * 0.5;
 
@@ -28,7 +29,6 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let leg_y = torso_y + torso_height;
 
     let torso_start_x = 0.5 - torso_width / 2.0;
-    let hip_star_x = 0.5 - hip_width / 2.0;
     let torso_start = aabb.get_point(torso_start_x, torso_y);
     let torso_size = aabb.size().scale(torso_width, torso_height);
     let torso_aabb = AABB::new(torso_start, torso_size);
@@ -55,16 +55,17 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let right_hand_center = aabb.get_point(0.5 - arm_offset, arm_y);
     renderer.render_circle(&right_hand_center, hand_radius, &options);
 
-    let left_leg_start_x = 0.5 + hip_width / 2.0 - leg_width;
+    let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
     let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);
     let leg_size = aabb.size().scale(leg_width, 1.0 - leg_y);
     renderer.render_rectangle(&AABB::new(left_leg_start, leg_size), &options);
-    let right_leg_start = aabb.get_point(hip_star_x, leg_y);
+    let right_leg_x = 0.5 - legs_width / 2.0;
+    let right_leg_start = aabb.get_point(right_leg_x, leg_y);
     renderer.render_rectangle(&AABB::new(right_leg_start, leg_size), &options);
 
     let left_foot_start = aabb.get_point(left_leg_start_x + leg_width / 2.0, 1.0);
-    let right_foot_start = aabb.get_point(hip_star_x + leg_width / 2.0, 1.0);
-    let foot_radius = (aabb.size().width() as f32 * feet_width / 2.0) as u32;
+    let right_foot_start = aabb.get_point(right_leg_x + leg_width / 2.0, 1.0);
+    let foot_radius = (aabb.size().width() as f32 * foot_width / 2.0) as u32;
     let offset = Orientation::from_degree(0.0);
     let angle = Orientation::from_degree(180.0);
 
