@@ -1,8 +1,5 @@
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
-use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
 use rpg_tools_core::model::character::appearance::ear::Ears;
-use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
-use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
@@ -20,8 +17,6 @@ use rpg_tools_rendering::renderer::Renderer;
 use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character};
 use rpg_tools_rendering::rendering::config::example::create_border_options;
 use rpg_tools_rendering::rendering::config::RenderConfig;
-use serde::Serialize;
-use std::fmt;
 use url_encoded_data::UrlEncodedData;
 use Appearance::{HeadOnly, Humanoid};
 
@@ -251,57 +246,4 @@ pub fn render_to_svg(config: &RenderConfig, appearance: &Appearance) -> RawSvg {
     render_character(&mut svg_builder, config, &aabb, appearance);
     let svg = svg_builder.finish();
     RawSvg(svg.export())
-}
-
-#[derive(Clone, Debug, PartialEq, Eq, Serialize)]
-pub struct AppearanceOptions {
-    body_types: Vec<String>,
-    body_shapes: Vec<String>,
-    colors: Vec<String>,
-    colors_skin: Vec<String>,
-    ears: Vec<String>,
-    ear_shapes: Vec<String>,
-    eyes: Vec<String>,
-    eye_shapes: Vec<String>,
-    eye: Vec<String>,
-    head_shapes: Vec<String>,
-    pupil_shapes: Vec<String>,
-    sizes: Vec<String>,
-    skin_types: Vec<String>,
-    widths: Vec<String>,
-}
-
-impl AppearanceOptions {
-    pub fn new() -> Self {
-        Self {
-            body_types: vec!["HeadOnly".to_string(), "Humanoid".to_string()],
-            body_shapes: convert(BodyShape::get_all()),
-            colors: convert(Color::get_all()),
-            colors_skin: convert(SkinColor::get_all()),
-            ears: vec!["None".to_string(), "Normal".to_string()],
-            ear_shapes: convert(EarShape::get_all()),
-            eyes: vec!["None".to_string(), "One".to_string(), "Two".to_string()],
-            eye_shapes: convert(EyeShape::get_all()),
-            eye: vec!["Normal".to_string(), "Simple".to_string()],
-            head_shapes: convert(HeadShape::get_all()),
-            pupil_shapes: convert(PupilShape::get_all()),
-            sizes: convert(Size::get_all()),
-            skin_types: vec![
-                "Scales".to_string(),
-                "Skin".to_string(),
-                "ExoticSkin".to_string(),
-            ],
-            widths: convert(Width::get_all()),
-        }
-    }
-}
-
-impl Default for AppearanceOptions {
-    fn default() -> Self {
-        Self::new()
-    }
-}
-
-fn convert(options: Vec<impl fmt::Display>) -> Vec<String> {
-    options.iter().map(|c| c.to_string()).collect()
 }

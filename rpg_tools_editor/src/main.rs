@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate rocket;
 
-use crate::appearance::{apply_update_to_appearance, render_to_svg, AppearanceOptions, RawSvg};
+use crate::appearance::{apply_update_to_appearance, render_to_svg, RawSvg};
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
@@ -201,7 +201,6 @@ fn edit_appearance_template(character: &Character, appearance: &Appearance) -> T
             id: character.id().id(),
             name: character.name(),
             appearance: appearance,
-            options: AppearanceOptions::new(),
         },
     )
 }
