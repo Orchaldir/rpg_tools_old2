@@ -125,6 +125,24 @@ impl AxisAlignedBoundingBox {
         self.start + self.size / 2.0
     }
 
+    /// Returns the 4 corners of the axis aligned bounding box.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    /// let aabb = AxisAlignedBoundingBox::simple(2, 3, 30, 50);
+    ///
+    /// assert_eq!(aabb.corners(), vec![Point2d::new(2, 3), Point2d::new(32, 3), Point2d::new(32, 53), Point2d::new(2, 53)]);
+    /// ```
+    pub fn corners(&self) -> Vec<Point2d> {
+        vec![
+            self.start,
+            self.get_point(1.0, 0.0),
+            self.end,
+            self.get_point(0.0, 1.0),
+        ]
+    }
+
     pub fn end(&self) -> &Point2d {
         &self.end
     }

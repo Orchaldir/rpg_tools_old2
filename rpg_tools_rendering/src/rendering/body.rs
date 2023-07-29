@@ -1,7 +1,9 @@
 use crate::math::aabb2d::AABB;
 use crate::math::orientation::Orientation;
+use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
-use crate::renderer::Renderer;
+use crate::math::size2d::Size2d;
+use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::width::Width;
@@ -26,7 +28,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     let torso_y = 0.21;
     let arm_y = torso_y + arm_height;
-    let leg_y = torso_y + torso_height;
+    let leg_y = torso_y + torso_height - 0.05;
 
     let torso_start_x = 0.5 - torso_width / 2.0;
     let torso_start = aabb.get_point(torso_start_x, torso_y);
@@ -58,10 +60,10 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
     let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);
     let leg_size = aabb.size().scale(leg_width, 1.0 - leg_y);
-    renderer.render_rectangle(&AABB::new(left_leg_start, leg_size), &options);
+    render_leg(renderer, config, &options, left_leg_start, leg_size);
     let right_leg_x = 0.5 - legs_width / 2.0;
     let right_leg_start = aabb.get_point(right_leg_x, leg_y);
-    renderer.render_rectangle(&AABB::new(right_leg_start, leg_size), &options);
+    render_leg(renderer, config, &options, right_leg_start, leg_size);
 
     let left_foot_start = aabb.get_point(left_leg_start_x + leg_width / 2.0, 1.0);
     let right_foot_start = aabb.get_point(right_leg_x + leg_width / 2.0, 1.0);
@@ -71,6 +73,19 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     renderer.render_circle_arc(&left_foot_start, foot_radius, offset, angle, &options);
     renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, &options);
+}
+
+fn render_leg(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    options: &RenderOptions,
+    start: Point2d,
+    size: Size2d,
+) {
+    let aabb = AABB::new(start, size);
+    let polygon = Polygon2d::new(aabb.corners());
+    let polygon = config.cut_corners(&polygon).unwrap();
+    renderer.render_polygon(&polygon, options);
 }
 
 fn create_fat(aabb: &AABB) -> Polygon2d {
