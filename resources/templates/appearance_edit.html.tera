@@ -2,8 +2,6 @@
 
 {% block content %}
     <p><h1>Edit appearance of {{ name }}</h1></p>
-    <p>Id: {{ id }}</p>
-    {{ __tera_context }}
     <form id="appearanceForm" action="/appearance/{{ id }}/preview" method="post">
       <ul>
         <li>

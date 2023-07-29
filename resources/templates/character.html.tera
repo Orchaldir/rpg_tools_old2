@@ -7,7 +7,6 @@
     <p><b>Gender:</b> {{ gender }}</p>
     <p><a href="/character/{{ id }}/edit">Edit Data</a></p>
     <p><h2>Appearance</h2></p>
-    {{ __tera_context }}
     <ul>
       {% if appearance.type == "HeadOnly" %}
         <li>
