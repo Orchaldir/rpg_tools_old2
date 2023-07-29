@@ -1,5 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::math::line2d::Line2d;
+use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::math::size2d::Size2d;
@@ -77,6 +78,20 @@ impl Renderer for SvgBuilder {
         ));
     }
 
+    fn render_circle_arc(
+        &mut self,
+        center: &Point2d,
+        radius: u32,
+        offset: Orientation,
+        angle: Orientation,
+        options: &RenderOptions,
+    ) {
+        self.render_path(
+            &path_from_circle_arc(center, radius, offset, angle),
+            options,
+        );
+    }
+
     fn render_ellipse(
         &mut self,
         center: &Point2d,
@@ -136,6 +151,21 @@ impl Renderer for SvgBuilder {
             to_style(options),
         ));
     }
+}
+
+fn path_from_circle_arc(
+    center: &Point2d,
+    radius: u32,
+    offset: Orientation,
+    angle: Orientation,
+) -> String {
+    let start = center.calculate_polar(radius as f32, offset);
+    let end = center.calculate_polar(radius as f32, offset + angle);
+
+    format!(
+        "M {} {} A {} {} 0 0 0 {} {} Z",
+        start.x, start.y, radius, radius, end.x, end.y
+    )
 }
 
 fn path_from_line(polygon: &Line2d) -> String {

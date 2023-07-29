@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::orientation::Orientation;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
@@ -12,7 +13,6 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let torso_height = 0.5;
     let arm_height = 0.36;
     let leg_height = 0.21;
-    let feet_height = 0.07;
 
     let width_factor = get_width_factor(body);
     let shoulder_width = get_shoulder_width(body, width_factor);
@@ -20,14 +20,13 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let torso_width = shoulder_width.max(hip_width);
     let arm_width = 0.1 * width_factor;
     let leg_width = 0.14 * width_factor;
-    let feet_width = 0.21 * width_factor;
+    let feet_width = 0.2 * width_factor;
 
     let hands_factor = 0.14 * 0.5;
 
     let torso_y = 0.21;
     let arm_y = torso_y + arm_height;
     let leg_y = torso_y + torso_height;
-    let foot_y = leg_y + leg_height;
 
     let torso_start_x = 0.5 - torso_width / 2.0;
     let hip_star_x = 0.5 - hip_width / 2.0;
@@ -64,11 +63,14 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let right_leg_start = aabb.get_point(hip_star_x, leg_y);
     renderer.render_rectangle(&AABB::new(right_leg_start, leg_size), &options);
 
-    let foot_size = aabb.size().scale(feet_width, feet_height);
-    let left_foot_start = aabb.get_point(left_leg_start_x, foot_y);
-    renderer.render_rectangle(&AABB::new(left_foot_start, foot_size), &options);
-    let right_foot_start = aabb.get_point(hip_star_x - feet_width + leg_width, foot_y);
-    renderer.render_rectangle(&AABB::new(right_foot_start, foot_size), &options);
+    let left_foot_start = aabb.get_point(left_leg_start_x + leg_width / 2.0, 1.0);
+    let right_foot_start = aabb.get_point(hip_star_x + leg_width / 2.0, 1.0);
+    let foot_radius = (aabb.size().width() as f32 * feet_width / 2.0) as u32;
+    let offset = Orientation::from_degree(0.0);
+    let angle = Orientation::from_degree(180.0);
+
+    renderer.render_circle_arc(&left_foot_start, foot_radius, offset, angle, &options);
+    renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, &options);
 }
 
 fn create_fat(aabb: &AABB) -> Polygon2d {
@@ -134,8 +136,8 @@ pub fn calculate_head_aabb(aabb: &AABB) -> AABB {
 fn get_width_factor(body: &Body) -> f32 {
     match body.width {
         Width::Thin => 0.8,
-        Width::Average => 1.0,
-        Width::Wide => 1.2,
+        Width::Average => 0.9,
+        Width::Wide => 1.0,
     }
 }
 
