@@ -67,7 +67,8 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     renderer.render_rectangle(&AABB::new(left_arm_start, arm_size), &options);
     let right_arm_start = aabb.get_point(torso_start_x - arm_width, army_y);
     let right_arm = AABB::new(right_arm_start, arm_size);
-    let polygon = (&right_arm).into();
+    let mut polygon: Polygon2d = (&right_arm).into();
+    polygon.create_sharp_corner(1);
     let polygon = config.cut_corners(&polygon).unwrap();
     renderer.render_polygon(&polygon, &options);
 

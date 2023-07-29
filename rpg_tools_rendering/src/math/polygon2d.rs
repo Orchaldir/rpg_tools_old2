@@ -45,6 +45,35 @@ impl Polygon2d {
         &self.corners
     }
 
+    /// Create a sharp corner for the corner cutting by duplicating it.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::polygon2d::Polygon2d;
+    /// let mut polygon = Polygon2d::new(vec![
+    ///   Point2d::new(0, 0),
+    ///   Point2d::new(100, 0),
+    ///   Point2d::new(50, 100),
+    /// ]);
+    /// let result = Polygon2d::new(vec![
+    ///   Point2d::new(0, 0),
+    ///   Point2d::new(100, 0),
+    ///   Point2d::new(100, 0),
+    ///   Point2d::new(50, 100),
+    /// ]);
+    /// assert!(polygon.create_sharp_corner(1));
+    /// assert_eq!(polygon, result);
+    /// ```
+    pub fn create_sharp_corner(&mut self, index: usize) -> bool {
+        if let Some(corner) = self.corners.get(index) {
+            self.corners.insert(index, *corner);
+
+            return true;
+        }
+
+        false
+    }
+
     /// Executes a simple corner cutting algorithm multiple times.
     pub fn cut_corners_n(&self, u: f32, v: f32, n: u32) -> Result<Polygon2d> {
         if n == 0 {
