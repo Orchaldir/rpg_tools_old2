@@ -105,7 +105,7 @@ fn update_eyes(data: &UrlEncodedData) -> Eyes {
 }
 
 fn update_eye(data: &UrlEncodedData) -> Eye {
-    let eye_shape = get_enum(data, "appearance.head.eyes.eye.shape");
+    let eye_shape = get_enum(data, "appearance.head.eyes.eye.eye_shape");
 
     match get_type(data, "appearance.head.eyes.eye.type") {
         "Simple" => {
