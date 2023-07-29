@@ -33,8 +33,8 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let fat_offset = aabb.calculate_from_height(fat_offset_factor / 2.0);
 
     let torso_y = 0.21;
-    let army_y = torso_y + 0.05;
-    let hand_y = army_y + arm_height;
+    let arm_y = torso_y + 0.05;
+    let hand_y = arm_y + arm_height;
     let leg_y = torso_y + torso_height - 0.05;
 
     let torso_start_x = 0.5 - torso_width / 2.0;
@@ -61,7 +61,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     let arm_size = aabb.size().scale(arm_width, arm_height);
     let arm_start_x = 0.5 - shoulder_width / 2.0;
-    let right_arm_start = aabb.get_point(arm_start_x - arm_width, army_y);
+    let right_arm_start = aabb.get_point(arm_start_x - arm_width, arm_y);
     let polygon = create_arm(config, arm_size, right_arm_start, fat_offset as i32);
     renderer.render_polygon(&polygon, &options);
     renderer.render_polygon(&aabb.mirrored(&polygon), &options);
