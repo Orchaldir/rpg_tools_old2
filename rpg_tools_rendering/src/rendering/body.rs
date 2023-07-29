@@ -27,7 +27,8 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let hands_factor = 0.14 * 0.5;
 
     let torso_y = 0.21;
-    let arm_y = torso_y + arm_height;
+    let army_y = torso_y + 0.05;
+    let hand_y = army_y + arm_height;
     let leg_y = torso_y + torso_height - 0.05;
 
     let torso_start_x = 0.5 - torso_width / 2.0;
@@ -62,16 +63,16 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     renderer.render_polygon(&smooth_polygon, &options);
 
     let arm_size = aabb.size().scale(arm_width, arm_height);
-    let left_arm_start = aabb.get_point(0.5 + torso_width / 2.0, torso_y);
+    let left_arm_start = aabb.get_point(0.5 + torso_width / 2.0, army_y);
     renderer.render_rectangle(&AABB::new(left_arm_start, arm_size), &options);
-    let right_arm_start = aabb.get_point(torso_start_x - arm_width, torso_y);
+    let right_arm_start = aabb.get_point(torso_start_x - arm_width, army_y);
     renderer.render_rectangle(&AABB::new(right_arm_start, arm_size), &options);
 
     let hand_radius = aabb.calculate_from_height(hands_factor);
-    let arm_offset = (torso_width + arm_width) / 2.0;
-    let left_hand_center = aabb.get_point(0.5 + arm_offset, arm_y);
+    let distance_between_hands = torso_width + arm_width;
+    let (left_hand_center, right_hand_center) =
+        aabb.get_mirrored_points(distance_between_hands, hand_y);
     renderer.render_circle(&left_hand_center, hand_radius, &options);
-    let right_hand_center = aabb.get_point(0.5 - arm_offset, arm_y);
     renderer.render_circle(&right_hand_center, hand_radius, &options);
 }
 
