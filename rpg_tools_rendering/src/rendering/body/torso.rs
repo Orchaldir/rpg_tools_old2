@@ -23,42 +23,31 @@ pub fn render_torso(
 }
 
 fn create_fat(aabb: &AABB) -> Polygon2d {
-    create_torso(aabb, 0.18, 0.09, 0.0)
+    create_torso(aabb, 0.64, 0.82, 1.0)
 }
 
 fn create_hourglass(aabb: &AABB) -> Polygon2d {
-    create_torso(aabb, 0.0, 0.15, 0.0)
+    create_torso(aabb, 1.0, 0.7, 1.0)
 }
 
 fn create_muscular(aabb: &AABB) -> Polygon2d {
-    create_torso(aabb, 0.0, 0.09, 0.18)
+    create_torso(aabb, 1.0, 0.82, 0.64)
 }
 
 fn create_rectangle(aabb: &AABB) -> Polygon2d {
-    create_torso(aabb, 0.0, 0.0, 0.0)
+    create_torso(aabb, 1.0, 1.0, 1.0)
 }
 
-fn create_torso(
-    aabb: &AABB,
-    shoulder_factor: f32,
-    waits_factor: f32,
-    hip_factor: f32,
-) -> Polygon2d {
+fn create_torso(aabb: &AABB, shoulder_width: f32, waist_width: f32, hip_width: f32) -> Polygon2d {
     let upper_height = 0.3;
     let waist_height = 0.5;
     let lower_height = 0.75;
 
-    let top_left = aabb.get_point(shoulder_factor, 0.0);
-    let upper_left = aabb.get_point(shoulder_factor, upper_height);
-    let waist_left = aabb.get_point(waits_factor, waist_height);
-    let lower_left = aabb.get_point(hip_factor, lower_height);
-    let bottom_left = aabb.get_point(hip_factor, 1.0);
-
-    let top_right = aabb.get_point(1.0 - shoulder_factor, 0.0);
-    let upper_right = aabb.get_point(1.0 - shoulder_factor, upper_height);
-    let waist_right = aabb.get_point(1.0 - waits_factor, waist_height);
-    let lower_right = aabb.get_point(1.0 - hip_factor, lower_height);
-    let bottom_right = aabb.get_point(1.0 - hip_factor, 1.0);
+    let (top_left, top_right) = aabb.get_mirrored_points(shoulder_width, 0.0);
+    let (upper_left, upper_right) = aabb.get_mirrored_points(shoulder_width, upper_height);
+    let (waist_left, waist_right) = aabb.get_mirrored_points(waist_width, waist_height);
+    let (lower_left, lower_right) = aabb.get_mirrored_points(hip_width, lower_height);
+    let (bottom_left, bottom_right) = aabb.get_mirrored_points(hip_width, 1.0);
 
     Polygon2d::new(vec![
         top_left,
