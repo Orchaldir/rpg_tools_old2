@@ -63,6 +63,7 @@ pub fn create_config() -> RenderConfig {
                 waist_width: 1.0,
                 hip_width: 1.0,
             },
+            width_arm: 0.1,
             y_torso: 0.21,
             y_upper: 0.3,
             y_waist: 0.5,

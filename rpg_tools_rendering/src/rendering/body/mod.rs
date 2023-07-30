@@ -18,7 +18,6 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let shoulder_width = config.body.get_shoulder_width(body);
     let hip_width = config.body.get_hip_width(body);
     let legs_width = config.body.get_legs_width(body);
-    let arm_width = 0.1 * width_factor;
     let leg_width = 0.14 * width_factor;
     let foot_width = 0.19 * width_factor;
 
@@ -30,10 +29,9 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     };
     let fat_offset = aabb.calculate_from_height(fat_offset_factor / 2.0);
 
-    let torso_y = 0.21;
-    let arm_y = torso_y + 0.05;
-    let hand_y = arm_y + config.body.height_arm;
-    let leg_y = torso_y + config.body.height_torso - 0.05;
+    let arm_y = config.body.y_torso + 0.05;
+    let hand_y = config.body.get_arm_y() + config.body.height_arm;
+    let leg_y = config.body.y_torso + config.body.height_torso - 0.05;
 
     let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
     let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);
@@ -52,15 +50,18 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     renderer.render_circle_arc(&left_foot_start, foot_radius, offset, angle, &options);
     renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, &options);
 
-    let arm_size = aabb.size().scale(arm_width, config.body.height_arm);
+    let arm_size = aabb
+        .size()
+        .scale(config.body.get_arm_width(body), config.body.height_arm);
     let arm_start_x = 0.5 - shoulder_width / 2.0;
-    let right_arm_start = aabb.get_point(arm_start_x - arm_width, arm_y);
+    let right_arm_start = aabb.get_point(arm_start_x - config.body.get_arm_width(body), arm_y);
     let polygon = create_arm(config, arm_size, right_arm_start, fat_offset as i32);
     renderer.render_polygon(&polygon, &options);
     renderer.render_polygon(&aabb.mirrored(&polygon), &options);
 
     let hand_radius = aabb.calculate_from_height(hands_factor);
-    let distance_between_hands = shoulder_width + arm_width + fat_offset_factor;
+    let distance_between_hands =
+        shoulder_width + config.body.get_arm_width(body) + fat_offset_factor;
     let (left_hand_center, right_hand_center) =
         aabb.get_mirrored_points(distance_between_hands, hand_y);
     renderer.render_circle(&left_hand_center, hand_radius, &options);

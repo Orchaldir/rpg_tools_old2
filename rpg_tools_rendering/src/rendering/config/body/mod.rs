@@ -18,6 +18,7 @@ pub struct BodyConfig {
     pub hourglass: TorsoConfig,
     pub muscular: TorsoConfig,
     pub rectangle: TorsoConfig,
+    pub width_arm: f32,
     pub y_torso: f32,
     pub y_upper: f32,
     pub y_waist: f32,
@@ -25,6 +26,10 @@ pub struct BodyConfig {
 }
 
 impl BodyConfig {
+    pub fn get_arm_width(&self, body: &Body) -> f32 {
+        self.width_arm * self.get_width_factor(body)
+    }
+
     pub fn get_width_factor(&self, body: &Body) -> f32 {
         self.width.convert(body.width)
     }
@@ -63,5 +68,9 @@ impl BodyConfig {
     /// The torso's aabb covers the shoulders & the hip.
     pub fn get_torso_width(&self, body: &Body) -> f32 {
         self.get_shoulder_width(body).max(self.get_hip_width(body))
+    }
+
+    pub fn get_arm_y(&self) -> f32 {
+        self.y_torso + 0.05
     }
 }
