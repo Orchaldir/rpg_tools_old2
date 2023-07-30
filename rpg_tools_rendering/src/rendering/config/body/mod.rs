@@ -85,4 +85,14 @@ impl BodyConfig {
             0.0
         }
     }
+
+    pub fn get_hand_radius(&self, aabb: &AABB) -> u32 {
+        let hands_factor = 0.14 * self.height_torso;
+        aabb.calculate_from_height(hands_factor)
+    }
+
+    pub fn get_foot_radius(&self, body: &Body, aabb: &AABB) -> u32 {
+        let foot_width = 0.19 * self.get_width_factor(body);
+        (aabb.size().width() as f32 * foot_width / 2.0) as u32
+    }
 }

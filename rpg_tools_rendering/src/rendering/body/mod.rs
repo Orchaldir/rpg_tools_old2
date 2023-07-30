@@ -6,7 +6,7 @@ use crate::math::size2d::Size2d;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::body::torso::render_torso;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
+use rpg_tools_core::model::character::appearance::body::Body;
 use std::ops::Mul;
 
 pub mod torso;
@@ -17,8 +17,6 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let width_factor = config.body.get_width_factor(body);
     let legs_width = config.body.get_legs_width(body);
     let leg_width = 0.14 * width_factor;
-    let foot_width = 0.19 * width_factor;
-
     let leg_y = config.body.get_leg_y();
 
     let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
@@ -31,7 +29,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     let left_foot_start = aabb.get_point(left_leg_start_x + leg_width / 2.0, 1.0);
     let right_foot_start = aabb.get_point(right_leg_x + leg_width / 2.0, 1.0);
-    let foot_radius = (aabb.size().width() as f32 * foot_width / 2.0) as u32;
+    let foot_radius = config.body.get_foot_radius(body, aabb);
     let offset = Orientation::from_degree(0.0);
     let angle = Orientation::from_degree(180.0);
 
@@ -52,8 +50,7 @@ fn render_hands(
     body: &Body,
     options: &RenderOptions,
 ) {
-    let hands_factor = 0.14 * 0.5;
-    let hand_radius = aabb.calculate_from_height(hands_factor);
+    let hand_radius = config.body.get_hand_radius(aabb);
     let distance_between_hands = config.body.get_shoulder_width(body)
         + config.body.get_arm_width(body)
         + config.body.get_fat_offset_factor(body);
