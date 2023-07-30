@@ -1,7 +1,7 @@
 use rpg_tools_core::model::width::Width;
 use Width::*;
 
-/// The configuration of a [`width`](rpg_tools_core::model::width::Width).
+/// The configuration of a [`width`](Width).
 #[derive(Debug, PartialEq)]
 pub struct WidthConfig {
     pub thin: f32,

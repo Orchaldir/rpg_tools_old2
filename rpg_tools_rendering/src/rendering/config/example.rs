@@ -37,6 +37,7 @@ pub fn create_config() -> RenderConfig {
                 average: 0.9,
                 wide: 1.0,
             },
+            torso_factor: 0.35,
         },
         hair: HairConfig {
             hairline: HairlineConfig {

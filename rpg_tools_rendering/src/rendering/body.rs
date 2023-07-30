@@ -15,8 +15,8 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let arm_height = 0.36;
 
     let width_factor = config.body.get_width_factor(body);
-    let shoulder_width = get_shoulder_width(body, width_factor);
-    let hip_width = get_hip_width(body, width_factor);
+    let shoulder_width = config.body.get_shoulder_width(body);
+    let hip_width = config.body.get_hip_width(body);
     let torso_width = shoulder_width.max(hip_width);
     let legs_width = shoulder_width.min(hip_width);
     let arm_width = 0.1 * width_factor;
@@ -178,20 +178,4 @@ pub fn calculate_head_aabb(aabb: &AABB) -> AABB {
     let head_start = aabb.get_point(0.5 - head_size / 2.0, 0.0);
     let head_size = aabb.size().mul(head_size);
     AABB::new(head_start, head_size)
-}
-
-fn get_shoulder_width(body: &Body, width_factor: f32) -> f32 {
-    0.35 * (width_factor
-        + match body.shape {
-            BodyShape::Muscular => 0.4,
-            _ => 0.0,
-        })
-}
-
-fn get_hip_width(body: &Body, width_factor: f32) -> f32 {
-    0.35 * (width_factor
-        + match body.shape {
-            BodyShape::Fat => 0.4,
-            _ => 0.0,
-        })
 }
