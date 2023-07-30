@@ -41,7 +41,6 @@ pub fn create_config() -> RenderConfig {
             torso_factor: 0.35,
             muscular_shoulder_bonus: 0.4,
             fat_hip_bonus: 0.4,
-            torso_y: 0.21,
             torso_height: 0.5,
             fat: TorsoConfig {
                 shoulder_width: 0.64,
@@ -63,6 +62,10 @@ pub fn create_config() -> RenderConfig {
                 waist_width: 1.0,
                 hip_width: 1.0,
             },
+            y_torso: 0.21,
+            y_upper: 0.3,
+            y_waist: 0.5,
+            y_lower: 0.75,
         },
         hair: HairConfig {
             hairline: HairlineConfig {
