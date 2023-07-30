@@ -34,10 +34,11 @@ fn render_legs(
     let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
     let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);
     let leg_size = aabb.size().scale(leg_width, 1.0 - leg_y);
-    render_leg(renderer, config, &options, left_leg_start, leg_size);
     let right_leg_x = 0.5 - legs_width / 2.0;
     let right_leg_start = aabb.get_point(right_leg_x, leg_y);
-    render_leg(renderer, config, &options, right_leg_start, leg_size);
+
+    render_leg(renderer, config, options, left_leg_start, leg_size);
+    render_leg(renderer, config, options, right_leg_start, leg_size);
 
     let left_foot_start = aabb.get_point(left_leg_start_x + leg_width / 2.0, 1.0);
     let right_foot_start = aabb.get_point(right_leg_x + leg_width / 2.0, 1.0);
@@ -45,8 +46,8 @@ fn render_legs(
     let offset = Orientation::from_degree(0.0);
     let angle = Orientation::from_degree(180.0);
 
-    renderer.render_circle_arc(&left_foot_start, foot_radius, offset, angle, &options);
-    renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, &options);
+    renderer.render_circle_arc(&left_foot_start, foot_radius, offset, angle, options);
+    renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, options);
 }
 
 fn render_hands(
@@ -63,8 +64,9 @@ fn render_hands(
     let hand_y = config.body.get_arm_y() + config.body.height_arm;
     let (left_hand_center, right_hand_center) =
         aabb.get_mirrored_points(distance_between_hands, hand_y);
-    renderer.render_circle(&left_hand_center, hand_radius, &options);
-    renderer.render_circle(&right_hand_center, hand_radius, &options);
+
+    renderer.render_circle(&left_hand_center, hand_radius, options);
+    renderer.render_circle(&right_hand_center, hand_radius, options);
 }
 
 fn render_arms(
@@ -84,8 +86,9 @@ fn render_arms(
     );
     let fat_offset = aabb.calculate_from_height(config.body.get_fat_offset_factor(body) / 2.0);
     let polygon = create_arm(config, arm_size, right_arm_start, fat_offset as i32);
-    renderer.render_polygon(&polygon, &options);
-    renderer.render_polygon(&aabb.mirrored(&polygon), &options);
+
+    renderer.render_polygon(&polygon, options);
+    renderer.render_polygon(&aabb.mirrored(&polygon), options);
 }
 
 fn create_arm(
