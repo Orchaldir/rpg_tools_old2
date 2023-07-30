@@ -17,7 +17,6 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let width_factor = config.body.get_width_factor(body);
     let shoulder_width = config.body.get_shoulder_width(body);
     let hip_width = config.body.get_hip_width(body);
-    let torso_width = config.body.get_torso_width(body);
     let legs_width = config.body.get_legs_width(body);
     let arm_width = 0.1 * width_factor;
     let leg_width = 0.14 * width_factor;
@@ -36,10 +35,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let hand_y = arm_y + arm_height;
     let leg_y = torso_y + torso_height - 0.05;
 
-    let torso_start_x = 0.5 - torso_width / 2.0;
-    let torso_start = aabb.get_point(torso_start_x, torso_y);
-    let torso_size = aabb.size().scale(torso_width, torso_height);
-    let torso_aabb = AABB::new(torso_start, torso_size);
+    let torso_aabb = config.body.get_torso_aabb(body, aabb);
 
     let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
     let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);

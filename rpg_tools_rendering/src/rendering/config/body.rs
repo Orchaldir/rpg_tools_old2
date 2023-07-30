@@ -1,3 +1,4 @@
+use crate::math::aabb2d::AABB;
 use crate::rendering::config::width::WidthConfig;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 
@@ -8,6 +9,8 @@ pub struct BodyConfig {
     pub torso_factor: f32,
     pub muscular_shoulder_bonus: f32,
     pub fat_hip_bonus: f32,
+    pub torso_y: f32,
+    pub torso_height: f32,
 }
 
 impl BodyConfig {
@@ -35,6 +38,14 @@ impl BodyConfig {
                 _ => 0.0,
             })
             * self.muscluar_shoulder_bonus
+    }
+
+    pub fn get_torso_aabb(&self, body: &Body, aabb: &AABB) -> AABB {
+        let torso_width = self.get_torso_width(body);
+        let torso_start_x = 0.5 - torso_width / 2.0;
+        let torso_start = aabb.get_point(torso_start_x, self.torso_y);
+        let torso_size = aabb.size().scale(torso_width, self.torso_height);
+        AABB::new(torso_start, torso_size)
     }
 
     /// The torso's aabb covers the shoulders & the hip.
