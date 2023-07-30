@@ -24,6 +24,7 @@ impl BodyConfig {
                 BodyShape::Fat => self.fat_hip_bonus,
                 _ => 0.0,
             })
+            * self.torso_factor
     }
 
     /// The aabb of both legs is limited to the smaller width of shoulders or hip to match *Fat* & *Muscular* [`body shapes`](BodyShape).
@@ -37,7 +38,7 @@ impl BodyConfig {
                 BodyShape::Muscular => self.muscular_shoulder_bonus,
                 _ => 0.0,
             })
-            * self.muscluar_shoulder_bonus
+            * self.torso_factor
     }
 
     pub fn get_torso_aabb(&self, body: &Body, aabb: &AABB) -> AABB {

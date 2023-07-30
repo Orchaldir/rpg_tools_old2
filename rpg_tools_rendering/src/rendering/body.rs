@@ -35,8 +35,6 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let hand_y = arm_y + arm_height;
     let leg_y = torso_y + torso_height - 0.05;
 
-    let torso_aabb = config.body.get_torso_aabb(body, aabb);
-
     let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
     let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);
     let leg_size = aabb.size().scale(leg_width, 1.0 - leg_y);
@@ -68,14 +66,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     renderer.render_circle(&left_hand_center, hand_radius, &options);
     renderer.render_circle(&right_hand_center, hand_radius, &options);
 
-    let polygon = match body.shape {
-        BodyShape::Fat => create_fat(&torso_aabb),
-        BodyShape::Hourglass => create_hourglass(&torso_aabb),
-        BodyShape::Muscular => create_muscular(&torso_aabb),
-        BodyShape::Rectangle => create_rectangle(&torso_aabb),
-    };
-    let smooth_polygon = config.cut_corners(&polygon).unwrap();
-    renderer.render_polygon(&smooth_polygon, &options);
+    render_torso(renderer, config, aabb, body, &options);
 }
 
 fn create_arm(
@@ -114,6 +105,24 @@ fn render_leg(
     let aabb = AABB::new(start, size);
     let polygon = config.cut_corners(&(&aabb).into()).unwrap();
     renderer.render_polygon(&polygon, options);
+}
+
+fn render_torso(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    options: &RenderOptions,
+) {
+    let torso_aabb = config.body.get_torso_aabb(body, aabb);
+    let polygon = match body.shape {
+        BodyShape::Fat => create_fat(&torso_aabb),
+        BodyShape::Hourglass => create_hourglass(&torso_aabb),
+        BodyShape::Muscular => create_muscular(&torso_aabb),
+        BodyShape::Rectangle => create_rectangle(&torso_aabb),
+    };
+    let smooth_polygon = config.cut_corners(&polygon).unwrap();
+    renderer.render_polygon(&smooth_polygon, options);
 }
 
 fn create_fat(aabb: &AABB) -> Polygon2d {
