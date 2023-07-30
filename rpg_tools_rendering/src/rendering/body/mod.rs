@@ -16,20 +16,12 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     let width_factor = config.body.get_width_factor(body);
     let shoulder_width = config.body.get_shoulder_width(body);
-    let hip_width = config.body.get_hip_width(body);
     let legs_width = config.body.get_legs_width(body);
     let leg_width = 0.14 * width_factor;
     let foot_width = 0.19 * width_factor;
 
     let hands_factor = 0.14 * 0.5;
-    let fat_offset_factor = if body.shape == BodyShape::Fat {
-        hip_width - shoulder_width
-    } else {
-        0.0
-    };
-    let fat_offset = aabb.calculate_from_height(fat_offset_factor / 2.0);
 
-    let arm_y = config.body.y_torso + 0.05;
     let hand_y = config.body.get_arm_y() + config.body.height_arm;
     let leg_y = config.body.y_torso + config.body.height_torso - 0.05;
 
@@ -50,24 +42,38 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     renderer.render_circle_arc(&left_foot_start, foot_radius, offset, angle, &options);
     renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, &options);
 
-    let arm_size = aabb
-        .size()
-        .scale(config.body.get_arm_width(body), config.body.height_arm);
-    let arm_start_x = 0.5 - shoulder_width / 2.0;
-    let right_arm_start = aabb.get_point(arm_start_x - config.body.get_arm_width(body), arm_y);
-    let polygon = create_arm(config, arm_size, right_arm_start, fat_offset as i32);
-    renderer.render_polygon(&polygon, &options);
-    renderer.render_polygon(&aabb.mirrored(&polygon), &options);
+    render_arms(renderer, config, &aabb, body, &options);
 
     let hand_radius = aabb.calculate_from_height(hands_factor);
     let distance_between_hands =
-        shoulder_width + config.body.get_arm_width(body) + fat_offset_factor;
+        shoulder_width + config.body.get_arm_width(body) + config.body.get_fat_offset_factor(body);
     let (left_hand_center, right_hand_center) =
         aabb.get_mirrored_points(distance_between_hands, hand_y);
     renderer.render_circle(&left_hand_center, hand_radius, &options);
     renderer.render_circle(&right_hand_center, hand_radius, &options);
 
     render_torso(renderer, config, aabb, body, &options);
+}
+
+fn render_arms(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &&AABB,
+    body: &Body,
+    options: &RenderOptions,
+) {
+    let arm_size = aabb
+        .size()
+        .scale(config.body.get_arm_width(body), config.body.height_arm);
+    let arm_start_x = 0.5 - config.body.get_shoulder_width(body) / 2.0;
+    let right_arm_start = aabb.get_point(
+        arm_start_x - config.body.get_arm_width(body),
+        config.body.get_arm_y(),
+    );
+    let fat_offset = aabb.calculate_from_height(config.body.get_fat_offset_factor(body) / 2.0);
+    let polygon = create_arm(config, arm_size, right_arm_start, fat_offset as i32);
+    renderer.render_polygon(&polygon, &options);
+    renderer.render_polygon(&aabb.mirrored(&polygon), &options);
 }
 
 fn create_arm(
