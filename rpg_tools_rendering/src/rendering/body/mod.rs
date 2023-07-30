@@ -19,7 +19,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let leg_width = 0.14 * width_factor;
     let foot_width = 0.19 * width_factor;
 
-    let leg_y = config.body.y_torso + config.body.height_torso - 0.05;
+    let leg_y = config.body.get_leg_y();
 
     let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
     let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);

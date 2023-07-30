@@ -74,6 +74,10 @@ impl BodyConfig {
         self.y_torso + 0.05
     }
 
+    pub fn get_leg_y(&self) -> f32 {
+        self.y_torso + self.height_torso - 0.05
+    }
+
     pub fn get_fat_offset_factor(&self, body: &Body) -> f32 {
         if body.shape == BodyShape::Fat {
             self.get_hip_width(body) - self.get_shoulder_width(body)
