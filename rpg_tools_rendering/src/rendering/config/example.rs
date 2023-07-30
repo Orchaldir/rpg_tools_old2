@@ -41,7 +41,8 @@ pub fn create_config() -> RenderConfig {
             torso_factor: 0.35,
             muscular_shoulder_bonus: 0.4,
             fat_hip_bonus: 0.4,
-            torso_height: 0.5,
+            height_torso: 0.5,
+            height_arm: 0.36,
             fat: TorsoConfig {
                 shoulder_width: 0.64,
                 waist_width: 0.82,

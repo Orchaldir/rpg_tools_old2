@@ -14,9 +14,6 @@ pub mod torso;
 pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, body: &Body) {
     let options = config.get_skin_options(&body.skin);
 
-    let torso_height = 0.5;
-    let arm_height = 0.36;
-
     let width_factor = config.body.get_width_factor(body);
     let shoulder_width = config.body.get_shoulder_width(body);
     let hip_width = config.body.get_hip_width(body);
@@ -35,8 +32,8 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     let torso_y = 0.21;
     let arm_y = torso_y + 0.05;
-    let hand_y = arm_y + arm_height;
-    let leg_y = torso_y + torso_height - 0.05;
+    let hand_y = arm_y + config.body.height_arm;
+    let leg_y = torso_y + config.body.height_torso - 0.05;
 
     let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
     let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);
@@ -55,7 +52,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     renderer.render_circle_arc(&left_foot_start, foot_radius, offset, angle, &options);
     renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, &options);
 
-    let arm_size = aabb.size().scale(arm_width, arm_height);
+    let arm_size = aabb.size().scale(arm_width, config.body.height_arm);
     let arm_start_x = 0.5 - shoulder_width / 2.0;
     let right_arm_start = aabb.get_point(arm_start_x - arm_width, arm_y);
     let polygon = create_arm(config, arm_size, right_arm_start, fat_offset as i32);

@@ -12,7 +12,8 @@ pub struct BodyConfig {
     pub torso_factor: f32,
     pub muscular_shoulder_bonus: f32,
     pub fat_hip_bonus: f32,
-    pub torso_height: f32,
+    pub height_torso: f32,
+    pub height_arm: f32,
     pub fat: TorsoConfig,
     pub hourglass: TorsoConfig,
     pub muscular: TorsoConfig,
@@ -55,7 +56,7 @@ impl BodyConfig {
         let torso_width = self.get_torso_width(body);
         let torso_start_x = 0.5 - torso_width / 2.0;
         let torso_start = aabb.get_point(torso_start_x, self.y_torso);
-        let torso_size = aabb.size().scale(torso_width, self.torso_height);
+        let torso_size = aabb.size().scale(torso_width, self.height_torso);
         AABB::new(torso_start, torso_size)
     }
 
