@@ -15,14 +15,10 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let options = config.get_skin_options(&body.skin);
 
     let width_factor = config.body.get_width_factor(body);
-    let shoulder_width = config.body.get_shoulder_width(body);
     let legs_width = config.body.get_legs_width(body);
     let leg_width = 0.14 * width_factor;
     let foot_width = 0.19 * width_factor;
 
-    let hands_factor = 0.14 * 0.5;
-
-    let hand_y = config.body.get_arm_y() + config.body.height_arm;
     let leg_y = config.body.y_torso + config.body.height_torso - 0.05;
 
     let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
@@ -44,15 +40,28 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     render_arms(renderer, config, &aabb, body, &options);
 
+    render_hands(renderer, config, aabb, body, &options);
+
+    render_torso(renderer, config, aabb, body, &options);
+}
+
+fn render_hands(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    options: &RenderOptions,
+) {
+    let hands_factor = 0.14 * 0.5;
     let hand_radius = aabb.calculate_from_height(hands_factor);
-    let distance_between_hands =
-        shoulder_width + config.body.get_arm_width(body) + config.body.get_fat_offset_factor(body);
+    let distance_between_hands = config.body.get_shoulder_width(body)
+        + config.body.get_arm_width(body)
+        + config.body.get_fat_offset_factor(body);
+    let hand_y = config.body.get_arm_y() + config.body.height_arm;
     let (left_hand_center, right_hand_center) =
         aabb.get_mirrored_points(distance_between_hands, hand_y);
     renderer.render_circle(&left_hand_center, hand_radius, &options);
     renderer.render_circle(&right_hand_center, hand_radius, &options);
-
-    render_torso(renderer, config, aabb, body, &options);
 }
 
 fn render_arms(
