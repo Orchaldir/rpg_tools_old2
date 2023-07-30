@@ -56,7 +56,7 @@ fn render_hands(
     body: &Body,
     options: &RenderOptions,
 ) {
-    let hand_radius = config.body.get_hand_radius(aabb);
+    let hand_radius = config.body.get_hand_radius(body, aabb);
     let distance_between_hands = config.body.get_shoulder_width(body)
         + config.body.get_arm_width(body)
         + config.body.get_fat_offset_factor(body);

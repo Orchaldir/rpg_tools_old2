@@ -39,6 +39,8 @@ pub fn create_config() -> RenderConfig {
                 wide: 1.0,
             },
             torso_factor: 0.35,
+            hand_factor: 0.07,
+            foot_factor: 0.09,
             muscular_shoulder_bonus: 0.4,
             fat_hip_bonus: 0.4,
             height_torso: 0.5,
