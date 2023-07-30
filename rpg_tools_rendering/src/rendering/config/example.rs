@@ -2,6 +2,7 @@ extern crate rpg_tools_core;
 
 use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
+use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::hairline::HairlineConfig;
@@ -10,6 +11,7 @@ use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
 use crate::rendering::config::mouth::{CircularMouthConfig, MouthConfig};
 use crate::rendering::config::size::SizeConfig;
+use crate::rendering::config::width::WidthConfig;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::color::Color;
 
@@ -29,6 +31,13 @@ pub fn create_config() -> RenderConfig {
         cut_corners_u: 0.25,
         cut_corners_v: 0.25,
         cut_corners_n: 3,
+        body: BodyConfig {
+            width: WidthConfig {
+                thin: 0.8,
+                average: 0.9,
+                wide: 1.0,
+            },
+        },
         hair: HairConfig {
             hairline: HairlineConfig {
                 width_round: 0.4,

@@ -6,7 +6,6 @@ use crate::math::size2d::Size2d;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
-use rpg_tools_core::model::width::Width;
 use std::ops::Mul;
 
 pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, body: &Body) {
@@ -15,7 +14,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let torso_height = 0.5;
     let arm_height = 0.36;
 
-    let width_factor = get_width_factor(body);
+    let width_factor = config.body.get_width_factor(body);
     let shoulder_width = get_shoulder_width(body, width_factor);
     let hip_width = get_hip_width(body, width_factor);
     let torso_width = shoulder_width.max(hip_width);
@@ -179,14 +178,6 @@ pub fn calculate_head_aabb(aabb: &AABB) -> AABB {
     let head_start = aabb.get_point(0.5 - head_size / 2.0, 0.0);
     let head_size = aabb.size().mul(head_size);
     AABB::new(head_start, head_size)
-}
-
-fn get_width_factor(body: &Body) -> f32 {
-    match body.width {
-        Width::Thin => 0.8,
-        Width::Average => 0.9,
-        Width::Wide => 1.0,
-    }
 }
 
 fn get_shoulder_width(body: &Body, width_factor: f32) -> f32 {
