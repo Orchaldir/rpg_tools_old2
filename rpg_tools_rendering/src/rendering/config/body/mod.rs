@@ -19,6 +19,7 @@ pub struct BodyConfig {
     pub muscular: TorsoConfig,
     pub rectangle: TorsoConfig,
     pub width_arm: f32,
+    pub width_leg: f32,
     pub y_torso: f32,
     pub y_upper: f32,
     pub y_waist: f32,
@@ -28,6 +29,10 @@ pub struct BodyConfig {
 impl BodyConfig {
     pub fn get_arm_width(&self, body: &Body) -> f32 {
         self.width_arm * self.get_width_factor(body)
+    }
+
+    pub fn get_leg_width(&self, body: &Body) -> f32 {
+        self.width_leg * self.get_width_factor(body)
     }
 
     pub fn get_width_factor(&self, body: &Body) -> f32 {

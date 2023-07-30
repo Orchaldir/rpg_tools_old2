@@ -14,9 +14,21 @@ pub mod torso;
 pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, body: &Body) {
     let options = config.get_skin_options(&body.skin);
 
-    let width_factor = config.body.get_width_factor(body);
+    render_legs(renderer, config, aabb, body, &options);
+    render_arms(renderer, config, &aabb, body, &options);
+    render_hands(renderer, config, aabb, body, &options);
+    render_torso(renderer, config, aabb, body, &options);
+}
+
+fn render_legs(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    options: &RenderOptions,
+) {
     let legs_width = config.body.get_legs_width(body);
-    let leg_width = 0.14 * width_factor;
+    let leg_width = config.body.get_leg_width(body);
     let leg_y = config.body.get_leg_y();
 
     let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
@@ -35,12 +47,6 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     renderer.render_circle_arc(&left_foot_start, foot_radius, offset, angle, &options);
     renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, &options);
-
-    render_arms(renderer, config, &aabb, body, &options);
-
-    render_hands(renderer, config, aabb, body, &options);
-
-    render_torso(renderer, config, aabb, body, &options);
 }
 
 fn render_hands(
