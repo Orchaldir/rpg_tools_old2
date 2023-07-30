@@ -17,8 +17,8 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let width_factor = config.body.get_width_factor(body);
     let shoulder_width = config.body.get_shoulder_width(body);
     let hip_width = config.body.get_hip_width(body);
-    let torso_width = shoulder_width.max(hip_width);
-    let legs_width = shoulder_width.min(hip_width);
+    let torso_width = config.body.get_torso_width(body);
+    let legs_width = config.body.get_legs_width(body);
     let arm_width = 0.1 * width_factor;
     let leg_width = 0.14 * width_factor;
     let foot_width = 0.19 * width_factor;

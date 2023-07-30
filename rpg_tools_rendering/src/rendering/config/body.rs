@@ -15,6 +15,19 @@ impl BodyConfig {
         self.width.convert(body.width)
     }
 
+    pub fn get_hip_width(&self, body: &Body) -> f32 {
+        (self.get_width_factor(body)
+            + match body.shape {
+                BodyShape::Fat => self.fat_hip_bonus,
+                _ => 0.0,
+            })
+    }
+
+    /// The aabb of both legs is limited to the smaller width of shoulders or hip to match *Fat* & *Muscular* [`body shapes`](BodyShape).
+    pub fn get_legs_width(&self, body: &Body) -> f32 {
+        self.get_shoulder_width(body).min(self.get_hip_width(body))
+    }
+
     pub fn get_shoulder_width(&self, body: &Body) -> f32 {
         (self.get_width_factor(body)
             + match body.shape {
@@ -24,11 +37,8 @@ impl BodyConfig {
             * self.muscluar_shoulder_bonus
     }
 
-    pub fn get_hip_width(&self, body: &Body) -> f32 {
-        (self.get_width_factor(body)
-            + match body.shape {
-                BodyShape::Fat => self.fat_hip_bonus,
-                _ => 0.0,
-            })
+    /// The torso's aabb covers the shoulders & the hip.
+    pub fn get_torso_width(&self, body: &Body) -> f32 {
+        self.get_shoulder_width(body).max(self.get_hip_width(body))
     }
 }
