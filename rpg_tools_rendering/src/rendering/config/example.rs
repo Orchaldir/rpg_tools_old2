@@ -2,6 +2,7 @@ extern crate rpg_tools_core;
 
 use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
+use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::eye::EyeConfig;
@@ -42,6 +43,26 @@ pub fn create_config() -> RenderConfig {
             fat_hip_bonus: 0.4,
             torso_y: 0.21,
             torso_height: 0.5,
+            fat: TorsoConfig {
+                shoulder_width: 0.64,
+                waist_width: 0.82,
+                hip_width: 1.0,
+            },
+            hourglass: TorsoConfig {
+                shoulder_width: 1.0,
+                waist_width: 0.7,
+                hip_width: 1.0,
+            },
+            muscular: TorsoConfig {
+                shoulder_width: 1.0,
+                waist_width: 0.82,
+                hip_width: 0.64,
+            },
+            rectangle: TorsoConfig {
+                shoulder_width: 1.0,
+                waist_width: 1.0,
+                hip_width: 1.0,
+            },
         },
         hair: HairConfig {
             hairline: HairlineConfig {

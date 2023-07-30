@@ -1,6 +1,9 @@
 use crate::math::aabb2d::AABB;
+use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::width::WidthConfig;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
+
+pub mod torso;
 
 /// The rendering config of the [`body`](Body).
 #[derive(Debug, PartialEq)]
@@ -11,6 +14,10 @@ pub struct BodyConfig {
     pub fat_hip_bonus: f32,
     pub torso_y: f32,
     pub torso_height: f32,
+    pub fat: TorsoConfig,
+    pub hourglass: TorsoConfig,
+    pub muscular: TorsoConfig,
+    pub rectangle: TorsoConfig,
 }
 
 impl BodyConfig {
