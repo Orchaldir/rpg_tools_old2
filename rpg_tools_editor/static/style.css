@@ -14,3 +14,18 @@ h1 {
 .grid-item {
   overflow: hidden;
 }
+
+.left_right_container {
+  align-items: center;
+  justify-content: normal;
+}
+
+.image {
+  float: left;
+}
+
+.text {
+  font-size: 20px;
+  padding-left: 20px;
+  float: left;
+}

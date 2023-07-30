@@ -1,5 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::math::line2d::Line2d;
+use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::color::WebColor;
@@ -43,6 +44,16 @@ impl RenderOptions {
 pub trait Renderer {
     /// Renders a circle.
     fn render_circle(&mut self, center: &Point2d, radius: u32, options: &RenderOptions);
+
+    /// Renders a circle arc.
+    fn render_circle_arc(
+        &mut self,
+        center: &Point2d,
+        radius: u32,
+        offset: Orientation,
+        angle: Orientation,
+        options: &RenderOptions,
+    );
 
     /// Renders an ellipse.
     fn render_ellipse(

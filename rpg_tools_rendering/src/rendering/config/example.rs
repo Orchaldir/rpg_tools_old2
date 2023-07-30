@@ -2,6 +2,8 @@ extern crate rpg_tools_core;
 
 use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
+use crate::rendering::config::body::torso::TorsoConfig;
+use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::hairline::HairlineConfig;
@@ -10,6 +12,7 @@ use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
 use crate::rendering::config::mouth::{CircularMouthConfig, MouthConfig};
 use crate::rendering::config::size::SizeConfig;
+use crate::rendering::config::width::WidthConfig;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::color::Color;
 
@@ -29,6 +32,46 @@ pub fn create_config() -> RenderConfig {
         cut_corners_u: 0.25,
         cut_corners_v: 0.25,
         cut_corners_n: 3,
+        body: BodyConfig {
+            width: WidthConfig {
+                thin: 0.8,
+                average: 0.9,
+                wide: 1.0,
+            },
+            torso_factor: 0.35,
+            hand_factor: 0.07,
+            foot_factor: 0.09,
+            muscular_shoulder_bonus: 0.4,
+            fat_hip_bonus: 0.4,
+            height_torso: 0.5,
+            height_arm: 0.36,
+            fat: TorsoConfig {
+                shoulder_width: 0.64,
+                waist_width: 0.82,
+                hip_width: 1.0,
+            },
+            hourglass: TorsoConfig {
+                shoulder_width: 1.0,
+                waist_width: 0.7,
+                hip_width: 1.0,
+            },
+            muscular: TorsoConfig {
+                shoulder_width: 1.0,
+                waist_width: 0.82,
+                hip_width: 0.64,
+            },
+            rectangle: TorsoConfig {
+                shoulder_width: 1.0,
+                waist_width: 1.0,
+                hip_width: 1.0,
+            },
+            width_arm: 0.1,
+            width_leg: 0.14,
+            y_torso: 0.21,
+            y_upper: 0.3,
+            y_waist: 0.5,
+            y_lower: 0.75,
+        },
         hair: HairConfig {
             hairline: HairlineConfig {
                 width_round: 0.4,
