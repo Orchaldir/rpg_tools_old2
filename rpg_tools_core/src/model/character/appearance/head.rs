@@ -4,12 +4,12 @@ use crate::model::character::appearance::hair::Hair;
 use crate::model::character::appearance::mouth::Mouth;
 use crate::model::character::appearance::skin::Skin;
 use crate::ui::{UiVisitor, UI};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use ui_macro::ui;
 
 /// How does the head look like?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Head {
     pub ears: Ears,
     pub eyes: Eyes,
@@ -33,7 +33,7 @@ impl Default for Head {
 }
 
 /// What is the shape of the head?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum HeadShape {
     Oval,
     Rectangle,

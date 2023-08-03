@@ -3,13 +3,13 @@ use crate::model::color::Color;
 use crate::model::side::Side;
 use crate::model::size::Size;
 use crate::ui::{UiVisitor, UI};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use ui_macro::ui;
 
 pub mod hairline;
 
 /// How does the hair look like?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum Hair {
     None,
@@ -22,7 +22,7 @@ pub enum Hair {
 }
 
 /// Which short hair style?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type", content = "c")]
 pub enum ShortHair {
     /// All hair is equally short.

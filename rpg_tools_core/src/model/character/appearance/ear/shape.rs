@@ -1,11 +1,11 @@
 use crate::ui::{UiVisitor, UI};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use ui_macro::ui;
 use EarShape::*;
 
 /// How many ears does the character have?
-#[derive(ui, Default, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Default, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum EarShape {
     /// Like an elf's ears.
     Pointed,

@@ -2,7 +2,7 @@ use crate::model::character::appearance::body::Body;
 use crate::model::character::appearance::head::Head;
 use crate::model::length::Length;
 use crate::ui::{UiVisitor, UI};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use ui_macro::ui;
 
 pub mod body;
@@ -14,7 +14,7 @@ pub mod mouth;
 pub mod skin;
 
 /// How does a [`character`](crate::model::character::Character) look like?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum Appearance {
     /// The [`character`](crate::model::character::Character) consists only of a head. E.g. a floating skull

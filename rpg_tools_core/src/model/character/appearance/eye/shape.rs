@@ -1,11 +1,11 @@
 use crate::ui::{UiVisitor, UI};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use ui_macro::ui;
 use EyeShape::*;
 
 /// What is the shape of the eye?
-#[derive(ui, Default, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Default, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum EyeShape {
     Almond,
     Circle,
