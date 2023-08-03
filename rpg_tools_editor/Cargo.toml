@@ -11,6 +11,7 @@ rocket = "0.5.0-rc.3"
 rpg_tools_core = { path = "../rpg_tools_core" }
 rpg_tools_rendering = { path = "../rpg_tools_rendering" }
 serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
 url_encoded_data = "0.6"
 
 [dependencies.rocket_dyn_templates]

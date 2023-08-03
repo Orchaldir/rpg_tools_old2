@@ -2,6 +2,7 @@
 extern crate rocket;
 
 use crate::appearance::{apply_update_to_appearance, render_to_svg, RawSvg};
+use crate::io::write;
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
@@ -22,9 +23,11 @@ use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::width::Width;
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
+use std::path::Path;
 use std::sync::Mutex;
 
 pub mod appearance;
+pub mod io;
 
 struct EditorData {
     config: RenderConfig,
@@ -144,12 +147,17 @@ fn update_appearance(data: &State<EditorData>, id: usize, update: String) -> Opt
 
     println!("Update appearance of character {} with {:?}", id, update);
 
-    data.get_mut(CharacterId::new(id))
+    let result = data
+        .get_mut(CharacterId::new(id))
         .map(|character| {
             character.set_appearance(apply_update_to_appearance(character.appearance(), &update));
             character
         })
-        .map(|character| show_character_template(id, character))
+        .map(|character| show_character_template(id, character));
+
+    write(data.get_all(), Path::new("characters.json"));
+
+    result
 }
 
 #[post("/appearance/<id>/preview", data = "<update>")]
