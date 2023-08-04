@@ -66,6 +66,12 @@ impl Length {
     }
 
     /// Converts to millimetres.
+    ///
+    /// ```
+    ///# use rpg_tools_core::model::length::Length;
+    ///
+    /// assert_eq!(Length::from_metre(0.5).to_millimetre(), 500);
+    /// ```
     pub fn to_millimetre(&self) -> u32 {
         self.millimetre
     }

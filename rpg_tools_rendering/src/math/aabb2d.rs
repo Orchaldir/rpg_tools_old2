@@ -225,7 +225,7 @@ impl AxisAlignedBoundingBox {
     /// vertical
     /// ```
     ///
-    /// # Examples
+    /// # Example
     ///
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
@@ -262,7 +262,7 @@ impl AxisAlignedBoundingBox {
     /// vertical
     /// ```
     ///
-    /// # Examples
+    /// # Example
     ///
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
@@ -300,6 +300,19 @@ impl AxisAlignedBoundingBox {
     ///   |                |
     ///   v
     /// y-axis
+    /// ```
+    ///
+    /// # Example
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AxisAlignedBoundingBox;
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::polygon2d::Polygon2d;
+    /// let aabb = AxisAlignedBoundingBox::simple(2, 3, 30, 60);
+    /// let polygon = Polygon2d::new(vec![Point2d::new(9, 18); 3]);
+    /// let mirrored = Polygon2d::new(vec![Point2d::new(25, 18); 3]);
+    ///
+    /// assert_eq!(aabb.mirrored(&polygon), mirrored);
     /// ```
     pub fn mirrored(&self, polygon: &Polygon2d) -> Polygon2d {
         let mirror_x = self.start.x + self.size.width() as i32 / 2;
