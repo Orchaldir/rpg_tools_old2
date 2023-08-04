@@ -246,7 +246,13 @@ fn init() -> CharacterMgr {
     let characters: Result<Vec<Character>> = read(Path::new(FILE));
 
     match characters {
-        Ok(characters) => CharacterMgr::new(characters),
-        Err(_) => CharacterMgr::default(),
+        Ok(characters) => {
+            println!("Loaded {} characters.", characters.len());
+            CharacterMgr::new(characters)
+        }
+        Err(e) => {
+            println!("Failed to load the characters: {}", e);
+            CharacterMgr::default()
+        }
     }
 }
