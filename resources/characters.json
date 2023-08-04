@@ -1,6 +1,6 @@
 - id: 0
   name: Elf
-  gender: Female
+  gender: Male
   appearance:
     type: Humanoid
     body:
@@ -58,8 +58,8 @@
     head:
       ears:
         type: Normal
-        shape: Square
-        size: Medium
+        shape: Pointed
+        size: Large
       eyes:
         type: Two
         eye:
@@ -161,85 +161,8 @@
     height:
       millimetre: 1500
 - id: 4
-  name: Character 4
-  gender: Female
-  appearance:
-    type: Humanoid
-    body:
-      shape: Rectangle
-      width: Average
-      skin:
-        type: Skin
-        c: Dark
-    head:
-      ears:
-        type: Normal
-        shape: Square
-        size: Medium
-      eyes:
-        type: Two
-        eye:
-          type: Normal
-          eye_shape: Ellipse
-          pupil_shape: Circle
-          pupil_color: Blue
-          background_color: White
-        distance: Medium
-      hair:
-        type: None
-      mouth:
-        type: None
-      shape: Round
-      skin:
-        type: Skin
-        c: Dark
-    height:
-      millimetre: 1500
-- id: 5
-  name: Character 5
-  gender: Female
-  appearance:
-    type: Humanoid
-    body:
-      shape: Rectangle
-      width: Average
-      skin:
-        type: Skin
-        c: VeryDark
-    head:
-      ears:
-        type: Normal
-        shape: Square
-        size: Medium
-      eyes:
-        type: Two
-        eye:
-          type: Normal
-          eye_shape: Ellipse
-          pupil_shape: Circle
-          pupil_color: SaddleBrown
-          background_color: White
-        distance: Medium
-      hair:
-        type: Short
-        style:
-          type: FlatTop
-          c: Medium
-        hairline:
-          type: Round
-          c: Medium
-        color: Black
-      mouth:
-        type: None
-      shape: Round
-      skin:
-        type: Skin
-        c: VeryDark
-    height:
-      millimetre: 1500
-- id: 6
-  name: Ork
-  gender: Female
+  name: Orc
+  gender: Male
   appearance:
     type: Humanoid
     body:
