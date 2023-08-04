@@ -1,0 +1,277 @@
+- id: 0
+  name: Elf
+  gender: Female
+  appearance:
+    type: Humanoid
+    body:
+      shape: Rectangle
+      width: Average
+      skin:
+        type: Skin
+        c: Fair
+    head:
+      ears:
+        type: Normal
+        shape: Pointed
+        size: Large
+      eyes:
+        type: Two
+        eye:
+          type: Normal
+          eye_shape: Ellipse
+          pupil_shape: Circle
+          pupil_color: Blue
+          background_color: White
+        distance: Medium
+      hair:
+        type: Short
+        style:
+          type: SidePart
+          c: Right
+        hairline:
+          type: Round
+          c: Medium
+        color: Yellow
+      mouth:
+        type: Normal
+        width: Medium
+        teeth:
+          type: None
+        teeth_color: White
+      shape: Round
+      skin:
+        type: Skin
+        c: Fair
+    height:
+      millimetre: 1500
+- id: 1
+  name: Devil
+  gender: Male
+  appearance:
+    type: Humanoid
+    body:
+      shape: Muscular
+      width: Wide
+      skin:
+        type: Scales
+        c: Red
+    head:
+      ears:
+        type: Normal
+        shape: Square
+        size: Medium
+      eyes:
+        type: Two
+        eye:
+          type: Normal
+          eye_shape: Ellipse
+          pupil_shape: VerticalSlit
+          pupil_color: Blue
+          background_color: Yellow
+        distance: Medium
+      hair:
+        type: None
+      mouth:
+        type: Normal
+        width: Medium
+        teeth:
+          type: UpperFangs
+          c: Large
+        teeth_color: White
+      shape: TriangleUp
+      skin:
+        type: ExoticSkin
+        c: Red
+    height:
+      millimetre: 2500
+- id: 2
+  name: Watcher
+  gender: Genderless
+  appearance:
+    type: HeadOnly
+    head:
+      ears:
+        type: None
+      eyes:
+        type: One
+        eye:
+          type: Normal
+          eye_shape: Circle
+          pupil_shape: VerticalSlit
+          pupil_color: Blue
+          background_color: White
+      hair:
+        type: None
+      mouth:
+        type: Normal
+        width: Medium
+        teeth:
+          type: None
+        teeth_color: White
+      shape: Round
+      skin:
+        type: Scales
+        c: Purple
+    height:
+      millimetre: 1500
+- id: 3
+  name: Vampire
+  gender: Female
+  appearance:
+    type: Humanoid
+    body:
+      shape: Hourglass
+      width: Average
+      skin:
+        type: ExoticSkin
+        c: White
+    head:
+      ears:
+        type: Normal
+        shape: Square
+        size: Medium
+      eyes:
+        type: Two
+        eye:
+          type: Normal
+          eye_shape: Ellipse
+          pupil_shape: Circle
+          pupil_color: Red
+          background_color: Silver
+        distance: Medium
+      hair:
+        type: Short
+        style:
+          type: MiddlePart
+        hairline:
+          type: Round
+          c: Medium
+        color: SaddleBrown
+      mouth:
+        type: Normal
+        width: Medium
+        teeth:
+          type: UpperFangs
+          c: Medium
+        teeth_color: White
+      shape: Round
+      skin:
+        type: ExoticSkin
+        c: White
+    height:
+      millimetre: 1500
+- id: 4
+  name: Character 4
+  gender: Female
+  appearance:
+    type: Humanoid
+    body:
+      shape: Rectangle
+      width: Average
+      skin:
+        type: Skin
+        c: Dark
+    head:
+      ears:
+        type: Normal
+        shape: Square
+        size: Medium
+      eyes:
+        type: Two
+        eye:
+          type: Normal
+          eye_shape: Ellipse
+          pupil_shape: Circle
+          pupil_color: Blue
+          background_color: White
+        distance: Medium
+      hair:
+        type: None
+      mouth:
+        type: None
+      shape: Round
+      skin:
+        type: Skin
+        c: Dark
+    height:
+      millimetre: 1500
+- id: 5
+  name: Character 5
+  gender: Female
+  appearance:
+    type: Humanoid
+    body:
+      shape: Rectangle
+      width: Average
+      skin:
+        type: Skin
+        c: VeryDark
+    head:
+      ears:
+        type: Normal
+        shape: Square
+        size: Medium
+      eyes:
+        type: Two
+        eye:
+          type: Normal
+          eye_shape: Ellipse
+          pupil_shape: Circle
+          pupil_color: SaddleBrown
+          background_color: White
+        distance: Medium
+      hair:
+        type: Short
+        style:
+          type: FlatTop
+          c: Medium
+        hairline:
+          type: Round
+          c: Medium
+        color: Black
+      mouth:
+        type: None
+      shape: Round
+      skin:
+        type: Skin
+        c: VeryDark
+    height:
+      millimetre: 1500
+- id: 6
+  name: Ork
+  gender: Female
+  appearance:
+    type: Humanoid
+    body:
+      shape: Rectangle
+      width: Average
+      skin:
+        type: ExoticSkin
+        c: Green
+    head:
+      ears:
+        type: None
+      eyes:
+        type: Two
+        eye:
+          type: Normal
+          eye_shape: Ellipse
+          pupil_shape: Circle
+          pupil_color: Blue
+          background_color: White
+        distance: Medium
+      hair:
+        type: None
+      mouth:
+        type: Normal
+        width: Medium
+        teeth:
+          type: LowerFangs
+          c: Large
+        teeth_color: White
+      shape: Round
+      skin:
+        type: ExoticSkin
+        c: Green
+    height:
+      millimetre: 1500

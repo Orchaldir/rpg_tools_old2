@@ -19,6 +19,8 @@ use std::sync::Mutex;
 pub mod appearance;
 pub mod io;
 
+const FILE: &str = "resources/characters.json";
+
 struct EditorData {
     config: RenderConfig,
     data: Mutex<CharacterMgr>,
@@ -145,7 +147,9 @@ fn update_appearance(data: &State<EditorData>, id: usize, update: String) -> Opt
         })
         .map(|character| show_character_template(id, character));
 
-    write(data.get_all(), Path::new("characters.json"));
+    if let Err(e) = write(data.get_all(), Path::new(FILE)) {
+        println!("Failed to save the characters: {}", e);
+    }
 
     result
 }
@@ -239,7 +243,7 @@ async fn main() -> Result<()> {
 }
 
 fn init() -> CharacterMgr {
-    let characters: Result<Vec<Character>> = read(Path::new("characters.json"));
+    let characters: Result<Vec<Character>> = read(Path::new(FILE));
 
     match characters {
         Ok(characters) => CharacterMgr::new(characters),

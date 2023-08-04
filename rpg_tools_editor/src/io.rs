@@ -9,13 +9,16 @@ use std::path::Path;
 pub fn read<T: DeserializeOwned>(path: &Path) -> Result<T> {
     let string = fs::read_to_string(path).context(format!("Failed to load {:?}", path))?;
     let data: T = serde_yaml::from_str(&string).context(format!("Failed to parse {:?}", path))?;
+
     Ok(data)
 }
 
-pub fn write<T: Serialize>(object: &T, path: &Path) {
-    let mut file = File::create(path).unwrap();
+pub fn write<T: Serialize>(object: &T, path: &Path) -> Result<()> {
+    let mut file = File::create(path).context(format!("Failed to create {:?}", path))?;
+    let s = serde_yaml::to_string(object).context(format!("Failed to serialize {:?}", path))?;
 
-    let s = serde_yaml::to_string(object).unwrap();
+    file.write_all(s.as_bytes())
+        .context(format!("Failed to write to {:?}", path))?;
 
-    file.write_all(s.as_bytes()).unwrap();
+    Ok(())
 }
