@@ -1,3 +1,4 @@
+use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
@@ -179,6 +180,7 @@ fn update_mouth(data: &UrlEncodedData) -> Mouth {
             let (width, teeth_color) = parse_common_mouth(data);
 
             Mouth::Normal {
+                beard: Beard::None,
                 width,
                 teeth: parse_special_teeth(data),
                 teeth_color,
