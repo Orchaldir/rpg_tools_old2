@@ -1,0 +1,16 @@
+= Orchaldir's RPG Tools
+
+This repo is a collection of tools for game masters of tabletop role-playing games.
+
+== Characters
+
+By combing different appearance options, a large number of characters can be generated.
+
+.An Elf
+image:resources/characters/elf.svg[An Elf,width=50%]
+
+.A Vampire
+image:resources/characters/vampire.svg[A Vampire,width=50%]
+
+.A Devil
+image:resources/characters/devil.svg[A Devil,width=50%]

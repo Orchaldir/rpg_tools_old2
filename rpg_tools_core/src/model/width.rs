@@ -1,10 +1,10 @@
 use crate::ui::{UiVisitor, UI};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use ui_macro::ui;
 
 /// How wide?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Width {
     Thin,
     Average,

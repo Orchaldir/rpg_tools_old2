@@ -1,12 +1,12 @@
 use crate::model::size::Size;
 use crate::ui::{UiVisitor, UI};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use ui_macro::ui;
 use TeethColor::*;
 
 /// How does the mouth look like?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum Mouth {
     None,
@@ -24,7 +24,7 @@ pub enum Mouth {
 }
 
 /// Does the character have special teeth?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type", content = "c")]
 pub enum SpecialTeeth {
     None,
@@ -35,7 +35,7 @@ pub enum SpecialTeeth {
 }
 
 /// The color of the teeth.
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum TeethColor {
     White,
     Yellow,

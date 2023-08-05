@@ -1,12 +1,12 @@
 use crate::ui::{UiVisitor, UI};
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use ui_macro::ui;
 
 const METRE_FACTOR: f32 = 1000.0;
 const CENTIMETRE_FACTOR: f32 = 10.0;
 
 /// A length or distance. The internal unit is millimetre.
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize)]
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Length {
     millimetre: u32,
 }
@@ -66,6 +66,12 @@ impl Length {
     }
 
     /// Converts to millimetres.
+    ///
+    /// ```
+    ///# use rpg_tools_core::model::length::Length;
+    ///
+    /// assert_eq!(Length::from_metre(0.5).to_millimetre(), 500);
+    /// ```
     pub fn to_millimetre(&self) -> u32 {
         self.millimetre
     }

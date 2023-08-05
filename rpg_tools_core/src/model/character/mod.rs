@@ -1,12 +1,13 @@
 use crate::model::character::appearance::Appearance;
 use crate::model::character::gender::Gender;
+use serde::{Deserialize, Serialize};
 
 pub mod appearance;
 pub mod gender;
 pub mod manager;
 
 /// The unique identifier of a [`character`](Character).
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct CharacterId(usize);
 
 impl CharacterId {
@@ -20,7 +21,7 @@ impl CharacterId {
 }
 
 /// A character in the game.
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Character {
     id: CharacterId,
     name: String,

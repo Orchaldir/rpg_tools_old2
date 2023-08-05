@@ -7,6 +7,10 @@ pub struct CharacterMgr {
 }
 
 impl CharacterMgr {
+    pub fn new(characters: Vec<Character>) -> Self {
+        Self { characters }
+    }
+
     pub fn create(&mut self) -> CharacterId {
         let id = CharacterId::new(self.characters.len());
         self.characters.push(Character::new(id));

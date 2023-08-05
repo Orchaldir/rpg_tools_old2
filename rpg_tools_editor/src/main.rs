@@ -2,29 +2,24 @@
 extern crate rocket;
 
 use crate::appearance::{apply_update_to_appearance, render_to_svg, RawSvg};
+use crate::io::{read, write};
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
-use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
-use rpg_tools_core::model::character::appearance::ear::Ears;
-use rpg_tools_core::model::character::appearance::eye::Eyes;
-use rpg_tools_core::model::character::appearance::hair::Hair;
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
-use rpg_tools_core::model::character::appearance::mouth::Mouth;
-use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::manager::CharacterMgr;
 use rpg_tools_core::model::character::{Character, CharacterId};
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::length::Length;
-use rpg_tools_core::model::width::Width;
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
+use std::path::Path;
 use std::sync::Mutex;
 
 pub mod appearance;
+pub mod io;
+
+const FILE: &str = "resources/characters/characters.yaml";
 
 struct EditorData {
     config: RenderConfig,
@@ -144,12 +139,19 @@ fn update_appearance(data: &State<EditorData>, id: usize, update: String) -> Opt
 
     println!("Update appearance of character {} with {:?}", id, update);
 
-    data.get_mut(CharacterId::new(id))
+    let result = data
+        .get_mut(CharacterId::new(id))
         .map(|character| {
             character.set_appearance(apply_update_to_appearance(character.appearance(), &update));
             character
         })
-        .map(|character| show_character_template(id, character))
+        .map(|character| show_character_template(id, character));
+
+    if let Err(e) = write(data.get_all(), Path::new(FILE)) {
+        println!("Failed to save the characters: {}", e);
+    }
+
+    result
 }
 
 #[post("/appearance/<id>/preview", data = "<update>")]
@@ -241,37 +243,16 @@ async fn main() -> Result<()> {
 }
 
 fn init() -> CharacterMgr {
-    let mut manager = CharacterMgr::default();
+    let characters: Result<Vec<Character>> = read(Path::new(FILE));
 
-    for skin in &[
-        Skin::Skin(SkinColor::Fair),
-        Skin::Skin(SkinColor::Light),
-        Skin::Skin(SkinColor::Medium),
-        Skin::Skin(SkinColor::Tan),
-        Skin::Skin(SkinColor::Dark),
-        Skin::Skin(SkinColor::VeryDark),
-        Skin::ExoticSkin(Color::Green),
-    ] {
-        let id = manager.create();
-        let character = manager.get_mut(id).unwrap();
-
-        character.set_appearance(Appearance::humanoid(
-            Body {
-                shape: BodyShape::Rectangle,
-                width: Width::Average,
-                skin: *skin,
-            },
-            Head {
-                ears: Ears::default(),
-                eyes: Eyes::default(),
-                hair: Hair::None,
-                mouth: Mouth::None,
-                shape: HeadShape::default(),
-                skin: *skin,
-            },
-            Length::from_metre(1.5),
-        ))
+    match characters {
+        Ok(characters) => {
+            println!("Loaded {} characters.", characters.len());
+            CharacterMgr::new(characters)
+        }
+        Err(e) => {
+            println!("Failed to load the characters: {}", e);
+            CharacterMgr::default()
+        }
     }
-
-    manager
 }
