@@ -4,6 +4,7 @@ use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
+use crate::rendering::beard::render_beard;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
@@ -34,6 +35,8 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             teeth,
             teeth_color,
         } => {
+            render_beard(renderer, config, aabb, head, beard);
+
             let width = config.mouth.get_mouth_width(head_width_factor, *width);
             let distance_between_fangs = config.mouth.get_distance_between_fangs(width);
             let down = Orientation::from_degree(90.0);

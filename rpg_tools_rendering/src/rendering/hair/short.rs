@@ -11,7 +11,7 @@ use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::side::Side;
 use rpg_tools_core::model::size::Size;
 
-pub fn render_buzz_cut_realistic(
+pub fn render_buzz_cut(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
@@ -21,13 +21,13 @@ pub fn render_buzz_cut_realistic(
 ) {
     let options = config.without_line(color);
     let line = config.get_line_options(1.0);
-    let polygon = get_buzz_cut_realistic(config, aabb, head_shape, hairline);
+    let polygon = get_buzz_cut(config, aabb, head_shape, hairline);
 
     renderer.render_polygon(&polygon, &options);
     render_head_shape_with_option(renderer, config, aabb, line, head_shape);
 }
 
-fn get_buzz_cut_realistic(
+fn get_buzz_cut(
     config: &RenderConfig,
     aabb: &AABB,
     head_shape: HeadShape,
@@ -53,7 +53,7 @@ fn get_buzz_cut_realistic(
     config.cut_corners(&polygon).unwrap()
 }
 
-pub fn get_flat_top_realistic(
+pub fn get_flat_top(
     config: &RenderConfig,
     aabb: &AABB,
     head_shape: HeadShape,
@@ -87,7 +87,7 @@ pub fn get_flat_top_realistic(
     config.cut_corners(&polygon).unwrap()
 }
 
-pub fn get_middle_part_realistic(
+pub fn get_middle_part(
     config: &RenderConfig,
     aabb: &AABB,
     head_shape: HeadShape,
@@ -131,7 +131,7 @@ pub fn get_middle_part_realistic(
     config.cut_corners(&polygon).unwrap()
 }
 
-pub fn get_side_part_realistic(
+pub fn get_side_part(
     config: &RenderConfig,
     aabb: &AABB,
     head_shape: HeadShape,

@@ -23,6 +23,9 @@ pub mod utils;
 
 fn main() {
     let short_options = vec![
+        Beard::Stubble {
+            color: Color::SaddleBrown,
+        },
         create_moustache(Handlebar),
         create_moustache(Horseshoe),
         create_moustache(Pencil),
