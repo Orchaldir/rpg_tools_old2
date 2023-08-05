@@ -11,11 +11,6 @@ pub mod moustache;
 #[serde(tag = "type")]
 pub enum Beard {
     None,
-    Stubble {
-        color: Color
-    },
-    Moustache {
-        style: MoustacheStyle,
-        color: Color
-    },
+    Stubble { color: Color },
+    Moustache { style: MoustacheStyle, color: Color },
 }
