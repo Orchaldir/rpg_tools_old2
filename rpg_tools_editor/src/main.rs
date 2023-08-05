@@ -19,7 +19,7 @@ use std::sync::Mutex;
 pub mod appearance;
 pub mod io;
 
-const FILE: &str = "resources/characters.yaml";
+const FILE: &str = "resources/characters/characters.yaml";
 
 struct EditorData {
     config: RenderConfig,
