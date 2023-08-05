@@ -154,7 +154,7 @@
           type: UpperFangs
           c: Medium
         teeth_color: White
-      shape: Round
+      shape: Oval
       skin:
         type: ExoticSkin
         c: White
@@ -192,7 +192,7 @@
           type: LowerFangs
           c: Large
         teeth_color: White
-      shape: Round
+      shape: Square
       skin:
         type: ExoticSkin
         c: Green
