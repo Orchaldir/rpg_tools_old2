@@ -15,7 +15,7 @@ pub fn get_pencil(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polyg
 
 pub fn get_pyramid(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
     let height = 0.08;
-    let width = 0.1;
+    let width = 0.08;
     let bottom_y = config.head.y_mouth - 0.01;
     let top_y = bottom_y - height;
     let (top_left, top_right) = aabb.get_mirrored_points(width, top_y);
@@ -27,7 +27,7 @@ pub fn get_pyramid(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Poly
 
 pub fn get_toothbrush(config: &RenderConfig, aabb: &AABB) -> Polygon2d {
     let height = 0.08;
-    let width = 0.1;
+    let width = 0.08;
     let bottom_y = config.head.y_mouth - 0.01;
     let top_y = bottom_y - height;
     let (top_left, top_right) = aabb.get_mirrored_points(width, top_y);

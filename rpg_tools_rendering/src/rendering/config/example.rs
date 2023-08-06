@@ -157,9 +157,9 @@ pub fn create_eye_config() -> EyeConfig {
 pub fn create_mouth_config() -> MouthConfig {
     MouthConfig {
         mouth_width: SizeConfig {
-            low: 0.4,
-            medium: 0.5,
-            high: 0.6,
+            low: 0.3,
+            medium: 0.35,
+            high: 0.4,
         },
         distance_between_fangs: 0.6,
         fang_height: SizeConfig {
