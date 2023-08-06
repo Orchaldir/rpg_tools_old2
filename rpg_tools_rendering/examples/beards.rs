@@ -10,7 +10,8 @@ use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
-use rpg_tools_core::model::character::appearance::hair::Hair;
+use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
+use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
@@ -65,7 +66,11 @@ fn create_appearance(height: Length, beard: &Beard, face: &HeadShape) -> Appeara
                 },
                 distance: Medium,
             },
-            hair: Hair::None,
+            hair: Hair::Short {
+                style: ShortHair::MiddlePart,
+                hairline: Hairline::Round(Medium),
+                color: Color::SaddleBrown,
+            },
             mouth: Mouth::Normal {
                 beard: *beard,
                 width: Medium,
