@@ -37,6 +37,7 @@ pub fn render_beard_in_front_of_mouth(
                 MoustacheStyle::FuManchu => get_fu_manchu(config, aabb, mouth_width),
                 MoustacheStyle::Pencil => get_pencil(config, aabb, mouth_width),
                 MoustacheStyle::Pyramid => get_pyramid(config, aabb, mouth_width),
+                MoustacheStyle::Walrus => get_walrus(config, aabb, mouth_width),
                 _ => get_toothbrush(config, aabb),
             };
             renderer.render_polygon(&polygon, &options);

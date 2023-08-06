@@ -62,3 +62,23 @@ pub fn get_toothbrush(config: &RenderConfig, aabb: &AABB) -> Polygon2d {
 
     Polygon2d::new(corners)
 }
+
+pub fn get_walrus(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
+    let height = 0.1;
+    let width = mouth_width + 0.1;
+    let bottom_y = config.head.y_mouth - 0.01;
+    let top_y = bottom_y - height;
+    let (top_left, top_right) = aabb.get_mirrored_points(width, top_y);
+    let (bottom_left, bottom_right) = aabb.get_mirrored_points(width, bottom_y);
+    let corners = vec![
+        top_left,
+        bottom_left,
+        bottom_left,
+        bottom_right,
+        bottom_right,
+        top_right,
+    ];
+
+    let polygon = Polygon2d::new(corners);
+    config.cut_corners(&polygon).unwrap()
+}
