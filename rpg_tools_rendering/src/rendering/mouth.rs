@@ -70,7 +70,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
                 _ => {}
             }
 
-            render_beard_in_front_of_mouth(renderer, config, aabb, head, beard);
+            render_beard_in_front_of_mouth(renderer, config, aabb, beard, width);
         }
     }
 }
