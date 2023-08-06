@@ -1,9 +1,8 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::head::HeadShape;
 
-pub fn get_toothbrush(config: &RenderConfig, aabb: &AABB, head_shape: HeadShape) -> Polygon2d {
+pub fn get_toothbrush(config: &RenderConfig, aabb: &AABB) -> Polygon2d {
     let height = 0.1;
     let width = 0.1;
     let center_y = config.head.get_moustache_y();

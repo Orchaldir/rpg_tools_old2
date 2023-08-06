@@ -18,9 +18,8 @@ pub fn render_beard_behind_mouth(
     head: &Head,
     beard: &Beard,
 ) {
-    match beard {
-        Beard::Stubble { color } => render_stubble(renderer, config, aabb, head, *color),
-        _ => {}
+    if let Beard::Stubble { color } = beard {
+        render_stubble(renderer, config, aabb, head, *color)
     }
 }
 
@@ -34,7 +33,7 @@ pub fn render_beard_in_front_of_mouth(
     match beard {
         Beard::Moustache { style, color } => {
             let options = config.without_line(*color);
-            let polygon = get_toothbrush(config, aabb, head.shape);
+            let polygon = get_toothbrush(config, aabb);
             renderer.render_polygon(&polygon, &options);
         }
         _ => {}
