@@ -4,11 +4,13 @@ use crate::rendering::config::RenderConfig;
 
 pub fn get_horseshoe(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
     let thickness = 0.05;
+    let delta_y = 0.02;
     let outer_width = mouth_width + 2.0 * thickness;
-    let bottom_y = 1.0;
-    let top_y = config.head.y_mouth - thickness;
+    let top_y = config.head.y_mouth - thickness - delta_y;
+    let bottom_y = 1.1;
     let (top_left, top_right) = aabb.get_mirrored_points(outer_width, top_y);
-    let (mouth_left, mouth_right) = aabb.get_mirrored_points(mouth_width, config.head.y_mouth);
+    let (mouth_left, mouth_right) =
+        aabb.get_mirrored_points(mouth_width, config.head.y_mouth - delta_y);
     let (outer_left, outer_right) = aabb.get_mirrored_points(outer_width, bottom_y);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(mouth_width, bottom_y);
     let corners = vec![
@@ -22,7 +24,8 @@ pub fn get_horseshoe(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Po
         top_right,
     ];
 
-    Polygon2d::new(corners)
+    let polygon = Polygon2d::new(corners);
+    config.cut_corners(&polygon).unwrap()
 }
 
 pub fn get_pencil(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
