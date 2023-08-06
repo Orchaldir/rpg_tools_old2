@@ -31,17 +31,21 @@ pub fn get_fu_manchu(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Po
 pub fn get_handlebar(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
     let thickness = 0.05;
     let width = mouth_width + 2.0 * thickness;
-    let delta_y = 0.02;
-    let bottom_y = config.head.y_mouth - delta_y;
+    let center_y = config.head.y_mouth - thickness;
+    let bottom_y = config.head.y_mouth + thickness;
     let inner_y = bottom_y - thickness;
     let top_y = inner_y - 0.1;
+    let bottom = aabb.get_point(0.5, center_y);
+    let top = aabb.get_point(0.5, center_y - thickness);
     let (top_left, top_right) = aabb.get_mirrored_points(width, top_y);
     let (inner_left, inner_right) = aabb.get_mirrored_points(mouth_width, inner_y);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(width, bottom_y);
     let corners = vec![
+        top,
         inner_left,
         top_left,
         bottom_left,
+        bottom,
         bottom_right,
         top_right,
         inner_right,
