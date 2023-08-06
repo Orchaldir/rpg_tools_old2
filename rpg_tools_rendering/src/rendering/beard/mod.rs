@@ -1,7 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
-use crate::rendering::beard::moustache::{get_pencil, get_pyramid, get_toothbrush};
+use crate::rendering::beard::moustache::*;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::head::render_head_shape_with_option;
 use rpg_tools_core::model::character::appearance::beard::moustache::MoustacheStyle;
@@ -34,6 +34,7 @@ pub fn render_beard_in_front_of_mouth(
         Beard::Moustache { style, color } => {
             let options = config.without_line(*color);
             let polygon = match style {
+                MoustacheStyle::Horseshoe => get_horseshoe(config, aabb, mouth_width),
                 MoustacheStyle::Pencil => get_pencil(config, aabb, mouth_width),
                 MoustacheStyle::Pyramid => get_pyramid(config, aabb, mouth_width),
                 _ => get_toothbrush(config, aabb),
