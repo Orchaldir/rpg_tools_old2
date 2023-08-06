@@ -81,6 +81,10 @@ impl HeadConfig {
             _ => self.width_sharp,
         }
     }
+
+    pub fn get_moustache_y(&self) -> f32 {
+        (self.y_eye + self.y_mouth) / 2.0
+    }
 }
 
 /// Calculates the width of the circle at a certain y position.
