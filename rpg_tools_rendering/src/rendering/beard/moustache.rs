@@ -72,7 +72,7 @@ pub fn get_toothbrush(config: &RenderConfig, aabb: &AABB) -> Polygon2d {
 
 pub fn get_walrus(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
     let height = 0.1;
-    let width = mouth_width + 0.1;
+    let width = mouth_width + height;
     let mut polygon = get_simple(config, aabb, height, 0.01, width, width);
 
     polygon.create_sharp_corner(1);
