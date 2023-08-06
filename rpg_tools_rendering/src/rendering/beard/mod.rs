@@ -34,7 +34,7 @@ pub fn render_beard_in_front_of_mouth(
         Beard::Moustache { style, color } => {
             let options = config.without_line(*color);
             let polygon = match style {
-                MoustacheStyle::Horseshoe => get_horseshoe(config, aabb, mouth_width),
+                MoustacheStyle::FuManchu => get_fu_manchu(config, aabb, mouth_width),
                 MoustacheStyle::Pencil => get_pencil(config, aabb, mouth_width),
                 MoustacheStyle::Pyramid => get_pyramid(config, aabb, mouth_width),
                 _ => get_toothbrush(config, aabb),

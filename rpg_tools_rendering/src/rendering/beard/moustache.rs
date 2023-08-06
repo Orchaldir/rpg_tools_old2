@@ -2,7 +2,7 @@ use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::rendering::config::RenderConfig;
 
-pub fn get_horseshoe(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
+pub fn get_fu_manchu(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
     let thickness = 0.05;
     let delta_y = 0.02;
     let outer_width = mouth_width + 2.0 * thickness;

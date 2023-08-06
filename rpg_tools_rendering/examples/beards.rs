@@ -28,7 +28,7 @@ fn main() {
             color: Color::SaddleBrown,
         },
         create_moustache(Handlebar),
-        create_moustache(Horseshoe),
+        create_moustache(FuManchu),
         create_moustache(Pencil),
         create_moustache(Pyramid),
         create_moustache(Toothbrush),

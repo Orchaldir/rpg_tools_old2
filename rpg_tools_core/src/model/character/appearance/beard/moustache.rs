@@ -6,8 +6,8 @@ use ui_macro::ui;
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum MoustacheStyle {
+    FuManchu,
     Handlebar,
-    Horseshoe,
     Pencil,
     Pyramid,
     Toothbrush,
