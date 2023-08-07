@@ -1,3 +1,4 @@
+use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
@@ -179,6 +180,7 @@ fn update_mouth(data: &UrlEncodedData) -> Mouth {
             let (width, teeth_color) = parse_common_mouth(data);
 
             Mouth::Normal {
+                beard: parse_beard("appearance.head.mouth", data),
                 width,
                 teeth: parse_special_teeth(data),
                 teeth_color,
@@ -205,8 +207,25 @@ fn parse_special_teeth(data: &UrlEncodedData) -> SpecialTeeth {
     }
 }
 
+fn parse_beard(path: &str, data: &UrlEncodedData) -> Beard {
+    let color = get_type(data, &format!("{}.beard.color", path));
+
+    match get_type(data, &format!("{}.beard.type", path)) {
+        "Stubble" => {
+            let color = Color::from(color);
+            Beard::Stubble { color }
+        }
+        "Moustache" => {
+            let color = Color::from(color);
+            let style = get_enum(data, &format!("{}.beard.style", path));
+            Beard::Moustache { style, color }
+        }
+        _ => Beard::None,
+    }
+}
+
 fn update_skin(path: &str, data: &UrlEncodedData) -> Skin {
-    let color = data.get_first(&format!("{}.skin.c", path)).unwrap_or("");
+    let color = get_type(data, &format!("{}.skin.c", path));
 
     match get_type(data, &format!("{}.skin.type", path)) {
         "Scales" => {

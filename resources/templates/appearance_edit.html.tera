@@ -156,6 +156,24 @@
                         </li>
                       {% elif appearance.head.mouth.type == "Normal" %}
                         <li>
+                          <b>Beard:</b> {{ macros::add_select(name="appearance.head.mouth.beard.type", options=[ "None","Stubble","Moustache" ], selected=appearance.head.mouth.beard.type, update=true) }}
+                          <ul>
+                            {% if appearance.head.mouth.beard.type == "None" %}
+                            {% elif appearance.head.mouth.beard.type == "Stubble" %}
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.mouth.beard.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.mouth.beard.color, update=true) }}
+                              </li>
+                            {% elif appearance.head.mouth.beard.type == "Moustache" %}
+                              <li>
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.mouth.beard.style", options=[ "FuManchu","Handlebar","Pencil","Pyramid","Toothbrush","Walrus" ], selected=appearance.head.mouth.beard.style, update=true) }}
+                              </li>
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.mouth.beard.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.mouth.beard.color, update=true) }}
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </li>
+                        <li>
                           <b>Width:</b> {{ macros::add_select(name="appearance.head.mouth.width", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.width, update=true) }}
                         </li>
                         <li>
@@ -380,6 +398,24 @@
                           <b>Teeth Color:</b> {{ macros::add_select(name="appearance.head.mouth.teeth_color", options=[ "White","Yellow","Brown" ], selected=appearance.head.mouth.teeth_color, update=true) }}
                         </li>
                       {% elif appearance.head.mouth.type == "Normal" %}
+                        <li>
+                          <b>Beard:</b> {{ macros::add_select(name="appearance.head.mouth.beard.type", options=[ "None","Stubble","Moustache" ], selected=appearance.head.mouth.beard.type, update=true) }}
+                          <ul>
+                            {% if appearance.head.mouth.beard.type == "None" %}
+                            {% elif appearance.head.mouth.beard.type == "Stubble" %}
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.mouth.beard.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.mouth.beard.color, update=true) }}
+                              </li>
+                            {% elif appearance.head.mouth.beard.type == "Moustache" %}
+                              <li>
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.mouth.beard.style", options=[ "FuManchu","Handlebar","Pencil","Pyramid","Toothbrush","Walrus" ], selected=appearance.head.mouth.beard.style, update=true) }}
+                              </li>
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.mouth.beard.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.mouth.beard.color, update=true) }}
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </li>
                         <li>
                           <b>Width:</b> {{ macros::add_select(name="appearance.head.mouth.width", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.width, update=true) }}
                         </li>

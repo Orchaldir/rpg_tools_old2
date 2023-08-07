@@ -28,7 +28,7 @@ pub fn create_config() -> RenderConfig {
     RenderConfig {
         border: 500,
         line_color: WebColor::from_color(Color::Black),
-        line_width: 30,
+        line_width: 15,
         cut_corners_u: 0.25,
         cut_corners_v: 0.25,
         cut_corners_n: 3,
@@ -157,9 +157,9 @@ pub fn create_eye_config() -> EyeConfig {
 pub fn create_mouth_config() -> MouthConfig {
     MouthConfig {
         mouth_width: SizeConfig {
-            low: 0.4,
-            medium: 0.5,
-            high: 0.6,
+            low: 0.3,
+            medium: 0.35,
+            high: 0.4,
         },
         distance_between_fangs: 0.6,
         fang_height: SizeConfig {

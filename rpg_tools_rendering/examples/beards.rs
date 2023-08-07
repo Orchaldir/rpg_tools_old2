@@ -2,6 +2,8 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
+use rpg_tools_core::model::character::appearance::beard::moustache::MoustacheStyle;
+use rpg_tools_core::model::character::appearance::beard::moustache::MoustacheStyle::*;
 use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
 use rpg_tools_core::model::character::appearance::ear::Ears;
@@ -9,7 +11,6 @@ use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
-use rpg_tools_core::model::character::appearance::hair::ShortHair::FlatTop;
 use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
@@ -17,61 +18,39 @@ use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
-use rpg_tools_core::model::side::Side;
-use rpg_tools_core::model::size::Size::{Large, Medium, Small};
-use Hairline::{Round, Straight, Triangle, WidowsPeak};
-use ShortHair::{BuzzCut, MiddlePart, SidePart};
-use Side::{Left, Right};
+use rpg_tools_core::model::size::Size::Medium;
 
 pub mod utils;
 
 fn main() {
-    let mut short_options = vec![
-        create_hair(FlatTop(Small), Round(Medium)),
-        create_hair(FlatTop(Medium), Straight(Medium)),
-        create_hair(FlatTop(Large), WidowsPeak(Medium)),
-        create_hair(MiddlePart, Round(Small)),
-        create_hair(MiddlePart, Round(Medium)),
-        create_hair(MiddlePart, Round(Large)),
-        create_hair(SidePart(Left), Round(Small)),
-        create_hair(SidePart(Right), Round(Small)),
+    let short_options = vec![
+        Beard::Stubble {
+            color: Color::SaddleBrown,
+        },
+        create_moustache(Handlebar),
+        create_moustache(FuManchu),
+        create_moustache(Pencil),
+        create_moustache(Pyramid),
+        create_moustache(Toothbrush),
+        create_moustache(Walrus),
     ];
-    add_all_hairlines(&mut short_options, BuzzCut);
 
     render_2_sets(
-        "hair_short.svg",
+        "beards.svg",
         short_options,
         HeadShape::get_all(),
         create_appearance,
     );
 }
 
-fn add_all_hairlines(short_options: &mut Vec<Hair>, style: ShortHair) {
-    short_options.append(&mut vec![
-        create_hair(style, Round(Small)),
-        create_hair(style, Round(Medium)),
-        create_hair(style, Round(Large)),
-        create_hair(style, Straight(Small)),
-        create_hair(style, Straight(Medium)),
-        create_hair(style, Straight(Large)),
-        create_hair(style, Triangle(Small)),
-        create_hair(style, Triangle(Medium)),
-        create_hair(style, Triangle(Large)),
-        create_hair(style, WidowsPeak(Small)),
-        create_hair(style, WidowsPeak(Medium)),
-        create_hair(style, WidowsPeak(Large)),
-    ]);
-}
-
-fn create_hair(style: ShortHair, hairline: Hairline) -> Hair {
-    Hair::Short {
+fn create_moustache(style: MoustacheStyle) -> Beard {
+    Beard::Moustache {
         style,
-        hairline,
         color: Color::SaddleBrown,
     }
 }
 
-fn create_appearance(height: Length, hair: &Hair, face: &HeadShape) -> Appearance {
+fn create_appearance(height: Length, beard: &Beard, face: &HeadShape) -> Appearance {
     Appearance::head(
         Head {
             ears: Ears::Normal {
@@ -87,9 +66,13 @@ fn create_appearance(height: Length, hair: &Hair, face: &HeadShape) -> Appearanc
                 },
                 distance: Medium,
             },
-            hair: *hair,
+            hair: Hair::Short {
+                style: ShortHair::MiddlePart,
+                hairline: Hairline::Round(Medium),
+                color: Color::SaddleBrown,
+            },
             mouth: Mouth::Normal {
-                beard: Beard::None,
+                beard: *beard,
                 width: Medium,
                 teeth: SpecialTeeth::None,
                 teeth_color: TeethColor::White,

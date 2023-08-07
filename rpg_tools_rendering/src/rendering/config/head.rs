@@ -45,15 +45,15 @@ pub struct HeadConfig {
 }
 
 impl HeadConfig {
-    pub fn get_top_width(&self, realistic: HeadShape) -> f32 {
-        match realistic {
+    pub fn get_top_width(&self, shape: HeadShape) -> f32 {
+        match shape {
             Rectangle | Square => self.width_square,
             _ => self.width_round,
         }
     }
 
-    pub fn get_forehead_width(&self, realistic: HeadShape) -> f32 {
-        match realistic {
+    pub fn get_forehead_width(&self, shape: HeadShape) -> f32 {
+        match shape {
             Round | Square | TriangleDown => self.width_wide,
             _ => self.width_narrow,
         }
@@ -74,12 +74,16 @@ impl HeadConfig {
         }
     }
 
-    pub fn get_chin_width(&self, realistic: HeadShape) -> f32 {
-        match realistic {
+    pub fn get_chin_width(&self, shape: HeadShape) -> f32 {
+        match shape {
             Rectangle | Square | TriangleUp => self.width_square,
             Round => self.width_round,
             _ => self.width_sharp,
         }
+    }
+
+    pub fn get_moustache_y(&self) -> f32 {
+        (self.y_eye + self.y_mouth) / 2.0
     }
 }
 

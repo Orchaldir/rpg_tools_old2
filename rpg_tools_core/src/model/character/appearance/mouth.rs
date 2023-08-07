@@ -1,3 +1,4 @@
+use crate::model::character::appearance::beard::Beard;
 use crate::model::size::Size;
 use crate::ui::{UiVisitor, UI};
 use serde::{Deserialize, Serialize};
@@ -17,6 +18,7 @@ pub enum Mouth {
     },
     /// Like a human's mouth.
     Normal {
+        beard: Beard,
         width: Size,
         teeth: SpecialTeeth,
         teeth_color: TeethColor,

@@ -5,6 +5,7 @@ use crate::ui::{UiVisitor, UI};
 use serde::{Deserialize, Serialize};
 use ui_macro::ui;
 
+pub mod beard;
 pub mod body;
 pub mod ear;
 pub mod eye;
