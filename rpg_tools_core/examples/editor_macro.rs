@@ -1,5 +1,5 @@
+extern crate macro_ui;
 extern crate rpg_tools_core;
-extern crate ui_macro;
 
 pub mod util;
 

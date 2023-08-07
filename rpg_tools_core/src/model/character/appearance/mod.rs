@@ -2,8 +2,8 @@ use crate::model::character::appearance::body::Body;
 use crate::model::character::appearance::head::Head;
 use crate::model::length::Length;
 use crate::ui::{UiVisitor, UI};
+use macro_ui::ui;
 use serde::{Deserialize, Serialize};
-use ui_macro::ui;
 
 pub mod beard;
 pub mod body;

@@ -1,6 +1,6 @@
 use crate::ui::{UiVisitor, UI};
+use macro_ui::ui;
 use serde::{Deserialize, Serialize};
-use ui_macro::ui;
 
 const METRE_FACTOR: f32 = 1000.0;
 const CENTIMETRE_FACTOR: f32 = 10.0;

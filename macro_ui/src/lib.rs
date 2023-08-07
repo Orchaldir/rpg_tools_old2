@@ -29,6 +29,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
 
     if is_simple_enum(data) {
         return quote! {
+            #[automatically_derived]
             impl UI for #name {
                 fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                     println!("{}Add simple enum {} with path '{}'!", spaces, stringify!(#name), path);
@@ -40,6 +41,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         let field_quotes = handle_enum_variants(data);
 
         return quote! {
+            #[automatically_derived]
             impl UI for #name {
                 fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                     println!("{}Create Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
@@ -56,6 +58,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     let field_quotes = handle_enum_variants(data);
 
     quote! {
+        #[automatically_derived]
         impl UI for #name {
             fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                 println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
@@ -109,6 +112,7 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
     let field_quotes: TokenStream2 = fields.named.iter().map(handle_field).collect();
 
     quote! {
+        #[automatically_derived]
         impl UI for #name {
             fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
                 println!("{}Create Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);

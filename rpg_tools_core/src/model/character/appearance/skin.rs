@@ -1,8 +1,8 @@
 use crate::model::color::Color;
 use crate::ui::{UiVisitor, UI};
+use macro_convert::Convert;
+use macro_ui::ui;
 use serde::{Deserialize, Serialize};
-use std::fmt;
-use ui_macro::ui;
 
 /// The skin of a [`Character`](crate::model::character::Character).
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -20,57 +20,13 @@ impl Default for Skin {
 }
 
 /// The skin color of a [`Character`](crate::model::character::Character).
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Convert, ui, Default, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum SkinColor {
     Fair,
     Light,
+    #[default]
     Medium,
     Tan,
     Dark,
     VeryDark,
-}
-
-impl SkinColor {
-    pub fn get_all() -> Vec<SkinColor> {
-        vec![
-            SkinColor::Fair,
-            SkinColor::Light,
-            SkinColor::Medium,
-            SkinColor::Tan,
-            SkinColor::Dark,
-            SkinColor::VeryDark,
-        ]
-    }
-}
-
-impl fmt::Display for SkinColor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{:?}", self)
-    }
-}
-
-impl From<&str> for SkinColor {
-    fn from(color: &str) -> Self {
-        match color {
-            "Light" => SkinColor::Light,
-            "Medium" => SkinColor::Medium,
-            "Tan" => SkinColor::Tan,
-            "Dark" => SkinColor::Dark,
-            "VeryDark" => SkinColor::VeryDark,
-            _ => SkinColor::Fair,
-        }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_conversion() {
-        for color in SkinColor::get_all() {
-            let string = color.to_string();
-            assert_eq!(color, SkinColor::from(&*string));
-        }
-    }
 }
