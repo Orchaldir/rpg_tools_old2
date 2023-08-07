@@ -3,7 +3,7 @@ extern crate rpg_tools_core;
 
 use macro_convert::Convert;
 
-#[derive(Convert)]
+#[derive(Convert, Debug)]
 pub enum Test {
     A,
     B,
@@ -11,5 +11,5 @@ pub enum Test {
 }
 
 fn main() {
-    println!("Generate tera code for viewer");
+    println!("Values:{:?}", Test::get_all());
 }
