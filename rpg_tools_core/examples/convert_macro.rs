@@ -3,9 +3,10 @@ extern crate rpg_tools_core;
 
 use macro_convert::Convert;
 
-#[derive(Convert, Debug)]
+#[derive(Convert, Default)]
 pub enum Test {
     A,
+    #[default]
     B,
     C,
 }

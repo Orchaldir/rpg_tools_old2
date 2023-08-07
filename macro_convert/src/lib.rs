@@ -22,8 +22,8 @@ fn impl_convert_macro(input: &syn::DeriveInput) -> TokenStream {
 
 fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     if is_simple_enum(data) {
-        let variants: Vec<Ident> = data.variants.iter().map(|v| v.ident.clone()).collect();
-        let default: Ident = variants.get(0).unwrap().clone();
+        let variants: Vec<Ident> = get_variants(data);
+        let default: Ident = get_default(data);
 
         return quote! {
             use std::fmt;
@@ -55,6 +55,22 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     }
 
     panic!("Expected a simple enum")
+}
+
+fn get_variants(data: &DataEnum) -> Vec<Ident> {
+    data.variants
+        .iter()
+        .map(|v| v.ident.clone())
+        .collect()
+}
+
+fn get_default(data: &DataEnum) -> Ident {
+    data.variants
+        .iter()
+        .find(|v| !v.attrs.is_empty())
+        .unwrap_or_else(|| data.variants.iter().next().unwrap())
+        .ident
+        .clone()
 }
 
 fn is_simple_enum(data: &DataEnum) -> bool {
