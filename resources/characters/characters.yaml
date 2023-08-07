@@ -34,6 +34,11 @@
         color: Yellow
       mouth:
         type: Normal
+        beard:
+          type: Moustache
+          style:
+            type: FuManchu
+          color: Yellow
         width: Medium
         teeth:
           type: None
@@ -73,6 +78,8 @@
         type: None
       mouth:
         type: Normal
+        beard:
+          type: None
         width: Medium
         teeth:
           type: UpperFangs
@@ -104,6 +111,8 @@
         type: None
       mouth:
         type: Normal
+        beard:
+          type: None
         width: Medium
         teeth:
           type: None
@@ -149,6 +158,8 @@
         color: SaddleBrown
       mouth:
         type: Normal
+        beard:
+          type: None
         width: Medium
         teeth:
           type: UpperFangs
@@ -187,6 +198,8 @@
         type: None
       mouth:
         type: Normal
+        beard:
+          type: None
         width: Medium
         teeth:
           type: LowerFangs

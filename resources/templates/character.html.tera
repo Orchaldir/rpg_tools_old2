@@ -157,6 +157,24 @@
                   </li>
                 {% elif appearance.head.mouth.type == "Normal" %}
                   <li>
+                    <b>Beard</b>: {{ appearance.head.mouth.beard.type }}
+                    <ul>
+                      {% if appearance.head.mouth.beard.type == "None" %}
+                      {% elif appearance.head.mouth.beard.type == "Stubble" %}
+                        <li>
+                          <b>Color:</b> {{ appearance.head.mouth.beard.color }}
+                        </li>
+                      {% elif appearance.head.mouth.beard.type == "Moustache" %}
+                        <li>
+                          <b>Style:</b> {{ appearance.head.mouth.beard.style }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.mouth.beard.color }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
                     <b>Width:</b> {{ appearance.head.mouth.width }}
                   </li>
                   <li>
@@ -381,6 +399,24 @@
                     <b>Teeth Color:</b> {{ appearance.head.mouth.teeth_color }}
                   </li>
                 {% elif appearance.head.mouth.type == "Normal" %}
+                  <li>
+                    <b>Beard</b>: {{ appearance.head.mouth.beard.type }}
+                    <ul>
+                      {% if appearance.head.mouth.beard.type == "None" %}
+                      {% elif appearance.head.mouth.beard.type == "Stubble" %}
+                        <li>
+                          <b>Color:</b> {{ appearance.head.mouth.beard.color }}
+                        </li>
+                      {% elif appearance.head.mouth.beard.type == "Moustache" %}
+                        <li>
+                          <b>Style:</b> {{ appearance.head.mouth.beard.style }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.mouth.beard.color }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
                   <li>
                     <b>Width:</b> {{ appearance.head.mouth.width }}
                   </li>
