@@ -25,9 +25,19 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         let variants: Vec<Ident> = data.variants.iter().map(|v| v.ident.clone()).collect();
 
         return quote! {
+            use std::fmt;
+
+            #[automatically_derived]
             impl #name {
                 pub fn get_all() -> Vec<Self> {
                     vec![#(Self::#variants),*]
+                }
+            }
+
+            #[automatically_derived]
+            impl fmt::Display for #name {
+                fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                    write!(f, "{:?}", self)
                 }
             }
         };
