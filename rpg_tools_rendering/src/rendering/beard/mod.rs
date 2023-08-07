@@ -30,20 +30,17 @@ pub fn render_beard_in_front_of_mouth(
     beard: &Beard,
     mouth_width: f32,
 ) {
-    match beard {
-        Beard::Moustache { style, color } => {
-            let options = config.without_line(*color);
-            let polygon = match style {
-                MoustacheStyle::FuManchu => get_fu_manchu(config, aabb, mouth_width),
-                MoustacheStyle::Handlebar => get_handlebar(config, aabb, mouth_width),
-                MoustacheStyle::Pencil => get_pencil(config, aabb, mouth_width),
-                MoustacheStyle::Pyramid => get_pyramid(config, aabb, mouth_width),
-                MoustacheStyle::Toothbrush => get_toothbrush(config, aabb),
-                MoustacheStyle::Walrus => get_walrus(config, aabb, mouth_width),
-            };
-            renderer.render_polygon(&polygon, &options);
-        }
-        _ => {}
+    if let Beard::Moustache { style, color } = beard {
+        let options = config.without_line(*color);
+        let polygon = match style {
+            MoustacheStyle::FuManchu => get_fu_manchu(config, aabb, mouth_width),
+            MoustacheStyle::Handlebar => get_handlebar(config, aabb, mouth_width),
+            MoustacheStyle::Pencil => get_pencil(config, aabb, mouth_width),
+            MoustacheStyle::Pyramid => get_pyramid(config, aabb, mouth_width),
+            MoustacheStyle::Toothbrush => get_toothbrush(config, aabb),
+            MoustacheStyle::Walrus => get_walrus(config, aabb, mouth_width),
+        };
+        renderer.render_polygon(&polygon, &options);
     }
 }
 
