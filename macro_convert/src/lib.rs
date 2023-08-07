@@ -58,10 +58,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
 }
 
 fn get_variants(data: &DataEnum) -> Vec<Ident> {
-    data.variants
-        .iter()
-        .map(|v| v.ident.clone())
-        .collect()
+    data.variants.iter().map(|v| v.ident.clone()).collect()
 }
 
 fn get_default(data: &DataEnum) -> Ident {
