@@ -23,6 +23,7 @@ fn impl_convert_macro(input: &syn::DeriveInput) -> TokenStream {
 fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     if is_simple_enum(data) {
         let variants: Vec<Ident> = data.variants.iter().map(|v| v.ident.clone()).collect();
+        let default: Ident = variants.get(0).unwrap().clone();
 
         return quote! {
             use std::fmt;
@@ -38,6 +39,16 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             impl fmt::Display for #name {
                 fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                     write!(f, "{:?}", self)
+                }
+            }
+
+            #[automatically_derived]
+            impl From<&str> for #name {
+                fn from(string: &str) -> Self {
+                    match string {
+                        #(stringify!(#variants) => Self::#variants),*
+                        _ => Self::#default,
+                    }
                 }
             }
         };
