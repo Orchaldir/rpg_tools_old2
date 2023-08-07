@@ -46,8 +46,8 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             impl From<&str> for #name {
                 fn from(string: &str) -> Self {
                     match string {
-                        #(stringify!(#variants) => Self::#variants),*
-                        _ => Self::#default,
+                        #(stringify!(#variants) => {Self::#variants})*
+                        _ => {Self::#default}
                     }
                 }
             }
