@@ -36,8 +36,7 @@
         type: Normal
         beard:
           type: Moustache
-          style:
-            type: FuManchu
+          style: Handlebar
           color: Yellow
         width: Medium
         teeth:

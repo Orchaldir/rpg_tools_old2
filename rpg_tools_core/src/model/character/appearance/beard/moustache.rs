@@ -6,7 +6,6 @@ use MoustacheStyle::*;
 
 /// What kind of moustache?
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(tag = "type")]
 pub enum MoustacheStyle {
     FuManchu,
     Handlebar,
