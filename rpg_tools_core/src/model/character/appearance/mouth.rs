@@ -1,9 +1,9 @@
 use crate::model::character::appearance::beard::Beard;
 use crate::model::size::Size;
 use crate::ui::{UiVisitor, UI};
+use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 use std::fmt;
-use ui_macro::ui;
 use TeethColor::*;
 
 /// How does the mouth look like?

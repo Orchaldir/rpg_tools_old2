@@ -1,7 +1,7 @@
 use crate::ui::{UiVisitor, UI};
+use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 use std::fmt;
-use ui_macro::ui;
 
 /// The relative size of something.
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]

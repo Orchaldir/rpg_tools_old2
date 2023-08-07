@@ -1,8 +1,8 @@
 use crate::model::character::appearance::beard::moustache::MoustacheStyle;
 use crate::model::color::Color;
 use crate::ui::{UiVisitor, UI};
+use macro_ui::ui;
 use serde::{Deserialize, Serialize};
-use ui_macro::ui;
 
 pub mod moustache;
 

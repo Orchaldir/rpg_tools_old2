@@ -1,8 +1,8 @@
 use crate::model::color::Color;
 use crate::ui::{UiVisitor, UI};
+use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 use std::fmt;
-use ui_macro::ui;
 
 /// The skin of a [`Character`](crate::model::character::Character).
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]

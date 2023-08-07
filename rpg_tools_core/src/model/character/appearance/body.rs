@@ -1,9 +1,9 @@
 use crate::model::character::appearance::skin::Skin;
 use crate::model::width::Width;
 use crate::ui::{UiVisitor, UI};
+use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 use std::fmt;
-use ui_macro::ui;
 use BodyShape::*;
 
 /// How does the humanoid body look like?

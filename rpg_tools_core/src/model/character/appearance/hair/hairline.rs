@@ -1,7 +1,7 @@
 use crate::model::size::Size;
 use crate::ui::{UiVisitor, UI};
+use macro_ui::ui;
 use serde::{Deserialize, Serialize};
-use ui_macro::ui;
 
 /// What type of hairline? It is not visible by some hair styles.
 ///
