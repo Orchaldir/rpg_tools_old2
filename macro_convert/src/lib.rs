@@ -23,7 +23,11 @@ fn impl_convert_macro(input: &syn::DeriveInput) -> TokenStream {
 fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     if is_simple_enum(data) {
         return quote! {
-            /// Test Convert Macro
+            impl #name {
+                pub fn get_all() -> Vec<Self> {
+                    vec![]
+                }
+            }
         };
     }
 
