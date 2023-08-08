@@ -19,6 +19,6 @@ pub fn render_polygon(
     polygon: &Polygon2d,
     color: Color,
 ) {
-    let options = config.get_hair_options(color);
+    let options = config.get_options(color);
     renderer.render_polygon(polygon, &options);
 }

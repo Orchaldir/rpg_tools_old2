@@ -60,7 +60,7 @@ fn render_goatee(
     style: &GoateeStyle,
     color: &Color,
 ) {
-    let options = config.without_line(*color);
+    let options = config.with_thickness(*color, 0.5);
     let polygon = match style {
         GoateeStyle::GoatPatch => get_goat_patch(config, aabb, mouth_width),
         GoateeStyle::Goatee => get_goatee(config, aabb, mouth_width),
@@ -78,7 +78,7 @@ fn render_mustache(
     style: &MoustacheStyle,
     color: &Color,
 ) {
-    let options = config.without_line(*color);
+    let options = config.with_thickness(*color, 0.5);
     let polygon = match style {
         MoustacheStyle::FuManchu => get_fu_manchu(config, aabb, mouth_width),
         MoustacheStyle::Handlebar => get_handlebar(config, aabb, mouth_width),
