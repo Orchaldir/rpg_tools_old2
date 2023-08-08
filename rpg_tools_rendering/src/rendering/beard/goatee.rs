@@ -7,6 +7,16 @@ pub fn get_soul_patch(config: &RenderConfig, aabb: &AABB) -> Polygon2d {
     get_simple(config, aabb, height, 0.01, height, height)
 }
 
+pub fn get_van_dyke(config: &RenderConfig, aabb: &AABB) -> Polygon2d {
+    let width = 0.1;
+    let mut polygon = get_simple(config, aabb, 1.05 - config.head.y_mouth, 0.01, width, width);
+
+    polygon.create_sharp_corner(0);
+    polygon.create_sharp_corner(4);
+
+    config.cut_corners(&polygon).unwrap()
+}
+
 fn get_simple(
     config: &RenderConfig,
     aabb: &AABB,
@@ -15,7 +25,7 @@ fn get_simple(
     top_width: f32,
     bottom_width: f32,
 ) -> Polygon2d {
-    let top_y = config.head.y_mouth - offset;
+    let top_y = config.head.y_mouth + offset;
     let bottom_y = top_y + height;
     let (top_left, top_right) = aabb.get_mirrored_points(top_width, top_y);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, bottom_y);
