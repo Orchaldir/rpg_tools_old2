@@ -171,6 +171,23 @@
                         <li>
                           <b>Color:</b> {{ appearance.head.mouth.beard.color }}
                         </li>
+                      {% elif appearance.head.mouth.beard.type == "Goatee" %}
+                        <li>
+                          <b>Style:</b> {{ appearance.head.mouth.beard.style }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.mouth.beard.color }}
+                        </li>
+                      {% elif appearance.head.mouth.beard.type == "GoateeAndMoustache" %}
+                        <li>
+                          <b>Moustache:</b> {{ appearance.head.mouth.beard.moustache }}
+                        </li>
+                        <li>
+                          <b>Goatee:</b> {{ appearance.head.mouth.beard.goatee }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.mouth.beard.color }}
+                        </li>
                       {% endif %}
                     </ul>
                   </li>
@@ -410,6 +427,23 @@
                       {% elif appearance.head.mouth.beard.type == "Moustache" %}
                         <li>
                           <b>Style:</b> {{ appearance.head.mouth.beard.style }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.mouth.beard.color }}
+                        </li>
+                      {% elif appearance.head.mouth.beard.type == "Goatee" %}
+                        <li>
+                          <b>Style:</b> {{ appearance.head.mouth.beard.style }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.mouth.beard.color }}
+                        </li>
+                      {% elif appearance.head.mouth.beard.type == "GoateeAndMoustache" %}
+                        <li>
+                          <b>Moustache:</b> {{ appearance.head.mouth.beard.moustache }}
+                        </li>
+                        <li>
+                          <b>Goatee:</b> {{ appearance.head.mouth.beard.goatee }}
                         </li>
                         <li>
                           <b>Color:</b> {{ appearance.head.mouth.beard.color }}
