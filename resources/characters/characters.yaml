@@ -35,8 +35,9 @@
       mouth:
         type: Normal
         beard:
-          type: Moustache
-          style: Handlebar
+          type: GoateeAndMoustache
+          moustache: Handlebar
+          goatee: VanDyke
           color: Yellow
         width: Medium
         teeth:
