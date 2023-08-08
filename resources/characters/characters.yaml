@@ -37,7 +37,7 @@
         beard:
           type: GoateeAndMoustache
           moustache: Handlebar
-          goatee: GoatPatch
+          goatee: VanDyke
           color: Yellow
         width: Medium
         teeth:

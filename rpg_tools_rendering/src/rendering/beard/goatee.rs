@@ -43,7 +43,7 @@ fn from_mouth_to_bottom(
 ) -> Polygon2d {
     from_top_and_bottom(
         aabb,
-        config.head.y_mouth + 0.01,
+        config.head.y_mouth,
         bottom_y,
         top_width,
         bottom_width,
