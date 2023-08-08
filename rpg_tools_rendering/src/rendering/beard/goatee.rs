@@ -2,6 +2,16 @@ use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::rendering::config::RenderConfig;
 
+pub fn get_goat_patch(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
+    let width = mouth_width * 0.8;
+    let mut polygon = get_simple(config, aabb, 1.05 - config.head.y_mouth, 0.01, width, width);
+
+    polygon.create_sharp_corner(0);
+    polygon.create_sharp_corner(4);
+
+    config.cut_corners(&polygon).unwrap()
+}
+
 pub fn get_soul_patch(config: &RenderConfig, aabb: &AABB) -> Polygon2d {
     let height = 0.1;
     get_simple(config, aabb, height, 0.01, height, height)
