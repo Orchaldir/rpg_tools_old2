@@ -2,6 +2,7 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
+use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
@@ -46,6 +47,7 @@ fn create_circle(size: Size) -> Mouth {
 
 fn create_normal(width: Size, teeth: Size) -> Mouth {
     Mouth::Normal {
+        beard: Beard::None,
         width,
         teeth: SpecialTeeth::LowerFangs(teeth),
         teeth_color: TeethColor::White,

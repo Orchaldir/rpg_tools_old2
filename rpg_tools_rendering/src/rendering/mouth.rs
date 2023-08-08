@@ -140,7 +140,7 @@ fn render_normal_mouth(
     aabb: &AABB,
     width: f32,
 ) {
-    let options = config.line_with_color(Black, 0.6);
+    let options = config.line_with_color(Black, 1.0);
     let line: Line2d = aabb.get_mirrored_points(width, config.head.y_mouth).into();
     renderer.render_line(&line, &options);
 }

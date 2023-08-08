@@ -2,6 +2,8 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
+use rpg_tools_core::model::character::appearance::beard::goatee::GoateeStyle;
+use rpg_tools_core::model::character::appearance::beard::goatee::GoateeStyle::*;
 use rpg_tools_core::model::character::appearance::beard::moustache::MoustacheStyle;
 use rpg_tools_core::model::character::appearance::beard::moustache::MoustacheStyle::*;
 use rpg_tools_core::model::character::appearance::beard::Beard;
@@ -33,6 +35,15 @@ fn main() {
         create_moustache(Pyramid),
         create_moustache(Toothbrush),
         create_moustache(Walrus),
+        create_goatee(GoatPatch),
+        create_goatee(Goatee),
+        create_goatee(SoulPatch),
+        create_goatee(VanDyke),
+        Beard::GoateeAndMoustache {
+            moustache: Handlebar,
+            goatee: VanDyke,
+            color: Color::SaddleBrown,
+        },
     ];
 
     render_2_sets(
@@ -43,9 +54,16 @@ fn main() {
     );
 }
 
-fn create_moustache(style: MoustacheStyle) -> Beard {
+fn create_goatee(goatee: GoateeStyle) -> Beard {
+    Beard::Goatee {
+        goatee,
+        color: Color::SaddleBrown,
+    }
+}
+
+fn create_moustache(moustache: MoustacheStyle) -> Beard {
     Beard::Moustache {
-        style,
+        moustache,
         color: Color::SaddleBrown,
     }
 }

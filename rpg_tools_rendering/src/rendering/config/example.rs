@@ -116,8 +116,8 @@ pub fn create_head_config() -> HeadConfig {
         width_round: 0.4,
         width_sharp: 0.2,
         y_forehead: 0.25,
-        y_eye: 0.5,
-        y_mouth: 0.75,
+        y_eye: 0.55,
+        y_mouth: 0.8,
     }
 }
 

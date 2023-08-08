@@ -58,11 +58,19 @@ impl RenderConfig {
         )
     }
 
-    pub fn get_hair_options(&self, color: Color) -> RenderOptions {
+    pub fn get_options(&self, color: Color) -> RenderOptions {
         RenderOptions::new(
             WebColor::from_color(color),
             self.line_color.clone(),
             self.line_width,
+        )
+    }
+
+    pub fn with_thickness(&self, color: Color, width_factor: f32) -> RenderOptions {
+        RenderOptions::new(
+            WebColor::from_color(color),
+            self.line_color.clone(),
+            (self.line_width as f32 * width_factor) as u32,
         )
     }
 
