@@ -39,6 +39,11 @@ fn main() {
         create_goatee(Goatee),
         create_goatee(SoulPatch),
         create_goatee(VanDyke),
+        Beard::GoateeAndMoustache {
+            moustache: Handlebar,
+            goatee: VanDyke,
+            color: Color::SaddleBrown,
+        },
     ];
 
     render_2_sets(
