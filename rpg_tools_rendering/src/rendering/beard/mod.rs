@@ -1,7 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
-use crate::rendering::beard::goatee::{get_goat_patch, get_soul_patch, get_van_dyke};
+use crate::rendering::beard::goatee::{get_goat_patch, get_goatee, get_soul_patch, get_van_dyke};
 use crate::rendering::beard::moustache::*;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::head::render_head_shape_with_option;
@@ -50,6 +50,7 @@ pub fn render_beard_in_front_of_mouth(
             let options = config.without_line(*color);
             let polygon = match style {
                 GoateeStyle::GoatPatch => get_goat_patch(config, aabb, mouth_width),
+                GoateeStyle::Goatee => get_goatee(config, aabb, mouth_width),
                 GoateeStyle::VanDyke => get_van_dyke(config, aabb),
                 _ => get_soul_patch(config, aabb),
             };

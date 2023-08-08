@@ -12,6 +12,14 @@ pub fn get_goat_patch(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> P
     config.cut_corners(&polygon).unwrap()
 }
 
+pub fn get_goatee(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
+    let width = mouth_width * 0.8;
+    let diff_y = 1.0 - config.head.y_mouth - 0.05;
+    let polygon = get_simple(config, aabb, 0.15, diff_y, width, width);
+
+    config.cut_corners(&polygon).unwrap()
+}
+
 pub fn get_soul_patch(config: &RenderConfig, aabb: &AABB) -> Polygon2d {
     let height = 0.1;
     get_simple(config, aabb, height, 0.01, height, height)
