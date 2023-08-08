@@ -217,12 +217,12 @@ fn parse_beard(path: &str, data: &UrlEncodedData) -> Beard {
         }
         "Moustache" => {
             let color = Color::from(color);
-            let style = get_enum(data, &format!("{}.beard.style", path));
+            let style = get_enum(data, &format!("{}.beard.moustache", path));
             Beard::Moustache { style, color }
         }
         "Goatee" => {
             let color = Color::from(color);
-            let style = get_enum(data, &format!("{}.beard.style", path));
+            let style = get_enum(data, &format!("{}.beard.goatee", path));
             Beard::Goatee { style, color }
         }
         "GoateeAndMoustache" => {
