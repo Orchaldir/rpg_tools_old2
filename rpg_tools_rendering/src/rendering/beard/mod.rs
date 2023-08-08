@@ -34,11 +34,11 @@ pub fn render_beard_in_front_of_mouth(
     mouth_width: f32,
 ) {
     match beard {
-        Beard::Moustache { style, color } => {
-            render_mustache(renderer, config, aabb, mouth_width, style, color);
+        Beard::Moustache { moustache, color } => {
+            render_mustache(renderer, config, aabb, mouth_width, moustache, color);
         }
-        Beard::Goatee { style, color } => {
-            render_goatee(renderer, config, aabb, mouth_width, style, color);
+        Beard::Goatee { goatee, color } => {
+            render_goatee(renderer, config, aabb, mouth_width, goatee, color);
         }
         Beard::GoateeAndMoustache {
             moustache,

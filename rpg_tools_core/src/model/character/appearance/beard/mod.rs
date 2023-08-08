@@ -17,11 +17,11 @@ pub enum Beard {
         color: Color,
     },
     Moustache {
-        style: MoustacheStyle,
+        moustache: MoustacheStyle,
         color: Color,
     },
     Goatee {
-        style: GoateeStyle,
+        goatee: GoateeStyle,
         color: Color,
     },
     GoateeAndMoustache {

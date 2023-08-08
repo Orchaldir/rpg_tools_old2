@@ -54,16 +54,16 @@ fn main() {
     );
 }
 
-fn create_goatee(style: GoateeStyle) -> Beard {
+fn create_goatee(goatee: GoateeStyle) -> Beard {
     Beard::Goatee {
-        style,
+        goatee,
         color: Color::SaddleBrown,
     }
 }
 
-fn create_moustache(style: MoustacheStyle) -> Beard {
+fn create_moustache(moustache: MoustacheStyle) -> Beard {
     Beard::Moustache {
-        style,
+        moustache,
         color: Color::SaddleBrown,
     }
 }

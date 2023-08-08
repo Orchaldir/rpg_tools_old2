@@ -2,6 +2,7 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
+use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
@@ -48,6 +49,7 @@ fn create_appearance(height: Length, skin: &Skin, color: &TeethColor) -> Appeara
             },
             hair: Hair::None,
             mouth: Mouth::Normal {
+                beard: Beard::None,
                 width: Large,
                 teeth: SpecialTeeth::LowerFangs(Large),
                 teeth_color: *color,
