@@ -41,13 +41,7 @@ fn from_mouth_to_bottom(
     top_width: f32,
     bottom_width: f32,
 ) -> Polygon2d {
-    from_top_and_bottom(
-        aabb,
-        config.head.y_mouth,
-        bottom_y,
-        top_width,
-        bottom_width,
-    )
+    from_top_and_bottom(aabb, config.head.y_mouth, bottom_y, top_width, bottom_width)
 }
 
 fn from_top_and_bottom(

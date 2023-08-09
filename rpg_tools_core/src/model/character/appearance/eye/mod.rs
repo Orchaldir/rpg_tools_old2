@@ -1,3 +1,4 @@
+use crate::model::character::appearance::eye::brow::EyeBrows;
 use crate::model::character::appearance::eye::pupil::PupilShape;
 use crate::model::character::appearance::eye::shape::EyeShape;
 use crate::model::color::Color;
@@ -6,6 +7,7 @@ use crate::ui::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
+pub mod brow;
 pub mod pupil;
 pub mod shape;
 
@@ -16,10 +18,12 @@ pub enum Eyes {
     None,
     One {
         eye: Eye,
+        eyebrow: EyeBrows,
     },
     Two {
         /// Both eyes are identical.
         eye: Eye,
+        eyebrows: EyeBrows,
         /// What is the distance between the eyes?
         distance: Size,
     },
@@ -29,6 +33,7 @@ impl Default for Eyes {
     fn default() -> Self {
         Self::Two {
             eye: Eye::default(),
+            eyebrows: EyeBrows::default(),
             distance: Size::Medium,
         }
     }
