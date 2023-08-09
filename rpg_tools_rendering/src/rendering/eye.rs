@@ -14,11 +14,15 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     match &head.eyes {
         Eyes::None => {}
-        Eyes::One { eye } => {
+        Eyes::One { eye, eyebrow } => {
             let center = aabb.get_point(0.5, config.head.y_eye);
             render_eye(renderer, config, &center, radius, eye);
         }
-        Eyes::Two { eye, distance } => {
+        Eyes::Two {
+            eye,
+            eyebrows,
+            distance,
+        } => {
             let distance_between_eyes = config
                 .eye
                 .get_distance_between_eyes(*distance, head_width_factor);
