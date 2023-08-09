@@ -1,5 +1,4 @@
 use crate::math::aabb2d::AABB;
-use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
@@ -83,8 +82,8 @@ fn get_straight_eyebrow(
     side: Option<Side>,
 ) -> Polygon2d {
     let height = -0.1;
-    let left_width = config.eye.eyebrow.get_outer_thickness(style);
-    let right_width = config.eye.eyebrow.get_inner_thickness(style);
+    let left_width = config.eye.eyebrow.get_left_thickness(style, side);
+    let right_width = config.eye.eyebrow.get_right_thickness(style, side);
     let top_left = aabb.get_point(0.0, height - left_width);
     let top_right = aabb.get_point(1.0, height - right_width);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(1.0, height);

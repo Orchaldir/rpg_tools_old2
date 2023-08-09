@@ -146,7 +146,7 @@ pub fn create_eye_config() -> EyeConfig {
             width: WidthConfig {
                 thin: 0.15,
                 average: 0.2,
-                wide: 0.25,
+                wide: 0.3,
             },
         },
         radius: 0.125,
