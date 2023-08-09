@@ -59,11 +59,13 @@ fn create_appearance(
                 },
                 eyebrows: if is_unibrow {
                     EyeBrows::Unibrow {
+                        color: Color::SaddleBrown,
                         shape: *shape,
                         style,
                     }
                 } else {
                     EyeBrows::Normal {
+                        color: Color::SaddleBrown,
                         shape: *shape,
                         style,
                     }

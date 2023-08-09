@@ -3,6 +3,7 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::ear::Ears;
+use rpg_tools_core::model::character::appearance::eye::brow::EyeBrows;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::Hair;
@@ -22,17 +23,23 @@ fn main() {
         color: Color::Yellow,
     };
     let eyes_options = vec![
-        Eyes::One { eye },
+        Eyes::One {
+            eye,
+            eyebrow: EyeBrows::None,
+        },
         Eyes::Two {
             eye,
+            eyebrows: EyeBrows::None,
             distance: Size::Small,
         },
         Eyes::Two {
             eye,
+            eyebrows: EyeBrows::None,
             distance: Size::Medium,
         },
         Eyes::Two {
             eye,
+            eyebrows: EyeBrows::None,
             distance: Size::Large,
         },
     ];
