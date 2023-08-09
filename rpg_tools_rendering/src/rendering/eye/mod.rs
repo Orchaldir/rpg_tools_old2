@@ -21,7 +21,7 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
             let center = aabb.get_point(0.5, config.head.y_eye);
             let eye_aabb = AABB::with_radii(center, radius, half_height);
             render_eye(renderer, config, &eye_aabb, eye);
-            render_eyebrow(renderer, config, eyebrow, &center, radius);
+            render_eyebrow(renderer, config, eyebrow, &eye_aabb);
         }
         Eyes::Two {
             eye,
@@ -39,7 +39,7 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
             render_eye(renderer, config, &left_aabb, eye);
             render_eye(renderer, config, &right_aabb, eye);
 
-            render_eyebrows(renderer, config, eyebrows, &left, &right, radius);
+            render_eyebrows(renderer, config, eyebrows, &left_aabb, &right_aabb);
         }
     }
 }

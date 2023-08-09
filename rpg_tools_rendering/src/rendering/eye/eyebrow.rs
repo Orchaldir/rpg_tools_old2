@@ -1,3 +1,4 @@
+use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
@@ -12,8 +13,7 @@ pub fn render_eyebrow(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     eyebrow: &EyeBrows,
-    center: &Point2d,
-    radius: u32,
+    aabb: &AABB,
 ) {
     match eyebrow {
         EyeBrows::Normal {
@@ -27,7 +27,7 @@ pub fn render_eyebrow(
             style,
         } => {
             let options = config.with_thickness(*color, 0.5);
-            let polygon = get_normal_eyebrow(config, *shape, *style, center, radius, None);
+            let polygon = get_normal_eyebrow(config, *shape, *style, aabb, None);
             renderer.render_polygon(&polygon, &options);
         }
         _ => {}
@@ -38,9 +38,8 @@ pub fn render_eyebrows(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     eyebrow: &EyeBrows,
-    left: &Point2d,
-    right: &Point2d,
-    radius: u32,
+    left: &AABB,
+    right: &AABB,
 ) {
     match eyebrow {
         EyeBrows::Normal {
@@ -49,9 +48,8 @@ pub fn render_eyebrows(
             style,
         } => {
             let options = config.with_thickness(*color, 0.5);
-            let polygon_left = get_normal_eyebrow(config, *shape, *style, left, radius, Some(Left));
-            let polygon_right =
-                get_normal_eyebrow(config, *shape, *style, right, radius, Some(Right));
+            let polygon_left = get_normal_eyebrow(config, *shape, *style, left, Some(Left));
+            let polygon_right = get_normal_eyebrow(config, *shape, *style, right, Some(Right));
             renderer.render_polygon(&polygon_left, &options);
             renderer.render_polygon(&polygon_right, &options);
         }
@@ -68,8 +66,7 @@ pub fn get_normal_eyebrow(
     config: &RenderConfig,
     shape: EyebrowShape,
     style: EyebrowStyle,
-    center: &Point2d,
-    radius: u32,
+    aabb: &AABB,
     side: Option<Side>,
 ) -> Polygon2d {
     Polygon2d::new(vec![Point2d::default(); 3])
