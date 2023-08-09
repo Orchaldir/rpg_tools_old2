@@ -2,11 +2,14 @@ use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
+use crate::rendering::eye::eyebrow::{render_eyebrow, render_eyebrows};
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::color::Color;
+
+pub mod eyebrow;
 
 pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     let head_width_factor = config.head.get_eye_width(head.shape);
@@ -17,6 +20,7 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
         Eyes::One { eye, eyebrow } => {
             let center = aabb.get_point(0.5, config.head.y_eye);
             render_eye(renderer, config, &center, radius, eye);
+            render_eyebrow(renderer, config, eyebrow, &center, radius);
         }
         Eyes::Two {
             eye,
@@ -30,6 +34,8 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
             render_eye(renderer, config, &left, radius, eye);
             render_eye(renderer, config, &right, radius, eye);
+
+            render_eyebrows(renderer, config, eyebrows, &left, &right, radius);
         }
     }
 }
