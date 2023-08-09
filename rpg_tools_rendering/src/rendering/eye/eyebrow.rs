@@ -69,5 +69,9 @@ pub fn get_normal_eyebrow(
     aabb: &AABB,
     side: Option<Side>,
 ) -> Polygon2d {
-    Polygon2d::new(vec![Point2d::default(); 3])
+    let (top_left, top_right) = aabb.get_mirrored_points(1.0, -0.2);
+    let (bottom_left, bottom_right) = aabb.get_mirrored_points(1.0, -0.1);
+    let corners = vec![top_left, bottom_left, bottom_right, top_right];
+
+    config.cut_corners(&Polygon2d::new(corners)).unwrap()
 }
