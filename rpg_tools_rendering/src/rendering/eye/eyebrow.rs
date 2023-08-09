@@ -72,5 +72,5 @@ pub fn get_normal_eyebrow(
     radius: u32,
     side: Option<Side>,
 ) -> Polygon2d {
-    Polygon2d::new(vec![])
+    Polygon2d::new(vec![Point2d::default(); 3])
 }

@@ -152,6 +152,11 @@ impl AxisAlignedBoundingBox {
         &self.size
     }
 
+    /// Returns the radius of the incircle.
+    pub fn inner_radius(&self) -> u32 {
+        self.size.width().min(self.size.height()) / 2
+    }
+
     /// Calculates a value based on the height.
     ///
     /// ```

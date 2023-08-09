@@ -55,6 +55,15 @@ pub enum Eye {
     },
 }
 
+impl Eye {
+    pub fn get_shape(&self) -> EyeShape {
+        match self {
+            Eye::Simple { eye_shape, .. } => *eye_shape,
+            Eye::Normal { eye_shape, .. } => *eye_shape,
+        }
+    }
+}
+
 impl Default for Eye {
     fn default() -> Self {
         Self::Normal {
