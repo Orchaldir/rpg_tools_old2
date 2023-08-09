@@ -5,6 +5,7 @@ use crate::renderer::RenderOptions;
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
+use crate::rendering::config::eye::eyebrow::EyebrowConfig;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::hairline::HairlineConfig;
 use crate::rendering::config::hair::short::ShortHairConfig;
@@ -141,6 +142,13 @@ pub fn create_ear_config() -> EarConfig {
 
 pub fn create_eye_config() -> EyeConfig {
     EyeConfig {
+        eyebrow: EyebrowConfig {
+            width: WidthConfig {
+                thin: 0.15,
+                average: 0.2,
+                wide: 0.25,
+            },
+        },
         radius: 0.125,
         half_height_almond: 0.7,
         half_height_ellipse: 0.75,

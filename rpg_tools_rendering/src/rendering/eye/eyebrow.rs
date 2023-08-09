@@ -62,7 +62,7 @@ pub fn render_eyebrows(
     }
 }
 
-pub fn get_normal_eyebrow(
+fn get_normal_eyebrow(
     config: &RenderConfig,
     shape: EyebrowShape,
     style: EyebrowStyle,
@@ -76,14 +76,18 @@ pub fn get_normal_eyebrow(
     }
 }
 
-pub fn get_straight_eyebrow(
+fn get_straight_eyebrow(
     config: &RenderConfig,
     style: EyebrowStyle,
     aabb: &AABB,
     side: Option<Side>,
 ) -> Polygon2d {
-    let (top_left, top_right) = aabb.get_mirrored_points(1.0, -0.2);
-    let (bottom_left, bottom_right) = aabb.get_mirrored_points(1.0, -0.1);
+    let height = -0.1;
+    let left_width = config.eye.eyebrow.get_outer_thickness(style);
+    let right_width = config.eye.eyebrow.get_inner_thickness(style);
+    let top_left = aabb.get_point(0.0, height - left_width);
+    let top_right = aabb.get_point(1.0, height - right_width);
+    let (bottom_left, bottom_right) = aabb.get_mirrored_points(1.0, height);
     let corners = vec![top_left, bottom_left, bottom_right, top_right];
 
     config.cut_corners(&Polygon2d::new(corners)).unwrap()

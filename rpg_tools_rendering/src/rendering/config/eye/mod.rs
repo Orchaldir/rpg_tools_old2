@@ -1,11 +1,15 @@
 use crate::math::aabb2d::AABB;
+use crate::rendering::config::eye::eyebrow::EyebrowConfig;
 use crate::rendering::config::size::SizeConfig;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::size::Size;
 
+pub mod eyebrow;
+
 /// The rendering config of the [`eyes`](rpg_tools_core::model::character::appearance::eye::Eyes).
 #[derive(Debug, PartialEq)]
 pub struct EyeConfig {
+    pub eyebrow: EyebrowConfig,
     pub radius: f32,
     pub half_height_almond: f32,
     pub half_height_ellipse: f32,
