@@ -69,10 +69,34 @@ fn get_normal_eyebrow(
     side: Option<Side>,
 ) -> Polygon2d {
     match shape {
-        EyebrowShape::Angled => get_straight_eyebrow(config, style, aabb, side),
-        EyebrowShape::Curved => get_curved_eyebrow(config, style, aabb, side),
+        EyebrowShape::Angled => get_angled_eyebrow(config, style, aabb, side),
+        EyebrowShape::Curved => get_smooth_curved_eyebrow(config, style, aabb, side),
         EyebrowShape::Straight => get_straight_eyebrow(config, style, aabb, side),
     }
+}
+
+fn get_angled_eyebrow(
+    config: &RenderConfig,
+    style: EyebrowStyle,
+    aabb: &AABB,
+    side: Option<Side>,
+) -> Polygon2d {
+    let mut polygon = get_curved_eyebrow(config, style, aabb, side);
+
+    polygon.create_sharp_corner(4);
+    polygon.create_sharp_corner(1);
+
+    config.cut_corners(&polygon).unwrap()
+}
+
+fn get_smooth_curved_eyebrow(
+    config: &RenderConfig,
+    style: EyebrowStyle,
+    aabb: &AABB,
+    side: Option<Side>,
+) -> Polygon2d {
+    let polygon = get_curved_eyebrow(config, style, aabb, side);
+    config.cut_corners(&polygon).unwrap()
 }
 
 fn get_curved_eyebrow(
@@ -102,7 +126,7 @@ fn get_curved_eyebrow(
         top_left,
     ];
 
-    config.cut_corners(&Polygon2d::new(corners)).unwrap()
+    Polygon2d::new(corners)
 }
 
 fn get_straight_eyebrow(
