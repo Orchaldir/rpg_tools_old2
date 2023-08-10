@@ -144,7 +144,7 @@ fn get_straight_eyebrow(
     aabb: &AABB,
     side: Option<Side>,
 ) -> Polygon2d {
-    let bottom_y = -config.eye.eyebrow.distance_to_eye;
+    let bottom_y = -config.eye.eyebrow.distance_to_eye_straight;
     let left_width = config.eye.eyebrow.get_left_thickness(style, side);
     let right_width = config.eye.eyebrow.get_right_thickness(style, side);
     let top_left = aabb.get_point(0.0, bottom_y - left_width);

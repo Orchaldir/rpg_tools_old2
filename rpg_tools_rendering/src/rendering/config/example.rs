@@ -149,6 +149,7 @@ pub fn create_eye_config() -> EyeConfig {
                 wide: 0.3,
             },
             distance_to_eye: 0.1,
+            distance_to_eye_straight: 0.2,
         },
         radius: 0.125,
         half_height_almond: 0.7,

@@ -7,6 +7,7 @@ use rpg_tools_core::model::side::Side;
 pub struct EyebrowConfig {
     pub width: WidthConfig,
     pub distance_to_eye: f32,
+    pub distance_to_eye_straight: f32,
 }
 
 impl EyebrowConfig {
