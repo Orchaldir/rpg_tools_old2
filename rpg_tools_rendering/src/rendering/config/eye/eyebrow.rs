@@ -6,6 +6,7 @@ use rpg_tools_core::model::side::Side;
 #[derive(Debug, PartialEq)]
 pub struct EyebrowConfig {
     pub width: WidthConfig,
+    pub distance_to_eye: f32,
 }
 
 impl EyebrowConfig {
@@ -30,7 +31,7 @@ impl EyebrowConfig {
     /// The eyebrow thickness on the left side of the eye.
     pub fn get_left_thickness(&self, style: EyebrowStyle, side: Option<Side>) -> f32 {
         match side {
-            None => self.get_thickness(style),
+            None => self.get_center_thickness(style),
             Some(side) => match side {
                 Side::Left => self.get_outer_thickness(style),
                 Side::Right => self.get_inner_thickness(style),
@@ -41,7 +42,7 @@ impl EyebrowConfig {
     /// The eyebrow thickness on the right side of the eye.
     pub fn get_right_thickness(&self, style: EyebrowStyle, side: Option<Side>) -> f32 {
         match side {
-            None => self.get_thickness(style),
+            None => self.get_center_thickness(style),
             Some(side) => match side {
                 Side::Left => self.get_inner_thickness(style),
                 Side::Right => self.get_outer_thickness(style),
@@ -49,7 +50,8 @@ impl EyebrowConfig {
         }
     }
 
-    fn get_thickness(&self, style: EyebrowStyle) -> f32 {
+    /// The eyebrow thickness in the center.
+    pub fn get_center_thickness(&self, style: EyebrowStyle) -> f32 {
         match style {
             EyebrowStyle::Bushy => self.width.wide,
             EyebrowStyle::Thin => self.width.thin,
