@@ -9,6 +9,7 @@ pub enum EyebrowStyle {
     Bushy,
     #[default]
     Even,
+    Managerial,
     Thin,
     Winged,
 }

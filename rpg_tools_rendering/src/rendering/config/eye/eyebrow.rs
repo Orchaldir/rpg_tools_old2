@@ -15,14 +15,14 @@ impl EyebrowConfig {
         match style {
             EyebrowStyle::Bushy | EyebrowStyle::Winged => self.width.wide,
             EyebrowStyle::Even => self.width.average,
-            EyebrowStyle::Thin => self.width.thin,
+            EyebrowStyle::Thin | EyebrowStyle::Managerial => self.width.thin,
         }
     }
 
     /// The eyebrow thickness closer to the side of the face.
     pub fn get_outer_thickness(&self, style: EyebrowStyle) -> f32 {
         match style {
-            EyebrowStyle::Bushy => self.width.wide,
+            EyebrowStyle::Bushy | EyebrowStyle::Managerial => self.width.wide,
             EyebrowStyle::Even => self.width.average,
             EyebrowStyle::Thin | EyebrowStyle::Winged => self.width.thin,
         }
