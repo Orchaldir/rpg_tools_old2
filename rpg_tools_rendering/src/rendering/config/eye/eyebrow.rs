@@ -24,8 +24,8 @@ impl EyebrowConfig {
     pub fn get_outer_thickness(&self, style: EyebrowStyle) -> f32 {
         match style {
             EyebrowStyle::Bushy | EyebrowStyle::Managerial => self.width.wide,
-            EyebrowStyle::Even => self.width.average,
-            EyebrowStyle::Thin | EyebrowStyle::Winged => self.width.thin,
+            EyebrowStyle::Even => self.width.average / 2.0,
+            EyebrowStyle::Thin | EyebrowStyle::Winged => self.width.thin / 2.0,
         }
     }
 
