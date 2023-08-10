@@ -26,7 +26,7 @@ pub fn render_eyebrow(
             style,
         } => {
             let options = config.with_thickness(*color, 0.5);
-            let polygon = get_normal_eyebrow(config, *shape, *style, aabb, None);
+            let polygon = get_smooth_eyebrow(config, *shape, *style, aabb, None);
             renderer.render_polygon(&polygon, &options);
         }
         _ => {}
@@ -47,8 +47,8 @@ pub fn render_eyebrows(
             style,
         } => {
             let options = config.with_thickness(*color, 0.5);
-            let polygon_left = get_normal_eyebrow(config, *shape, *style, left, Some(Left));
-            let polygon_right = get_normal_eyebrow(config, *shape, *style, right, Some(Right));
+            let polygon_left = get_smooth_eyebrow(config, *shape, *style, left, Some(Left));
+            let polygon_right = get_smooth_eyebrow(config, *shape, *style, right, Some(Right));
             renderer.render_polygon(&polygon_left, &options);
             renderer.render_polygon(&polygon_right, &options);
         }
@@ -56,25 +56,42 @@ pub fn render_eyebrows(
             color,
             shape,
             style,
-        } => {}
+        } => {
+            let options = config.with_thickness(*color, 0.5);
+            let polygon_left = get_eyebrow(config, *shape, *style, left, Some(Left));
+            let polygon_right = get_eyebrow(config, *shape, *style, right, Some(Right));
+            let index = polygon_left.corners().len() / 2;
+            let polygon = polygon_left.insert(index, &polygon_right);
+            let polygon = config.cut_corners(&polygon).unwrap();
+            renderer.render_polygon(&polygon, &options);
+        }
         _ => {}
     }
 }
 
-fn get_normal_eyebrow(
+fn get_smooth_eyebrow(
     config: &RenderConfig,
     shape: EyebrowShape,
     style: EyebrowStyle,
     aabb: &AABB,
     side: Option<Side>,
 ) -> Polygon2d {
-    let polygon = match shape {
+    let polygon = get_eyebrow(config, shape, style, aabb, side);
+    config.cut_corners(&polygon).unwrap()
+}
+
+fn get_eyebrow(
+    config: &RenderConfig,
+    shape: EyebrowShape,
+    style: EyebrowStyle,
+    aabb: &AABB,
+    side: Option<Side>,
+) -> Polygon2d {
+    match shape {
         EyebrowShape::Angled => get_angled_eyebrow(config, style, aabb, side),
         EyebrowShape::Curved => get_curved_eyebrow(config, style, aabb, side),
         EyebrowShape::Straight => get_straight_eyebrow(config, style, aabb, side),
-    };
-
-    config.cut_corners(&polygon).unwrap()
+    }
 }
 
 fn get_angled_eyebrow(
@@ -133,7 +150,7 @@ fn get_straight_eyebrow(
     let top_left = aabb.get_point(0.0, bottom_y - left_width);
     let top_right = aabb.get_point(1.0, bottom_y - right_width);
     let (bottom_left, bottom_right) = aabb.get_mirrored_points(1.0, bottom_y);
-    let corners = vec![top_left, bottom_left, bottom_right, top_right];
+    let corners = vec![bottom_left, bottom_right, top_right, top_left];
 
     Polygon2d::new(corners)
 }

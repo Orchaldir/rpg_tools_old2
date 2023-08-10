@@ -125,6 +125,16 @@ impl Polygon2d {
         Ok(Polygon2d::new(new_corners))
     }
 
+    pub fn insert(&self, index: usize, polygon: &Polygon2d) -> Polygon2d {
+        let mut new_corners = self.corners.clone();
+
+        for (i, corner) in polygon.corners.iter().enumerate() {
+            new_corners.insert(index + i, *corner);
+        }
+
+        Polygon2d::new(new_corners)
+    }
+
     /// Resizes the polygon around the center.
     ///
     /// ```
