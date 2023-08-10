@@ -87,12 +87,14 @@ fn update_eyes(data: &UrlEncodedData) -> Eyes {
     match get_type(data, "appearance.head.eyes.type") {
         "One" => Eyes::One {
             eye: update_eye(data),
+            eyebrow: Default::default(),
         },
         "Two" => {
             let distance = get_enum(data, "appearance.head.eyes.distance");
 
             Eyes::Two {
                 eye: update_eye(data),
+                eyebrows: Default::default(),
                 distance,
             }
         }
