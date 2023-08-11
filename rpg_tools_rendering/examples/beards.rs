@@ -82,6 +82,7 @@ fn create_appearance(height: Length, beard: &Beard, face: &HeadShape) -> Appeara
                     pupil_color: Color::Green,
                     background_color: Color::White,
                 },
+                eyebrows: Default::default(),
                 distance: Medium,
             },
             hair: Hair::Short {

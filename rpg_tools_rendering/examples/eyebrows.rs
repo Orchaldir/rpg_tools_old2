@@ -5,11 +5,13 @@ use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
 use rpg_tools_core::model::character::appearance::ear::Ears;
+use rpg_tools_core::model::character::appearance::eye::brow::shape::EyebrowShape;
+use rpg_tools_core::model::character::appearance::eye::brow::style::EyebrowStyle;
+use rpg_tools_core::model::character::appearance::eye::brow::EyeBrows;
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
-use rpg_tools_core::model::character::appearance::hair::ShortHair::FlatTop;
 use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
@@ -17,61 +19,38 @@ use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
-use rpg_tools_core::model::side::Side;
-use rpg_tools_core::model::size::Size::{Large, Medium, Small};
-use Hairline::{Round, Straight, Triangle, WidowsPeak};
-use ShortHair::{BuzzCut, MiddlePart, SidePart};
-use Side::{Left, Right};
+use rpg_tools_core::model::size::Size::Medium;
+use rpg_tools_core::model::width::Width;
+use std::vec;
 
 pub mod utils;
 
 fn main() {
-    let mut short_options = vec![
-        create_hair(FlatTop(Small), Round(Medium)),
-        create_hair(FlatTop(Medium), Straight(Medium)),
-        create_hair(FlatTop(Large), WidowsPeak(Medium)),
-        create_hair(MiddlePart, Round(Small)),
-        create_hair(MiddlePart, Round(Medium)),
-        create_hair(MiddlePart, Round(Large)),
-        create_hair(SidePart(Left), Round(Small)),
-        create_hair(SidePart(Right), Round(Small)),
-    ];
-    add_all_hairlines(&mut short_options, BuzzCut);
+    let mut options = Vec::new();
+
+    for is_unibrow in vec![false, true] {
+        for style in EyebrowStyle::get_all() {
+            for width in Width::get_all() {
+                options.push((is_unibrow, style, width));
+            }
+        }
+    }
 
     render_2_sets(
-        "hair_short.svg",
-        short_options,
-        HeadShape::get_all(),
+        "eyebrows.svg",
+        options,
+        EyebrowShape::get_all(),
         create_appearance,
     );
 }
 
-fn add_all_hairlines(short_options: &mut Vec<Hair>, style: ShortHair) {
-    short_options.append(&mut vec![
-        create_hair(style, Round(Small)),
-        create_hair(style, Round(Medium)),
-        create_hair(style, Round(Large)),
-        create_hair(style, Straight(Small)),
-        create_hair(style, Straight(Medium)),
-        create_hair(style, Straight(Large)),
-        create_hair(style, Triangle(Small)),
-        create_hair(style, Triangle(Medium)),
-        create_hair(style, Triangle(Large)),
-        create_hair(style, WidowsPeak(Small)),
-        create_hair(style, WidowsPeak(Medium)),
-        create_hair(style, WidowsPeak(Large)),
-    ]);
-}
+fn create_appearance(
+    height: Length,
+    options: &(bool, EyebrowStyle, Width),
+    shape: &EyebrowShape,
+) -> Appearance {
+    let (is_unibrow, style, width) = *options;
 
-fn create_hair(style: ShortHair, hairline: Hairline) -> Hair {
-    Hair::Short {
-        style,
-        hairline,
-        color: Color::SaddleBrown,
-    }
-}
-
-fn create_appearance(height: Length, hair: &Hair, face: &HeadShape) -> Appearance {
     Appearance::head(
         Head {
             ears: Ears::Normal {
@@ -85,17 +64,35 @@ fn create_appearance(height: Length, hair: &Hair, face: &HeadShape) -> Appearanc
                     pupil_color: Color::Green,
                     background_color: Color::White,
                 },
-                eyebrows: Default::default(),
+                eyebrows: if is_unibrow {
+                    EyeBrows::Unibrow {
+                        color: Color::SaddleBrown,
+                        shape: *shape,
+                        style,
+                        width,
+                    }
+                } else {
+                    EyeBrows::Normal {
+                        color: Color::SaddleBrown,
+                        shape: *shape,
+                        style,
+                        width,
+                    }
+                },
                 distance: Medium,
             },
-            hair: *hair,
+            hair: Hair::Short {
+                style: ShortHair::MiddlePart,
+                hairline: Hairline::Round(Medium),
+                color: Color::SaddleBrown,
+            },
             mouth: Mouth::Normal {
                 beard: Beard::None,
                 width: Medium,
                 teeth: SpecialTeeth::None,
                 teeth_color: TeethColor::White,
             },
-            shape: *face,
+            shape: HeadShape::Round,
             skin: Skin::Skin(SkinColor::Light),
         },
         height,

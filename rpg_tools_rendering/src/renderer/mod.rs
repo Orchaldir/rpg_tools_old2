@@ -45,6 +45,11 @@ pub trait Renderer {
     /// Renders a circle.
     fn render_circle(&mut self, center: &Point2d, radius: u32, options: &RenderOptions);
 
+    /// Renders a circle in an [`axis aligned bounding box`](AABB).
+    fn render_circle_aabb(&mut self, aabb: &AABB, options: &RenderOptions) {
+        self.render_circle(&aabb.center(), aabb.inner_radius(), options)
+    }
+
     /// Renders a circle arc.
     fn render_circle_arc(
         &mut self,
@@ -64,6 +69,16 @@ pub trait Renderer {
         options: &RenderOptions,
     );
 
+    /// Renders an ellipse in an [`axis aligned bounding box`](AABB).
+    fn render_ellipse_aabb(&mut self, aabb: &AABB, options: &RenderOptions) {
+        self.render_ellipse(
+            &aabb.center(),
+            aabb.size().width() / 2,
+            aabb.size().height() / 2,
+            options,
+        )
+    }
+
     /// Renders a line.
     fn render_line(&mut self, line: &Line2d, options: &RenderOptions);
 
@@ -76,6 +91,16 @@ pub trait Renderer {
         radius_y: u32,
         options: &RenderOptions,
     );
+
+    /// Renders a pointed oval in an [`axis aligned bounding box`](AABB).
+    fn render_pointed_oval_aabb(&mut self, aabb: &AABB, options: &RenderOptions) {
+        self.render_pointed_oval(
+            &aabb.center(),
+            aabb.size().width() / 2,
+            aabb.size().height() / 2,
+            options,
+        )
+    }
 
     /// Renders a polygon.
     fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions);

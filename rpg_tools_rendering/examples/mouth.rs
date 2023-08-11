@@ -63,6 +63,7 @@ fn create_appearance(height: Length, mouth: &Mouth, face: &HeadShape) -> Appeara
                     eye_shape: EyeShape::Ellipse,
                     color: Color::Yellow,
                 },
+                eyebrows: Default::default(),
                 distance: Medium,
             },
             hair: Hair::None,

@@ -3,6 +3,7 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::ear::Ears;
+use rpg_tools_core::model::character::appearance::eye::brow::EyeBrows;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::Hair;
@@ -32,6 +33,7 @@ fn create_appearance(height: Length, shape: &EyeShape, face: &HeadShape) -> Appe
                     eye_shape: *shape,
                     color: Color::Yellow,
                 },
+                eyebrows: EyeBrows::None,
                 distance: Size::Medium,
             },
             hair: Hair::None,

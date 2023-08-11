@@ -45,6 +45,7 @@ fn create_appearance(height: Length, skin: &Skin, color: &TeethColor) -> Appeara
                     pupil_color: Color::Blue,
                     background_color: Color::White,
                 },
+                eyebrows: Default::default(),
                 distance: Size::Small,
             },
             hair: Hair::None,

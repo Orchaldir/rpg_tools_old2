@@ -53,6 +53,7 @@ fn create_appearance(height: Length, ears: &Ears, face: &HeadShape) -> Appearanc
                     pupil_color: Color::Gray,
                     background_color: Color::White,
                 },
+                eyebrows: Default::default(),
                 distance: Medium,
             },
             hair: Hair::Short {

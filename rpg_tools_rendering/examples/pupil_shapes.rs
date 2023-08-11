@@ -44,6 +44,7 @@ fn create_appearance(height: Length, pupil_shape: &PupilShape, eye_shape: &EyeSh
                     pupil_color: Color::Black,
                     background_color: Color::Yellow,
                 },
+                eyebrows: Default::default(),
                 distance: Size::Medium,
             },
             hair: Hair::None,

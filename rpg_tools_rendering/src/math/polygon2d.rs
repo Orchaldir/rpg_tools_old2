@@ -125,6 +125,41 @@ impl Polygon2d {
         Ok(Polygon2d::new(new_corners))
     }
 
+    /// Inserts the corners of another polygon at a certain index.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    ///# use rpg_tools_rendering::math::polygon2d::Polygon2d;
+    /// let a = Polygon2d::new(vec![
+    ///   Point2d::new(0, 0),
+    ///   Point2d::new(100, 0),
+    ///   Point2d::new(0, 100),
+    /// ]);
+    /// let b = Polygon2d::new(vec![
+    ///   Point2d::new(200, 0),
+    ///   Point2d::new(200, 100),
+    ///   Point2d::new(100, 100),
+    /// ]);
+    /// let result = Polygon2d::new(vec![
+    ///   Point2d::new(0, 0),
+    ///   Point2d::new(100, 0),
+    ///   Point2d::new(200, 0),
+    ///   Point2d::new(200, 100),
+    ///   Point2d::new(100, 100),
+    ///   Point2d::new(0, 100),
+    /// ]);
+    /// assert_eq!(a.insert(2, &b), result);
+    /// ```
+    pub fn insert(&self, index: usize, polygon: &Polygon2d) -> Polygon2d {
+        let mut new_corners = self.corners.clone();
+
+        for (i, corner) in polygon.corners.iter().enumerate() {
+            new_corners.insert(index + i, *corner);
+        }
+
+        Polygon2d::new(new_corners)
+    }
+
     /// Resizes the polygon around the center.
     ///
     /// ```

@@ -1,6 +1,7 @@
 use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::ear::Ears;
+use rpg_tools_core::model::character::appearance::eye::brow::EyeBrows;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
@@ -87,12 +88,14 @@ fn update_eyes(data: &UrlEncodedData) -> Eyes {
     match get_type(data, "appearance.head.eyes.type") {
         "One" => Eyes::One {
             eye: update_eye(data),
+            eyebrow: update_eyebrows("appearance.head.eyes.eyebrow", data),
         },
         "Two" => {
             let distance = get_enum(data, "appearance.head.eyes.distance");
 
             Eyes::Two {
                 eye: update_eye(data),
+                eyebrows: update_eyebrows("appearance.head.eyes.eyebrows", data),
                 distance,
             }
         }
@@ -125,6 +128,29 @@ fn update_eye(data: &UrlEncodedData) -> Eye {
             }
         }
         _ => Eye::default(),
+    }
+}
+
+fn update_eyebrows(path: &str, data: &UrlEncodedData) -> EyeBrows {
+    let color = get_enum(data, &format!("{}.color", path));
+    let shape = get_enum(data, &format!("{}.shape", path));
+    let style = get_enum(data, &format!("{}.style", path));
+    let width = get_enum(data, &format!("{}.width", path));
+
+    match get_type(data, &format!("{}.type", path)) {
+        "Unibrow" => EyeBrows::Unibrow {
+            color,
+            shape,
+            style,
+            width,
+        },
+        "Normal" => EyeBrows::Normal {
+            color,
+            shape,
+            style,
+            width,
+        },
+        _ => EyeBrows::None,
     }
 }
 
