@@ -153,6 +153,12 @@ impl AxisAlignedBoundingBox {
     }
 
     /// Returns the radius of the incircle.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
+    /// assert_eq!(AABB::simple(100, 100, 8, 6).inner_radius(), 3);
+    /// assert_eq!(AABB::simple(100, 100, 6, 8).inner_radius(), 3);
+    /// ```
     pub fn inner_radius(&self) -> u32 {
         self.size.width().min(self.size.height()) / 2
     }

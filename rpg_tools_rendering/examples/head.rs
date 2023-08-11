@@ -35,6 +35,7 @@ fn main() {
                         pupil_color: Color::Black,
                         background_color: Color::White,
                     },
+                    eyebrow: Default::default(),
                 },
                 hair: Hair::None,
                 mouth: Mouth::None,
