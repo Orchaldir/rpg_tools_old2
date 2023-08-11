@@ -61,6 +61,39 @@
                             {% endif %}
                           </ul>
                         </li>
+                        <li>
+                          <b>Eyebrow:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.type", options=[ "None","Normal","Unibrow" ], selected=appearance.head.eyes.eyebrow.type, update=true) }}
+                          <ul>
+                            {% if appearance.head.eyes.eyebrow.type == "None" %}
+                            {% elif appearance.head.eyes.eyebrow.type == "Normal" %}
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyebrow.color, update=true) }}
+                              </li>
+                              <li>
+                                <b>Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.shape", options=[ "Angled","Curved","Straight" ], selected=appearance.head.eyes.eyebrow.shape, update=true) }}
+                              </li>
+                              <li>
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.style", options=[ "Even","Managerial","Winged" ], selected=appearance.head.eyes.eyebrow.style, update=true) }}
+                              </li>
+                              <li>
+                                <b>Width:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.width", options=[ "Thin","Average","Wide" ], selected=appearance.head.eyes.eyebrow.width, update=true) }}
+                              </li>
+                            {% elif appearance.head.eyes.eyebrow.type == "Unibrow" %}
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyebrow.color, update=true) }}
+                              </li>
+                              <li>
+                                <b>Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.shape", options=[ "Angled","Curved","Straight" ], selected=appearance.head.eyes.eyebrow.shape, update=true) }}
+                              </li>
+                              <li>
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.style", options=[ "Even","Managerial","Winged" ], selected=appearance.head.eyes.eyebrow.style, update=true) }}
+                              </li>
+                              <li>
+                                <b>Width:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.width", options=[ "Thin","Average","Wide" ], selected=appearance.head.eyes.eyebrow.width, update=true) }}
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </li>
                       {% elif appearance.head.eyes.type == "Two" %}
                         <li>
                           <b>Eye:</b> {{ macros::add_select(name="appearance.head.eyes.eye.type", options=[ "Simple","Normal" ], selected=appearance.head.eyes.eye.type, update=true) }}
@@ -84,6 +117,39 @@
                               </li>
                               <li>
                                 <b>Background Color:</b> {{ macros::add_select(name="appearance.head.eyes.eye.background_color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eye.background_color, update=true) }}
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </li>
+                        <li>
+                          <b>Eyebrows:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.type", options=[ "None","Normal","Unibrow" ], selected=appearance.head.eyes.eyebrows.type, update=true) }}
+                          <ul>
+                            {% if appearance.head.eyes.eyebrows.type == "None" %}
+                            {% elif appearance.head.eyes.eyebrows.type == "Normal" %}
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyebrows.color, update=true) }}
+                              </li>
+                              <li>
+                                <b>Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.shape", options=[ "Angled","Curved","Straight" ], selected=appearance.head.eyes.eyebrows.shape, update=true) }}
+                              </li>
+                              <li>
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.style", options=[ "Even","Managerial","Winged" ], selected=appearance.head.eyes.eyebrows.style, update=true) }}
+                              </li>
+                              <li>
+                                <b>Width:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.width", options=[ "Thin","Average","Wide" ], selected=appearance.head.eyes.eyebrows.width, update=true) }}
+                              </li>
+                            {% elif appearance.head.eyes.eyebrows.type == "Unibrow" %}
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyebrows.color, update=true) }}
+                              </li>
+                              <li>
+                                <b>Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.shape", options=[ "Angled","Curved","Straight" ], selected=appearance.head.eyes.eyebrows.shape, update=true) }}
+                              </li>
+                              <li>
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.style", options=[ "Even","Managerial","Winged" ], selected=appearance.head.eyes.eyebrows.style, update=true) }}
+                              </li>
+                              <li>
+                                <b>Width:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.width", options=[ "Thin","Average","Wide" ], selected=appearance.head.eyes.eyebrows.width, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -321,6 +387,39 @@
                             {% endif %}
                           </ul>
                         </li>
+                        <li>
+                          <b>Eyebrow:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.type", options=[ "None","Normal","Unibrow" ], selected=appearance.head.eyes.eyebrow.type, update=true) }}
+                          <ul>
+                            {% if appearance.head.eyes.eyebrow.type == "None" %}
+                            {% elif appearance.head.eyes.eyebrow.type == "Normal" %}
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyebrow.color, update=true) }}
+                              </li>
+                              <li>
+                                <b>Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.shape", options=[ "Angled","Curved","Straight" ], selected=appearance.head.eyes.eyebrow.shape, update=true) }}
+                              </li>
+                              <li>
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.style", options=[ "Even","Managerial","Winged" ], selected=appearance.head.eyes.eyebrow.style, update=true) }}
+                              </li>
+                              <li>
+                                <b>Width:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.width", options=[ "Thin","Average","Wide" ], selected=appearance.head.eyes.eyebrow.width, update=true) }}
+                              </li>
+                            {% elif appearance.head.eyes.eyebrow.type == "Unibrow" %}
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyebrow.color, update=true) }}
+                              </li>
+                              <li>
+                                <b>Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.shape", options=[ "Angled","Curved","Straight" ], selected=appearance.head.eyes.eyebrow.shape, update=true) }}
+                              </li>
+                              <li>
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.style", options=[ "Even","Managerial","Winged" ], selected=appearance.head.eyes.eyebrow.style, update=true) }}
+                              </li>
+                              <li>
+                                <b>Width:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrow.width", options=[ "Thin","Average","Wide" ], selected=appearance.head.eyes.eyebrow.width, update=true) }}
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </li>
                       {% elif appearance.head.eyes.type == "Two" %}
                         <li>
                           <b>Eye:</b> {{ macros::add_select(name="appearance.head.eyes.eye.type", options=[ "Simple","Normal" ], selected=appearance.head.eyes.eye.type, update=true) }}
@@ -344,6 +443,39 @@
                               </li>
                               <li>
                                 <b>Background Color:</b> {{ macros::add_select(name="appearance.head.eyes.eye.background_color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eye.background_color, update=true) }}
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </li>
+                        <li>
+                          <b>Eyebrows:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.type", options=[ "None","Normal","Unibrow" ], selected=appearance.head.eyes.eyebrows.type, update=true) }}
+                          <ul>
+                            {% if appearance.head.eyes.eyebrows.type == "None" %}
+                            {% elif appearance.head.eyes.eyebrows.type == "Normal" %}
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyebrows.color, update=true) }}
+                              </li>
+                              <li>
+                                <b>Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.shape", options=[ "Angled","Curved","Straight" ], selected=appearance.head.eyes.eyebrows.shape, update=true) }}
+                              </li>
+                              <li>
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.style", options=[ "Even","Managerial","Winged" ], selected=appearance.head.eyes.eyebrows.style, update=true) }}
+                              </li>
+                              <li>
+                                <b>Width:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.width", options=[ "Thin","Average","Wide" ], selected=appearance.head.eyes.eyebrows.width, update=true) }}
+                              </li>
+                            {% elif appearance.head.eyes.eyebrows.type == "Unibrow" %}
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyebrows.color, update=true) }}
+                              </li>
+                              <li>
+                                <b>Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.shape", options=[ "Angled","Curved","Straight" ], selected=appearance.head.eyes.eyebrows.shape, update=true) }}
+                              </li>
+                              <li>
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.style", options=[ "Even","Managerial","Winged" ], selected=appearance.head.eyes.eyebrows.style, update=true) }}
+                              </li>
+                              <li>
+                                <b>Width:</b> {{ macros::add_select(name="appearance.head.eyes.eyebrows.width", options=[ "Thin","Average","Wide" ], selected=appearance.head.eyes.eyebrows.width, update=true) }}
                               </li>
                             {% endif %}
                           </ul>

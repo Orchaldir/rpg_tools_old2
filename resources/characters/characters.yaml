@@ -22,6 +22,8 @@
           pupil_shape: Circle
           pupil_color: Blue
           background_color: White
+        eyebrows:
+          type: None
         distance: Medium
       hair:
         type: Short
@@ -73,6 +75,8 @@
           pupil_shape: VerticalSlit
           pupil_color: Blue
           background_color: Yellow
+        eyebrows:
+          type: None
         distance: Medium
       hair:
         type: None
@@ -107,6 +111,8 @@
           pupil_shape: VerticalSlit
           pupil_color: Blue
           background_color: White
+        eyebrow:
+          type: None
       hair:
         type: None
       mouth:
@@ -147,6 +153,8 @@
           pupil_shape: Circle
           pupil_color: Red
           background_color: Silver
+        eyebrows:
+          type: None
         distance: Medium
       hair:
         type: Short
@@ -193,6 +201,8 @@
           pupil_shape: Circle
           pupil_color: Blue
           background_color: White
+        eyebrows:
+          type: None
         distance: Medium
       hair:
         type: None
