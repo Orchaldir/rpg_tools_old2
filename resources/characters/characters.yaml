@@ -23,7 +23,11 @@
           pupil_color: Blue
           background_color: White
         eyebrows:
-          type: None
+          type: Normal
+          color: Yellow
+          shape: Curved
+          style: Winged
+          width: Wide
         distance: Medium
       hair:
         type: Short
@@ -76,7 +80,11 @@
           pupil_color: Blue
           background_color: Yellow
         eyebrows:
-          type: None
+          type: Normal
+          color: Black
+          shape: Angled
+          style: Even
+          width: Wide
         distance: Medium
       hair:
         type: None
@@ -112,7 +120,11 @@
           pupil_color: Blue
           background_color: White
         eyebrow:
-          type: None
+          type: Normal
+          color: Fuchsia
+          shape: Curved
+          style: Even
+          width: Average
       hair:
         type: None
       mouth:
@@ -154,7 +166,11 @@
           pupil_color: Red
           background_color: Silver
         eyebrows:
-          type: None
+          type: Normal
+          color: SaddleBrown
+          shape: Curved
+          style: Even
+          width: Thin
         distance: Medium
       hair:
         type: Short
