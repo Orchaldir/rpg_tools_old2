@@ -1,6 +1,7 @@
 use crate::model::character::appearance::eye::brow::shape::EyebrowShape;
 use crate::model::character::appearance::eye::brow::style::EyebrowStyle;
 use crate::model::color::Color;
+use crate::model::width::Width;
 use crate::ui::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
@@ -18,10 +19,12 @@ pub enum EyeBrows {
         color: Color,
         shape: EyebrowShape,
         style: EyebrowStyle,
+        width: Width,
     },
     Unibrow {
         color: Color,
         shape: EyebrowShape,
         style: EyebrowStyle,
+        width: Width,
     },
 }

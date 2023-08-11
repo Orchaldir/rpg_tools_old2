@@ -20,18 +20,25 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::size::Size::Medium;
+use rpg_tools_core::model::width::Width;
+use std::vec;
 
 pub mod utils;
 
 fn main() {
-    let short_options = EyebrowStyle::get_all()
-        .iter()
-        .flat_map(|s| vec![(true, *s), (false, *s)])
-        .collect();
+    let mut options = Vec::new();
+
+    for is_unibrow in vec![false, true] {
+        for style in EyebrowStyle::get_all() {
+            for width in Width::get_all() {
+                options.push((is_unibrow, style, width));
+            }
+        }
+    }
 
     render_2_sets(
         "eyebrows.svg",
-        short_options,
+        options,
         EyebrowShape::get_all(),
         create_appearance,
     );
@@ -39,10 +46,10 @@ fn main() {
 
 fn create_appearance(
     height: Length,
-    options: &(bool, EyebrowStyle),
+    options: &(bool, EyebrowStyle, Width),
     shape: &EyebrowShape,
 ) -> Appearance {
-    let (is_unibrow, style) = *options;
+    let (is_unibrow, style, width) = *options;
 
     Appearance::head(
         Head {
@@ -62,12 +69,14 @@ fn create_appearance(
                         color: Color::SaddleBrown,
                         shape: *shape,
                         style,
+                        width,
                     }
                 } else {
                     EyeBrows::Normal {
                         color: Color::SaddleBrown,
                         shape: *shape,
                         style,
+                        width,
                     }
                 },
                 distance: Medium,
