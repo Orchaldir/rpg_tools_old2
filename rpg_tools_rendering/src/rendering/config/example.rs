@@ -148,11 +148,7 @@ pub fn create_eye_config() -> EyeConfig {
                 average: 0.2,
                 wide: 0.3,
             },
-            relative_width: WidthConfig {
-                thin: 0.4,
-                average: 0.6,
-                wide: 1.0,
-            },
+            width_thinner_end: 0.4,
             distance_to_eye: 0.1,
             distance_to_eye_straight: 0.2,
         },

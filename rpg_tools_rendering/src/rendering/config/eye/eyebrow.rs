@@ -7,7 +7,7 @@ use rpg_tools_core::model::width::Width;
 #[derive(Debug, PartialEq)]
 pub struct EyebrowConfig {
     pub width: WidthConfig,
-    pub relative_width: WidthConfig,
+    pub width_thinner_end: f32,
     pub distance_to_eye: f32,
     pub distance_to_eye_straight: f32,
 }
@@ -16,18 +16,16 @@ impl EyebrowConfig {
     /// The eyebrow thickness closer to the center of the face.
     fn get_inner_thickness(&self, style: EyebrowStyle) -> f32 {
         match style {
-            EyebrowStyle::Winged => self.relative_width.wide,
-            EyebrowStyle::Even => self.relative_width.average,
-            EyebrowStyle::Managerial => self.relative_width.thin,
+            EyebrowStyle::Winged | EyebrowStyle::Even => 1.0,
+            EyebrowStyle::Managerial => self.width_thinner_end,
         }
     }
 
     /// The eyebrow thickness closer to the side of the face.
     fn get_outer_thickness(&self, style: EyebrowStyle) -> f32 {
         match style {
-            EyebrowStyle::Managerial => self.relative_width.wide,
-            EyebrowStyle::Even => self.relative_width.average / 2.0,
-            EyebrowStyle::Winged => self.relative_width.thin / 2.0,
+            EyebrowStyle::Managerial | EyebrowStyle::Even => 1.0,
+            EyebrowStyle::Winged => self.width_thinner_end / 2.0,
         }
     }
 
