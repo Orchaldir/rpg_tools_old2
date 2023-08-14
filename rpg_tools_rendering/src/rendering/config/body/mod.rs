@@ -14,6 +14,7 @@ pub struct BodyConfig {
     pub foot_factor: f32,
     pub muscular_shoulder_bonus: f32,
     pub fat_hip_bonus: f32,
+    pub height_head: f32,
     pub height_torso: f32,
     pub height_arm: f32,
     pub fat: TorsoConfig,
