@@ -7,6 +7,7 @@ use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
 pub mod hairline;
+pub mod length;
 
 /// How does the hair look like?
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
