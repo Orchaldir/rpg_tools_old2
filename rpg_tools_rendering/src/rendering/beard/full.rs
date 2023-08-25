@@ -4,7 +4,7 @@ use crate::math::polygon2d::Polygon2d;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::length::Length;
-use std::ops::Add;
+use std::ops::{Add, Div, Sub};
 
 pub fn get_full_forked(
     config: &RenderConfig,
@@ -19,8 +19,10 @@ pub fn get_full_forked(
     let (chin_left, chin_right) = aabb.get_mirrored_points(width, 1.0);
     let center = aabb.get_point(0.5, 1.0);
     let down = Point2d::new(0, length.to_millimetre() as i32);
-    let bottom_left = chin_left.add(down);
-    let bottom_right = chin_right.add(down);
+    let side = chin_right.sub(chin_left).div(4.0);
+    let bottom = center.add(down);
+    let bottom_left = bottom.sub(side);
+    let bottom_right = bottom.add(side);
     let corners = vec![
         top_left,
         chin_left,
