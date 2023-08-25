@@ -1,7 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
-use crate::rendering::beard::full::get_full_rectangle;
+use crate::rendering::beard::full::{get_full_rectangle, get_full_triangle};
 use crate::rendering::beard::goatee::{get_goat_patch, get_goatee, get_soul_patch, get_van_dyke};
 use crate::rendering::beard::moustache::*;
 use crate::rendering::config::RenderConfig;
@@ -95,7 +95,12 @@ fn render_full_beard(
     color: &Color,
 ) {
     let options = config.with_thickness(*color, 0.5);
-    let polygon = get_full_rectangle(config, aabb, head_shape, length);
+    let polygon = match style {
+        FullBeardStyle::Fork => get_full_rectangle(config, aabb, head_shape, length),
+        FullBeardStyle::Rectangle => get_full_rectangle(config, aabb, head_shape, length),
+        FullBeardStyle::Triangle => get_full_triangle(config, aabb, head_shape, length),
+    };
+
     renderer.render_polygon(&polygon, &options);
 }
 
