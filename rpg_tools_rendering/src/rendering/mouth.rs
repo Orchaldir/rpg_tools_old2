@@ -35,7 +35,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             teeth,
             teeth_color,
         } => {
-            render_beard_behind_mouth(renderer, config, aabb, head, beard);
+            render_beard_behind_mouth(renderer, config, aabb, head.shape, head, beard);
 
             let width = config.mouth.get_mouth_width(head_width_factor, *width);
             let distance_between_fangs = config.mouth.get_distance_between_fangs(width);

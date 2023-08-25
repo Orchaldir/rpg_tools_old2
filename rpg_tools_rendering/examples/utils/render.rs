@@ -21,7 +21,7 @@ pub fn render_2_sets<T, S>(
 ) {
     let config = create_config();
     let options = create_border_options();
-    let height = Length::from_metre(1.0);
+    let height = Length::from_metre(1.8);
     let size = calculate_size(&config, height);
     let svg_size = Size2d::new(
         columns.len() as u32 * size.width(),

@@ -11,7 +11,6 @@ use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
-use rpg_tools_core::model::character::appearance::hair::length::HairLength;
 use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
@@ -28,8 +27,8 @@ fn main() {
     let mut options = Vec::new();
 
     for style in FullBeardStyle::get_all() {
-        for length in HairLength::get_all() {
-            options.push(create_full(style, length));
+        for l in 1..6 {
+            options.push(create_full(style, Length::from_metre(l as f32 * 0.2)));
         }
     }
 
@@ -41,7 +40,7 @@ fn main() {
     );
 }
 
-fn create_full(style: FullBeardStyle, length: HairLength) -> Beard {
+fn create_full(style: FullBeardStyle, length: Length) -> Beard {
     Beard::FullBeard {
         style,
         length,

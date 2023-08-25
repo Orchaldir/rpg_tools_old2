@@ -1,8 +1,8 @@
 use crate::model::character::appearance::beard::full::FullBeardStyle;
 use crate::model::character::appearance::beard::goatee::GoateeStyle;
 use crate::model::character::appearance::beard::moustache::MoustacheStyle;
-use crate::model::character::appearance::hair::length::HairLength;
 use crate::model::color::Color;
+use crate::model::length::Length;
 use crate::ui::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
@@ -34,7 +34,7 @@ pub enum Beard {
     },
     FullBeard {
         style: FullBeardStyle,
-        length: HairLength,
+        length: Length,
         color: Color,
     },
 }
