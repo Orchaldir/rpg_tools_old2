@@ -237,3 +237,60 @@
         c: Green
     height:
       millimetre: 1500
+- id: 5
+  name: Dwarf
+  gender: Male
+  appearance:
+    type: Humanoid
+    body:
+      shape: Muscular
+      width: Wide
+      skin:
+        type: Skin
+        c: Light
+    head:
+      ears:
+        type: Normal
+        shape: Square
+        size: Medium
+      eyes:
+        type: Two
+        eye:
+          type: Normal
+          eye_shape: Ellipse
+          pupil_shape: Circle
+          pupil_color: Blue
+          background_color: White
+        eyebrows:
+          type: Normal
+          color: SaddleBrown
+          shape: Curved
+          style: Even
+          width: Average
+        distance: Medium
+      hair:
+        type: Short
+        style:
+          type: MiddlePart
+        hairline:
+          type: Round
+          c: Medium
+        color: SaddleBrown
+      mouth:
+        type: Normal
+        beard:
+          type: FullBeard
+          style: Triangle
+          length:
+            millimetre: 500
+          color: SaddleBrown
+        width: Medium
+        teeth:
+          type: None
+        teeth_color: White
+      shape: Round
+      skin:
+        type: Skin
+        c: Light
+    height:
+      millimetre: 1000

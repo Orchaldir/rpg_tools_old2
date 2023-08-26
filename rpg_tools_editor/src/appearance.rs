@@ -25,24 +25,22 @@ use Appearance::{HeadOnly, Humanoid};
 pub fn apply_update_to_appearance(appearance: &Appearance, update: &str) -> Appearance {
     let data = UrlEncodedData::parse_str(update);
 
-    if let Some(height) = data.get_first("appearance.height.millimetre") {
-        if let Ok(height) = height.parse::<u32>().map(Length::from_millimetre) {
-            return match get_type(&data, "appearance.type") {
-                "HeadOnly" => match appearance {
-                    HeadOnly { .. } => Appearance::head(update_head(&data), height),
-                    Humanoid { .. } => Appearance::head(update_head(&data), height),
-                },
-                "Humanoid" => match appearance {
-                    HeadOnly { .. } => {
-                        Appearance::humanoid(Body::default(), update_head(&data), height)
-                    }
-                    Humanoid { .. } => {
-                        Appearance::humanoid(update_body(&data), update_head(&data), height)
-                    }
-                },
-                _ => Appearance::default(),
-            };
-        }
+    if let Some(height) = parse_length(&data, "appearance.height.millimetre") {
+        return match get_type(&data, "appearance.type") {
+            "HeadOnly" => match appearance {
+                HeadOnly { .. } => Appearance::head(update_head(&data), height),
+                Humanoid { .. } => Appearance::head(update_head(&data), height),
+            },
+            "Humanoid" => match appearance {
+                HeadOnly { .. } => {
+                    Appearance::humanoid(Body::default(), update_head(&data), height)
+                }
+                Humanoid { .. } => {
+                    Appearance::humanoid(update_body(&data), update_head(&data), height)
+                }
+            },
+            _ => Appearance::default(),
+        };
     }
 
     Appearance::default()
@@ -261,6 +259,17 @@ fn parse_beard(path: &str, data: &UrlEncodedData) -> Beard {
                 color,
             }
         }
+        "FullBeard" => {
+            let color = Color::from(color);
+            let style = get_enum(data, &format!("{}.beard.style", path));
+            let length = parse_length(data, &format!("{}.beard.length.millimetre", path))
+                .unwrap_or_else(|| Length::from_metre(0.1));
+            Beard::FullBeard {
+                style,
+                length,
+                color,
+            }
+        }
         _ => Beard::None,
     }
 }
@@ -282,6 +291,14 @@ fn update_skin(path: &str, data: &UrlEncodedData) -> Skin {
             Skin::Skin(color)
         }
     }
+}
+
+fn parse_length(data: &UrlEncodedData, path: &str) -> Option<Length> {
+    data.get_first(path)
+        .iter()
+        .flat_map(|s| s.parse::<u32>().ok())
+        .map(Length::from_millimetre)
+        .next()
 }
 
 fn get_enum<'a, T: From<&'a str>>(data: &'a UrlEncodedData, path: &str) -> T {

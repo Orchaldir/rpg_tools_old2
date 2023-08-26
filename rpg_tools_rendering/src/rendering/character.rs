@@ -34,7 +34,7 @@ pub fn render_character(
         }
         Appearance::Humanoid { body, head, .. } => {
             render_body(renderer, config, &inner, body);
-            let head_aabb = calculate_head_aabb(&inner);
+            let head_aabb = calculate_head_aabb(config, &inner);
             render_head(renderer, config, head, &head_aabb);
         }
     }

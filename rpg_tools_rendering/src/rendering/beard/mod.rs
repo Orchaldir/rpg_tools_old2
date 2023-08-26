@@ -1,16 +1,22 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
+use crate::rendering::beard::full::{
+    get_full_forked, get_full_rectangle, get_full_triangle, get_full_wide,
+};
 use crate::rendering::beard::goatee::{get_goat_patch, get_goatee, get_soul_patch, get_van_dyke};
 use crate::rendering::beard::moustache::*;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::head::render_head_shape_with_option;
+use rpg_tools_core::model::character::appearance::beard::full::FullBeardStyle;
 use rpg_tools_core::model::character::appearance::beard::goatee::GoateeStyle;
 use rpg_tools_core::model::character::appearance::beard::moustache::MoustacheStyle;
 use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::color::Color;
+use rpg_tools_core::model::length::Length;
 
+pub mod full;
 pub mod goatee;
 pub mod moustache;
 
@@ -18,11 +24,22 @@ pub fn render_beard_behind_mouth(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
+    head_shape: HeadShape,
     head: &Head,
     beard: &Beard,
 ) {
-    if let Beard::Stubble { color } = beard {
-        render_stubble(renderer, config, aabb, head, *color)
+    match beard {
+        Beard::Stubble { color } => {
+            render_stubble(renderer, config, aabb, head, *color);
+        }
+        Beard::FullBeard {
+            style,
+            length,
+            color,
+        } => {
+            render_full_beard(renderer, config, aabb, head_shape, style, length, color);
+        }
+        _ => {}
     }
 }
 
@@ -67,6 +84,26 @@ fn render_goatee(
         GoateeStyle::VanDyke => get_van_dyke(config, aabb),
         _ => get_soul_patch(config, aabb),
     };
+    renderer.render_polygon(&polygon, &options);
+}
+
+fn render_full_beard(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    head_shape: HeadShape,
+    style: &FullBeardStyle,
+    length: &Length,
+    color: &Color,
+) {
+    let options = config.get_options(*color);
+    let polygon = match style {
+        FullBeardStyle::Fork => get_full_forked(config, aabb, head_shape, length),
+        FullBeardStyle::Rectangle => get_full_rectangle(config, aabb, head_shape, length),
+        FullBeardStyle::Triangle => get_full_triangle(config, aabb, head_shape, length),
+        FullBeardStyle::Wide => get_full_wide(config, aabb, head_shape, length),
+    };
+
     renderer.render_polygon(&polygon, &options);
 }
 

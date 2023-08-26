@@ -129,8 +129,8 @@ fn render_leg(
     renderer.render_polygon(&polygon, options);
 }
 
-pub fn calculate_head_aabb(aabb: &AABB) -> AABB {
-    let head_size = 0.286;
+pub fn calculate_head_aabb(config: &RenderConfig, aabb: &AABB) -> AABB {
+    let head_size = config.body.height_head;
 
     let head_start = aabb.get_point(0.5 - head_size / 2.0, 0.0);
     let head_size = aabb.size().mul(head_size);
