@@ -4,7 +4,7 @@ use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::hair::hairline::add_hairlines;
-use crate::rendering::head::render_head_shape_with_option;
+use crate::rendering::head::{get_head_corners, render_head_shape_with_option};
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::color::Color;
@@ -53,7 +53,7 @@ fn get_buzz_cut(
     config.cut_corners(&polygon).unwrap()
 }
 
-pub fn get_flat_top(
+pub fn get_flat_top_front(
     config: &RenderConfig,
     aabb: &AABB,
     head_shape: HeadShape,
@@ -85,6 +85,29 @@ pub fn get_flat_top(
 
     let polygon = Polygon2d::new(corners);
     config.cut_corners(&polygon).unwrap()
+}
+
+pub fn get_flat_top_back(
+    config: &RenderConfig,
+    aabb: &AABB,
+    head_shape: HeadShape,
+    size: Size,
+) -> Polygon2d {
+    let mut corners = get_head_corners(config, aabb, head_shape);
+
+    let forehead_width = config.head.get_forehead_width(head_shape);
+    let top_width = config.head.get_top_width(head_shape);
+    let flattop_width = forehead_width.max(top_width);
+    let flattop_y = config.hair.short.y_flat_top.convert(size);
+
+    let (top_left, top_right) = aabb.get_mirrored_points(flattop_width, flattop_y);
+
+    corners.pop();
+    corners.pop();
+    corners.push(top_right);
+    corners.push(top_left);
+
+    config.cut_corners(&Polygon2d::new(corners)).unwrap()
 }
 
 pub fn get_middle_part(
