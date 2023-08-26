@@ -64,8 +64,8 @@ fn render_head_front(renderer: &mut dyn Renderer, config: &RenderConfig, head: &
     render_ears(renderer, config, aabb, head);
     render_head_shape(renderer, config, aabb, head);
     render_eyes(renderer, config, aabb, head);
-    render_mouth(renderer, config, aabb, head);
     render_hair(renderer, config, aabb, head);
+    render_mouth(renderer, config, aabb, head);
 }
 
 fn render_head_back(renderer: &mut dyn Renderer, config: &RenderConfig, head: &Head, aabb: &AABB) {
