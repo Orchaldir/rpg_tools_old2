@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
@@ -22,6 +23,13 @@ pub fn render_head_shape_with_option(
     options: RenderOptions,
     shape: HeadShape,
 ) {
+    let polygon = Polygon2d::new(get_head_corners(config, aabb, shape));
+    let cut = config.cut_corners(&polygon).unwrap();
+
+    renderer.render_polygon(&cut, &options);
+}
+
+pub fn get_head_corners(config: &RenderConfig, aabb: &AABB, shape: HeadShape) -> Vec<Point2d> {
     let (top_left, top_right) = aabb.get_mirrored_points(config.head.get_top_width(shape), 0.0);
     let (forehead_left, forehead_right) = aabb.get_mirrored_points(
         config.head.get_forehead_width(shape),
@@ -31,8 +39,7 @@ pub fn render_head_shape_with_option(
         aabb.get_mirrored_points(config.head.get_mouth_width(shape), config.head.y_mouth);
     let (chin_left, chin_right) = aabb.get_mirrored_points(config.head.get_chin_width(shape), 1.0);
 
-    let polygon = Polygon2d::new(vec![
-        top_left,
+    vec![
         forehead_left,
         mouth_left,
         chin_left,
@@ -40,8 +47,6 @@ pub fn render_head_shape_with_option(
         mouth_right,
         forehead_right,
         top_right,
-    ]);
-    let cut = config.cut_corners(&polygon).unwrap();
-
-    renderer.render_polygon(&cut, &options);
+        top_left,
+    ]
 }
