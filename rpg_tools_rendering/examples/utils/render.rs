@@ -9,7 +9,7 @@ use rpg_tools_rendering::math::size2d::Size2d;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
 use rpg_tools_rendering::renderer::Renderer;
 use rpg_tools_rendering::rendering::character::{
-    calculate_character_size, calculate_size, render_character,
+    calculate_character_size, calculate_size, render_character_front,
 };
 use rpg_tools_rendering::rendering::config::example::{create_border_options, create_config};
 
@@ -39,7 +39,7 @@ pub fn render_2_sets<T, S>(
             let aabb = AABB::new(start, size);
 
             svg_builder.render_rectangle(&aabb, &options);
-            render_character(&mut svg_builder, &config, &aabb, &appearance);
+            render_character_front(&mut svg_builder, &config, &aabb, &appearance);
 
             start.x += size.width() as i32;
         }

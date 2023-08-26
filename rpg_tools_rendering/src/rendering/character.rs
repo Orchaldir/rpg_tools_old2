@@ -20,7 +20,7 @@ pub fn calculate_size(config: &RenderConfig, height: Length) -> Size2d {
     Size2d::square(height.to_millimetre() + config.border * 2)
 }
 
-pub fn render_character(
+pub fn render_character_front(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
