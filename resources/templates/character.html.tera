@@ -9,7 +9,8 @@
   <p><a href="/character/{{ id }}/edit">Edit Data</a></p>
   <p><h2>Appearance</h2></p>
   <div class="image">
-    <img src = "/character/{{ id }}/front.svg" alt="Front View of the Character" width="100%"/>
+    <img src = "/character/{{ id }}/front.svg" alt="Front View of the Character" width="75%"/>
+    <img src = "/character/{{ id }}/back.svg" alt="Back View of the Character" width="75%"/>
   </div>
   <div class="text">
     <ul>

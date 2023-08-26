@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate rocket;
 
-use crate::appearance::{apply_update_to_appearance, render_front_to_svg, RawSvg};
+use crate::appearance::{apply_update_to_appearance, render_to_svg, RawSvg};
 use crate::io::{read, write};
 use anyhow::Result;
 use rocket::form::Form;
@@ -112,26 +112,26 @@ fn update_character(
 fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
     let data = state.data.lock().expect("lock shared data");
     data.get(CharacterId::new(id))
-        .map(|character| render_front_to_svg(&state.config, character.appearance()))
+        .map(|character| render_to_svg(&state.config, character.appearance(), true))
 }
 
 #[get("/character/<id>/back.svg")]
 fn get_back(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
     let data = state.data.lock().expect("lock shared data");
     data.get(CharacterId::new(id))
-        .map(|character| render_front_to_svg(&state.config, character.appearance()))
+        .map(|character| render_to_svg(&state.config, character.appearance(), false))
 }
 
 #[get("/appearance/preview/front.svg")]
 fn get_preview_front(state: &State<EditorData>) -> RawSvg {
     let preview = state.preview.lock().expect("lock shared preview");
-    render_front_to_svg(&state.config, &preview)
+    render_to_svg(&state.config, &preview, true)
 }
 
 #[get("/appearance/preview/back.svg")]
 fn get_preview_back(state: &State<EditorData>) -> RawSvg {
     let preview = state.preview.lock().expect("lock shared preview");
-    render_front_to_svg(&state.config, &preview)
+    render_to_svg(&state.config, &preview, false)
 }
 
 #[get("/appearance/<id>/edit")]

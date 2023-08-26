@@ -4,7 +4,8 @@
 <p><h1>Edit appearance of {{ name }}</h1></p>
 <div class="left_right_container">
   <div class="image">
-    <img id="preview" src="/appearance/preview/front.svg" alt="Preview" width="100%"/>
+    <img id="preview" src="/appearance/preview/front.svg" alt="Front Preview" width="75%"/>
+    <img id="preview" src="/appearance/preview/back.svg" alt="Back Preview" width="75%"/>
   </div>
   <div class="text">
     <form id="appearanceForm" action="/appearance/{{ id }}/preview" method="post">
