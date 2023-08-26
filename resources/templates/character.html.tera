@@ -254,6 +254,19 @@
                         <li>
                           <b>Color:</b> {{ appearance.head.mouth.beard.color }}
                         </li>
+                      {% elif appearance.head.mouth.beard.type == "FullBeard" %}
+                        <li>
+                          <b>Style:</b> {{ appearance.head.mouth.beard.style }}
+                        </li>
+                        <li>
+                          <b>Length</b>
+                          <ul>
+                            <li><b>Millimetre:</b> {{ appearance.head.mouth.beard.length.millimetre }}</li>
+                          </ul>
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.mouth.beard.color }}
+                        </li>
                       {% endif %}
                     </ul>
                   </li>
@@ -576,6 +589,19 @@
                         </li>
                         <li>
                           <b>Goatee:</b> {{ appearance.head.mouth.beard.goatee }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ appearance.head.mouth.beard.color }}
+                        </li>
+                      {% elif appearance.head.mouth.beard.type == "FullBeard" %}
+                        <li>
+                          <b>Style:</b> {{ appearance.head.mouth.beard.style }}
+                        </li>
+                        <li>
+                          <b>Length</b>
+                          <ul>
+                            <li><b>Millimetre:</b> {{ appearance.head.mouth.beard.length.millimetre }}</li>
+                          </ul>
                         </li>
                         <li>
                           <b>Color:</b> {{ appearance.head.mouth.beard.color }}
