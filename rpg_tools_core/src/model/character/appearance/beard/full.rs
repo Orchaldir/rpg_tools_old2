@@ -10,4 +10,6 @@ pub enum FullBeardStyle {
     Rectangle,
     #[default]
     Triangle,
+    /// Wider at the bottom.
+    Wide,
 }

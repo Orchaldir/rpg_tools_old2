@@ -255,7 +255,7 @@
                               </li>
                             {% elif appearance.head.mouth.beard.type == "FullBeard" %}
                               <li>
-                                <b>Style:</b> {{ macros::add_select(name="appearance.head.mouth.beard.style", options=[ "Fork","Rectangle","Triangle" ], selected=appearance.head.mouth.beard.style, update=true) }}
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.mouth.beard.style", options=[ "Fork","Rectangle","Triangle","Wide" ], selected=appearance.head.mouth.beard.style, update=true) }}
                               </li>
                               <li>
                                 <b>Length</b>
@@ -594,7 +594,7 @@
                               </li>
                             {% elif appearance.head.mouth.beard.type == "FullBeard" %}
                               <li>
-                                <b>Style:</b> {{ macros::add_select(name="appearance.head.mouth.beard.style", options=[ "Fork","Rectangle","Triangle" ], selected=appearance.head.mouth.beard.style, update=true) }}
+                                <b>Style:</b> {{ macros::add_select(name="appearance.head.mouth.beard.style", options=[ "Fork","Rectangle","Triangle","Wide" ], selected=appearance.head.mouth.beard.style, update=true) }}
                               </li>
                               <li>
                                 <b>Length</b>
