@@ -30,3 +30,9 @@ impl Hairline {
         }
     }
 }
+
+impl Default for Hairline {
+    fn default() -> Self {
+        Self::Round(Size::Medium)
+    }
+}

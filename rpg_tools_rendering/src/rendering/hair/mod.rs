@@ -41,6 +41,7 @@ pub fn render_hair_front(
                 render_polygon(renderer, config, &polygon, color);
             }
         },
+        Hair::Bun { .. } => {}
     }
 }
 
@@ -62,5 +63,6 @@ pub fn render_hair_back(
                 render_head_shape_with_option(renderer, config, aabb, options, head.shape);
             }
         },
+        Hair::Bun { .. } => {}
     }
 }
