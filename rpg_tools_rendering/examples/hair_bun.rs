@@ -34,7 +34,7 @@ fn create_bun(style: BunStyle, size: Size) -> Hair {
     Hair::Bun {
         style,
         size,
-        hairline: Hairline::default(),
+        hairline: Hairline::Straight(Size::Small),
         color: Color::SaddleBrown,
     }
 }

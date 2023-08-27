@@ -17,8 +17,8 @@ pub fn render_buns(
 ) {
     let options = config.get_options(color);
     let radius_factor = match size {
-        Size::Small => 0.15,
-        Size::Medium => 0.2,
+        Size::Small => 0.17,
+        Size::Medium => 0.21,
         Size::Large => 0.25,
     };
     let radius = aabb.calculate_from_height(radius_factor);
@@ -33,7 +33,9 @@ pub fn render_buns(
             renderer.render_circle(&center, radius, &options);
         }
         BunStyle::Twin => {
-            let width = config.head.get_top_width(head_shape);
+            let width = (config.head.get_top_width(head_shape)
+                + config.head.get_forehead_width(head_shape))
+                / 2.0;
             let radius = (0.85 * radius as f32) as u32;
             let (left, right) = aabb.get_mirrored_points(width, 0.1);
             renderer.render_circle(&left, radius, &options);
