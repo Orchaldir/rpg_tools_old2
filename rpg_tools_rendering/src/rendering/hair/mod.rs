@@ -1,6 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
+use crate::rendering::hair::bun::render_buns;
 use crate::rendering::hair::short::{
     get_buzz_cut, get_flat_top_back, get_flat_top_front, get_middle_part, get_side_part,
     render_buzz_cut,
@@ -10,10 +11,11 @@ use crate::rendering::render_polygon;
 use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
 use rpg_tools_core::model::character::appearance::head::Head;
 
+pub mod bun;
 pub mod hairline;
 pub mod short;
 
-pub fn render_hair_front(
+pub fn render_hair_before_head_front(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
@@ -51,6 +53,22 @@ pub fn render_hair_front(
     }
 }
 
+pub fn render_hair_behind_head_front(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    head: &Head,
+) {
+    match head.hair {
+        Hair::Bun {
+            style, size, color, ..
+        } => {
+            render_buns(renderer, config, aabb, head.shape, style, size, color);
+        }
+        _ => {}
+    }
+}
+
 pub fn render_hair_back(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
@@ -69,9 +87,12 @@ pub fn render_hair_back(
                 render_head_shape_with_option(renderer, config, aabb, options, head.shape);
             }
         },
-        Hair::Bun { color, .. } => {
+        Hair::Bun {
+            style, size, color, ..
+        } => {
             let options = config.get_options(color);
             render_head_shape_with_option(renderer, config, aabb, options, head.shape);
+            render_buns(renderer, config, aabb, head.shape, style, size, color);
         }
     }
 }
