@@ -35,7 +35,7 @@ fn main() {
     ];
     let faces = HeadShape::get_all();
 
-    render_2_sets("ears.svg", shape_options, faces, create_appearance);
+    render_2_sets("ears.svg", shape_options, faces, create_appearance, false);
 }
 
 fn create(shape: EarShape, size: Size) -> Ears {

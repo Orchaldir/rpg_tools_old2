@@ -26,6 +26,7 @@ fn main() {
         options,
         HeadShape::get_all(),
         create_appearance_with_hair,
+        true,
     );
 }
 

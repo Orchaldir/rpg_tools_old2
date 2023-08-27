@@ -35,7 +35,7 @@ fn main() {
     ];
     let faces = HeadShape::get_all();
 
-    render_2_sets("mouth.svg", shape_options, faces, create_appearance);
+    render_2_sets("mouth.svg", shape_options, faces, create_appearance, false);
 }
 
 fn create_circle(size: Size) -> Mouth {

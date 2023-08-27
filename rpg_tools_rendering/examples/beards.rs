@@ -51,6 +51,7 @@ fn main() {
         short_options,
         HeadShape::get_all(),
         create_appearance,
+        false,
     );
 }
 

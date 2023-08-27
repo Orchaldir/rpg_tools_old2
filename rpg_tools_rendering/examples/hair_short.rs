@@ -34,6 +34,7 @@ fn main() {
         short_options,
         HeadShape::get_all(),
         create_appearance_with_hair,
+        false,
     );
 }
 

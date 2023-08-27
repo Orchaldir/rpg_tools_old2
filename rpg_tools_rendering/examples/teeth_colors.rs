@@ -31,7 +31,13 @@ fn main() {
         Skin::ExoticSkin(Color::Green),
     ];
 
-    render_2_sets("teeth_colors.svg", skin, teeth_colors, create_appearance);
+    render_2_sets(
+        "teeth_colors.svg",
+        skin,
+        teeth_colors,
+        create_appearance,
+        false,
+    );
 }
 
 fn create_appearance(height: Length, skin: &Skin, color: &TeethColor) -> Appearance {
