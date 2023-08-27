@@ -27,7 +27,7 @@ pub fn render_buzz_cut(
     render_head_shape_with_option(renderer, config, aabb, line, head_shape);
 }
 
-fn get_buzz_cut(
+pub fn get_buzz_cut(
     config: &RenderConfig,
     aabb: &AABB,
     head_shape: HeadShape,

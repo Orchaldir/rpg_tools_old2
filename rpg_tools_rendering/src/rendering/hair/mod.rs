@@ -2,7 +2,8 @@ use crate::math::aabb2d::AABB;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::hair::short::{
-    get_flat_top_back, get_flat_top_front, get_middle_part, get_side_part, render_buzz_cut,
+    get_buzz_cut, get_flat_top_back, get_flat_top_front, get_middle_part, get_side_part,
+    render_buzz_cut,
 };
 use crate::rendering::head::render_head_shape_with_option;
 use crate::rendering::render_polygon;
@@ -41,7 +42,12 @@ pub fn render_hair_front(
                 render_polygon(renderer, config, &polygon, color);
             }
         },
-        Hair::Bun { .. } => {}
+        Hair::Bun {
+            hairline, color, ..
+        } => {
+            let polygon = get_buzz_cut(config, aabb, head.shape, hairline);
+            render_polygon(renderer, config, &polygon, color);
+        }
     }
 }
 
