@@ -17,7 +17,7 @@ pub fn create_appearance_with_hair(height: Length, hair: &Hair, face: &HeadShape
     Appearance::head(
         Head {
             ears: Ears::Normal {
-                shape: EarShape::Round,
+                shape: EarShape::Square,
                 size: Medium,
             },
             eyes: Eyes::Two {
