@@ -63,6 +63,9 @@ pub fn render_hair_back(
                 render_head_shape_with_option(renderer, config, aabb, options, head.shape);
             }
         },
-        Hair::Bun { .. } => {}
+        Hair::Bun { color, .. } => {
+            let options = config.get_options(color);
+            render_head_shape_with_option(renderer, config, aabb, options, head.shape);
+        }
     }
 }
