@@ -16,30 +16,43 @@ pub fn render_buns(
     color: Color,
 ) {
     let options = config.get_options(color);
-    let radius_factor = match size {
-        Size::Small => 0.17,
-        Size::Medium => 0.21,
-        Size::Large => 0.25,
-    };
-    let radius = aabb.calculate_from_height(radius_factor);
 
     match style {
         BunStyle::Low => {
-            let center = aabb.get_point(0.5, 1.0 - radius_factor);
+            let width = config.head.get_mouth_width(head_shape);
+            let (radius, width_factor) = calculate(aabb, size, width);
+            let center = aabb.get_point(0.5, 1.0 - width_factor);
             renderer.render_circle(&center, radius, &options);
         }
         BunStyle::High => {
-            let center = aabb.get_point(0.5, radius_factor / 2.0);
+            let width = (config.head.get_top_width(head_shape)
+                + config.head.get_forehead_width(head_shape))
+                / 2.0;
+            let (radius, width_factor) = calculate(aabb, size, width);
+            let center = aabb.get_point(0.5, width_factor / 2.0);
             renderer.render_circle(&center, radius, &options);
         }
         BunStyle::Twin => {
             let width = (config.head.get_top_width(head_shape)
                 + config.head.get_forehead_width(head_shape))
                 / 2.0;
-            let radius = (0.85 * radius as f32) as u32;
+            let (radius, _width_factor) = calculate(aabb, size, width);
+            let radius = (0.8 * radius as f32) as u32;
             let (left, right) = aabb.get_mirrored_points(width, 0.1);
             renderer.render_circle(&left, radius, &options);
             renderer.render_circle(&right, radius, &options);
         }
     }
+}
+
+fn calculate(aabb: &AABB, size: Size, width: f32) -> (u32, f32) {
+    let radius_factor = match size {
+        Size::Small => 0.25,
+        Size::Medium => 0.3,
+        Size::Large => 0.35,
+    };
+    let width_factor = width * radius_factor;
+    let radius = aabb.calculate_from_width(width_factor);
+
+    (radius, width_factor)
 }
