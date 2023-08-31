@@ -29,7 +29,7 @@ pub fn render_buns(
             renderer.render_circle(&center, radius, &options);
         }
         BunStyle::High => {
-            let center = aabb.get_point(0.5, 0.0);
+            let center = aabb.get_point(0.5, radius_factor / 2.0);
             renderer.render_circle(&center, radius, &options);
         }
         BunStyle::Twin => {
