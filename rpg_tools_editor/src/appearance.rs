@@ -156,6 +156,18 @@ fn update_eyebrows(path: &str, data: &UrlEncodedData) -> EyeBrows {
 
 fn update_hair(data: &UrlEncodedData) -> Hair {
     match get_type(data, "appearance.head.hair.type") {
+        "Bun" => {
+            let color = get_enum(data, "appearance.head.hair.color");
+            let size = get_enum(data, "appearance.head.hair.size");
+            let style = get_enum(data, "appearance.head.hair.style");
+
+            Hair::Bun {
+                style,
+                size,
+                hairline: get_hairline(data),
+                color,
+            }
+        }
         "Short" => {
             let color = get_enum(data, "appearance.head.hair.color");
 
