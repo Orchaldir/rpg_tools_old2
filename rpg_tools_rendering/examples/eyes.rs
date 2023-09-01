@@ -45,7 +45,7 @@ fn main() {
     ];
     let faces = HeadShape::get_all();
 
-    render_2_sets("eyes.svg", eyes_options, faces, create_appearance);
+    render_2_sets("eyes.svg", eyes_options, faces, create_appearance, false);
 }
 
 fn create_appearance(height: Length, eyes: &Eyes, face: &HeadShape) -> Appearance {

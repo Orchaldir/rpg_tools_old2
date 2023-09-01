@@ -37,6 +37,7 @@ fn main() {
         options,
         HeadShape::get_all(),
         create_appearance,
+        false,
     );
 }
 

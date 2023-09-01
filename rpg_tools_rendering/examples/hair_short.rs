@@ -1,22 +1,13 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
+use crate::utils::appearance::create_appearance_with_hair;
 use crate::utils::render::render_2_sets;
-use rpg_tools_core::model::character::appearance::beard::Beard;
-use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
-use rpg_tools_core::model::character::appearance::ear::Ears;
-use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
-use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
-use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::hair::ShortHair::FlatTop;
 use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
-use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
-use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
-use rpg_tools_core::model::character::appearance::Appearance;
+use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::side::Side;
 use rpg_tools_core::model::size::Size::{Large, Medium, Small};
 use Hairline::{Round, Straight, Triangle, WidowsPeak};
@@ -42,7 +33,8 @@ fn main() {
         "hair_short.svg",
         short_options,
         HeadShape::get_all(),
-        create_appearance,
+        create_appearance_with_hair,
+        false,
     );
 }
 
@@ -69,35 +61,4 @@ fn create_hair(style: ShortHair, hairline: Hairline) -> Hair {
         hairline,
         color: Color::SaddleBrown,
     }
-}
-
-fn create_appearance(height: Length, hair: &Hair, face: &HeadShape) -> Appearance {
-    Appearance::head(
-        Head {
-            ears: Ears::Normal {
-                shape: EarShape::Round,
-                size: Medium,
-            },
-            eyes: Eyes::Two {
-                eye: Eye::Normal {
-                    eye_shape: EyeShape::Ellipse,
-                    pupil_shape: PupilShape::Circle,
-                    pupil_color: Color::Green,
-                    background_color: Color::White,
-                },
-                eyebrows: Default::default(),
-                distance: Medium,
-            },
-            hair: *hair,
-            mouth: Mouth::Normal {
-                beard: Beard::None,
-                width: Medium,
-                teeth: SpecialTeeth::None,
-                teeth_color: TeethColor::White,
-            },
-            shape: *face,
-            skin: Skin::Skin(SkinColor::Light),
-        },
-        height,
-    )
 }

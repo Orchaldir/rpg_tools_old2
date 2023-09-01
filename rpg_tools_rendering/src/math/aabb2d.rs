@@ -173,6 +173,16 @@ impl AxisAlignedBoundingBox {
         (self.size.height() as f32 * factor) as u32
     }
 
+    /// Calculates a value based on the width.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
+    /// assert_eq!(AABB::simple(2, 3, 30, 100).calculate_from_width(0.5), 15);
+    /// ```
+    pub fn calculate_from_width(&self, factor: f32) -> u32 {
+        (self.size.width() as f32 * factor) as u32
+    }
+
     /// Returns the inner radius of the axis aligned bounding box.
     ///
     /// ```

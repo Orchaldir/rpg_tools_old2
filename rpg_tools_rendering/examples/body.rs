@@ -21,7 +21,7 @@ fn main() {
     let rows = vec![Thin, Average, Wide];
     let columns = vec![Fat, Hourglass, Muscular, Rectangle];
 
-    render_2_sets("bodies.svg", rows, columns, create_appearance);
+    render_2_sets("bodies.svg", rows, columns, create_appearance, false);
 }
 
 fn create_appearance(height: Length, width: &Width, shape: &BodyShape) -> Appearance {

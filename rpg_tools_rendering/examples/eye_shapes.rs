@@ -21,7 +21,13 @@ fn main() {
     let shape_options = vec![EyeShape::Almond, EyeShape::Ellipse, EyeShape::Circle];
     let faces = HeadShape::get_all();
 
-    render_2_sets("eye_shapes.svg", shape_options, faces, create_appearance);
+    render_2_sets(
+        "eye_shapes.svg",
+        shape_options,
+        faces,
+        create_appearance,
+        false,
+    );
 }
 
 fn create_appearance(height: Length, shape: &EyeShape, face: &HeadShape) -> Appearance {

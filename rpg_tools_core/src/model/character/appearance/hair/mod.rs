@@ -1,3 +1,4 @@
+use crate::model::character::appearance::hair::bun::BunStyle;
 use crate::model::character::appearance::hair::hairline::Hairline;
 use crate::model::color::Color;
 use crate::model::side::Side;
@@ -6,6 +7,7 @@ use crate::ui::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
+pub mod bun;
 pub mod hairline;
 
 /// How does the hair look like?
@@ -16,6 +18,12 @@ pub enum Hair {
     /// Short normal hair.
     Short {
         style: ShortHair,
+        hairline: Hairline,
+        color: Color,
+    },
+    Bun {
+        style: BunStyle,
+        size: Size,
         hairline: Hairline,
         color: Color,
     },

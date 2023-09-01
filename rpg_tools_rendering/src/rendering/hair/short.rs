@@ -21,13 +21,13 @@ pub fn render_buzz_cut(
 ) {
     let options = config.without_line(color);
     let line = config.get_line_options(1.0);
-    let polygon = get_buzz_cut(config, aabb, head_shape, hairline);
+    let polygon = get_simple_hair_style_polyon(config, aabb, head_shape, hairline);
 
     renderer.render_polygon(&polygon, &options);
     render_head_shape_with_option(renderer, config, aabb, line, head_shape);
 }
 
-fn get_buzz_cut(
+pub fn get_simple_hair_style_polyon(
     config: &RenderConfig,
     aabb: &AABB,
     head_shape: HeadShape,

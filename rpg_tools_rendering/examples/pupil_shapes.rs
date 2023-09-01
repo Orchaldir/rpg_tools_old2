@@ -30,6 +30,7 @@ fn main() {
         pupil_shapes,
         eye_shapes,
         create_appearance,
+        false,
     );
 }
 
