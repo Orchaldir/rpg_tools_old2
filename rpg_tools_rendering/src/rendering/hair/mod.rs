@@ -59,13 +59,11 @@ pub fn render_hair_behind_head_front(
     aabb: &AABB,
     head: &Head,
 ) {
-    match head.hair {
-        Hair::Bun {
-            style, size, color, ..
-        } => {
-            render_buns(renderer, config, aabb, head.shape, style, size, color);
-        }
-        _ => {}
+    if let Hair::Bun {
+        style, size, color, ..
+    } = head.hair
+    {
+        render_buns(renderer, config, aabb, head.shape, style, size, color);
     }
 }
 
