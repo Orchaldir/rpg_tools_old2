@@ -35,31 +35,48 @@ fn get_long_hair_polygon(
     let width_mouth = config.head.get_mouth_width(head_shape);
     let mut width = width_forehead;
 
-    let (top_left, top_right) =
-        aabb.get_mirrored_points(config.head.get_top_width(head_shape), 0.0);
-    let (forehead_left, forehead_right) =
-        aabb.get_mirrored_points(width_forehead, config.head.y_forehead);
+    let mut left_corners = vec![];
+    let mut right_corners = vec![];
 
-    let mut left_corners = vec![top_left, forehead_left];
-    let mut right_corners = vec![top_right, forehead_right];
+    add_mirrored_points(
+        aabb,
+        config.head.get_top_width(head_shape),
+        0.0,
+        &mut left_corners,
+        &mut right_corners,
+    );
+
+    add_mirrored_points(
+        aabb,
+        width,
+        width_forehead,
+        &mut left_corners,
+        &mut right_corners,
+    );
 
     if width_eye > width {
         width = width_eye;
     }
 
-    let (eye_left, eye_right) = aabb.get_mirrored_points(width, config.head.y_eye);
-
-    left_corners.push(eye_left);
-    right_corners.push(eye_right);
+    add_mirrored_points(
+        aabb,
+        width,
+        config.head.y_eye,
+        &mut left_corners,
+        &mut right_corners,
+    );
 
     if width_mouth > width {
         width = width_mouth;
     }
 
-    let (mouth_left, mouth_right) = aabb.get_mirrored_points(width, config.head.y_mouth);
-
-    left_corners.push(mouth_left);
-    right_corners.push(mouth_right);
+    add_mirrored_points(
+        aabb,
+        width,
+        config.head.y_mouth,
+        &mut left_corners,
+        &mut right_corners,
+    );
 
     let (left, right) = aabb.get_mirrored_points(width, 1.0);
 
@@ -94,4 +111,17 @@ fn get_long_hair_polygon(
 
     let polygon = Polygon2d::new(left_corners);
     config.cut_corners(&polygon).unwrap()
+}
+
+fn add_mirrored_points(
+    aabb: &AABB,
+    width: f32,
+    vertical: f32,
+    left_corners: &mut Vec<Point2d>,
+    right_corners: &mut Vec<Point2d>,
+) {
+    let (left, right) = aabb.get_mirrored_points(width, vertical);
+
+    left_corners.push(left);
+    right_corners.push(right);
 }
