@@ -174,12 +174,12 @@
         distance: Medium
       hair:
         type: Long
-        style: Wide
+        style: Straight
         hairline:
           type: Round
           c: Medium
         length:
-          millimetre: 1000
+          millimetre: 800
         color: SaddleBrown
       mouth:
         type: Normal
