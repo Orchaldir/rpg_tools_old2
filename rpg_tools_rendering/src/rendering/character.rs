@@ -32,12 +32,13 @@ pub fn render_character_from_front(
 
     match appearance {
         Appearance::HeadOnly { head, .. } => {
-            render_head_from_front(renderer, config, head, &inner);
+            render_head_before_body_from_front(renderer, config, head, &inner);
         }
         Appearance::Humanoid { body, head, .. } => {
-            render_body(renderer, config, &inner, body);
             let head_aabb = calculate_head_aabb(config, &inner);
-            render_head_from_front(renderer, config, head, &head_aabb);
+            render_head_behind_body_from_front(renderer, config, head, &head_aabb);
+            render_body(renderer, config, &inner, body);
+            render_head_before_body_from_front(renderer, config, head, &head_aabb);
         }
     }
 }
@@ -62,18 +63,26 @@ pub fn render_character_from_back(
     }
 }
 
-fn render_head_from_front(
+fn render_head_before_body_from_front(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    head: &Head,
+    aabb: &AABB,
+) {
+    render_ears(renderer, config, aabb, head);
+    render_head_shape(renderer, config, aabb, head);
+    render_eyes(renderer, config, aabb, head);
+    render_hair_before_head_from_front(renderer, config, aabb, head);
+    render_mouth(renderer, config, aabb, head);
+}
+
+fn render_head_behind_body_from_front(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     head: &Head,
     aabb: &AABB,
 ) {
     render_hair_behind_head_from_front(renderer, config, aabb, head);
-    render_ears(renderer, config, aabb, head);
-    render_head_shape(renderer, config, aabb, head);
-    render_eyes(renderer, config, aabb, head);
-    render_hair_before_head_from_front(renderer, config, aabb, head);
-    render_mouth(renderer, config, aabb, head);
 }
 
 fn render_head_from_back(
