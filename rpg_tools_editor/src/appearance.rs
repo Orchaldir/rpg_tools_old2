@@ -177,6 +177,19 @@ fn update_hair(data: &UrlEncodedData) -> Hair {
                 color,
             }
         }
+        "Long" => {
+            let color = get_enum(data, "appearance.head.hair.color");
+            let length = parse_length(data, "appearance.head.hair.length.millimetre")
+                .unwrap_or_else(|| Length::from_metre(0.1));
+            let style = get_enum(data, "appearance.head.hair.style");
+
+            Hair::Long {
+                style,
+                hairline: get_hairline(data),
+                length,
+                color,
+            }
+        }
         _ => Hair::None,
     }
 }

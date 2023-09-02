@@ -208,6 +208,41 @@
                   <li>
                     <b>Color:</b> {{ appearance.head.hair.color }}
                   </li>
+                {% elif appearance.head.hair.type == "Long" %}
+                  <li>
+                    <b>Style:</b> {{ appearance.head.hair.style }}
+                  </li>
+                  <li>
+                    <b>Hairline</b>: {{ appearance.head.hair.hairline.type }}
+                    <ul>
+                      {% if appearance.head.hair.hairline.type == "Round" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "Straight" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "Triangle" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Length</b>
+                    <ul>
+                      <li><b>Millimetre:</b> {{ appearance.head.hair.length.millimetre }}</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Color:</b> {{ appearance.head.hair.color }}
+                  </li>
                 {% elif appearance.head.hair.type == "Bun" %}
                   <li>
                     <b>Style:</b> {{ appearance.head.hair.style }}
@@ -574,6 +609,41 @@
                           <b>C:</b> {{ appearance.head.hair.hairline.c }}
                         </li>
                       {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Color:</b> {{ appearance.head.hair.color }}
+                  </li>
+                {% elif appearance.head.hair.type == "Long" %}
+                  <li>
+                    <b>Style:</b> {{ appearance.head.hair.style }}
+                  </li>
+                  <li>
+                    <b>Hairline</b>: {{ appearance.head.hair.hairline.type }}
+                    <ul>
+                      {% if appearance.head.hair.hairline.type == "Round" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "Straight" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "Triangle" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.hair.hairline.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Length</b>
+                    <ul>
+                      <li><b>Millimetre:</b> {{ appearance.head.hair.length.millimetre }}</li>
                     </ul>
                   </li>
                   <li>
