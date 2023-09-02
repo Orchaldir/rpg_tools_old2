@@ -103,6 +103,7 @@ fn get_long_hair_polygon(
             let down = center.add(down);
 
             left_corners.push(down);
+            left_corners.push(down);
         }
     }
 
