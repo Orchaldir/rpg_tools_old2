@@ -17,7 +17,7 @@ pub mod hairline;
 pub mod long;
 pub mod short;
 
-pub fn render_hair_before_head_front(
+pub fn render_hair_before_head_from_front(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
@@ -58,7 +58,7 @@ pub fn render_hair_before_head_front(
     }
 }
 
-pub fn render_hair_behind_head_front(
+pub fn render_hair_behind_head_from_front(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
@@ -100,7 +100,14 @@ pub fn render_hair_back(
                 render_head_shape_with_option(renderer, config, aabb, options, head.shape);
             }
         },
-        Hair::Long { .. } => {}
+        Hair::Long {
+            style,
+            length,
+            color,
+            ..
+        } => {
+            render_long_hair(renderer, config, aabb, head.shape, style, length, color);
+        }
         Hair::Bun {
             style, size, color, ..
         } => {

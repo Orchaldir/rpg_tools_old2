@@ -9,7 +9,8 @@ use rpg_tools_rendering::math::size2d::Size2d;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
 use rpg_tools_rendering::renderer::Renderer;
 use rpg_tools_rendering::rendering::character::{
-    calculate_character_size, calculate_size, render_character_back, render_character_front,
+    calculate_character_size, calculate_size, render_character_from_back,
+    render_character_from_front,
 };
 use rpg_tools_rendering::rendering::config::example::{create_border_options, create_config};
 
@@ -42,13 +43,13 @@ pub fn render_2_sets<T, S>(
             let aabb_front = AABB::new(start, size);
 
             svg_builder.render_rectangle(&aabb_front, &options);
-            render_character_front(&mut svg_builder, &config, &aabb_front, &appearance);
+            render_character_from_front(&mut svg_builder, &config, &aabb_front, &appearance);
 
             if back_too {
                 let start_back = start + Point2d::new(0, size.width() as i32);
                 let aabb_back = AABB::new(start_back, size);
                 svg_builder.render_rectangle(&aabb_back, &options);
-                render_character_back(&mut svg_builder, &config, &aabb_back, &appearance);
+                render_character_from_back(&mut svg_builder, &config, &aabb_back, &appearance);
             }
 
             start.x += size.width() as i32;
