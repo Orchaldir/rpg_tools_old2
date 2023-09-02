@@ -19,19 +19,16 @@ pub fn render_long_hair(
     length: Length,
     color: Color,
 ) {
-    let polygon = match style {
-        LongHairStyle::Straight => get_rectangle_polygon(config, aabb, head_shape, length, false),
-        LongHairStyle::Triangle => get_rectangle_polygon(config, aabb, head_shape, length, true),
-    };
+    let polygon = get_long_hair_polygon(config, aabb, head_shape, style, length);
     render_polygon(renderer, config, &polygon, color);
 }
 
-fn get_rectangle_polygon(
+fn get_long_hair_polygon(
     config: &RenderConfig,
     aabb: &AABB,
     head_shape: HeadShape,
+    style: LongHairStyle,
     length: Length,
-    round_bottom: bool,
 ) -> Polygon2d {
     let width_forehead = config.head.get_forehead_width(head_shape);
     let width_eye = config.head.get_eye_width(head_shape);
@@ -47,35 +44,49 @@ fn get_rectangle_polygon(
     let mut right_corners = vec![top_right, forehead_right];
 
     if width_eye > width {
-        let (eye_left, eye_right) = aabb.get_mirrored_points(width_eye, config.head.y_eye);
-
-        left_corners.push(eye_left);
-        right_corners.push(eye_right);
-
         width = width_eye;
     }
 
+    let (eye_left, eye_right) = aabb.get_mirrored_points(width, config.head.y_eye);
+
+    left_corners.push(eye_left);
+    right_corners.push(eye_right);
+
     if width_mouth > width {
-        let (mouth_left, mouth_right) = aabb.get_mirrored_points(width_mouth, config.head.y_mouth);
-
-        left_corners.push(mouth_left);
-        right_corners.push(mouth_right);
-
         width = width_mouth;
     }
 
+    let (mouth_left, mouth_right) = aabb.get_mirrored_points(width, config.head.y_mouth);
+
+    left_corners.push(mouth_left);
+    right_corners.push(mouth_right);
+
     let (left, right) = aabb.get_mirrored_points(width, 1.0);
 
+    left_corners.push(left);
+    right_corners.push(right);
+
     let down = Point2d::new(0, length.to_millimetre() as i32);
-    let bottom_left = left.add(down);
-    let bottom_right = right.add(down);
 
-    left_corners.push(bottom_left);
-    right_corners.push(bottom_right);
+    match style {
+        LongHairStyle::Rounded | LongHairStyle::Straight => {
+            let bottom_left = left.add(down);
+            let bottom_right = right.add(down);
 
-    if !round_bottom {
-        left_corners.push(bottom_left);
-        right_corners.push(bottom_right);
+            left_corners.push(bottom_left);
+            right_corners.push(bottom_right);
+
+            if style == LongHairStyle::Straight {
+                left_corners.push(bottom_left);
+                right_corners.push(bottom_right);
+            }
+        }
+        LongHairStyle::Triangle => {
+            let center = aabb.get_point(0.5, 1.0);
+            let down = center.add(down);
+
+            left_corners.push(down);
+        }
     }
 
     right_corners.reverse();

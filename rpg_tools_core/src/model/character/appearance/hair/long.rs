@@ -6,6 +6,7 @@ use serde::{Deserialize, Serialize};
 /// What style of long hair?
 #[derive(Convert, ui, Default, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum LongHairStyle {
+    Rounded,
     #[default]
     Straight,
     Triangle,
