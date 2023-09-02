@@ -74,7 +74,6 @@ pub fn get_straight_polygon(
     right_corners.reverse();
     left_corners.append(&mut right_corners);
 
-    let mut polygon = Polygon2d::new(left_corners);
-    polygon = polygon.resize(1.1);
+    let polygon = Polygon2d::new(left_corners);
     config.cut_corners(&polygon).unwrap()
 }
