@@ -1,6 +1,8 @@
 use crate::model::character::appearance::hair::bun::BunStyle;
 use crate::model::character::appearance::hair::hairline::Hairline;
+use crate::model::character::appearance::hair::long::LongHairStyle;
 use crate::model::color::Color;
+use crate::model::length::Length;
 use crate::model::side::Side;
 use crate::model::size::Size;
 use crate::ui::{UiVisitor, UI};
@@ -9,6 +11,7 @@ use serde::{Deserialize, Serialize};
 
 pub mod bun;
 pub mod hairline;
+pub mod long;
 
 /// How does the hair look like?
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
@@ -19,6 +22,12 @@ pub enum Hair {
     Short {
         style: ShortHair,
         hairline: Hairline,
+        color: Color,
+    },
+    Long {
+        style: LongHairStyle,
+        hairline: Hairline,
+        length: Length,
         color: Color,
     },
     Bun {
