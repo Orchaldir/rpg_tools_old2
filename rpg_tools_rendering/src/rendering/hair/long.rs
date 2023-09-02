@@ -19,15 +19,19 @@ pub fn render_long_hair(
     length: Length,
     color: Color,
 ) {
-    let polygon = get_straight_polygon(config, aabb, head_shape, length);
+    let polygon = match style {
+        LongHairStyle::Straight => get_rectangle_polygon(config, aabb, head_shape, length, false),
+        LongHairStyle::Triangle => get_rectangle_polygon(config, aabb, head_shape, length, true),
+    };
     render_polygon(renderer, config, &polygon, color);
 }
 
-pub fn get_straight_polygon(
+fn get_rectangle_polygon(
     config: &RenderConfig,
     aabb: &AABB,
     head_shape: HeadShape,
     length: Length,
+    round_bottom: bool,
 ) -> Polygon2d {
     let width_forehead = config.head.get_forehead_width(head_shape);
     let width_eye = config.head.get_eye_width(head_shape);
@@ -67,9 +71,12 @@ pub fn get_straight_polygon(
     let bottom_right = right.add(down);
 
     left_corners.push(bottom_left);
-    left_corners.push(bottom_left);
     right_corners.push(bottom_right);
-    right_corners.push(bottom_right);
+
+    if !round_bottom {
+        left_corners.push(bottom_left);
+        right_corners.push(bottom_right);
+    }
 
     right_corners.reverse();
     left_corners.append(&mut right_corners);
