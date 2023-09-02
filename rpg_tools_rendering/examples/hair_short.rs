@@ -1,7 +1,7 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::appearance::create_appearance_with_hair;
+use crate::utils::appearance::create_head_with_hair;
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::hair::ShortHair::FlatTop;
@@ -33,7 +33,7 @@ fn main() {
         "hair_short.svg",
         short_options,
         HeadShape::get_all(),
-        create_appearance_with_hair,
+        create_head_with_hair,
         false,
     );
 }

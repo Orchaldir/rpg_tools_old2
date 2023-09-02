@@ -44,8 +44,10 @@ pub fn render_hair_before_head_front(
                 render_polygon(renderer, config, &polygon, color);
             }
         },
-        Hair::Long { .. } => {}
         Hair::Bun {
+            hairline, color, ..
+        }
+        | Hair::Long {
             hairline, color, ..
         } => {
             let polygon = get_simple_hair_style_polyon(config, aabb, head.shape, hairline);
