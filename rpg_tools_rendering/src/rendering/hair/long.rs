@@ -9,6 +9,7 @@ use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use std::ops::Add;
+use LongHairStyle::{Rounded, Straight, Triangle, Wide};
 
 pub fn render_long_hair(
     renderer: &mut dyn Renderer,
@@ -78,25 +79,26 @@ fn get_long_hair_polygon(
         &mut right_corners,
     );
 
-    let (left, right) =
-        add_mirrored_points(aabb, width, 1.0, &mut left_corners, &mut right_corners);
+    add_mirrored_points(aabb, width, 1.0, &mut left_corners, &mut right_corners);
 
     let down = Point2d::new(0, length.to_millimetre() as i32);
 
     match style {
-        LongHairStyle::Rounded | LongHairStyle::Straight => {
+        Rounded | Straight | Wide => {
+            let width = width * if style == Wide { 1.5 } else { 1.0 };
+            let (left, right) = aabb.get_mirrored_points(width, 1.0);
             let bottom_left = left.add(down);
             let bottom_right = right.add(down);
 
             left_corners.push(bottom_left);
             right_corners.push(bottom_right);
 
-            if style == LongHairStyle::Straight {
+            if style == Straight {
                 left_corners.push(bottom_left);
                 right_corners.push(bottom_right);
             }
         }
-        LongHairStyle::Triangle => {
+        Triangle => {
             let center = aabb.get_point(0.5, 1.0);
             let down = center.add(down);
 

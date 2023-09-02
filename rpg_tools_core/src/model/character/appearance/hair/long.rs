@@ -10,4 +10,5 @@ pub enum LongHairStyle {
     #[default]
     Straight,
     Triangle,
+    Wide,
 }
