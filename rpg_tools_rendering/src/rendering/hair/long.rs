@@ -48,8 +48,8 @@ fn get_long_hair_polygon(
 
     add_mirrored_points(
         aabb,
-        width,
         width_forehead,
+        config.head.y_forehead,
         &mut left_corners,
         &mut right_corners,
     );
