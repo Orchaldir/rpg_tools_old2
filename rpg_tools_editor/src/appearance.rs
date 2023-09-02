@@ -17,7 +17,7 @@ use rpg_tools_rendering::math::aabb2d::AABB;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
 use rpg_tools_rendering::renderer::Renderer;
 use rpg_tools_rendering::rendering::character::{
-    calculate_character_size, render_character_back, render_character_front,
+    calculate_character_size, render_character_from_back, render_character_from_front,
 };
 use rpg_tools_rendering::rendering::config::example::create_border_options;
 use rpg_tools_rendering::rendering::config::RenderConfig;
@@ -174,6 +174,19 @@ fn update_hair(data: &UrlEncodedData) -> Hair {
             Hair::Short {
                 style: update_short_hair(data),
                 hairline: get_hairline(data),
+                color,
+            }
+        }
+        "Long" => {
+            let color = get_enum(data, "appearance.head.hair.color");
+            let length = parse_length(data, "appearance.head.hair.length.millimetre")
+                .unwrap_or_else(|| Length::from_metre(0.1));
+            let style = get_enum(data, "appearance.head.hair.style");
+
+            Hair::Long {
+                style,
+                hairline: get_hairline(data),
+                length,
                 color,
             }
         }
@@ -336,9 +349,9 @@ pub fn render_to_svg(config: &RenderConfig, appearance: &Appearance, front: bool
     svg_builder.render_rectangle(&aabb, &options);
 
     if front {
-        render_character_front(&mut svg_builder, config, &aabb, appearance);
+        render_character_from_front(&mut svg_builder, config, &aabb, appearance);
     } else {
-        render_character_back(&mut svg_builder, config, &aabb, appearance);
+        render_character_from_back(&mut svg_builder, config, &aabb, appearance);
     }
 
     let svg = svg_builder.finish();

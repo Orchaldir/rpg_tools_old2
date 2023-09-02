@@ -16,10 +16,16 @@ pub struct Body {
 
 impl Default for Body {
     fn default() -> Self {
+        Body::with_skin(Skin::default())
+    }
+}
+
+impl Body {
+    pub fn with_skin(skin: Skin) -> Body {
         Self {
             shape: BodyShape::Rectangle,
             width: Width::Average,
-            skin: Skin::default(),
+            skin,
         }
     }
 }

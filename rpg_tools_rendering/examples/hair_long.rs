@@ -1,13 +1,14 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::appearance::create_head_with_hair;
+use crate::utils::appearance::create_humanoid_with_hair;
 use crate::utils::render::render_2_sets;
-use rpg_tools_core::model::character::appearance::hair::bun::BunStyle;
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
+use rpg_tools_core::model::character::appearance::hair::long::LongHairStyle;
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::color::Color;
+use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::size::Size;
 
 pub mod utils;
@@ -15,26 +16,26 @@ pub mod utils;
 fn main() {
     let mut options = Vec::new();
 
-    for style in BunStyle::get_all() {
-        for size in Size::get_all() {
-            options.push(create_bun(style, size));
+    for style in LongHairStyle::get_all() {
+        for l in 1..6 {
+            options.push(create_long(style, l as f32 * 0.2));
         }
     }
 
     render_2_sets(
-        "hair_bun.svg",
+        "hair_long.svg",
         options,
         HeadShape::get_all(),
-        create_head_with_hair,
+        create_humanoid_with_hair,
         true,
     );
 }
 
-fn create_bun(style: BunStyle, size: Size) -> Hair {
-    Hair::Bun {
+fn create_long(style: LongHairStyle, length: f32) -> Hair {
+    Hair::Long {
         style,
-        size,
-        hairline: Hairline::Straight(Size::Small),
+        hairline: Hairline::Straight(Size::Medium),
+        length: Length::from_metre(length),
         color: Color::SaddleBrown,
     }
 }

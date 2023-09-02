@@ -15,7 +15,9 @@ use rpg_tools_core::model::length::Length;
 use rpg_tools_rendering::math::aabb2d::AABB;
 use rpg_tools_rendering::renderer::svg::SvgBuilder;
 use rpg_tools_rendering::renderer::Renderer;
-use rpg_tools_rendering::rendering::character::{calculate_character_size, render_character_front};
+use rpg_tools_rendering::rendering::character::{
+    calculate_character_size, render_character_from_front,
+};
 use rpg_tools_rendering::rendering::config::example::{create_border_options, create_config};
 
 pub mod utils;
@@ -49,7 +51,7 @@ fn main() {
         let mut svg_builder = SvgBuilder::new(size);
 
         svg_builder.render_rectangle(&aabb, &options);
-        render_character_front(&mut svg_builder, &config, &aabb, &appearance);
+        render_character_from_front(&mut svg_builder, &config, &aabb, &appearance);
         let svg = svg_builder.finish();
         svg.save(&format!("{}-{:?}.svg", i, shape)).unwrap();
     }

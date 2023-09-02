@@ -173,12 +173,13 @@
           width: Thin
         distance: Medium
       hair:
-        type: Short
-        style:
-          type: MiddlePart
+        type: Long
+        style: Straight
         hairline:
           type: Round
           c: Medium
+        length:
+          millimetre: 800
         color: SaddleBrown
       mouth:
         type: Normal
