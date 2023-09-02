@@ -78,10 +78,8 @@ fn get_long_hair_polygon(
         &mut right_corners,
     );
 
-    let (left, right) = aabb.get_mirrored_points(width, 1.0);
-
-    left_corners.push(left);
-    right_corners.push(right);
+    let (left, right) =
+        add_mirrored_points(aabb, width, 1.0, &mut left_corners, &mut right_corners);
 
     let down = Point2d::new(0, length.to_millimetre() as i32);
 
@@ -119,9 +117,11 @@ fn add_mirrored_points(
     vertical: f32,
     left_corners: &mut Vec<Point2d>,
     right_corners: &mut Vec<Point2d>,
-) {
+) -> (Point2d, Point2d) {
     let (left, right) = aabb.get_mirrored_points(width, vertical);
 
     left_corners.push(left);
     right_corners.push(right);
+
+    (left, right)
 }
