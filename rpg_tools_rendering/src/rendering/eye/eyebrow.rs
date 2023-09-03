@@ -29,8 +29,8 @@ pub fn render_eyebrow(
             width,
         } => {
             let options = config.without_line(*color);
-            let polygon = get_smooth_eyebrow(config, *shape, *style, aabb, *width, None);
-            renderer.render_polygon(&polygon, &options);
+            let polygon = get_eyebrow(config, *shape, *style, aabb, *width, None);
+            renderer.render_smooth_polygon(&polygon, &options);
         }
         _ => {}
     }
@@ -51,11 +51,10 @@ pub fn render_eyebrows(
             width,
         } => {
             let options = config.without_line(*color);
-            let polygon_left = get_smooth_eyebrow(config, *shape, *style, left, *width, Some(Left));
-            let polygon_right =
-                get_smooth_eyebrow(config, *shape, *style, right, *width, Some(Right));
-            renderer.render_polygon(&polygon_left, &options);
-            renderer.render_polygon(&polygon_right, &options);
+            let polygon_left = get_eyebrow(config, *shape, *style, left, *width, Some(Left));
+            let polygon_right = get_eyebrow(config, *shape, *style, right, *width, Some(Right));
+            renderer.render_smooth_polygon(&polygon_left, &options);
+            renderer.render_smooth_polygon(&polygon_right, &options);
         }
         EyeBrows::Unibrow {
             color,
@@ -68,23 +67,10 @@ pub fn render_eyebrows(
             let polygon_right = get_eyebrow(config, *shape, *style, right, *width, Some(Right));
             let index = polygon_left.corners().len() / 2;
             let polygon = polygon_left.insert(index, &polygon_right);
-            let polygon = config.cut_corners(&polygon).unwrap();
-            renderer.render_polygon(&polygon, &options);
+            renderer.render_smooth_polygon(&polygon, &options);
         }
         _ => {}
     }
-}
-
-fn get_smooth_eyebrow(
-    config: &RenderConfig,
-    shape: EyebrowShape,
-    style: EyebrowStyle,
-    aabb: &AABB,
-    width: Width,
-    side: Option<Side>,
-) -> Polygon2d {
-    let polygon = get_eyebrow(config, shape, style, aabb, width, side);
-    config.cut_corners(&polygon).unwrap()
 }
 
 fn get_eyebrow(

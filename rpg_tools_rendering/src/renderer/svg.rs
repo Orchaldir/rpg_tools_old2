@@ -208,6 +208,7 @@ fn path_from_smooth_polygon(polygon: &Polygon2d) -> String {
     let mut is_start = true;
     let mut is_sharp = false;
     let mut index = 1;
+    let mut first_middle = None;
 
     for point in corners.iter().skip(1) {
         if previous.calculate_distance(point) == 0.0 {
@@ -240,6 +241,7 @@ fn path_from_smooth_polygon(polygon: &Polygon2d) -> String {
                 );
             } else {
                 println!("Point {} is not sharp start", index);
+                first_middle = Some(middle);
                 path.push_str(format!("M {} {}", middle.x, middle.y).as_str());
             }
         } else if is_sharp {
@@ -259,7 +261,13 @@ fn path_from_smooth_polygon(polygon: &Polygon2d) -> String {
         index += 1;
     }
 
-    path.push_str(" Z");
+    if let Some(middle) = first_middle {
+        path.push_str(
+            format!(" Q {} {} {} {}", previous.x, previous.y, middle.x, middle.y).as_str(),
+        );
+    } else {
+        path.push_str(" Z");
+    }
 
     path
 }
@@ -269,18 +277,6 @@ fn create_corners(polygon: &Polygon2d) -> Vec<Point2d> {
     corners.push(corners[0]);
 
     corners
-}
-
-fn get_smooth_polygon_start(polygon: &Polygon2d) -> Point2d {
-    let corners = polygon.corners();
-    let first = &corners[0];
-    let second = &corners[1];
-
-    if first.calculate_distance(second) == 0.0 {
-        return *first;
-    }
-
-    return first.lerp(second, 0.5);
 }
 
 fn to_style(options: &RenderOptions) -> String {
