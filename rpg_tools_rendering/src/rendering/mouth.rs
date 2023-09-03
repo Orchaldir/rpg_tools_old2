@@ -42,7 +42,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             let down = Orientation::from_degree(90.0);
             let up = Orientation::from_degree(270.0);
 
-            render_normal_mouth(renderer, config, aabb, width);
+            render_simple_mouth(renderer, config, aabb, width);
 
             match teeth {
                 SpecialTeeth::UpperFangs(size) => {
@@ -71,6 +71,11 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             }
 
             render_beard_in_front_of_mouth(renderer, config, aabb, beard, width);
+        }
+        Mouth::Female { width, color, .. } => {
+            let width = config.mouth.get_mouth_width(head_width_factor, *width);
+
+            render_female_mouth(renderer, config, aabb, width, *color);
         }
     }
 }
@@ -134,7 +139,7 @@ pub fn render_circular_mouth(
     }
 }
 
-fn render_normal_mouth(
+fn render_simple_mouth(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
@@ -143,6 +148,44 @@ fn render_normal_mouth(
     let options = config.line_with_color(Black, 1.0);
     let line: Line2d = aabb.get_mirrored_points(width, config.head.y_mouth).into();
     renderer.render_line(&line, &options);
+}
+
+fn render_female_mouth(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    width: f32,
+    color: Color,
+) {
+    let options = config.without_line(color);
+    let half_height = 0.03;
+    let (left, right) = aabb.get_mirrored_points(width, config.head.y_mouth);
+    let (top_left, top_right) =
+        aabb.get_mirrored_points(width * 0.5, config.head.y_mouth - half_height);
+    let (bottom_left, bottom_right) =
+        aabb.get_mirrored_points(width * 0.6, config.head.y_mouth + half_height);
+    let top_center = aabb.get_point(0.5, config.head.y_mouth - half_height);
+    let cupids_bow = aabb.get_point(0.5, config.head.y_mouth);
+
+    let corners = vec![
+        left,
+        left,
+        bottom_left,
+        bottom_right,
+        right,
+        right,
+        top_right,
+        //top_center,
+        cupids_bow,
+        cupids_bow,
+        //top_center,
+        top_left,
+    ];
+
+    let polygon = Polygon2d::new(corners);
+    let polygon = config.cut_corners(&polygon).unwrap();
+
+    renderer.render_polygon(&polygon, &options);
 }
 
 fn render_fang(
