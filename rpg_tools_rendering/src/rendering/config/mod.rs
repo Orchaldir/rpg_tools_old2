@@ -27,6 +27,7 @@ pub struct RenderConfig {
     pub border: u32,
     pub line_color: WebColor,
     pub line_width: u32,
+    pub thin_line_width: u32,
     pub cut_corners_u: f32,
     pub cut_corners_v: f32,
     pub cut_corners_n: u32,
@@ -86,7 +87,7 @@ impl RenderConfig {
         RenderOptions::new(
             self.mouth.get_teeth_color(color),
             WebColor::from_color(Color::Black),
-            self.line_width / 10,
+            self.thin_line_width,
         )
     }
 

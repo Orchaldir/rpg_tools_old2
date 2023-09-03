@@ -35,48 +35,63 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             teeth,
             teeth_color,
         } => {
-            render_beard_behind_mouth(renderer, config, aabb, head.shape, head, beard);
-
             let width = config.mouth.get_mouth_width(head_width_factor, *width);
-            let distance_between_fangs = config.mouth.get_distance_between_fangs(width);
-            let down = Orientation::from_degree(90.0);
-            let up = Orientation::from_degree(270.0);
 
+            render_beard_behind_mouth(renderer, config, aabb, head.shape, head, beard);
             render_simple_mouth(renderer, config, aabb, width);
-
-            match teeth {
-                SpecialTeeth::UpperFangs(size) => {
-                    render_2_fangs(
-                        renderer,
-                        &config,
-                        &aabb,
-                        down,
-                        distance_between_fangs,
-                        *size,
-                        *teeth_color,
-                    );
-                }
-                SpecialTeeth::LowerFangs(size) => {
-                    render_2_fangs(
-                        renderer,
-                        &config,
-                        &aabb,
-                        up,
-                        distance_between_fangs,
-                        *size,
-                        *teeth_color,
-                    );
-                }
-                _ => {}
-            }
-
+            render_special_teeth(renderer, &config, &aabb, teeth, teeth_color, width);
             render_beard_in_front_of_mouth(renderer, config, aabb, beard, width);
         }
-        Mouth::Female { width, color, .. } => {
+        Mouth::Female {
+            width,
+            color,
+            teeth,
+            teeth_color,
+        } => {
             let width = config.mouth.get_mouth_width(head_width_factor, *width);
 
             render_female_mouth(renderer, config, aabb, width, *color);
+            render_special_teeth(renderer, &config, &aabb, teeth, teeth_color, width);
         }
+    }
+}
+
+fn render_special_teeth(
+    renderer: &mut dyn Renderer,
+    config: &&RenderConfig,
+    aabb: &&AABB,
+    teeth: &SpecialTeeth,
+    teeth_color: &TeethColor,
+    width: f32,
+) {
+    let distance_between_fangs = config.mouth.get_distance_between_fangs(width);
+    let down = Orientation::from_degree(90.0);
+    let up = Orientation::from_degree(270.0);
+
+    match teeth {
+        SpecialTeeth::UpperFangs(size) => {
+            render_2_fangs(
+                renderer,
+                &config,
+                &aabb,
+                down,
+                distance_between_fangs,
+                *size,
+                *teeth_color,
+            );
+        }
+        SpecialTeeth::LowerFangs(size) => {
+            render_2_fangs(
+                renderer,
+                &config,
+                &aabb,
+                up,
+                distance_between_fangs,
+                *size,
+                *teeth_color,
+            );
+        }
+        _ => {}
     }
 }
 
