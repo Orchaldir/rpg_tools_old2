@@ -183,11 +183,11 @@
         color: SaddleBrown
       mouth:
         type: Female
-        width: Medium
+        width: Large
         color: Red
         teeth:
           type: UpperFangs
-          c: Medium
+          c: Small
         teeth_color: White
       shape: Oval
       skin:

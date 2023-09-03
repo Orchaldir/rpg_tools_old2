@@ -253,10 +253,10 @@ fn update_mouth(data: &UrlEncodedData) -> Mouth {
 }
 
 fn parse_common_mouth(data: &UrlEncodedData) -> (Size, TeethColor) {
-    let size = get_enum(data, "appearance.head.mouth.size");
+    let width = get_enum(data, "appearance.head.mouth.width");
     let color = get_enum(data, "appearance.head.mouth.teeth_color");
 
-    (size, color)
+    (width, color)
 }
 
 fn parse_special_teeth(data: &UrlEncodedData) -> SpecialTeeth {
