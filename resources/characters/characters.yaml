@@ -39,7 +39,7 @@
           c: Medium
         color: Yellow
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: GoateeAndMoustache
           moustache: Handlebar
@@ -89,7 +89,7 @@
       hair:
         type: None
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: None
         width: Medium
@@ -128,7 +128,7 @@
       hair:
         type: None
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: None
         width: Medium
@@ -182,7 +182,7 @@
           millimetre: 800
         color: SaddleBrown
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: None
         width: Medium
@@ -224,7 +224,7 @@
       hair:
         type: None
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: None
         width: Medium
@@ -278,7 +278,7 @@
           c: Medium
         color: SaddleBrown
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: FullBeard
           style: Triangle

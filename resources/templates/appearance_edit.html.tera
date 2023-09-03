@@ -278,7 +278,7 @@
                     </ul>
                   </li>
                   <li>
-                    <b>Mouth:</b> {{ macros::add_select(name="appearance.head.mouth.type", options=[ "None","Circle","Normal" ], selected=appearance.head.mouth.type, update=true) }}
+                    <b>Mouth:</b> {{ macros::add_select(name="appearance.head.mouth.type", options=[ "None","Circle","Simple" ], selected=appearance.head.mouth.type, update=true) }}
                     <ul>
                       {% if appearance.head.mouth.type == "None" %}
                       {% elif appearance.head.mouth.type == "Circle" %}
@@ -288,7 +288,7 @@
                         <li>
                           <b>Teeth Color:</b> {{ macros::add_select(name="appearance.head.mouth.teeth_color", options=[ "White","Yellow","Brown" ], selected=appearance.head.mouth.teeth_color, update=true) }}
                         </li>
-                      {% elif appearance.head.mouth.type == "Normal" %}
+                      {% elif appearance.head.mouth.type == "Simple" %}
                         <li>
                           <b>Beard:</b> {{ macros::add_select(name="appearance.head.mouth.beard.type", options=[ "None","Stubble","Moustache","Goatee","GoateeAndMoustache","FullBeard" ], selected=appearance.head.mouth.beard.type, update=true) }}
                           <ul>
@@ -684,7 +684,7 @@
                     </ul>
                   </li>
                   <li>
-                    <b>Mouth:</b> {{ macros::add_select(name="appearance.head.mouth.type", options=[ "None","Circle","Normal" ], selected=appearance.head.mouth.type, update=true) }}
+                    <b>Mouth:</b> {{ macros::add_select(name="appearance.head.mouth.type", options=[ "None","Circle","Simple" ], selected=appearance.head.mouth.type, update=true) }}
                     <ul>
                       {% if appearance.head.mouth.type == "None" %}
                       {% elif appearance.head.mouth.type == "Circle" %}
@@ -694,7 +694,7 @@
                         <li>
                           <b>Teeth Color:</b> {{ macros::add_select(name="appearance.head.mouth.teeth_color", options=[ "White","Yellow","Brown" ], selected=appearance.head.mouth.teeth_color, update=true) }}
                         </li>
-                      {% elif appearance.head.mouth.type == "Normal" %}
+                      {% elif appearance.head.mouth.type == "Simple" %}
                         <li>
                           <b>Beard:</b> {{ macros::add_select(name="appearance.head.mouth.beard.type", options=[ "None","Stubble","Moustache","Goatee","GoateeAndMoustache","FullBeard" ], selected=appearance.head.mouth.beard.type, update=true) }}
                           <ul>

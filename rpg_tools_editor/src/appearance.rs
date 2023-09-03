@@ -227,10 +227,10 @@ fn update_mouth(data: &UrlEncodedData) -> Mouth {
 
             Mouth::Circle { size, teeth_color }
         }
-        "Normal" => {
+        "Simple" => {
             let (width, teeth_color) = parse_common_mouth(data);
 
-            Mouth::Normal {
+            Mouth::Simple {
                 beard: parse_beard("appearance.head.mouth", data),
                 width,
                 teeth: parse_special_teeth(data),

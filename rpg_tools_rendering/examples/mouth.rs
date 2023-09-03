@@ -46,7 +46,7 @@ fn create_circle(size: Size) -> Mouth {
 }
 
 fn create_normal(width: Size, teeth: Size) -> Mouth {
-    Mouth::Normal {
+    Mouth::Simple {
         beard: Beard::None,
         width,
         teeth: SpecialTeeth::LowerFangs(teeth),

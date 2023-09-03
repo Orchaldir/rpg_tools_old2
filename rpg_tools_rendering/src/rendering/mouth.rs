@@ -29,7 +29,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
 
             render_circular_mouth(renderer, config, &center, radius, *teeth_color);
         }
-        Mouth::Normal {
+        Mouth::Simple {
             beard,
             width,
             teeth,

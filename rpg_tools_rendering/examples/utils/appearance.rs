@@ -43,7 +43,7 @@ fn create_head(shape: HeadShape, hair: &Hair) -> Head {
             distance: Medium,
         },
         hair: *hair,
-        mouth: Mouth::Normal {
+        mouth: Mouth::Simple {
             beard: Beard::None,
             width: Medium,
             teeth: SpecialTeeth::None,

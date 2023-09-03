@@ -16,7 +16,7 @@ pub enum Mouth {
         teeth_color: TeethColor,
     },
     /// Like a human's mouth.
-    Normal {
+    Simple {
         beard: Beard,
         width: Size,
         teeth: SpecialTeeth,
