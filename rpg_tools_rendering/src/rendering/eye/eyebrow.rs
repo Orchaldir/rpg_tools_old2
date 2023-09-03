@@ -28,7 +28,7 @@ pub fn render_eyebrow(
             style,
             width,
         } => {
-            let options = config.with_thickness(*color, 0.5);
+            let options = config.without_line(*color);
             let polygon = get_smooth_eyebrow(config, *shape, *style, aabb, *width, None);
             renderer.render_polygon(&polygon, &options);
         }
@@ -50,7 +50,7 @@ pub fn render_eyebrows(
             style,
             width,
         } => {
-            let options = config.with_thickness(*color, 0.5);
+            let options = config.without_line(*color);
             let polygon_left = get_smooth_eyebrow(config, *shape, *style, left, *width, Some(Left));
             let polygon_right =
                 get_smooth_eyebrow(config, *shape, *style, right, *width, Some(Right));
@@ -63,7 +63,7 @@ pub fn render_eyebrows(
             style,
             width,
         } => {
-            let options = config.with_thickness(*color, 0.5);
+            let options = config.without_line(*color);
             let polygon_left = get_eyebrow(config, *shape, *style, left, *width, Some(Left));
             let polygon_right = get_eyebrow(config, *shape, *style, right, *width, Some(Right));
             let index = polygon_left.corners().len() / 2;
