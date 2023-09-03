@@ -24,9 +24,8 @@ pub fn render_head_shape_with_option(
     shape: HeadShape,
 ) {
     let polygon = Polygon2d::new(get_head_corners(config, aabb, shape));
-    let cut = config.cut_corners(&polygon).unwrap();
 
-    renderer.render_polygon(&cut, &options);
+    renderer.render_smooth_polygon(&polygon, &options);
 }
 
 pub fn get_head_corners(config: &RenderConfig, aabb: &AABB, shape: HeadShape) -> Vec<Point2d> {

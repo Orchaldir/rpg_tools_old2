@@ -80,11 +80,11 @@ fn render_goatee(
     let options = config.without_line(*color);
     let polygon = match style {
         GoateeStyle::GoatPatch => get_goat_patch(config, aabb, mouth_width),
-        GoateeStyle::Goatee => get_goatee(config, aabb, mouth_width),
+        GoateeStyle::Goatee => get_goatee(aabb, mouth_width),
         GoateeStyle::VanDyke => get_van_dyke(config, aabb),
         _ => get_soul_patch(config, aabb),
     };
-    renderer.render_polygon(&polygon, &options);
+    renderer.render_smooth_polygon(&polygon, &options);
 }
 
 fn render_full_beard(
@@ -104,7 +104,7 @@ fn render_full_beard(
         FullBeardStyle::Wide => get_full_wide(config, aabb, head_shape, length),
     };
 
-    renderer.render_polygon(&polygon, &options);
+    renderer.render_smooth_polygon(&polygon, &options);
 }
 
 fn render_mustache(
@@ -124,7 +124,7 @@ fn render_mustache(
         MoustacheStyle::Toothbrush => get_toothbrush(config, aabb),
         MoustacheStyle::Walrus => get_walrus(config, aabb, mouth_width),
     };
-    renderer.render_polygon(&polygon, &options);
+    renderer.render_smooth_polygon(&polygon, &options);
 }
 
 fn render_stubble(
@@ -138,7 +138,7 @@ fn render_stubble(
     let line = config.get_line_options(1.0);
     let polygon = get_stubble(config, aabb, head.shape);
 
-    renderer.render_polygon(&polygon, &options);
+    renderer.render_smooth_polygon(&polygon, &options);
     render_head_shape_with_option(renderer, config, aabb, line, head.shape);
 }
 
@@ -151,6 +151,5 @@ fn get_stubble(config: &RenderConfig, aabb: &AABB, head_shape: HeadShape) -> Pol
         aabb.get_mirrored_points(config.head.get_chin_width(head_shape), 1.0);
     let corners = vec![top_left, bottom_left, bottom_right, top_right];
 
-    let polygon = Polygon2d::new(corners);
-    config.cut_corners(&polygon).unwrap()
+    Polygon2d::new(corners)
 }

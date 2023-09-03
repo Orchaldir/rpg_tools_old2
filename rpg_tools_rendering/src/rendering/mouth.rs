@@ -39,7 +39,7 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
 
             render_beard_behind_mouth(renderer, config, aabb, head.shape, head, beard);
             render_simple_mouth(renderer, config, aabb, width);
-            render_special_teeth(renderer, &config, &aabb, teeth, teeth_color, width);
+            render_special_teeth(renderer, config, aabb, teeth, teeth_color, width);
             render_beard_in_front_of_mouth(renderer, config, aabb, beard, width);
         }
         Mouth::Female {
@@ -51,15 +51,15 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
             let width = config.mouth.get_mouth_width(head_width_factor, *width);
 
             render_female_mouth(renderer, config, aabb, width, *color);
-            render_special_teeth(renderer, &config, &aabb, teeth, teeth_color, width);
+            render_special_teeth(renderer, config, aabb, teeth, teeth_color, width);
         }
     }
 }
 
 fn render_special_teeth(
     renderer: &mut dyn Renderer,
-    config: &&RenderConfig,
-    aabb: &&AABB,
+    config: &RenderConfig,
+    aabb: &AABB,
     teeth: &SpecialTeeth,
     teeth_color: &TeethColor,
     width: f32,
@@ -72,8 +72,8 @@ fn render_special_teeth(
         SpecialTeeth::UpperFangs(size) => {
             render_2_fangs(
                 renderer,
-                &config,
-                &aabb,
+                config,
+                aabb,
                 down,
                 distance_between_fangs,
                 *size,
@@ -83,8 +83,8 @@ fn render_special_teeth(
         SpecialTeeth::LowerFangs(size) => {
             render_2_fangs(
                 renderer,
-                &config,
-                &aabb,
+                config,
+                aabb,
                 up,
                 distance_between_fangs,
                 *size,
@@ -97,8 +97,8 @@ fn render_special_teeth(
 
 fn render_2_fangs(
     renderer: &mut dyn Renderer,
-    config: &&RenderConfig,
-    aabb: &&AABB,
+    config: &RenderConfig,
+    aabb: &AABB,
     down: Orientation,
     distance_between_fangs: f32,
     size: Size,
@@ -179,7 +179,6 @@ fn render_female_mouth(
         aabb.get_mirrored_points(width * 0.5, config.head.y_mouth - half_height);
     let (bottom_left, bottom_right) =
         aabb.get_mirrored_points(width * 0.5, config.head.y_mouth + half_height);
-    let top_center = aabb.get_point(0.5, config.head.y_mouth - half_height);
     let cupids_bow = aabb.get_point(0.5, config.head.y_mouth - half_height / 2.0);
 
     let corners = vec![
@@ -190,10 +189,8 @@ fn render_female_mouth(
         right,
         right,
         top_right,
-        //top_center,
         cupids_bow,
         cupids_bow,
-        //top_center,
         top_left,
     ];
 

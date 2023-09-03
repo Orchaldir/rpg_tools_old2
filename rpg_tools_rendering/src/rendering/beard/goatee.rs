@@ -9,14 +9,12 @@ pub fn get_goat_patch(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> P
     polygon.create_sharp_corner(0);
     polygon.create_sharp_corner(4);
 
-    config.cut_corners(&polygon).unwrap()
+    polygon
 }
 
-pub fn get_goatee(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
+pub fn get_goatee(aabb: &AABB, mouth_width: f32) -> Polygon2d {
     let width = mouth_width * 0.8;
-    let polygon = from_top_and_bottom(aabb, 0.95, 1.10, width, width);
-
-    config.cut_corners(&polygon).unwrap()
+    from_top_and_bottom(aabb, 0.95, 1.10, width, width)
 }
 
 pub fn get_soul_patch(config: &RenderConfig, aabb: &AABB) -> Polygon2d {
@@ -31,7 +29,7 @@ pub fn get_van_dyke(config: &RenderConfig, aabb: &AABB) -> Polygon2d {
     polygon.create_sharp_corner(0);
     polygon.create_sharp_corner(4);
 
-    config.cut_corners(&polygon).unwrap()
+    polygon
 }
 
 fn from_mouth_to_bottom(
