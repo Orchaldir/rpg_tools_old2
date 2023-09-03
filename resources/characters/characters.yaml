@@ -182,10 +182,9 @@
           millimetre: 800
         color: SaddleBrown
       mouth:
-        type: Simple
-        beard:
-          type: None
+        type: Female
         width: Medium
+        color: Red
         teeth:
           type: UpperFangs
           c: Medium

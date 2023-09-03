@@ -237,6 +237,17 @@ fn update_mouth(data: &UrlEncodedData) -> Mouth {
                 teeth_color,
             }
         }
+        "Female" => {
+            let (width, teeth_color) = parse_common_mouth(data);
+            let color = get_enum(data, "appearance.head.mouth.color");
+
+            Mouth::Female {
+                width,
+                color,
+                teeth: parse_special_teeth(data),
+                teeth_color,
+            }
+        }
         _ => Mouth::None,
     }
 }

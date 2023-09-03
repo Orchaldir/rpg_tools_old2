@@ -278,7 +278,7 @@
                     </ul>
                   </li>
                   <li>
-                    <b>Mouth:</b> {{ macros::add_select(name="appearance.head.mouth.type", options=[ "None","Circle","Simple" ], selected=appearance.head.mouth.type, update=true) }}
+                    <b>Mouth:</b> {{ macros::add_select(name="appearance.head.mouth.type", options=[ "None","Circle","Simple","Female" ], selected=appearance.head.mouth.type, update=true) }}
                     <ul>
                       {% if appearance.head.mouth.type == "None" %}
                       {% elif appearance.head.mouth.type == "Circle" %}
@@ -339,6 +339,31 @@
                         </li>
                         <li>
                           <b>Width:</b> {{ macros::add_select(name="appearance.head.mouth.width", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.width, update=true) }}
+                        </li>
+                        <li>
+                          <b>Teeth:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.type", options=[ "None","LowerFangs","UpperFangs" ], selected=appearance.head.mouth.teeth.type, update=true) }}
+                          <ul>
+                            {% if appearance.head.mouth.teeth.type == "None" %}
+                            {% elif appearance.head.mouth.teeth.type == "LowerFangs" %}
+                              <li>
+                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                              </li>
+                            {% elif appearance.head.mouth.teeth.type == "UpperFangs" %}
+                              <li>
+                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </li>
+                        <li>
+                          <b>Teeth Color:</b> {{ macros::add_select(name="appearance.head.mouth.teeth_color", options=[ "White","Yellow","Brown" ], selected=appearance.head.mouth.teeth_color, update=true) }}
+                        </li>
+                      {% elif appearance.head.mouth.type == "Female" %}
+                        <li>
+                          <b>Width:</b> {{ macros::add_select(name="appearance.head.mouth.width", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.width, update=true) }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ macros::add_select(name="appearance.head.mouth.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.mouth.color, update=true) }}
                         </li>
                         <li>
                           <b>Teeth:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.type", options=[ "None","LowerFangs","UpperFangs" ], selected=appearance.head.mouth.teeth.type, update=true) }}
@@ -684,7 +709,7 @@
                     </ul>
                   </li>
                   <li>
-                    <b>Mouth:</b> {{ macros::add_select(name="appearance.head.mouth.type", options=[ "None","Circle","Simple" ], selected=appearance.head.mouth.type, update=true) }}
+                    <b>Mouth:</b> {{ macros::add_select(name="appearance.head.mouth.type", options=[ "None","Circle","Simple","Female" ], selected=appearance.head.mouth.type, update=true) }}
                     <ul>
                       {% if appearance.head.mouth.type == "None" %}
                       {% elif appearance.head.mouth.type == "Circle" %}
@@ -745,6 +770,31 @@
                         </li>
                         <li>
                           <b>Width:</b> {{ macros::add_select(name="appearance.head.mouth.width", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.width, update=true) }}
+                        </li>
+                        <li>
+                          <b>Teeth:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.type", options=[ "None","LowerFangs","UpperFangs" ], selected=appearance.head.mouth.teeth.type, update=true) }}
+                          <ul>
+                            {% if appearance.head.mouth.teeth.type == "None" %}
+                            {% elif appearance.head.mouth.teeth.type == "LowerFangs" %}
+                              <li>
+                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                              </li>
+                            {% elif appearance.head.mouth.teeth.type == "UpperFangs" %}
+                              <li>
+                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </li>
+                        <li>
+                          <b>Teeth Color:</b> {{ macros::add_select(name="appearance.head.mouth.teeth_color", options=[ "White","Yellow","Brown" ], selected=appearance.head.mouth.teeth_color, update=true) }}
+                        </li>
+                      {% elif appearance.head.mouth.type == "Female" %}
+                        <li>
+                          <b>Width:</b> {{ macros::add_select(name="appearance.head.mouth.width", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.width, update=true) }}
+                        </li>
+                        <li>
+                          <b>Color:</b> {{ macros::add_select(name="appearance.head.mouth.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.mouth.color, update=true) }}
                         </li>
                         <li>
                           <b>Teeth:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.type", options=[ "None","LowerFangs","UpperFangs" ], selected=appearance.head.mouth.teeth.type, update=true) }}

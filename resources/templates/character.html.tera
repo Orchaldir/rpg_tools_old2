@@ -289,7 +289,7 @@
                   <li>
                     <b>Teeth Color:</b> {{ appearance.head.mouth.teeth_color }}
                   </li>
-                {% elif appearance.head.mouth.type == "Normal" %}
+                {% elif appearance.head.mouth.type == "Simple" %}
                   <li>
                     <b>Beard</b>: {{ appearance.head.mouth.beard.type }}
                     <ul>
@@ -340,6 +340,31 @@
                   </li>
                   <li>
                     <b>Width:</b> {{ appearance.head.mouth.width }}
+                  </li>
+                  <li>
+                    <b>Teeth</b>: {{ appearance.head.mouth.teeth.type }}
+                    <ul>
+                      {% if appearance.head.mouth.teeth.type == "None" %}
+                      {% elif appearance.head.mouth.teeth.type == "LowerFangs" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.mouth.teeth.c }}
+                        </li>
+                      {% elif appearance.head.mouth.teeth.type == "UpperFangs" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.mouth.teeth.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Teeth Color:</b> {{ appearance.head.mouth.teeth_color }}
+                  </li>
+                {% elif appearance.head.mouth.type == "Female" %}
+                  <li>
+                    <b>Width:</b> {{ appearance.head.mouth.width }}
+                  </li>
+                  <li>
+                    <b>Color:</b> {{ appearance.head.mouth.color }}
                   </li>
                   <li>
                     <b>Teeth</b>: {{ appearance.head.mouth.teeth.type }}
@@ -695,7 +720,7 @@
                   <li>
                     <b>Teeth Color:</b> {{ appearance.head.mouth.teeth_color }}
                   </li>
-                {% elif appearance.head.mouth.type == "Normal" %}
+                {% elif appearance.head.mouth.type == "Simple" %}
                   <li>
                     <b>Beard</b>: {{ appearance.head.mouth.beard.type }}
                     <ul>
@@ -746,6 +771,31 @@
                   </li>
                   <li>
                     <b>Width:</b> {{ appearance.head.mouth.width }}
+                  </li>
+                  <li>
+                    <b>Teeth</b>: {{ appearance.head.mouth.teeth.type }}
+                    <ul>
+                      {% if appearance.head.mouth.teeth.type == "None" %}
+                      {% elif appearance.head.mouth.teeth.type == "LowerFangs" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.mouth.teeth.c }}
+                        </li>
+                      {% elif appearance.head.mouth.teeth.type == "UpperFangs" %}
+                        <li>
+                          <b>C:</b> {{ appearance.head.mouth.teeth.c }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                  <li>
+                    <b>Teeth Color:</b> {{ appearance.head.mouth.teeth_color }}
+                  </li>
+                {% elif appearance.head.mouth.type == "Female" %}
+                  <li>
+                    <b>Width:</b> {{ appearance.head.mouth.width }}
+                  </li>
+                  <li>
+                    <b>Color:</b> {{ appearance.head.mouth.color }}
                   </li>
                   <li>
                     <b>Teeth</b>: {{ appearance.head.mouth.teeth.type }}
