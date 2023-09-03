@@ -158,14 +158,14 @@ fn render_female_mouth(
     color: Color,
 ) {
     let options = config.without_line(color);
-    let half_height = 0.03;
+    let half_height = 0.04;
     let (left, right) = aabb.get_mirrored_points(width, config.head.y_mouth);
     let (top_left, top_right) =
         aabb.get_mirrored_points(width * 0.5, config.head.y_mouth - half_height);
     let (bottom_left, bottom_right) =
-        aabb.get_mirrored_points(width * 0.6, config.head.y_mouth + half_height);
+        aabb.get_mirrored_points(width * 0.5, config.head.y_mouth + half_height);
     let top_center = aabb.get_point(0.5, config.head.y_mouth - half_height);
-    let cupids_bow = aabb.get_point(0.5, config.head.y_mouth);
+    let cupids_bow = aabb.get_point(0.5, config.head.y_mouth - half_height / 2.0);
 
     let corners = vec![
         left,
