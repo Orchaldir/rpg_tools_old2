@@ -105,6 +105,9 @@ pub trait Renderer {
     /// Renders a polygon.
     fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions);
 
+    /// Renders a smooth polygon.
+    fn render_smooth_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions);
+
     /// Renders an axis aligned rectangle.
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions);
 }

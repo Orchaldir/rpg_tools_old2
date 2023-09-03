@@ -198,9 +198,8 @@ fn render_female_mouth(
     ];
 
     let polygon = Polygon2d::new(corners);
-    let polygon = config.cut_corners(&polygon).unwrap();
 
-    renderer.render_polygon(&polygon, &options);
+    renderer.render_smooth_polygon(&polygon, &options);
 }
 
 fn render_fang(

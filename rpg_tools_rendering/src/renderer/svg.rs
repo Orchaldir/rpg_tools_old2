@@ -141,6 +141,10 @@ impl Renderer for SvgBuilder {
         self.render_path(&path_from_polygon(polygon), options);
     }
 
+    fn render_smooth_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
+        self.render_path(&path_from_smooth_polygon(polygon), options);
+    }
+
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions) {
         self.lines.push(format!(
             "  <rect x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" style=\"{}\"/>",
@@ -194,6 +198,89 @@ fn path_from_polygon(polygon: &Polygon2d) -> String {
     path.push_str(" Z");
 
     path
+}
+
+fn path_from_smooth_polygon(polygon: &Polygon2d) -> String {
+    println!("path_from_smooth_polygon()");
+    let mut path = String::new();
+    let corners = create_corners(polygon);
+    let mut previous = &corners[0];
+    let mut is_start = true;
+    let mut is_sharp = false;
+    let mut index = 1;
+
+    for point in corners.iter().skip(1) {
+        if previous.calculate_distance(point) == 0.0 {
+            is_sharp = true;
+
+            println!("Point {} is same as previous", index);
+
+            if !is_start {
+                println!("Not start");
+                path.push_str(format!(" L {} {}", previous.x, previous.y).as_str());
+            }
+            index += 1;
+
+            continue;
+        }
+
+        if is_start {
+            is_start = false;
+            let middle = previous.lerp(point, 0.5);
+
+            if is_sharp {
+                println!("Point {} is sharp start", index);
+                is_sharp = false;
+                path.push_str(
+                    format!(
+                        "M {} {} L {} {}",
+                        previous.x, previous.y, middle.x, middle.y
+                    )
+                    .as_str(),
+                );
+            } else {
+                println!("Point {} is not sharp start", index);
+                path.push_str(format!("M {} {}", middle.x, middle.y).as_str());
+            }
+        } else if is_sharp {
+            println!("Point {}: Line to middle after sharp", index);
+            is_sharp = false;
+            let middle = previous.lerp(point, 0.5);
+            path.push_str(format!(" L {} {}", middle.x, middle.y).as_str());
+        } else {
+            println!("Point {}: curve", index);
+            let middle = previous.lerp(point, 0.5);
+            path.push_str(
+                format!(" Q {} {} {} {}", previous.x, previous.y, middle.x, middle.y).as_str(),
+            );
+        }
+
+        previous = point;
+        index += 1;
+    }
+
+    path.push_str(" Z");
+
+    path
+}
+
+fn create_corners(polygon: &Polygon2d) -> Vec<Point2d> {
+    let mut corners = Vec::from(polygon.corners());
+    corners.push(corners[0]);
+
+    corners
+}
+
+fn get_smooth_polygon_start(polygon: &Polygon2d) -> Point2d {
+    let corners = polygon.corners();
+    let first = &corners[0];
+    let second = &corners[1];
+
+    if first.calculate_distance(second) == 0.0 {
+        return *first;
+    }
+
+    return first.lerp(second, 0.5);
 }
 
 fn to_style(options: &RenderOptions) -> String {
