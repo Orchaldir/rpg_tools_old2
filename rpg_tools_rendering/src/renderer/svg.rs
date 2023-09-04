@@ -185,18 +185,8 @@ fn path_from_circle_arc(
 /// ]);
 /// assert_eq!(path_from_line(&polygon), "M 0 0 L 100 0 L 0 100");
 /// ```
-pub fn path_from_line(polygon: &Line2d) -> String {
-    let mut path = String::new();
-    let corners = polygon.corners();
-    let first = &corners[0];
-
-    move_to(&mut path, &first);
-
-    for point in corners.iter().skip(1) {
-        line_to(&mut path, &point);
-    }
-
-    path
+pub fn path_from_line(line: &Line2d) -> String {
+    path_from_corners(line.corners())
 }
 
 /// Returns the SVG path of a polygon.
@@ -213,16 +203,22 @@ pub fn path_from_line(polygon: &Line2d) -> String {
 /// assert_eq!(path_from_polygon(&polygon), "M 0 0 L 100 0 L 0 100 Z");
 /// ```
 pub fn path_from_polygon(polygon: &Polygon2d) -> String {
+    let mut path = path_from_corners(polygon.corners());
+
+    close(&mut path);
+
+    path
+}
+
+fn path_from_corners(corners: &[Point2d]) -> String {
     let mut path = String::new();
-    let corners = polygon.corners();
     let first = &corners[0];
+
     move_to(&mut path, &first);
 
     for point in corners.iter().skip(1) {
         line_to(&mut path, &point);
     }
-
-    close(&mut path);
 
     path
 }
