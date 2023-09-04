@@ -110,8 +110,7 @@ fn get_long_hair_polygon(
     right_corners.reverse();
     left_corners.append(&mut right_corners);
 
-    let polygon = Polygon2d::new(left_corners);
-    config.cut_corners(&polygon).unwrap()
+    Polygon2d::new(left_corners)
 }
 
 fn add_mirrored_points(

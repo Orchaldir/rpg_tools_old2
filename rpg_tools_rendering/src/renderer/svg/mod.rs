@@ -4,10 +4,15 @@ use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::math::size2d::Size2d;
+use crate::renderer::svg::path::{
+    path_from_circle_arc, path_from_line, path_from_polygon, path_from_rounded_polygon,
+};
 use crate::renderer::{RenderOptions, Renderer};
 use anyhow::Result;
 use std::fs::File;
 use std::io::Write;
+
+pub mod path;
 
 /// A valid [SVG](https://en.wikipedia.org/wiki/Scalable_Vector_Graphics).
 #[derive(Debug, PartialEq, Eq)]
@@ -141,6 +146,10 @@ impl Renderer for SvgBuilder {
         self.render_path(&path_from_polygon(polygon), options);
     }
 
+    fn render_rounded_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
+        self.render_path(&path_from_rounded_polygon(polygon), options);
+    }
+
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions) {
         self.lines.push(format!(
             "  <rect x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" style=\"{}\"/>",
@@ -151,49 +160,6 @@ impl Renderer for SvgBuilder {
             to_style(options),
         ));
     }
-}
-
-fn path_from_circle_arc(
-    center: &Point2d,
-    radius: u32,
-    offset: Orientation,
-    angle: Orientation,
-) -> String {
-    let start = center.calculate_polar(radius as f32, offset);
-    let end = center.calculate_polar(radius as f32, offset + angle);
-
-    format!(
-        "M {} {} A {} {} 0 0 0 {} {} Z",
-        start.x, start.y, radius, radius, end.x, end.y
-    )
-}
-
-fn path_from_line(polygon: &Line2d) -> String {
-    let mut path = String::new();
-    let corners = polygon.corners();
-    let first = &corners[0];
-    path.push_str(format!("M {} {}", first.x, first.y).as_str());
-
-    for point in corners.iter().skip(1) {
-        path.push_str(format!(" L {} {}", point.x, point.y).as_str());
-    }
-
-    path
-}
-
-fn path_from_polygon(polygon: &Polygon2d) -> String {
-    let mut path = String::new();
-    let corners = polygon.corners();
-    let first = &corners[0];
-    path.push_str(format!("M {} {}", first.x, first.y).as_str());
-
-    for point in corners.iter().skip(1) {
-        path.push_str(format!(" L {} {}", point.x, point.y).as_str());
-    }
-
-    path.push_str(" Z");
-
-    path
 }
 
 fn to_style(options: &RenderOptions) -> String {

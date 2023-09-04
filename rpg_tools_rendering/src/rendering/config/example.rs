@@ -29,10 +29,8 @@ pub fn create_config() -> RenderConfig {
     RenderConfig {
         border: 500,
         line_color: WebColor::from_color(Color::Black),
-        line_width: 15,
-        cut_corners_u: 0.25,
-        cut_corners_v: 0.25,
-        cut_corners_n: 3,
+        line_width: 5,
+        thin_line_width: 1,
         body: BodyConfig {
             width: WidthConfig {
                 thin: 0.8,

@@ -37,8 +37,8 @@ fn render_legs(
     let right_leg_x = 0.5 - legs_width / 2.0;
     let right_leg_start = aabb.get_point(right_leg_x, leg_y);
 
-    render_leg(renderer, config, options, left_leg_start, leg_size);
-    render_leg(renderer, config, options, right_leg_start, leg_size);
+    render_leg(renderer, options, left_leg_start, leg_size);
+    render_leg(renderer, options, right_leg_start, leg_size);
 
     let left_foot_start = aabb.get_point(left_leg_start_x + leg_width / 2.0, 1.0);
     let right_foot_start = aabb.get_point(right_leg_x + leg_width / 2.0, 1.0);
@@ -85,18 +85,13 @@ fn render_arms(
         config.body.get_arm_y(),
     );
     let fat_offset = aabb.calculate_from_height(config.body.get_fat_offset_factor(body) / 2.0);
-    let polygon = create_arm(config, arm_size, right_arm_start, fat_offset as i32);
+    let polygon = create_arm(arm_size, right_arm_start, fat_offset as i32);
 
-    renderer.render_polygon(&polygon, options);
-    renderer.render_polygon(&aabb.mirrored(&polygon), options);
+    renderer.render_rounded_polygon(&polygon, options);
+    renderer.render_rounded_polygon(&aabb.mirrored(&polygon), options);
 }
 
-fn create_arm(
-    config: &RenderConfig,
-    arm_size: Size2d,
-    right_arm_start: Point2d,
-    offset: i32,
-) -> Polygon2d {
+fn create_arm(arm_size: Size2d, right_arm_start: Point2d, offset: i32) -> Polygon2d {
     let right_arm = AABB::new(right_arm_start, arm_size);
     let mut polygon: Polygon2d = (&right_arm).into();
 
@@ -108,7 +103,8 @@ fn create_arm(
     }
 
     polygon.create_sharp_corner(1);
-    config.cut_corners(&polygon).unwrap()
+
+    polygon
 }
 
 fn update_corner(corners: &mut [Point2d], index: usize, offset: i32) {
@@ -117,16 +113,10 @@ fn update_corner(corners: &mut [Point2d], index: usize, offset: i32) {
     }
 }
 
-fn render_leg(
-    renderer: &mut dyn Renderer,
-    config: &RenderConfig,
-    options: &RenderOptions,
-    start: Point2d,
-    size: Size2d,
-) {
+fn render_leg(renderer: &mut dyn Renderer, options: &RenderOptions, start: Point2d, size: Size2d) {
     let aabb = AABB::new(start, size);
-    let polygon = config.cut_corners(&(&aabb).into()).unwrap();
-    renderer.render_polygon(&polygon, options);
+    let polygon = (&aabb).into();
+    renderer.render_rounded_polygon(&polygon, options);
 }
 
 pub fn calculate_head_aabb(config: &RenderConfig, aabb: &AABB) -> AABB {

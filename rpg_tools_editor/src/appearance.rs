@@ -227,12 +227,23 @@ fn update_mouth(data: &UrlEncodedData) -> Mouth {
 
             Mouth::Circle { size, teeth_color }
         }
-        "Normal" => {
+        "Simple" => {
             let (width, teeth_color) = parse_common_mouth(data);
 
-            Mouth::Normal {
+            Mouth::Simple {
                 beard: parse_beard("appearance.head.mouth", data),
                 width,
+                teeth: parse_special_teeth(data),
+                teeth_color,
+            }
+        }
+        "Female" => {
+            let (width, teeth_color) = parse_common_mouth(data);
+            let color = get_enum(data, "appearance.head.mouth.color");
+
+            Mouth::Female {
+                width,
+                color,
                 teeth: parse_special_teeth(data),
                 teeth_color,
             }
@@ -242,10 +253,10 @@ fn update_mouth(data: &UrlEncodedData) -> Mouth {
 }
 
 fn parse_common_mouth(data: &UrlEncodedData) -> (Size, TeethColor) {
-    let size = get_enum(data, "appearance.head.mouth.size");
+    let width = get_enum(data, "appearance.head.mouth.width");
     let color = get_enum(data, "appearance.head.mouth.teeth_color");
 
-    (size, color)
+    (width, color)
 }
 
 fn parse_special_teeth(data: &UrlEncodedData) -> SpecialTeeth {

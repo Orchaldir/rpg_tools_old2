@@ -33,8 +33,7 @@ pub fn get_full_forked(
         top_right,
     ];
 
-    let polygon = Polygon2d::new(corners);
-    config.cut_corners(&polygon).unwrap()
+    Polygon2d::new(corners)
 }
 
 pub fn get_full_rectangle(
@@ -60,8 +59,7 @@ pub fn get_full_rectangle(
         top_right,
     ];
 
-    let polygon = Polygon2d::new(corners);
-    config.cut_corners(&polygon).unwrap()
+    Polygon2d::new(corners)
 }
 
 pub fn get_full_triangle(
@@ -79,8 +77,7 @@ pub fn get_full_triangle(
     let center = aabb.get_point(0.5, 1.0).add(down);
     let corners = vec![top_left, chin_left, center, chin_right, top_right];
 
-    let polygon = Polygon2d::new(corners);
-    config.cut_corners(&polygon).unwrap()
+    Polygon2d::new(corners)
 }
 
 pub fn get_full_wide(
@@ -107,6 +104,5 @@ pub fn get_full_wide(
         top_right,
     ];
 
-    let polygon = Polygon2d::new(corners);
-    config.cut_corners(&polygon).unwrap()
+    Polygon2d::new(corners)
 }

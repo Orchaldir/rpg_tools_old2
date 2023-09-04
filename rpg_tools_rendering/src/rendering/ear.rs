@@ -115,7 +115,6 @@ pub fn render_normal_ear(
     }
 
     let polygon = Polygon2d::new(corners);
-    let cut = config.cut_corners(&polygon).unwrap();
 
-    renderer.render_polygon(&cut, options);
+    renderer.render_rounded_polygon(&polygon, options);
 }

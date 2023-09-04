@@ -29,56 +29,76 @@ pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &A
 
             render_circular_mouth(renderer, config, &center, radius, *teeth_color);
         }
-        Mouth::Normal {
+        Mouth::Simple {
             beard,
             width,
             teeth,
             teeth_color,
         } => {
-            render_beard_behind_mouth(renderer, config, aabb, head.shape, head, beard);
-
             let width = config.mouth.get_mouth_width(head_width_factor, *width);
-            let distance_between_fangs = config.mouth.get_distance_between_fangs(width);
-            let down = Orientation::from_degree(90.0);
-            let up = Orientation::from_degree(270.0);
 
-            render_normal_mouth(renderer, config, aabb, width);
-
-            match teeth {
-                SpecialTeeth::UpperFangs(size) => {
-                    render_2_fangs(
-                        renderer,
-                        &config,
-                        &aabb,
-                        down,
-                        distance_between_fangs,
-                        *size,
-                        *teeth_color,
-                    );
-                }
-                SpecialTeeth::LowerFangs(size) => {
-                    render_2_fangs(
-                        renderer,
-                        &config,
-                        &aabb,
-                        up,
-                        distance_between_fangs,
-                        *size,
-                        *teeth_color,
-                    );
-                }
-                _ => {}
-            }
-
+            render_beard_behind_mouth(renderer, config, aabb, head.shape, head, beard);
+            render_simple_mouth(renderer, config, aabb, width);
+            render_special_teeth(renderer, config, aabb, teeth, teeth_color, width);
             render_beard_in_front_of_mouth(renderer, config, aabb, beard, width);
         }
+        Mouth::Female {
+            width,
+            color,
+            teeth,
+            teeth_color,
+        } => {
+            let width = config.mouth.get_mouth_width(head_width_factor, *width);
+
+            render_female_mouth(renderer, config, aabb, width, *color);
+            render_special_teeth(renderer, config, aabb, teeth, teeth_color, width);
+        }
+    }
+}
+
+fn render_special_teeth(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    teeth: &SpecialTeeth,
+    teeth_color: &TeethColor,
+    width: f32,
+) {
+    let distance_between_fangs = config.mouth.get_distance_between_fangs(width);
+    let down = Orientation::from_degree(90.0);
+    let up = Orientation::from_degree(270.0);
+
+    match teeth {
+        SpecialTeeth::UpperFangs(size) => {
+            render_2_fangs(
+                renderer,
+                config,
+                aabb,
+                down,
+                distance_between_fangs,
+                *size,
+                *teeth_color,
+            );
+        }
+        SpecialTeeth::LowerFangs(size) => {
+            render_2_fangs(
+                renderer,
+                config,
+                aabb,
+                up,
+                distance_between_fangs,
+                *size,
+                *teeth_color,
+            );
+        }
+        _ => {}
     }
 }
 
 fn render_2_fangs(
     renderer: &mut dyn Renderer,
-    config: &&RenderConfig,
-    aabb: &&AABB,
+    config: &RenderConfig,
+    aabb: &AABB,
     down: Orientation,
     distance_between_fangs: f32,
     size: Size,
@@ -134,7 +154,7 @@ pub fn render_circular_mouth(
     }
 }
 
-fn render_normal_mouth(
+fn render_simple_mouth(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
@@ -143,6 +163,40 @@ fn render_normal_mouth(
     let options = config.line_with_color(Black, 1.0);
     let line: Line2d = aabb.get_mirrored_points(width, config.head.y_mouth).into();
     renderer.render_line(&line, &options);
+}
+
+fn render_female_mouth(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    width: f32,
+    color: Color,
+) {
+    let options = config.without_line(color);
+    let half_height = 0.04;
+    let (left, right) = aabb.get_mirrored_points(width, config.head.y_mouth);
+    let (top_left, top_right) =
+        aabb.get_mirrored_points(width * 0.5, config.head.y_mouth - half_height);
+    let (bottom_left, bottom_right) =
+        aabb.get_mirrored_points(width * 0.5, config.head.y_mouth + half_height);
+    let cupids_bow = aabb.get_point(0.5, config.head.y_mouth - half_height / 2.0);
+
+    let corners = vec![
+        left,
+        left,
+        bottom_left,
+        bottom_right,
+        right,
+        right,
+        top_right,
+        cupids_bow,
+        cupids_bow,
+        top_left,
+    ];
+
+    let polygon = Polygon2d::new(corners);
+
+    renderer.render_rounded_polygon(&polygon, &options);
 }
 
 fn render_fang(

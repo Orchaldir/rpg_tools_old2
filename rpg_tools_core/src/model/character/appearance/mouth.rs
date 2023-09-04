@@ -1,4 +1,5 @@
 use crate::model::character::appearance::beard::Beard;
+use crate::model::color::Color;
 use crate::model::size::Size;
 use crate::ui::{UiVisitor, UI};
 use macro_convert::Convert;
@@ -15,10 +16,15 @@ pub enum Mouth {
         size: Size,
         teeth_color: TeethColor,
     },
-    /// Like a human's mouth.
-    Normal {
+    Simple {
         beard: Beard,
         width: Size,
+        teeth: SpecialTeeth,
+        teeth_color: TeethColor,
+    },
+    Female {
+        width: Size,
+        color: Color,
         teeth: SpecialTeeth,
         teeth_color: TeethColor,
     },

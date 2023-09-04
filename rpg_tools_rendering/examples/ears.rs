@@ -61,7 +61,7 @@ fn create_appearance(height: Length, ears: &Ears, face: &HeadShape) -> Appearanc
                 hairline: Hairline::Round(Medium),
                 color: Color::Yellow,
             },
-            mouth: Mouth::Normal {
+            mouth: Mouth::Simple {
                 beard: Beard::None,
                 width: Medium,
                 teeth: SpecialTeeth::None,

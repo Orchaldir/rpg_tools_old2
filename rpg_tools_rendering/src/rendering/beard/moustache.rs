@@ -24,8 +24,7 @@ pub fn get_fu_manchu(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Po
         top_right,
     ];
 
-    let polygon = Polygon2d::new(corners);
-    config.cut_corners(&polygon).unwrap()
+    Polygon2d::new(corners)
 }
 
 pub fn get_handlebar(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
@@ -51,8 +50,7 @@ pub fn get_handlebar(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Po
         inner_right,
     ];
 
-    let polygon = Polygon2d::new(corners);
-    config.cut_corners(&polygon).unwrap()
+    Polygon2d::new(corners)
 }
 
 pub fn get_pencil(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polygon2d {
@@ -78,7 +76,7 @@ pub fn get_walrus(config: &RenderConfig, aabb: &AABB, mouth_width: f32) -> Polyg
     polygon.create_sharp_corner(1);
     polygon.create_sharp_corner(3);
 
-    config.cut_corners(&polygon).unwrap()
+    polygon
 }
 
 fn get_simple(

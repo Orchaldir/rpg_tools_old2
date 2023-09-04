@@ -23,7 +23,7 @@ pub fn render_buzz_cut(
     let line = config.get_line_options(1.0);
     let polygon = get_simple_hair_style_polyon(config, aabb, head_shape, hairline);
 
-    renderer.render_polygon(&polygon, &options);
+    renderer.render_rounded_polygon(&polygon, &options);
     render_head_shape_with_option(renderer, config, aabb, line, head_shape);
 }
 
@@ -49,8 +49,7 @@ pub fn get_simple_hair_style_polyon(
     corners.push(forehead_right);
     corners.push(top_right);
 
-    let polygon = Polygon2d::new(corners);
-    config.cut_corners(&polygon).unwrap()
+    Polygon2d::new(corners)
 }
 
 pub fn get_flat_top_front(
@@ -83,8 +82,7 @@ pub fn get_flat_top_front(
         top_right,
     ]);
 
-    let polygon = Polygon2d::new(corners);
-    config.cut_corners(&polygon).unwrap()
+    Polygon2d::new(corners)
 }
 
 pub fn get_flat_top_back(
@@ -107,7 +105,7 @@ pub fn get_flat_top_back(
     corners.push(top_right);
     corners.push(top_left);
 
-    config.cut_corners(&Polygon2d::new(corners)).unwrap()
+    Polygon2d::new(corners)
 }
 
 pub fn get_middle_part(
@@ -135,7 +133,7 @@ pub fn get_middle_part(
     let (left, right) = aabb.get_mirrored_points(0.0, hairline_y);
     let center = aabb.get_point(0.5, 0.0);
 
-    let mut polygon = Polygon2d::new(vec![
+    let polygon = Polygon2d::new(vec![
         top_left,
         forehead_left,
         bottom_left,
@@ -150,8 +148,7 @@ pub fn get_middle_part(
         forehead_right,
         top_right,
     ]);
-    polygon = polygon.resize(1.1);
-    config.cut_corners(&polygon).unwrap()
+    polygon.resize(1.1)
 }
 
 pub fn get_side_part(
@@ -203,9 +200,8 @@ pub fn get_side_part(
         forehead_right,
         top_right,
     ]);
-    let mut polygon = Polygon2d::new(corners);
-    polygon = polygon.resize(1.1);
-    config.cut_corners(&polygon).unwrap()
+    let polygon = Polygon2d::new(corners);
+    polygon.resize(1.1)
 }
 
 fn get_hairline_width(

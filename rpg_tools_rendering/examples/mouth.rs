@@ -32,6 +32,9 @@ fn main() {
         create_normal(Large, Small),
         create_normal(Large, Medium),
         create_normal(Large, Large),
+        create_female(Small),
+        create_female(Medium),
+        create_female(Large),
     ];
     let faces = HeadShape::get_all();
 
@@ -46,10 +49,19 @@ fn create_circle(size: Size) -> Mouth {
 }
 
 fn create_normal(width: Size, teeth: Size) -> Mouth {
-    Mouth::Normal {
+    Mouth::Simple {
         beard: Beard::None,
         width,
         teeth: SpecialTeeth::LowerFangs(teeth),
+        teeth_color: TeethColor::White,
+    }
+}
+
+fn create_female(width: Size) -> Mouth {
+    Mouth::Female {
+        width,
+        color: Color::White,
+        teeth: SpecialTeeth::None,
         teeth_color: TeethColor::White,
     }
 }

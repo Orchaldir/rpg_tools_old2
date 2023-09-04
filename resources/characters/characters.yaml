@@ -39,7 +39,7 @@
           c: Medium
         color: Yellow
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: GoateeAndMoustache
           moustache: Handlebar
@@ -89,7 +89,7 @@
       hair:
         type: None
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: None
         width: Medium
@@ -128,7 +128,7 @@
       hair:
         type: None
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: None
         width: Medium
@@ -150,8 +150,8 @@
       shape: Hourglass
       width: Average
       skin:
-        type: ExoticSkin
-        c: White
+        type: Skin
+        c: Fair
     head:
       ears:
         type: Normal
@@ -163,14 +163,14 @@
           type: Normal
           eye_shape: Ellipse
           pupil_shape: Circle
-          pupil_color: Red
-          background_color: Silver
+          pupil_color: Yellow
+          background_color: Black
         eyebrows:
           type: Normal
           color: SaddleBrown
           shape: Curved
           style: Even
-          width: Thin
+          width: Wide
         distance: Medium
       hair:
         type: Long
@@ -182,18 +182,17 @@
           millimetre: 800
         color: SaddleBrown
       mouth:
-        type: Normal
-        beard:
-          type: None
-        width: Medium
+        type: Female
+        width: Large
+        color: Red
         teeth:
           type: UpperFangs
-          c: Medium
+          c: Small
         teeth_color: White
       shape: Oval
       skin:
-        type: ExoticSkin
-        c: White
+        type: Skin
+        c: Fair
     height:
       millimetre: 1500
 - id: 4
@@ -224,7 +223,7 @@
       hair:
         type: None
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: None
         width: Medium
@@ -278,7 +277,7 @@
           c: Medium
         color: SaddleBrown
       mouth:
-        type: Normal
+        type: Simple
         beard:
           type: FullBeard
           style: Triangle
