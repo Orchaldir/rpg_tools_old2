@@ -150,8 +150,8 @@
       shape: Hourglass
       width: Average
       skin:
-        type: ExoticSkin
-        c: White
+        type: Skin
+        c: Fair
     head:
       ears:
         type: Normal
@@ -163,14 +163,14 @@
           type: Normal
           eye_shape: Ellipse
           pupil_shape: Circle
-          pupil_color: Red
-          background_color: Silver
+          pupil_color: Yellow
+          background_color: Black
         eyebrows:
           type: Normal
           color: SaddleBrown
           shape: Curved
           style: Even
-          width: Thin
+          width: Wide
         distance: Medium
       hair:
         type: Long
@@ -191,8 +191,8 @@
         teeth_color: White
       shape: Oval
       skin:
-        type: ExoticSkin
-        c: White
+        type: Skin
+        c: Fair
     height:
       millimetre: 1500
 - id: 4
