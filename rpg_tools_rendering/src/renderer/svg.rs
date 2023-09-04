@@ -172,7 +172,20 @@ fn path_from_circle_arc(
     )
 }
 
-fn path_from_line(polygon: &Line2d) -> String {
+/// Returns the SVG path of a line.
+///
+/// ```
+///# use rpg_tools_rendering::math::point2d::Point2d;
+///# use rpg_tools_rendering::math::line2d::Line2d;
+///# use rpg_tools_rendering::renderer::svg::path_from_line;
+/// let polygon = Line2d::new(vec![
+///   Point2d::new(0, 0),
+///   Point2d::new(100, 0),
+///   Point2d::new(0, 100),
+/// ]);
+/// assert_eq!(path_from_line(&polygon), "M 0 0 L 100 0 L 0 100");
+/// ```
+pub fn path_from_line(polygon: &Line2d) -> String {
     let mut path = String::new();
     let corners = polygon.corners();
     let first = &corners[0];
@@ -186,7 +199,20 @@ fn path_from_line(polygon: &Line2d) -> String {
     path
 }
 
-fn path_from_polygon(polygon: &Polygon2d) -> String {
+/// Returns the SVG path of a polygon.
+///
+/// ```
+///# use rpg_tools_rendering::math::point2d::Point2d;
+///# use rpg_tools_rendering::math::polygon2d::Polygon2d;
+///# use rpg_tools_rendering::renderer::svg::path_from_polygon;
+/// let polygon = Polygon2d::new(vec![
+///   Point2d::new(0, 0),
+///   Point2d::new(100, 0),
+///   Point2d::new(0, 100),
+/// ]);
+/// assert_eq!(path_from_polygon(&polygon), "M 0 0 L 100 0 L 0 100 Z");
+/// ```
+pub fn path_from_polygon(polygon: &Polygon2d) -> String {
     let mut path = String::new();
     let corners = polygon.corners();
     let first = &corners[0];
@@ -201,7 +227,7 @@ fn path_from_polygon(polygon: &Polygon2d) -> String {
     path
 }
 
-/// Renders a polygon with using quadratic Bézier curves of the SVG path.
+/// Returns the SVG path of a polygon using quadratic Bézier curves.
 /// Each curve goes from the midpoint of one polygon side to the midpoint of the next.
 /// The corner between those polygon sides is the control point.
 ///
