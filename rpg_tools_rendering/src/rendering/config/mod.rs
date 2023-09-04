@@ -1,4 +1,3 @@
-use crate::math::polygon2d::Polygon2d;
 use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
 use crate::rendering::config::body::BodyConfig;
@@ -7,7 +6,6 @@ use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
 use crate::rendering::config::mouth::MouthConfig;
-use anyhow::Result;
 use rpg_tools_core::model::character::appearance::mouth::TeethColor;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::color::Color;
@@ -104,9 +102,5 @@ impl RenderConfig {
             },
             Skin::ExoticSkin(color) => WebColor::from_color(*color),
         }
-    }
-
-    pub fn cut_corners(&self, polygon: &Polygon2d) -> Result<Polygon2d> {
-        polygon.cut_corners_n(self.cut_corners_u, self.cut_corners_v, self.cut_corners_n)
     }
 }
