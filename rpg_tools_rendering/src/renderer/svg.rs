@@ -142,7 +142,7 @@ impl Renderer for SvgBuilder {
     }
 
     fn render_rounded_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
-        self.render_path(&path_from_smooth_polygon(polygon), options);
+        self.render_path(&path_from_rounded_polygon(polygon), options);
     }
 
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions) {
@@ -203,8 +203,34 @@ fn path_from_polygon(polygon: &Polygon2d) -> String {
 /// Renders a polygon with using quadratic Bézier curves of the SVG path.
 /// Each curve goes from the midpoint of one polygon side to the midpoint of the next.
 /// The corner between those polygon sides is the control point.
+///
+/// ```
+///# use rpg_tools_rendering::math::point2d::Point2d;
+///# use rpg_tools_rendering::math::polygon2d::Polygon2d;
+///# use rpg_tools_rendering::renderer::svg::path_from_rounded_polygon;
+/// let polygon = Polygon2d::new(vec![
+///   Point2d::new(0, 0),
+///   Point2d::new(100, 0),
+///   Point2d::new(0, 100),
+/// ]);
+/// assert_eq!(path_from_rounded_polygon(&polygon), "M 50 0 Q 100 0 50 50 Q 0 100 0 50 Q 0 0 50 0");
+/// ```
+///
 /// If a point is twice in a row, its a sharp corner.
-fn path_from_smooth_polygon(polygon: &Polygon2d) -> String {
+///
+/// ```
+///# use rpg_tools_rendering::math::point2d::Point2d;
+///# use rpg_tools_rendering::math::polygon2d::Polygon2d;
+///# use rpg_tools_rendering::renderer::svg::path_from_rounded_polygon;
+/// let polygon = Polygon2d::new(vec![
+///   Point2d::new(0, 0),
+///   Point2d::new(0, 0),
+///   Point2d::new(100, 0),
+///   Point2d::new(0, 100),
+/// ]);
+/// assert_eq!(path_from_rounded_polygon(&polygon), "M 0 0 L 50 0 Q 100 0 50 50 Q 0 100 0 50 Z");
+/// ```
+pub fn path_from_rounded_polygon(polygon: &Polygon2d) -> String {
     println!("path_from_smooth_polygon()");
     let mut path = String::new();
     let corners = create_corners(polygon);
