@@ -231,26 +231,20 @@ fn path_from_polygon(polygon: &Polygon2d) -> String {
 /// assert_eq!(path_from_rounded_polygon(&polygon), "M 0 0 L 50 0 Q 100 0 50 50 Q 0 100 0 50 Z");
 /// ```
 pub fn path_from_rounded_polygon(polygon: &Polygon2d) -> String {
-    println!("path_from_smooth_polygon()");
     let mut path = String::new();
     let corners = create_corners(polygon);
     let mut previous = &corners[0];
     let mut is_start = true;
     let mut is_sharp = false;
-    let mut index = 1;
     let mut first_middle = None;
 
     for point in corners.iter().skip(1) {
         if previous.calculate_distance(point) == 0.0 {
             is_sharp = true;
 
-            println!("Point {} is same as previous", index);
-
             if !is_start {
-                println!("Not start");
                 path.push_str(format!(" L {} {}", previous.x, previous.y).as_str());
             }
-            index += 1;
 
             continue;
         }
@@ -260,7 +254,6 @@ pub fn path_from_rounded_polygon(polygon: &Polygon2d) -> String {
             let middle = previous.lerp(point, 0.5);
 
             if is_sharp {
-                println!("Point {} is sharp start", index);
                 is_sharp = false;
                 path.push_str(
                     format!(
@@ -270,17 +263,14 @@ pub fn path_from_rounded_polygon(polygon: &Polygon2d) -> String {
                     .as_str(),
                 );
             } else {
-                println!("Point {} is not sharp start", index);
                 first_middle = Some(middle);
                 path.push_str(format!("M {} {}", middle.x, middle.y).as_str());
             }
         } else if is_sharp {
-            println!("Point {}: Line to middle after sharp", index);
             is_sharp = false;
             let middle = previous.lerp(point, 0.5);
             path.push_str(format!(" L {} {}", middle.x, middle.y).as_str());
         } else {
-            println!("Point {}: curve", index);
             let middle = previous.lerp(point, 0.5);
             path.push_str(
                 format!(" Q {} {} {} {}", previous.x, previous.y, middle.x, middle.y).as_str(),
@@ -288,7 +278,6 @@ pub fn path_from_rounded_polygon(polygon: &Polygon2d) -> String {
         }
 
         previous = point;
-        index += 1;
     }
 
     if let Some(middle) = first_middle {
