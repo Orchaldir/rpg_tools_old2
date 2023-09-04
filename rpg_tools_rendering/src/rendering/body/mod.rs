@@ -87,8 +87,8 @@ fn render_arms(
     let fat_offset = aabb.calculate_from_height(config.body.get_fat_offset_factor(body) / 2.0);
     let polygon = create_arm(arm_size, right_arm_start, fat_offset as i32);
 
-    renderer.render_smooth_polygon(&polygon, options);
-    renderer.render_smooth_polygon(&aabb.mirrored(&polygon), options);
+    renderer.render_rounded_polygon(&polygon, options);
+    renderer.render_rounded_polygon(&aabb.mirrored(&polygon), options);
 }
 
 fn create_arm(arm_size: Size2d, right_arm_start: Point2d, offset: i32) -> Polygon2d {
@@ -116,7 +116,7 @@ fn update_corner(corners: &mut [Point2d], index: usize, offset: i32) {
 fn render_leg(renderer: &mut dyn Renderer, options: &RenderOptions, start: Point2d, size: Size2d) {
     let aabb = AABB::new(start, size);
     let polygon = (&aabb).into();
-    renderer.render_smooth_polygon(&polygon, options);
+    renderer.render_rounded_polygon(&polygon, options);
 }
 
 pub fn calculate_head_aabb(config: &RenderConfig, aabb: &AABB) -> AABB {

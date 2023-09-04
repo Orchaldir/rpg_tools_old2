@@ -20,7 +20,7 @@ pub fn render_torso(
         BodyShape::Muscular => create_torso(&torso_aabb, &config.body, &config.body.muscular),
         BodyShape::Rectangle => create_torso(&torso_aabb, &config.body, &config.body.rectangle),
     };
-    renderer.render_smooth_polygon(&polygon, options);
+    renderer.render_rounded_polygon(&polygon, options);
 }
 
 fn create_torso(aabb: &AABB, config: &BodyConfig, torso: &TorsoConfig) -> Polygon2d {

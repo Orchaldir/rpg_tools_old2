@@ -23,7 +23,7 @@ pub fn render_buzz_cut(
     let line = config.get_line_options(1.0);
     let polygon = get_simple_hair_style_polyon(config, aabb, head_shape, hairline);
 
-    renderer.render_smooth_polygon(&polygon, &options);
+    renderer.render_rounded_polygon(&polygon, &options);
     render_head_shape_with_option(renderer, config, aabb, line, head_shape);
 }
 

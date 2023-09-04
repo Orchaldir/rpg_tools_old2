@@ -20,5 +20,5 @@ pub fn render_polygon(
     color: Color,
 ) {
     let options = config.get_options(color);
-    renderer.render_smooth_polygon(polygon, &options);
+    renderer.render_rounded_polygon(polygon, &options);
 }

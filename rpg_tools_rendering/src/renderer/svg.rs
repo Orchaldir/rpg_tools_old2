@@ -141,7 +141,7 @@ impl Renderer for SvgBuilder {
         self.render_path(&path_from_polygon(polygon), options);
     }
 
-    fn render_smooth_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
+    fn render_rounded_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
         self.render_path(&path_from_smooth_polygon(polygon), options);
     }
 
@@ -200,6 +200,10 @@ fn path_from_polygon(polygon: &Polygon2d) -> String {
     path
 }
 
+/// Renders a polygon with using quadratic Bézier curves of the SVG path.
+/// Each curve goes from the midpoint of one polygon side to the midpoint of the next.
+/// The corner between those polygon sides is the control point.
+/// If a point is twice in a row, its a sharp corner.
 fn path_from_smooth_polygon(polygon: &Polygon2d) -> String {
     println!("path_from_smooth_polygon()");
     let mut path = String::new();

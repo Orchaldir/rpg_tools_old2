@@ -116,5 +116,5 @@ pub fn render_normal_ear(
 
     let polygon = Polygon2d::new(corners);
 
-    renderer.render_smooth_polygon(&polygon, options);
+    renderer.render_rounded_polygon(&polygon, options);
 }
