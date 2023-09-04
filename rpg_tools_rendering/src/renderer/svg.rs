@@ -272,23 +272,23 @@ pub fn path_from_rounded_polygon(polygon: &Polygon2d) -> String {
             path.push_str(format!(" L {} {}", middle.x, middle.y).as_str());
         } else {
             let middle = previous.lerp(point, 0.5);
-            path.push_str(
-                format!(" Q {} {} {} {}", previous.x, previous.y, middle.x, middle.y).as_str(),
-            );
+            add_curve(&mut path, previous, middle);
         }
 
         previous = point;
     }
 
     if let Some(middle) = first_middle {
-        path.push_str(
-            format!(" Q {} {} {} {}", previous.x, previous.y, middle.x, middle.y).as_str(),
-        );
+        add_curve(&mut path, previous, middle);
     } else {
         path.push_str(" Z");
     }
 
     path
+}
+
+fn add_curve(path: &mut String, control: &Point2d, end: Point2d) {
+    path.push_str(format!(" Q {} {} {} {}", control.x, control.y, end.x, end.y).as_str());
 }
 
 fn create_corners(polygon: &Polygon2d) -> Vec<Point2d> {
