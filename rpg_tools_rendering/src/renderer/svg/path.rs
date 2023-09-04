@@ -60,10 +60,10 @@ fn path_from_corners(corners: &[Point2d]) -> String {
     let mut path = String::new();
     let first = &corners[0];
 
-    move_to(&mut path, &first);
+    move_to(&mut path, first);
 
     for point in corners.iter().skip(1) {
-        line_to(&mut path, &point);
+        line_to(&mut path, point);
     }
 
     path
@@ -112,7 +112,7 @@ pub fn path_from_rounded_polygon(polygon: &Polygon2d) -> String {
             is_sharp = true;
 
             if !is_start {
-                line_to(&mut path, &previous);
+                line_to(&mut path, previous);
             }
 
             continue;
@@ -124,7 +124,7 @@ pub fn path_from_rounded_polygon(polygon: &Polygon2d) -> String {
 
             if is_sharp {
                 is_sharp = false;
-                move_to(&mut path, &previous);
+                move_to(&mut path, previous);
                 line_to(&mut path, &middle);
             } else {
                 first_middle = Some(middle);
