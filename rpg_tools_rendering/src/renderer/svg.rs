@@ -176,10 +176,11 @@ fn path_from_line(polygon: &Line2d) -> String {
     let mut path = String::new();
     let corners = polygon.corners();
     let first = &corners[0];
-    path.push_str(format!("M {} {}", first.x, first.y).as_str());
+
+    move_to(&mut path, &first);
 
     for point in corners.iter().skip(1) {
-        path.push_str(format!(" L {} {}", point.x, point.y).as_str());
+        line_to(&mut path, &point);
     }
 
     path
@@ -189,13 +190,13 @@ fn path_from_polygon(polygon: &Polygon2d) -> String {
     let mut path = String::new();
     let corners = polygon.corners();
     let first = &corners[0];
-    path.push_str(format!("M {} {}", first.x, first.y).as_str());
+    move_to(&mut path, &first);
 
     for point in corners.iter().skip(1) {
-        path.push_str(format!(" L {} {}", point.x, point.y).as_str());
+        line_to(&mut path, &point);
     }
 
-    path.push_str(" Z");
+    close(&mut path);
 
     path
 }
@@ -243,7 +244,7 @@ pub fn path_from_rounded_polygon(polygon: &Polygon2d) -> String {
             is_sharp = true;
 
             if !is_start {
-                path.push_str(format!(" L {} {}", previous.x, previous.y).as_str());
+                line_to(&mut path, &previous);
             }
 
             continue;
@@ -255,40 +256,47 @@ pub fn path_from_rounded_polygon(polygon: &Polygon2d) -> String {
 
             if is_sharp {
                 is_sharp = false;
-                path.push_str(
-                    format!(
-                        "M {} {} L {} {}",
-                        previous.x, previous.y, middle.x, middle.y
-                    )
-                    .as_str(),
-                );
+                move_to(&mut path, &previous);
+                line_to(&mut path, &middle);
             } else {
                 first_middle = Some(middle);
-                path.push_str(format!("M {} {}", middle.x, middle.y).as_str());
+                move_to(&mut path, &middle);
             }
         } else if is_sharp {
             is_sharp = false;
             let middle = previous.lerp(point, 0.5);
-            path.push_str(format!(" L {} {}", middle.x, middle.y).as_str());
+            line_to(&mut path, &middle);
         } else {
             let middle = previous.lerp(point, 0.5);
-            add_curve(&mut path, previous, middle);
+            curve_to(&mut path, previous, &middle);
         }
 
         previous = point;
     }
 
     if let Some(middle) = first_middle {
-        add_curve(&mut path, previous, middle);
+        curve_to(&mut path, previous, &middle);
     } else {
-        path.push_str(" Z");
+        close(&mut path);
     }
 
     path
 }
 
-fn add_curve(path: &mut String, control: &Point2d, end: Point2d) {
+fn move_to(path: &mut String, point: &Point2d) {
+    path.push_str(format!("M {} {}", point.x, point.y).as_str());
+}
+
+fn line_to(path: &mut String, point: &Point2d) {
+    path.push_str(format!(" L {} {}", point.x, point.y).as_str());
+}
+
+fn curve_to(path: &mut String, control: &Point2d, end: &Point2d) {
     path.push_str(format!(" Q {} {} {} {}", control.x, control.y, end.x, end.y).as_str());
+}
+
+fn close(path: &mut String) {
+    path.push_str(" Z");
 }
 
 fn create_corners(polygon: &Polygon2d) -> Vec<Point2d> {
