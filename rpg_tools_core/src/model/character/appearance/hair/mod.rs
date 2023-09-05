@@ -1,7 +1,7 @@
 use crate::model::character::appearance::hair::bun::BunStyle;
 use crate::model::character::appearance::hair::hairline::Hairline;
 use crate::model::character::appearance::hair::long::LongHairStyle;
-use crate::model::character::appearance::hair::ponytail::PonytailPosition;
+use crate::model::character::appearance::hair::ponytail::{PonytailPosition, PonytailStyle};
 use crate::model::character::appearance::hair::short::ShortHair;
 use crate::model::color::Color;
 use crate::model::length::Length;
@@ -35,6 +35,7 @@ pub enum Hair {
     None,
     Ponytail {
         position: PonytailPosition,
+        style: PonytailStyle,
         hairline: Hairline,
         length: Length,
         color: Color,

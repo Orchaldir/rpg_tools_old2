@@ -13,3 +13,12 @@ pub enum PonytailPosition {
     Low,
     Right,
 }
+
+/// What style of ponytail?
+#[derive(Convert, ui, Default, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub enum PonytailStyle {
+    Bubble,
+    #[default]
+    Straight,
+    Wide,
+}
