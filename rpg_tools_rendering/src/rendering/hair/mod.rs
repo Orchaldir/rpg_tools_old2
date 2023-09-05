@@ -9,7 +9,8 @@ use crate::rendering::hair::short::{
 };
 use crate::rendering::head::render_head_shape_with_option;
 use crate::rendering::render_polygon;
-use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
+use rpg_tools_core::model::character::appearance::hair::short::ShortHair;
+use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::Head;
 
 pub mod bun;
