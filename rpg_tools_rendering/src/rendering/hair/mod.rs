@@ -56,6 +56,7 @@ pub fn render_hair_before_head_from_front(
             let polygon = get_simple_hair_style_polyon(config, aabb, head.shape, hairline);
             render_polygon(renderer, config, &polygon, color);
         }
+        Hair::Ponytail { .. } => {}
     }
 }
 
@@ -116,5 +117,6 @@ pub fn render_hair_back(
             render_head_shape_with_option(renderer, config, aabb, options, head.shape);
             render_buns(renderer, config, aabb, head.shape, style, size, color);
         }
+        Hair::Ponytail { .. } => {}
     }
 }
