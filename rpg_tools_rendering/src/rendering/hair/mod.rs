@@ -3,6 +3,7 @@ use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::hair::bun::render_buns;
 use crate::rendering::hair::long::render_long_hair;
+use crate::rendering::hair::ponytail::render_ponytail;
 use crate::rendering::hair::short::{
     get_flat_top_back, get_flat_top_front, get_middle_part, get_side_part,
     get_simple_hair_style_polyon, render_buzz_cut,
@@ -16,6 +17,7 @@ use rpg_tools_core::model::character::appearance::head::Head;
 pub mod bun;
 pub mod hairline;
 pub mod long;
+pub mod ponytail;
 pub mod short;
 
 pub fn render_hair_before_head_from_front(
@@ -74,14 +76,19 @@ pub fn render_hair_behind_head_from_front(
             length,
             color,
             ..
-        } => {
-            render_long_hair(renderer, config, aabb, head.shape, style, length, color);
-        }
+        } => render_long_hair(renderer, config, aabb, head.shape, style, length, color),
         Hair::Bun {
             style, size, color, ..
-        } => {
-            render_buns(renderer, config, aabb, head.shape, style, size, color);
-        }
+        } => render_buns(renderer, config, aabb, head.shape, style, size, color),
+        Hair::Ponytail {
+            position,
+            style,
+            length,
+            color,
+            ..
+        } => render_ponytail(
+            renderer, config, aabb, head.shape, position, style, length, color,
+        ),
         _ => {}
     }
 }
@@ -119,9 +126,18 @@ pub fn render_hair_back(
             render_head_shape_with_option(renderer, config, aabb, options, head.shape);
             render_buns(renderer, config, aabb, head.shape, style, size, color);
         }
-        Hair::Ponytail { color, .. } => {
+        Hair::Ponytail {
+            position,
+            style,
+            length,
+            color,
+            ..
+        } => {
             let options = config.get_options(color);
             render_head_shape_with_option(renderer, config, aabb, options, head.shape);
+            render_ponytail(
+                renderer, config, aabb, head.shape, position, style, length, color,
+            );
         }
     }
 }

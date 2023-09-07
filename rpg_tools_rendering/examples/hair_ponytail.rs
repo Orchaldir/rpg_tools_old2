@@ -1,7 +1,7 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::appearance::create_head_with_hair;
+use crate::utils::appearance::create_humanoid_with_hair;
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::hair::ponytail::position::PonytailPosition;
@@ -27,7 +27,7 @@ fn main() {
         "hair_ponytail.svg",
         options,
         HeadShape::get_all(),
-        create_head_with_hair,
+        create_humanoid_with_hair,
         true,
     );
 }
