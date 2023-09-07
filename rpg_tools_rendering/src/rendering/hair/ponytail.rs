@@ -32,10 +32,16 @@ pub fn render_ponytail(
 }
 
 fn get_ponytail_down(aabb: &AABB, style: PonytailStyle, start: f32, length: Length) -> Polygon2d {
-    let (top_left, top_right) = aabb.get_mirrored_points(0.2, start);
-    let down = Point2d::vertical(length.to_millimetre() as i32);
-    let bottom_left = top_left.add(down);
-    let bottom_right = top_right.add(down);
+    let length = aabb.convert_from_height(length.to_millimetre());
+    let width = 0.2;
+    let bottom_width = width
+        * if style == PonytailStyle::Wide {
+            2.0
+        } else {
+            1.0
+        };
+    let (top_left, top_right) = aabb.get_mirrored_points(width, start);
+    let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, start + length);
 
     let corners = vec![top_left, bottom_left, bottom_right, top_right];
 
