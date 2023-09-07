@@ -52,7 +52,7 @@ fn calculate(aabb: &AABB, size: Size, width: f32) -> (u32, f32) {
         Size::Large => 0.35,
     };
     let width_factor = width * radius_factor;
-    let radius = aabb.calculate_from_width(width_factor);
+    let radius = aabb.convert_to_width(width_factor);
 
     (radius, width_factor)
 }

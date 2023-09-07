@@ -95,10 +95,10 @@ impl BodyConfig {
     }
 
     pub fn get_hand_radius(&self, body: &Body, aabb: &AABB) -> u32 {
-        aabb.calculate_from_height(self.hand_factor * self.get_width_factor(body))
+        aabb.convert_to_height(self.hand_factor * self.get_width_factor(body))
     }
 
     pub fn get_foot_radius(&self, body: &Body, aabb: &AABB) -> u32 {
-        aabb.calculate_from_height(self.foot_factor * self.get_width_factor(body))
+        aabb.convert_to_height(self.foot_factor * self.get_width_factor(body))
     }
 }

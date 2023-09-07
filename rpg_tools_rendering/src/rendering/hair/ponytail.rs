@@ -1,14 +1,14 @@
 use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
-use crate::renderer::{RenderOptions, Renderer};
+use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::hair::ponytail::position::PonytailPosition;
 use rpg_tools_core::model::character::appearance::hair::ponytail::style::PonytailStyle;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
-use std::ops::{Add, Sub};
+use std::ops::Add;
 
 pub fn render_ponytail(
     renderer: &mut dyn Renderer,

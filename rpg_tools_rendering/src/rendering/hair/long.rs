@@ -81,7 +81,7 @@ fn get_long_hair_polygon(
 
     add_mirrored_points(aabb, width, 1.0, &mut left_corners, &mut right_corners);
 
-    let down = Point2d::new(0, length.to_millimetre() as i32);
+    let down = Point2d::vertical(length.to_millimetre() as i32);
 
     match style {
         Rounded | Straight | Wide => {

@@ -84,7 +84,7 @@ fn render_arms(
         arm_start_x - config.body.get_arm_width(body),
         config.body.get_arm_y(),
     );
-    let fat_offset = aabb.calculate_from_height(config.body.get_fat_offset_factor(body) / 2.0);
+    let fat_offset = aabb.convert_to_height(config.body.get_fat_offset_factor(body) / 2.0);
     let polygon = create_arm(arm_size, right_arm_start, fat_offset as i32);
 
     renderer.render_rounded_polygon(&polygon, options);

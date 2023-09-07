@@ -14,12 +14,12 @@ use Color::Black;
 
 pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     let head_width_factor = config.head.get_mouth_width(head.shape);
-    let head_width = aabb.calculate_from_height(head_width_factor);
+    let head_width = aabb.convert_to_height(head_width_factor);
 
     match &head.mouth {
         Mouth::None => {}
         Mouth::Circle { size, teeth_color } => {
-            let free_y = aabb.calculate_from_height(1.0 - config.head.y_eye);
+            let free_y = aabb.convert_to_height(1.0 - config.head.y_eye);
             let max_free_space = head_width.min(free_y);
             let center = aabb.get_point(0.5, config.head.y_mouth);
             let radius = config

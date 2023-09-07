@@ -163,23 +163,33 @@ impl AxisAlignedBoundingBox {
         self.size.width().min(self.size.height()) / 2
     }
 
-    /// Calculates a value based on the height.
+    /// Converts a height to a factor.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AABB;
-    /// assert_eq!(AABB::simple(2, 3, 30, 100).calculate_from_height(0.8), 80);
+    /// assert_eq!(AABB::simple(2, 3, 30, 100).convert_from_height(80), 0.8);
     /// ```
-    pub fn calculate_from_height(&self, factor: f32) -> u32 {
+    pub fn convert_from_height(&self, height: u32) -> f32 {
+        height as f32 / self.size.height() as f32
+    }
+
+    /// Converts a factor to a height.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
+    /// assert_eq!(AABB::simple(2, 3, 30, 100).convert_to_height(0.8), 80);
+    /// ```
+    pub fn convert_to_height(&self, factor: f32) -> u32 {
         (self.size.height() as f32 * factor) as u32
     }
 
-    /// Calculates a value based on the width.
+    /// Converts a factor to a width.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AABB;
-    /// assert_eq!(AABB::simple(2, 3, 30, 100).calculate_from_width(0.5), 15);
+    /// assert_eq!(AABB::simple(2, 3, 30, 100).convert_to_width(0.5), 15);
     /// ```
-    pub fn calculate_from_width(&self, factor: f32) -> u32 {
+    pub fn convert_to_width(&self, factor: f32) -> u32 {
         (self.size.width() as f32 * factor) as u32
     }
 
