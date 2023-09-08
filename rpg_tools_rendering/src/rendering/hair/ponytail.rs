@@ -20,13 +20,11 @@ pub fn render_ponytail(
 ) {
     let options = config.get_options(color);
     let radius = 0.2;
-    let width =
-        (config.head.get_top_width(head_shape) + config.head.get_forehead_width(head_shape)) / 2.0;
 
     let polygon = match position {
         PonytailPosition::High => get_ponytail_down(aabb, style, radius, length),
         PonytailPosition::Low => get_ponytail_down(aabb, style, 1.0 - radius, length),
-        _ => get_ponytail_left(aabb, width, style, radius, length),
+        _ => get_ponytail_left(config, aabb, head_shape, style, radius, length),
     };
 
     if position != PonytailPosition::Right {
@@ -57,17 +55,20 @@ fn get_ponytail_down(aabb: &AABB, style: PonytailStyle, start: f32, length: Leng
 }
 
 fn get_ponytail_left(
+    config: &RenderConfig,
     aabb: &AABB,
-    head_width: f32,
+    head_shape: HeadShape,
     style: PonytailStyle,
     start_y: f32,
     length: Length,
 ) -> Polygon2d {
     let length = aabb.convert_from_height(length.to_millimetre());
-    let start_x = 0.5 + head_width / 2.0;
-    let x = 1.0;
-    let bottom_y = start_y + length;
+    let start_head_width =
+        (config.head.get_top_width(head_shape) + config.head.get_forehead_width(head_shape)) / 2.0;
+    let start_x = 0.5 + start_head_width / 2.0;
     let width = 0.2;
+    let x = config.head.get_max_width(head_shape) + width;
+    let bottom_y = start_y + length;
     let start_half = width / 2.0;
     let bottom_width = width
         * if style == PonytailStyle::Wide {

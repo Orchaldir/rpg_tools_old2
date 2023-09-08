@@ -82,6 +82,14 @@ impl HeadConfig {
         }
     }
 
+    pub fn get_max_width(&self, shape: HeadShape) -> f32 {
+        self.get_chin_width(shape)
+            .max(self.get_mouth_width(shape))
+            .max(self.get_eye_width(shape))
+            .max(self.get_forehead_width(shape))
+            .max(self.get_top_width(shape))
+    }
+
     pub fn get_moustache_y(&self) -> f32 {
         (self.y_eye + self.y_mouth) / 2.0
     }
