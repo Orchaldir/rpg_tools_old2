@@ -17,8 +17,10 @@ pub mod utils;
 fn main() {
     let mut options = Vec::new();
 
-    for style in PonytailStyle::get_all() {
-        options.push(create_ponytail(PonytailPosition::Left, style));
+    for position in PonytailPosition::get_all() {
+        for style in PonytailStyle::get_all() {
+            options.push(create_ponytail(position, style));
+        }
     }
 
     render_2_sets(
