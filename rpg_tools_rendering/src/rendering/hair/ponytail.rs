@@ -59,7 +59,8 @@ fn get_ponytail_left(
     length: Length,
 ) -> Polygon2d {
     let length = aabb.convert_from_height(length.to_millimetre());
-    let start_x = head_width / 2.0;
+    let start_x = 0.5 + head_width / 2.0;
+    let x = 1.0;
     let bottom_y = start_y + length;
     let width = 0.2;
     let start_half = width / 2.0;
@@ -69,14 +70,22 @@ fn get_ponytail_left(
         } else {
             1.0
         };
-    let bottom_half = bottom_width / 2.0;
 
-    let top_left = aabb.get_point(start_x - start_half, start_y - start_half);
-    let top_right = aabb.get_point(start_x + start_half, start_y + start_half);
-    let bottom_left = aabb.get_point(start_x - bottom_half, bottom_y);
-    let bottom_right = aabb.get_point(start_x + bottom_half, bottom_y);
+    let center_top = aabb.get_point(start_x - start_half, start_y - start_half);
+    let center_bottom = aabb.get_point(start_x - start_half, start_y + start_half);
+    let top_left = aabb.get_point(x, start_y + start_half);
+    let top_right = aabb.get_point(x + width, start_y - start_half);
+    let bottom_left = aabb.get_point(x, bottom_y);
+    let bottom_right = aabb.get_point(x + bottom_width, bottom_y);
 
-    let corners = vec![top_left, bottom_left, bottom_right, top_right];
+    let corners = vec![
+        center_top,
+        center_bottom,
+        top_left,
+        bottom_left,
+        bottom_right,
+        top_right,
+    ];
 
     Polygon2d::new(corners)
 }
