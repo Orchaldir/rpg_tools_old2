@@ -305,10 +305,9 @@ impl AxisAlignedBoundingBox {
     /// assert_eq!(right, Point2d::new(24, 18));
     /// ```
     pub fn get_mirrored_points(&self, width: f32, vertical: f32) -> (Point2d, Point2d) {
-        let half = width / 2.0;
         (
-            self.get_point(0.5 - half, vertical),
-            self.get_point(0.5 + half, vertical),
+            self.get_point(get_start_x(width), vertical),
+            self.get_point(get_end_x(width), vertical),
         )
     }
 
@@ -356,4 +355,14 @@ impl AxisAlignedBoundingBox {
                 .collect(),
         )
     }
+}
+
+/// Returns the start x coordinated, if the width is centered.
+pub fn get_start_x(width: f32) -> f32 {
+    0.5 - width / 2.0
+}
+
+/// Returns the start x coordinated, if the width is centered.
+pub fn get_end_x(width: f32) -> f32 {
+    0.5 + width / 2.0
 }

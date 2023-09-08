@@ -1,4 +1,4 @@
-use crate::math::aabb2d::AABB;
+use crate::math::aabb2d::{get_end_x, get_start_x, AABB};
 use crate::math::line2d::Line2d;
 use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
@@ -111,7 +111,7 @@ fn render_2_fangs(
         renderer,
         config,
         fang_height,
-        &aabb.get_point(0.5 - distance_between_fangs / 2.0, config.head.y_mouth),
+        &aabb.get_point(get_start_x(distance_between_fangs), config.head.y_mouth),
         down,
         color,
     );
@@ -119,7 +119,7 @@ fn render_2_fangs(
         renderer,
         config,
         fang_height,
-        &aabb.get_point(0.5 + distance_between_fangs / 2.0, config.head.y_mouth),
+        &aabb.get_point(get_end_x(distance_between_fangs), config.head.y_mouth),
         down,
         color,
     );

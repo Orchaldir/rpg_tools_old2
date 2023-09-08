@@ -1,4 +1,4 @@
-use crate::math::aabb2d::AABB;
+use crate::math::aabb2d::{get_start_x, AABB};
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::width::WidthConfig;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
@@ -67,7 +67,7 @@ impl BodyConfig {
 
     pub fn get_torso_aabb(&self, body: &Body, aabb: &AABB) -> AABB {
         let torso_width = self.get_torso_width(body);
-        let torso_start_x = 0.5 - torso_width / 2.0;
+        let torso_start_x = get_start_x(torso_width);
         let torso_start = aabb.get_point(torso_start_x, self.y_torso);
         let torso_size = aabb.size().scale(torso_width, self.height_torso);
         AABB::new(torso_start, torso_size)

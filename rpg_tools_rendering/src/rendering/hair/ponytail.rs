@@ -1,4 +1,4 @@
-use crate::math::aabb2d::AABB;
+use crate::math::aabb2d::{get_end_x, AABB};
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
@@ -65,9 +65,9 @@ fn get_ponytail_left(
     let length = aabb.convert_from_height(length.to_millimetre());
     let start_head_width =
         (config.head.get_top_width(head_shape) + config.head.get_forehead_width(head_shape)) / 2.0;
-    let start_x = 0.5 + start_head_width / 2.0;
+    let start_x = get_end_x(start_head_width);
     let width = 0.2;
-    let x = 0.5 + config.head.get_max_width(head_shape) / 2.0 + 0.1;
+    let x = get_end_x(config.head.get_max_width(head_shape)) + 0.1;
     let bottom_y = start_y + length;
     let start_half = width / 2.0;
     let bottom_width = width
