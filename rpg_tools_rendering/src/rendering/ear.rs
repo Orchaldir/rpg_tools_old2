@@ -62,17 +62,16 @@ fn get_normal_ear_left(
     mouth_width: f32,
 ) -> Polygon2d {
     let offset = config.ear.normal_offset;
-    let half_mouth = mouth_width / 2.0 - offset;
     let width = config.ear.normal_width;
     let top_inner_x = get_end_x(eye_width) - offset;
     let top_outer_x = top_inner_x + width + config.ear.normal_top_x;
-    let bottom_inner_x = half_mouth;
-    let bottom_outer_x = half_mouth + width;
+    let bottom_inner_x = get_end_x(mouth_width) - offset;
+    let bottom_outer_x = bottom_inner_x + width;
 
     let top_inner = aabb.get_point(top_inner_x, config.head.y_eye);
     let top_outer = aabb.get_point(top_outer_x, config.head.y_eye);
-    let bottom_inner = aabb.get_point(0.5 + bottom_inner_x, config.head.y_mouth);
-    let bottom_outer = aabb.get_point(0.5 + bottom_outer_x, config.head.y_mouth);
+    let bottom_inner = aabb.get_point(bottom_inner_x, config.head.y_mouth);
+    let bottom_outer = aabb.get_point(bottom_outer_x, config.head.y_mouth);
 
     let mut corners = vec![
         top_inner,
