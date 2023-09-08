@@ -5,7 +5,6 @@ use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
 use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::head::Head;
-use rpg_tools_core::model::side::Side;
 use rpg_tools_core::model::size::Size;
 
 pub fn render_ears(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
@@ -48,51 +47,28 @@ pub fn render_normal_ears(
     let width_eyes = config.head.get_eye_width(head.shape);
     let width_mouth = config.head.get_mouth_width(head.shape);
 
-    render_normal_ear(
-        renderer,
-        config,
-        options,
-        aabb,
-        shape,
-        size,
-        Side::Left,
-        width_eyes,
-        width_mouth,
-    );
+    let left_ear = get_normal_ear_left(config, aabb, shape, size, width_eyes, width_mouth);
 
-    render_normal_ear(
-        renderer,
-        config,
-        options,
-        aabb,
-        shape,
-        size,
-        Side::Right,
-        width_eyes,
-        width_mouth,
-    );
+    renderer.render_rounded_polygon(&left_ear, options);
+    renderer.render_rounded_polygon(&aabb.mirrored(&left_ear), options);
 }
 
-pub fn render_normal_ear(
-    renderer: &mut dyn Renderer,
+fn get_normal_ear_left(
     config: &RenderConfig,
-    options: &RenderOptions,
     aabb: &AABB,
     shape: EarShape,
     size: Size,
-    side: Side,
     eye_width: f32,
     mouth_width: f32,
-) {
+) -> Polygon2d {
     let offset = config.ear.normal_offset;
     let half_eye = eye_width / 2.0 - offset;
     let half_mouth = mouth_width / 2.0 - offset;
     let width = config.ear.normal_width;
-    let sign = side.get_sign_from_front();
-    let top_inner_x = half_eye * sign;
-    let top_outer_x = (half_eye + width + config.ear.normal_top_x) * sign;
-    let bottom_inner_x = half_mouth * sign;
-    let bottom_outer_x = (half_mouth + width) * sign;
+    let top_inner_x = half_eye;
+    let top_outer_x = half_eye + width + config.ear.normal_top_x;
+    let bottom_inner_x = half_mouth;
+    let bottom_outer_x = half_mouth + width;
 
     let top_inner = aabb.get_point(0.5 + top_inner_x, config.head.y_eye);
     let top_outer = aabb.get_point(0.5 + top_outer_x, config.head.y_eye);
@@ -114,7 +90,5 @@ pub fn render_normal_ear(
         corners.push(point);
     }
 
-    let polygon = Polygon2d::new(corners);
-
-    renderer.render_rounded_polygon(&polygon, options);
+    Polygon2d::new(corners)
 }
