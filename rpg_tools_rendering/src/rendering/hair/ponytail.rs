@@ -67,7 +67,7 @@ fn get_ponytail_left(
         (config.head.get_top_width(head_shape) + config.head.get_forehead_width(head_shape)) / 2.0;
     let start_x = 0.5 + start_head_width / 2.0;
     let width = 0.2;
-    let x = config.head.get_max_width(head_shape) + width;
+    let x = 0.5 + config.head.get_max_width(head_shape) / 2.0 + 0.1;
     let bottom_y = start_y + length;
     let start_half = width / 2.0;
     let bottom_width = width
