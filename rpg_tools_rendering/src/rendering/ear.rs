@@ -1,4 +1,4 @@
-use crate::math::aabb2d::AABB;
+use crate::math::aabb2d::{get_end_x, AABB};
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
@@ -62,16 +62,15 @@ fn get_normal_ear_left(
     mouth_width: f32,
 ) -> Polygon2d {
     let offset = config.ear.normal_offset;
-    let half_eye = eye_width / 2.0 - offset;
     let half_mouth = mouth_width / 2.0 - offset;
     let width = config.ear.normal_width;
-    let top_inner_x = half_eye;
-    let top_outer_x = half_eye + width + config.ear.normal_top_x;
+    let top_inner_x = get_end_x(eye_width) - offset;
+    let top_outer_x = top_inner_x + width + config.ear.normal_top_x;
     let bottom_inner_x = half_mouth;
     let bottom_outer_x = half_mouth + width;
 
-    let top_inner = aabb.get_point(0.5 + top_inner_x, config.head.y_eye);
-    let top_outer = aabb.get_point(0.5 + top_outer_x, config.head.y_eye);
+    let top_inner = aabb.get_point(top_inner_x, config.head.y_eye);
+    let top_outer = aabb.get_point(top_outer_x, config.head.y_eye);
     let bottom_inner = aabb.get_point(0.5 + bottom_inner_x, config.head.y_mouth);
     let bottom_outer = aabb.get_point(0.5 + bottom_outer_x, config.head.y_mouth);
 
@@ -85,7 +84,7 @@ fn get_normal_ear_left(
 
     if EarShape::Pointed == shape {
         let length = config.ear.get_pointed_ear_length(size);
-        let point = aabb.get_point(0.5 + top_outer_x, config.head.y_eye - length);
+        let point = aabb.get_point(top_outer_x, config.head.y_eye - length);
 
         corners.push(point);
     }
