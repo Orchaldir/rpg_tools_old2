@@ -180,8 +180,7 @@ fn update_hair(data: &UrlEncodedData) -> Hair {
         }
         "Long" => {
             let color = get_enum(data, "appearance.head.hair.color");
-            let length = parse_length(data, "appearance.head.hair.length.millimetre")
-                .unwrap_or_else(|| Length::from_metre(0.1));
+            let length = parse_length_or(data, "appearance.head.hair.length.millimetre", 0.1);
             let style = get_enum(data, "appearance.head.hair.style");
 
             Hair::Long {
@@ -193,8 +192,7 @@ fn update_hair(data: &UrlEncodedData) -> Hair {
         }
         "Ponytail" => {
             let color = get_enum(data, "appearance.head.hair.color");
-            let length = parse_length(data, "appearance.head.hair.length.millimetre")
-                .unwrap_or_else(|| Length::from_metre(0.1));
+            let length = parse_length_or(data, "appearance.head.hair.length.millimetre", 0.1);
             let position = get_enum(data, "appearance.head.hair.position");
             let style = get_enum(data, "appearance.head.hair.style");
 
@@ -316,8 +314,7 @@ fn parse_beard(path: &str, data: &UrlEncodedData) -> Beard {
         "FullBeard" => {
             let color = Color::from(color);
             let style = get_enum(data, &format!("{}.beard.style", path));
-            let length = parse_length(data, &format!("{}.beard.length.millimetre", path))
-                .unwrap_or_else(|| Length::from_metre(0.1));
+            let length = parse_length_or(data, &format!("{}.beard.length.millimetre", path), 0.1);
             Beard::FullBeard {
                 style,
                 length,
@@ -353,6 +350,10 @@ fn parse_length(data: &UrlEncodedData, path: &str) -> Option<Length> {
         .flat_map(|s| s.parse::<u32>().ok())
         .map(Length::from_millimetre)
         .next()
+}
+
+fn parse_length_or(data: &UrlEncodedData, path: &str, default: f32) -> Length {
+    parse_length(data, path).unwrap_or_else(|| Length::from_metre(default))
 }
 
 fn get_enum<'a, T: From<&'a str>>(data: &'a UrlEncodedData, path: &str) -> T {
