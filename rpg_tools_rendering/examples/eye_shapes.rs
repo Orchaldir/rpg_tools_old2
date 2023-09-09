@@ -21,6 +21,7 @@ fn main() {
     let shape_options = vec![EyeShape::Almond, EyeShape::Ellipse, EyeShape::Circle];
     let faces = HeadShape::get_all();
     let test = 5;
+    let test3 = 5;
 
     render_2_sets(
         "eye_shapes.svg",
