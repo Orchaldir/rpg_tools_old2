@@ -7,3 +7,4 @@ members = [
     "rpg_tools_rendering",
     "rpg_tools_editor",
 ]
+resolver = "2"
