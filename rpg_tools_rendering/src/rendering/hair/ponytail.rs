@@ -95,27 +95,58 @@ fn get_ponytail_left(
     let start_head_width =
         (config.head.get_top_width(head_shape) + config.head.get_forehead_width(head_shape)) / 2.0;
     let start_x = get_end_x(start_head_width);
-    let width = config.hair.ponytail.width;
     let x = get_end_x(config.head.get_max_width(head_shape)) + 0.1;
     let bottom_y = start_y + length;
-    let start_half = width / 2.0;
-    let bottom_width = config.hair.ponytail.get_bottom_width(style);
 
-    let center_top = aabb.get_point(start_x - start_half, start_y - start_half);
-    let center_bottom = aabb.get_point(start_x - start_half, start_y + start_half);
-    let top_left = aabb.get_point(x, start_y + start_half);
-    let top_right = aabb.get_point(x + width, start_y - start_half);
-    let bottom_left = aabb.get_point(x, bottom_y);
-    let bottom_right = aabb.get_point(x + bottom_width, bottom_y);
+    match style {
+        PonytailStyle::Bubble => {
+            let thin_width = config.hair.ponytail.link_width;
+            let thin_length = config.hair.ponytail.link_length;
+            let bubble = config.hair.ponytail.bubble_width;
+            let bubble_half = bubble / 2.0;
+            let combined_length = thin_length + bubble;
+            let n = ((length / combined_length) as u32).max(1);
+            let mut x = start_x;
+            let mut y = start_y;
 
-    let corners = vec![
-        center_top,
-        center_bottom,
-        top_left,
-        bottom_left,
-        bottom_right,
-        top_right,
-    ];
+            let mut builder = Polygon2dBuilder::new();
 
-    Polygon2d::new(corners)
+            // start link
+            builder.add_vertical_pair(aabb, thin_width, x, y, false);
+            x += thin_length;
+            builder.add_vertical_pair(aabb, thin_width, x, y, false);
+
+            // 1.bubble
+            builder.add_vertical_pair(aabb, bubble, x, y, false);
+            builder.add_point_cw(aabb.get_point(x + bubble, y - bubble_half), false);
+            builder.add_point_cw(aabb.get_point(x + bubble, y + bubble_half), false);
+            x += bubble_half;
+            y += bubble_half;
+
+            builder.build()
+        }
+        PonytailStyle::Straight | PonytailStyle::Wide => {
+            let width = config.hair.ponytail.width;
+            let start_half = width / 2.0;
+            let bottom_width = config.hair.ponytail.get_bottom_width(style);
+
+            let center_top = aabb.get_point(start_x - start_half, start_y - start_half);
+            let center_bottom = aabb.get_point(start_x - start_half, start_y + start_half);
+            let top_left = aabb.get_point(x, start_y + start_half);
+            let top_right = aabb.get_point(x + width, start_y - start_half);
+            let bottom_left = aabb.get_point(x, bottom_y);
+            let bottom_right = aabb.get_point(x + bottom_width, bottom_y);
+
+            let corners = vec![
+                center_top,
+                center_bottom,
+                top_left,
+                bottom_left,
+                bottom_right,
+                top_right,
+            ];
+
+            Polygon2d::new(corners)
+        }
+    }
 }

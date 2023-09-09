@@ -33,12 +33,55 @@ impl Polygon2dBuilder {
         (left, right)
     }
 
-    /// Adds a point.
+    pub fn add_horizontal_pair(
+        &mut self,
+        aabb: &AABB,
+        width: f32,
+        horizontal: f32,
+        vertical: f32,
+        is_sharp: bool,
+    ) -> (Point2d, Point2d) {
+        let half = width / 2.0;
+        let left = aabb.get_point(horizontal - half, vertical);
+        let right = aabb.get_point(horizontal + half, vertical);
+
+        self.add_points(left, right, is_sharp);
+
+        (left, right)
+    }
+
+    pub fn add_vertical_pair(
+        &mut self,
+        aabb: &AABB,
+        height: f32,
+        horizontal: f32,
+        vertical: f32,
+        is_sharp: bool,
+    ) -> (Point2d, Point2d) {
+        let half = height / 2.0;
+        let top = aabb.get_point(horizontal, vertical - half);
+        let bottom = aabb.get_point(horizontal, vertical + half);
+
+        self.add_points(bottom, top, is_sharp);
+
+        (bottom, top)
+    }
+
+    /// Adds a point in the counter clockwise direction.
     pub fn add_point(&mut self, point: Point2d, is_sharp: bool) {
         self.left_corners.push(point);
 
         if is_sharp {
             self.left_corners.push(point);
+        }
+    }
+
+    /// Adds a point in the clockwise direction.
+    pub fn add_point_cw(&mut self, point: Point2d, is_sharp: bool) {
+        self.right_corners.push(point);
+
+        if is_sharp {
+            self.right_corners.push(point);
         }
     }
 
