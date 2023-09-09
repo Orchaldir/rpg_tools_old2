@@ -48,6 +48,30 @@ fn get_ponytail_down(
     let length = aabb.convert_from_height(length.to_millimetre());
 
     match style {
+        PonytailStyle::Braid => {
+            let bubble = config.hair.ponytail.bubble_width;
+            let half = bubble / 2.0;
+            let n = ((length / bubble) as u32).max(1);
+            let x = 0.5;
+            let mut y = start;
+            let mut builder = Polygon2dBuilder::new();
+
+            builder.add_mirrored_points(aabb, bubble, y, false);
+
+            for _i in 0..n - 1 {
+                y += half;
+                builder.add_point(aabb.get_point(x - half, y), false);
+                builder.add_point(aabb.get_point(x, y), false);
+                y += half;
+                builder.add_point_cw(aabb.get_point(x + half, y), false);
+                builder.add_point_cw(aabb.get_point(x, y), false);
+            }
+
+            y += half;
+            builder.add_point(aabb.get_point(x, y), false);
+
+            builder.build()
+        }
         PonytailStyle::Bubble => {
             let thin_width = config.hair.ponytail.link_width;
             let thin_length = config.hair.ponytail.link_length;
@@ -55,7 +79,6 @@ fn get_ponytail_down(
             let combined_length = thin_length + bubble_width;
             let n = ((length / combined_length) as u32).max(1);
             let mut y = start;
-
             let mut builder = Polygon2dBuilder::new();
 
             for i in 0..n {
@@ -102,7 +125,7 @@ fn get_ponytail_left(
     let bottom_y = start_y + length;
 
     match style {
-        PonytailStyle::Bubble => {
+        PonytailStyle::Braid | PonytailStyle::Bubble => {
             let thin_width = config.hair.ponytail.link_width;
             let thin_length = config.hair.ponytail.link_length;
             let bubble = config.hair.ponytail.bubble_width;
