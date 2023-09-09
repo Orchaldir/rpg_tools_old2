@@ -77,17 +77,17 @@ impl UiVisitor for ViewerVisitor {
     fn leave_enum(&mut self) {
         self.leave();
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
-        self.leave_struct();
+        self.leave_struct(false);
     }
 
-    fn enter_struct(&mut self) {
+    fn enter_struct(&mut self, in_tuple: bool) {
         self.lines
             .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
         self.lines.push(format!("{}<ul>", self.spaces));
         self.enter();
     }
 
-    fn leave_struct(&mut self) {
+    fn leave_struct(&mut self, in_tuple: bool) {
         self.leave();
         self.lines.push(format!("{}</ul>", self.spaces));
     }

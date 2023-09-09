@@ -82,19 +82,30 @@ impl UiVisitor for EditorVisitor {
     fn leave_enum(&mut self) {
         self.leave();
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
-        self.leave_struct();
+        self.leave_struct(false);
     }
 
-    fn enter_struct(&mut self) {
-        self.lines
-            .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
-        self.lines.push(format!("{}<ul>", self.spaces));
-        self.enter();
+    fn enter_struct(&mut self, in_tuple: bool) {
+        if in_tuple {
+            /*self.lines.pop();
+            self.leave();
+            self.path.pop();
+
+             */
+            self.enter();
+        } else {
+            self.lines
+                .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
+            self.lines.push(format!("{}<ul>", self.spaces));
+            self.enter();
+        }
     }
 
-    fn leave_struct(&mut self) {
+    fn leave_struct(&mut self, in_tuple: bool) {
         self.leave();
-        self.lines.push(format!("{}</ul>", self.spaces));
+        if !in_tuple {
+            self.lines.push(format!("{}</ul>", self.spaces));
+        }
     }
 
     fn enter_child(&mut self, name: &str) {
