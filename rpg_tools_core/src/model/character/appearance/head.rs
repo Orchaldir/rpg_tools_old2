@@ -19,6 +19,16 @@ pub struct Head {
     pub skin: Skin,
 }
 
+impl Head {
+    /// Mirrors along the center axis.
+    pub fn mirror(&self) -> Self {
+        Self {
+            hair: self.hair.mirror(),
+            ..*self
+        }
+    }
+}
+
 impl Default for Head {
     fn default() -> Self {
         Self {

@@ -47,3 +47,25 @@ pub enum Hair {
         color: Color,
     },
 }
+
+impl Hair {
+    /// Mirrors along the center axis.
+    pub fn mirror(&self) -> Self {
+        match self {
+            Hair::Ponytail {
+                position,
+                style,
+                hairline,
+                length,
+                color,
+            } => Hair::Ponytail {
+                position: position.mirror(),
+                style: *style,
+                hairline: *hairline,
+                length: *length,
+                color: *color,
+            },
+            _ => *self,
+        }
+    }
+}

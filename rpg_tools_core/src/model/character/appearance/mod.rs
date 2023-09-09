@@ -43,6 +43,21 @@ impl Appearance {
             Appearance::Humanoid { height, .. } => height,
         }
     }
+
+    /// Mirrors along the center axis.
+    pub fn mirror(&self) -> Self {
+        match self {
+            Appearance::HeadOnly { head, height } => Appearance::HeadOnly {
+                head: head.mirror(),
+                height: *height,
+            },
+            Appearance::Humanoid { body, head, height } => Appearance::Humanoid {
+                body: *body,
+                head: head.mirror(),
+                height: *height,
+            },
+        }
+    }
 }
 
 impl Default for Appearance {

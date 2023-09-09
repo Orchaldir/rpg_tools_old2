@@ -13,3 +13,14 @@ pub enum PonytailPosition {
     Low,
     Right,
 }
+
+impl PonytailPosition {
+    /// Mirrors along the center axis.
+    pub fn mirror(&self) -> Self {
+        match self {
+            PonytailPosition::Left => PonytailPosition::Right,
+            PonytailPosition::Right => PonytailPosition::Left,
+            _ => *self,
+        }
+    }
+}

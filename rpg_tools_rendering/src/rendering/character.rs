@@ -51,14 +51,14 @@ pub fn render_character_from_back(
 ) {
     let inner = aabb.shrink(config.border);
 
-    match appearance {
+    match appearance.mirror() {
         Appearance::HeadOnly { head, .. } => {
-            render_head_from_back(renderer, config, head, &inner);
+            render_head_from_back(renderer, config, &head, &inner);
         }
         Appearance::Humanoid { body, head, .. } => {
-            render_body(renderer, config, &inner, body);
+            render_body(renderer, config, &inner, &body);
             let head_aabb = calculate_head_aabb(config, &inner);
-            render_head_from_back(renderer, config, head, &head_aabb);
+            render_head_from_back(renderer, config, &head, &head_aabb);
         }
     }
 }
