@@ -1,4 +1,5 @@
 use crate::math::aabb2d::{get_end_x, AABB};
+use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
@@ -39,19 +40,45 @@ pub fn render_ponytail(
 
 fn get_ponytail_down(aabb: &AABB, style: PonytailStyle, start: f32, length: Length) -> Polygon2d {
     let length = aabb.convert_from_height(length.to_millimetre());
-    let width = 0.2;
-    let bottom_width = width
-        * if style == PonytailStyle::Wide {
-            2.0
-        } else {
-            1.0
-        };
-    let (top_left, top_right) = aabb.get_mirrored_points(width, start);
-    let (bottom_left, bottom_right) = aabb.get_mirrored_points(bottom_width, start + length);
 
-    let corners = vec![top_left, bottom_left, bottom_right, top_right];
+    match style {
+        PonytailStyle::Bubble => {
+            let thin_width = 0.1;
+            let bubble_width = 0.3;
+            let combined_length = thin_width + bubble_width;
+            let n = ((length / combined_length) as u32).max(1);
+            let mut y = start;
 
-    Polygon2d::new(corners)
+            let mut builder = Polygon2dBuilder::new();
+
+            for _i in 0..n {
+                builder.add_mirrored_points(aabb, bubble_width, y, false);
+                y += bubble_width;
+                builder.add_mirrored_points(aabb, bubble_width, y, false);
+                builder.add_mirrored_points(aabb, thin_width, y, false);
+                y += thin_width;
+                builder.add_mirrored_points(aabb, thin_width, y, false);
+            }
+
+            builder.build()
+        }
+        PonytailStyle::Straight | PonytailStyle::Wide => {
+            let width = 0.2;
+            let bottom_width = width
+                * if style == PonytailStyle::Wide {
+                    2.0
+                } else {
+                    1.0
+                };
+            let (top_left, top_right) = aabb.get_mirrored_points(width, start);
+            let (bottom_left, bottom_right) =
+                aabb.get_mirrored_points(bottom_width, start + length);
+
+            let corners = vec![top_left, bottom_left, bottom_right, top_right];
+
+            Polygon2d::new(corners)
+        }
+    }
 }
 
 fn get_ponytail_left(
