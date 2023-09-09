@@ -82,6 +82,7 @@ impl HeadConfig {
         }
     }
 
+    /// Returns the max width along the entire head.
     pub fn get_max_width(&self, shape: HeadShape) -> f32 {
         self.get_chin_width(shape)
             .max(self.get_mouth_width(shape))

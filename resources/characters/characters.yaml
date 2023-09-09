@@ -150,8 +150,8 @@
       shape: Hourglass
       width: Average
       skin:
-        type: Skin
-        c: Fair
+        type: ExoticSkin
+        c: White
     head:
       ears:
         type: Normal
@@ -191,8 +191,8 @@
         teeth_color: White
       shape: Oval
       skin:
-        type: Skin
-        c: Fair
+        type: ExoticSkin
+        c: White
     height:
       millimetre: 1500
 - id: 4
