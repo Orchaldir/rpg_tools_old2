@@ -54,12 +54,13 @@ pub fn render_hair_before_head_from_front(
         }
         | Hair::Long {
             hairline, color, ..
-        }
-        | Hair::Ponytail {
-            hairline, color, ..
         } => {
             let polygon = get_simple_hair_style_polyon(config, aabb, head.shape, hairline);
             render_polygon(renderer, config, &polygon, color);
+        }
+        Hair::Ponytail(ponytail) => {
+            let polygon = get_simple_hair_style_polyon(config, aabb, head.shape, ponytail.hairline);
+            render_polygon(renderer, config, &polygon, ponytail.color);
         }
     }
 }
@@ -80,15 +81,7 @@ pub fn render_hair_behind_head_from_front(
         Hair::Bun {
             style, size, color, ..
         } => render_buns(renderer, config, aabb, head.shape, style, size, color),
-        Hair::Ponytail {
-            position,
-            style,
-            length,
-            color,
-            ..
-        } => render_ponytail(
-            renderer, config, aabb, head.shape, position, style, length, color,
-        ),
+        Hair::Ponytail(ponytail) => render_ponytail(renderer, config, aabb, head.shape, &ponytail),
         _ => {}
     }
 }
@@ -126,18 +119,10 @@ pub fn render_hair_back(
             render_head_shape_with_option(renderer, config, aabb, options, head.shape);
             render_buns(renderer, config, aabb, head.shape, style, size, color);
         }
-        Hair::Ponytail {
-            position,
-            style,
-            length,
-            color,
-            ..
-        } => {
-            let options = config.get_options(color);
+        Hair::Ponytail(ponytail) => {
+            let options = config.get_options(ponytail.color);
             render_head_shape_with_option(renderer, config, aabb, options, head.shape);
-            render_ponytail(
-                renderer, config, aabb, head.shape, position, style, length, color,
-            );
+            render_ponytail(renderer, config, aabb, head.shape, &ponytail);
         }
     }
 }

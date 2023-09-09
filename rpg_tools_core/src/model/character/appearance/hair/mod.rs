@@ -1,8 +1,7 @@
 use crate::model::character::appearance::hair::bun::BunStyle;
 use crate::model::character::appearance::hair::hairline::Hairline;
 use crate::model::character::appearance::hair::long::LongHairStyle;
-use crate::model::character::appearance::hair::ponytail::position::PonytailPosition;
-use crate::model::character::appearance::hair::ponytail::style::PonytailStyle;
+use crate::model::character::appearance::hair::ponytail::Ponytail;
 use crate::model::character::appearance::hair::short::ShortHair;
 use crate::model::color::Color;
 use crate::model::length::Length;
@@ -34,13 +33,7 @@ pub enum Hair {
         color: Color,
     },
     None,
-    Ponytail {
-        position: PonytailPosition,
-        style: PonytailStyle,
-        hairline: Hairline,
-        length: Length,
-        color: Color,
-    },
+    Ponytail(Ponytail),
     Short {
         style: ShortHair,
         hairline: Hairline,
@@ -52,19 +45,7 @@ impl Hair {
     /// Mirrors along the center axis.
     pub fn mirror(&self) -> Self {
         match self {
-            Hair::Ponytail {
-                position,
-                style,
-                hairline,
-                length,
-                color,
-            } => Hair::Ponytail {
-                position: position.mirror(),
-                style: *style,
-                hairline: *hairline,
-                length: *length,
-                color: *color,
-            },
+            Hair::Ponytail(ponytail) => Hair::Ponytail(ponytail.mirror()),
             _ => *self,
         }
     }

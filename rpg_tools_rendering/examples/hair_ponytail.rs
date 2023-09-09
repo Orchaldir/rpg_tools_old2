@@ -6,6 +6,7 @@ use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::hair::ponytail::position::PonytailPosition;
 use rpg_tools_core::model::character::appearance::hair::ponytail::style::PonytailStyle;
+use rpg_tools_core::model::character::appearance::hair::ponytail::Ponytail;
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::color::Color;
@@ -33,11 +34,11 @@ fn main() {
 }
 
 fn create_ponytail(position: PonytailPosition, style: PonytailStyle) -> Hair {
-    Hair::Ponytail {
+    Hair::Ponytail(Ponytail {
         position,
         style,
         length: Length::from_metre(1.0),
         hairline: Hairline::Straight(Size::Medium),
         color: Color::SaddleBrown,
-    }
+    })
 }
