@@ -48,7 +48,7 @@ fn get_ponytail_down(
     let length = aabb.convert_from_height(length.to_millimetre());
 
     match style {
-        PonytailStyle::Braid => get_braid(config, aabb, 0.5, start, length),
+        PonytailStyle::Braid => get_braid(config, aabb, 0.5, start, length, 0.0),
         PonytailStyle::Bubble => {
             let thin_width = config.hair.ponytail.link_width;
             let thin_length = config.hair.ponytail.link_length;
@@ -108,6 +108,7 @@ fn get_ponytail_left(
             start_x + config.hair.ponytail.braid_width / 2.0,
             start_y,
             length,
+            config.hair.ponytail.braid_width,
         ),
         PonytailStyle::Bubble => {
             let thin_width = config.hair.ponytail.link_width;
@@ -176,24 +177,36 @@ fn get_ponytail_left(
     }
 }
 
-fn get_braid(config: &RenderConfig, aabb: &AABB, x: f32, start_y: f32, length: f32) -> Polygon2d {
+fn get_braid(
+    config: &RenderConfig,
+    aabb: &AABB,
+    start_x: f32,
+    start_y: f32,
+    length: f32,
+    offset: f32,
+) -> Polygon2d {
     let braid = config.hair.ponytail.braid_width;
     let half = braid / 2.0;
     let n = ((length / braid) as u32).max(1);
+    let mut x = start_x;
     let mut y = start_y;
+    let mut step = offset;
     let mut builder = Polygon2dBuilder::new();
 
     builder.add_horizontal_pair(aabb, braid, x, y, false);
 
     for _i in 0..n - 1 {
         y += half;
+        x += step / 4.0;
         builder.add_point(aabb.get_point(x - half, y), false);
         builder.add_point(aabb.get_point(x, y), false);
         builder.add_point(aabb.get_point(x - half, y), false);
         y += half;
+        x += step / 4.0;
         builder.add_point_cw(aabb.get_point(x + half, y), false);
         builder.add_point_cw(aabb.get_point(x, y), false);
         builder.add_point_cw(aabb.get_point(x + half, y), false);
+        step /= 2.0;
     }
 
     y += braid;
