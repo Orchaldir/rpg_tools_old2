@@ -58,13 +58,16 @@ fn get_ponytail_down(
 
             let mut builder = Polygon2dBuilder::new();
 
-            for _i in 0..n {
+            for i in 0..n {
                 builder.add_mirrored_points(aabb, bubble_width, y, false);
                 y += bubble_width;
                 builder.add_mirrored_points(aabb, bubble_width, y, false);
-                builder.add_mirrored_points(aabb, thin_width, y, false);
-                y += thin_length;
-                builder.add_mirrored_points(aabb, thin_width, y, false);
+
+                if i < n - 1 {
+                    builder.add_mirrored_points(aabb, thin_width, y, false);
+                    y += thin_length;
+                    builder.add_mirrored_points(aabb, thin_width, y, false);
+                }
             }
 
             builder.build()
@@ -123,9 +126,15 @@ fn get_ponytail_left(
             x += bubble_half;
             y += bubble_half;
 
-            for _i in 0..n {
+            for i in 0..n {
                 builder.add_horizontal_pair(aabb, thin_width, x, y, false);
+
                 y += thin_length;
+
+                if i == 0 {
+                    x += bubble / 3.0;
+                }
+
                 builder.add_horizontal_pair(aabb, thin_width, x, y, false);
                 builder.add_horizontal_pair(aabb, bubble, x, y, false);
                 y += bubble;
