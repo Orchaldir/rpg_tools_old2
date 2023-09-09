@@ -31,7 +31,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         return quote! {
             #[automatically_derived]
             impl UI for #name {
-                fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
+                fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str, _in_tuple: bool) {
                     println!("{}Add simple enum {} with path '{}'!", spaces, stringify!(#name), path);
                     visitor.add_simple_enum(&[#(stringify!(#variants).to_string()),*]);
                 }
@@ -43,7 +43,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         return quote! {
             #[automatically_derived]
             impl UI for #name {
-                fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
+                fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str, _in_tuple: bool) {
                     println!("{}Create Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), path);
                     visitor.enter_enum(&[#(stringify!(#variants).to_string()),*]);
                     let inner_spaces = format!("  {}", spaces);
@@ -60,7 +60,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     quote! {
         #[automatically_derived]
         impl UI for #name {
-            fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
+            fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str, _in_tuple: bool) {
                 println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), path);
                 visitor.enter_enum(&[#(stringify!(#variants).to_string()),*]);
                 let inner_spaces = format!("  {}", spaces);
@@ -84,7 +84,7 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
                 results.push(quote! {  println!("{}Add named variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
 
                 for field in &fields.named {
-                    results.push(handle_field(field));
+                    results.push(handle_struct_field(field));
                 }
             }
             Fields::Unnamed(fields) => {
@@ -94,7 +94,7 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
 
                 results.push(quote! {  println!("{}Add unnamed variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
 
-                results.push(handle_field_name(&fields.unnamed[0], "c"));
+                results.push(handle_tuple_field(&fields.unnamed[0], "c"));
             }
             Fields::Unit => {
                 results.push(quote! {
@@ -109,24 +109,24 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
 }
 
 fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
-    let field_quotes: TokenStream2 = fields.named.iter().map(handle_field).collect();
+    let field_quotes: TokenStream2 = fields.named.iter().map(handle_struct_field).collect();
 
     quote! {
         #[automatically_derived]
         impl UI for #name {
-            fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str) {
-                println!("{}Create Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
-                visitor.enter_struct();
+            fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str, in_tuple: bool) {
+                println!("{}Create Viewer for struct {} with path '{}' & in_tuple={}!", spaces, stringify!(#name), path, in_tuple);
+                visitor.enter_struct(in_tuple);
                 let inner_spaces = format!("  {}", spaces);
                 #field_quotes
-                visitor.leave_struct();
+                visitor.leave_struct(in_tuple);
                 println!("{}Finish Viewer for struct {} with path '{}'!", spaces, stringify!(#name), path);
             }
         }
     }
 }
 
-fn handle_field(field: &Field) -> TokenStream2 {
+fn handle_struct_field(field: &Field) -> TokenStream2 {
     let field_name = &field.ident;
 
     if is_integer(field) {
@@ -138,13 +138,13 @@ fn handle_field(field: &Field) -> TokenStream2 {
         let name = &get_field_type(field);
         quote! {
             visitor.enter_child(stringify!(#field_name));
-            #name::create_viewer(visitor, &format!("{}.{}", path, stringify!(#field_name)), &inner_spaces);
+            #name::create_viewer(visitor, &format!("{}.{}", path, stringify!(#field_name)), &inner_spaces, false);
             visitor.leave_child();
         }
     }
 }
 
-fn handle_field_name(field: &Field, field_name: &str) -> TokenStream2 {
+fn handle_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
     if is_integer(field) {
         quote! {
             println!("{}Add integer '{}'!", &inner_spaces, #field_name);
@@ -154,7 +154,7 @@ fn handle_field_name(field: &Field, field_name: &str) -> TokenStream2 {
         let name = &get_field_type(field);
         quote! {
             visitor.enter_child(#field_name);
-            #name::create_viewer(visitor, &format!("{}.{}", path, #field_name), &inner_spaces);
+            #name::create_viewer(visitor, &format!("{}.{}", path, #field_name), &inner_spaces, true);
             visitor.leave_child();
         }
     }

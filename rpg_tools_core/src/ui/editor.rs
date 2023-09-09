@@ -6,6 +6,7 @@ pub struct EditorVisitor {
     lines: Vec<String>,
     path: Vec<String>,
     spaces: String,
+    in_tuple: bool,
 }
 
 impl EditorVisitor {
@@ -15,6 +16,7 @@ impl EditorVisitor {
             lines: vec![],
             path: vec![path],
             spaces,
+            in_tuple: false,
         }
     }
 
@@ -82,19 +84,29 @@ impl UiVisitor for EditorVisitor {
     fn leave_enum(&mut self) {
         self.leave();
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
-        self.leave_struct();
-    }
-
-    fn enter_struct(&mut self) {
-        self.lines
-            .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
-        self.lines.push(format!("{}<ul>", self.spaces));
-        self.enter();
-    }
-
-    fn leave_struct(&mut self) {
         self.leave();
         self.lines.push(format!("{}</ul>", self.spaces));
+    }
+
+    fn enter_struct(&mut self, in_tuple: bool) {
+        if in_tuple {
+            self.lines.pop();
+            self.leave();
+            self.path.pop();
+        } else {
+            self.lines
+                .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
+            self.lines.push(format!("{}<ul>", self.spaces));
+            self.enter();
+        }
+    }
+
+    fn leave_struct(&mut self, in_tuple: bool) {
+        if !in_tuple {
+            self.leave();
+            self.lines.push(format!("{}</ul>", self.spaces));
+        }
+        self.in_tuple = in_tuple;
     }
 
     fn enter_child(&mut self, name: &str) {
@@ -104,9 +116,13 @@ impl UiVisitor for EditorVisitor {
     }
 
     fn leave_child(&mut self) {
-        self.path.pop();
-        self.leave();
-        self.lines.push(format!("{}</li>", self.spaces));
+        if self.in_tuple {
+            self.in_tuple = false;
+        } else {
+            self.path.pop();
+            self.leave();
+            self.lines.push(format!("{}</li>", self.spaces));
+        }
     }
 
     fn add_integer(&mut self, name: &str) {

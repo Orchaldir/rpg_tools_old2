@@ -6,8 +6,8 @@ pub trait UiVisitor {
     fn enter_tuple_variant(&mut self, name: &str);
     fn leave_enum(&mut self);
 
-    fn enter_struct(&mut self);
-    fn leave_struct(&mut self);
+    fn enter_struct(&mut self, in_tuple: bool);
+    fn leave_struct(&mut self, in_tuple: bool);
 
     fn enter_child(&mut self, name: &str);
     fn leave_child(&mut self);
@@ -19,5 +19,5 @@ pub trait UiVisitor {
 
 pub trait UI {
     /// Create a viewer ui.
-    fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str);
+    fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str, in_tuple: bool);
 }

@@ -5,8 +5,8 @@ use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::hair::ponytail::position::PonytailPosition;
 use rpg_tools_core::model::character::appearance::hair::ponytail::style::PonytailStyle;
+use rpg_tools_core::model::character::appearance::hair::ponytail::Ponytail;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
-use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 
 pub fn render_ponytail(
@@ -14,25 +14,35 @@ pub fn render_ponytail(
     config: &RenderConfig,
     aabb: &AABB,
     head_shape: HeadShape,
-    position: PonytailPosition,
-    style: PonytailStyle,
-    length: Length,
-    color: Color,
+    ponytail: &Ponytail,
 ) {
-    let options = config.get_options(color);
+    let options = config.get_options(ponytail.color);
     let radius = 0.2;
 
-    let polygon = match position {
-        PonytailPosition::High => get_ponytail_down(config, aabb, style, radius, length),
-        PonytailPosition::Low => get_ponytail_down(config, aabb, style, 1.0 - radius, length),
-        _ => get_ponytail_left(config, aabb, head_shape, style, radius, length),
+    let polygon = match ponytail.position {
+        PonytailPosition::High => {
+            get_ponytail_down(config, aabb, ponytail.style, radius, ponytail.length)
+        }
+        PonytailPosition::Low => {
+            get_ponytail_down(config, aabb, ponytail.style, 1.0 - radius, ponytail.length)
+        }
+        _ => get_ponytail_left(
+            config,
+            aabb,
+            head_shape,
+            ponytail.style,
+            radius,
+            ponytail.length,
+        ),
     };
 
-    if position != PonytailPosition::Right {
+    if ponytail.position != PonytailPosition::Right {
         renderer.render_rounded_polygon(&polygon, &options);
     }
 
-    if position == PonytailPosition::Right || position == PonytailPosition::BothSides {
+    if ponytail.position == PonytailPosition::Right
+        || ponytail.position == PonytailPosition::BothSides
+    {
         let right = aabb.mirrored(&polygon);
         renderer.render_rounded_polygon(&right, &options);
     }
