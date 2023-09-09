@@ -56,7 +56,7 @@ fn get_ponytail_down(
             let mut y = start;
             let mut builder = Polygon2dBuilder::new();
 
-            builder.add_mirrored_points(aabb, braid, y, false);
+            builder.add_horizontal_pair(aabb, braid, x, y, false);
 
             for _i in 0..n - 1 {
                 y += half;
