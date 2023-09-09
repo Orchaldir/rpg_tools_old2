@@ -23,8 +23,8 @@ pub fn render_ponytail(
     let radius = 0.2;
 
     let polygon = match position {
-        PonytailPosition::High => get_ponytail_down(aabb, style, radius, length),
-        PonytailPosition::Low => get_ponytail_down(aabb, style, 1.0 - radius, length),
+        PonytailPosition::High => get_ponytail_down(config, aabb, style, radius, length),
+        PonytailPosition::Low => get_ponytail_down(config, aabb, style, 1.0 - radius, length),
         _ => get_ponytail_left(config, aabb, head_shape, style, radius, length),
     };
 
@@ -38,14 +38,21 @@ pub fn render_ponytail(
     }
 }
 
-fn get_ponytail_down(aabb: &AABB, style: PonytailStyle, start: f32, length: Length) -> Polygon2d {
+fn get_ponytail_down(
+    config: &RenderConfig,
+    aabb: &AABB,
+    style: PonytailStyle,
+    start: f32,
+    length: Length,
+) -> Polygon2d {
     let length = aabb.convert_from_height(length.to_millimetre());
 
     match style {
         PonytailStyle::Bubble => {
-            let thin_width = 0.1;
-            let bubble_width = 0.3;
-            let combined_length = thin_width + bubble_width;
+            let thin_width = config.hair.ponytail.link_width;
+            let thin_length = config.hair.ponytail.link_length;
+            let bubble_width = config.hair.ponytail.bubble_width;
+            let combined_length = thin_length + bubble_width;
             let n = ((length / combined_length) as u32).max(1);
             let mut y = start;
 
@@ -56,20 +63,15 @@ fn get_ponytail_down(aabb: &AABB, style: PonytailStyle, start: f32, length: Leng
                 y += bubble_width;
                 builder.add_mirrored_points(aabb, bubble_width, y, false);
                 builder.add_mirrored_points(aabb, thin_width, y, false);
-                y += thin_width;
+                y += thin_length;
                 builder.add_mirrored_points(aabb, thin_width, y, false);
             }
 
             builder.build()
         }
         PonytailStyle::Straight | PonytailStyle::Wide => {
-            let width = 0.2;
-            let bottom_width = width
-                * if style == PonytailStyle::Wide {
-                    2.0
-                } else {
-                    1.0
-                };
+            let width = config.hair.ponytail.width;
+            let bottom_width = config.hair.ponytail.get_bottom_width(style);
             let (top_left, top_right) = aabb.get_mirrored_points(width, start);
             let (bottom_left, bottom_right) =
                 aabb.get_mirrored_points(bottom_width, start + length);
@@ -93,16 +95,11 @@ fn get_ponytail_left(
     let start_head_width =
         (config.head.get_top_width(head_shape) + config.head.get_forehead_width(head_shape)) / 2.0;
     let start_x = get_end_x(start_head_width);
-    let width = 0.2;
+    let width = config.hair.ponytail.width;
     let x = get_end_x(config.head.get_max_width(head_shape)) + 0.1;
     let bottom_y = start_y + length;
     let start_half = width / 2.0;
-    let bottom_width = width
-        * if style == PonytailStyle::Wide {
-            2.0
-        } else {
-            1.0
-        };
+    let bottom_width = config.hair.ponytail.get_bottom_width(style);
 
     let center_top = aabb.get_point(start_x - start_half, start_y - start_half);
     let center_bottom = aabb.get_point(start_x - start_half, start_y + start_half);
