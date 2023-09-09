@@ -4,6 +4,7 @@ use rpg_tools_core::model::character::appearance::hair::ponytail::style::Ponytai
 pub struct PonytailConfig {
     pub width: f32,
     pub wide_width: f32,
+    pub braid_width: f32,
     pub bubble_width: f32,
     pub link_width: f32,
     pub link_length: f32,

@@ -89,6 +89,7 @@ pub fn create_config() -> RenderConfig {
             ponytail: PonytailConfig {
                 width: 0.2,
                 wide_width: 0.4,
+                braid_width: 0.2,
                 bubble_width: 0.3,
                 link_width: 0.05,
                 link_length: 0.1,

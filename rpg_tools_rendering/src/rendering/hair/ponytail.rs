@@ -49,25 +49,27 @@ fn get_ponytail_down(
 
     match style {
         PonytailStyle::Braid => {
-            let bubble = config.hair.ponytail.bubble_width;
-            let half = bubble / 2.0;
-            let n = ((length / bubble) as u32).max(1);
+            let braid = config.hair.ponytail.braid_width;
+            let half = braid / 2.0;
+            let n = ((length / braid) as u32).max(1);
             let x = 0.5;
             let mut y = start;
             let mut builder = Polygon2dBuilder::new();
 
-            builder.add_mirrored_points(aabb, bubble, y, false);
+            builder.add_mirrored_points(aabb, braid, y, false);
 
             for _i in 0..n - 1 {
                 y += half;
                 builder.add_point(aabb.get_point(x - half, y), false);
                 builder.add_point(aabb.get_point(x, y), false);
+                builder.add_point(aabb.get_point(x - half, y), false);
                 y += half;
                 builder.add_point_cw(aabb.get_point(x + half, y), false);
                 builder.add_point_cw(aabb.get_point(x, y), false);
+                builder.add_point_cw(aabb.get_point(x + half, y), false);
             }
 
-            y += half;
+            y += braid;
             builder.add_point(aabb.get_point(x, y), false);
 
             builder.build()
