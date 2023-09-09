@@ -4,6 +4,7 @@ use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::brow::EyeBrows;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
+use rpg_tools_core::model::character::appearance::hair::ponytail::Ponytail;
 use rpg_tools_core::model::character::appearance::hair::short::ShortHair;
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
@@ -196,13 +197,13 @@ fn update_hair(data: &UrlEncodedData) -> Hair {
             let position = get_enum(data, "appearance.head.hair.position");
             let style = get_enum(data, "appearance.head.hair.style");
 
-            Hair::Ponytail {
+            Hair::Ponytail(Ponytail {
                 position,
                 style,
                 hairline: get_hairline(data),
                 length,
                 color,
-            }
+            })
         }
         _ => Hair::None,
     }
