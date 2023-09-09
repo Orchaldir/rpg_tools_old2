@@ -192,7 +192,7 @@ fn update_hair(data: &UrlEncodedData) -> Hair {
         }
         "Ponytail" => {
             let color = get_enum(data, "appearance.head.hair.color");
-            let length = parse_length_or(data, "appearance.head.hair.length.millimetre", 0.1);
+            let length = parse_length_or(data, "appearance.head.hair.length.millimetre", 0.2);
             let position = get_enum(data, "appearance.head.hair.position");
             let style = get_enum(data, "appearance.head.hair.style");
 
@@ -352,8 +352,10 @@ fn parse_length(data: &UrlEncodedData, path: &str) -> Option<Length> {
         .next()
 }
 
-fn parse_length_or(data: &UrlEncodedData, path: &str, default: f32) -> Length {
-    parse_length(data, path).unwrap_or_else(|| Length::from_metre(default))
+fn parse_length_or(data: &UrlEncodedData, path: &str, min: f32) -> Length {
+    parse_length(data, path)
+        .filter(|l| l.to_metre() >= min)
+        .unwrap_or_else(|| Length::from_metre(min))
 }
 
 fn get_enum<'a, T: From<&'a str>>(data: &'a UrlEncodedData, path: &str) -> T {
