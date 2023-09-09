@@ -105,7 +105,7 @@ fn get_ponytail_left(
             let bubble = config.hair.ponytail.bubble_width;
             let bubble_half = bubble / 2.0;
             let combined_length = thin_length + bubble;
-            let n = ((length / combined_length) as u32).max(1);
+            let n = ((length / combined_length) as u32).max(1) - 1;
             let mut x = start_x;
             let mut y = start_y;
 
@@ -122,6 +122,15 @@ fn get_ponytail_left(
             builder.add_point_cw(aabb.get_point(x + bubble, y + bubble_half), false);
             x += bubble_half;
             y += bubble_half;
+
+            for _i in 0..n {
+                builder.add_horizontal_pair(aabb, thin_width, x, y, false);
+                y += thin_length;
+                builder.add_horizontal_pair(aabb, thin_width, x, y, false);
+                builder.add_horizontal_pair(aabb, bubble, x, y, false);
+                y += bubble;
+                builder.add_horizontal_pair(aabb, bubble, x, y, false);
+            }
 
             builder.build()
         }
