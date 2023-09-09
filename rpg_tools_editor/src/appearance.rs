@@ -4,7 +4,8 @@ use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::brow::EyeBrows;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
-use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
+use rpg_tools_core::model::character::appearance::hair::short::ShortHair;
+use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
@@ -179,11 +180,24 @@ fn update_hair(data: &UrlEncodedData) -> Hair {
         }
         "Long" => {
             let color = get_enum(data, "appearance.head.hair.color");
-            let length = parse_length(data, "appearance.head.hair.length.millimetre")
-                .unwrap_or_else(|| Length::from_metre(0.1));
+            let length = parse_length_or(data, "appearance.head.hair.length.millimetre", 0.1);
             let style = get_enum(data, "appearance.head.hair.style");
 
             Hair::Long {
+                style,
+                hairline: get_hairline(data),
+                length,
+                color,
+            }
+        }
+        "Ponytail" => {
+            let color = get_enum(data, "appearance.head.hair.color");
+            let length = parse_length_or(data, "appearance.head.hair.length.millimetre", 0.2);
+            let position = get_enum(data, "appearance.head.hair.position");
+            let style = get_enum(data, "appearance.head.hair.style");
+
+            Hair::Ponytail {
+                position,
                 style,
                 hairline: get_hairline(data),
                 length,
@@ -300,8 +314,7 @@ fn parse_beard(path: &str, data: &UrlEncodedData) -> Beard {
         "FullBeard" => {
             let color = Color::from(color);
             let style = get_enum(data, &format!("{}.beard.style", path));
-            let length = parse_length(data, &format!("{}.beard.length.millimetre", path))
-                .unwrap_or_else(|| Length::from_metre(0.1));
+            let length = parse_length_or(data, &format!("{}.beard.length.millimetre", path), 0.1);
             Beard::FullBeard {
                 style,
                 length,
@@ -337,6 +350,12 @@ fn parse_length(data: &UrlEncodedData, path: &str) -> Option<Length> {
         .flat_map(|s| s.parse::<u32>().ok())
         .map(Length::from_millimetre)
         .next()
+}
+
+fn parse_length_or(data: &UrlEncodedData, path: &str, min: f32) -> Length {
+    parse_length(data, path)
+        .filter(|l| l.to_metre() >= min)
+        .unwrap_or_else(|| Length::from_metre(min))
 }
 
 fn get_enum<'a, T: From<&'a str>>(data: &'a UrlEncodedData, path: &str) -> T {

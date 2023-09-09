@@ -1,6 +1,8 @@
 use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 
+pub mod builder;
+
 /// Defines a polygons as a list of [`points`](Point2d).
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 pub struct Polygon2d {
@@ -8,9 +10,9 @@ pub struct Polygon2d {
 }
 
 impl Polygon2d {
-    /// Returns a new point.
-    pub fn new(corners: Vec<Point2d>) -> Polygon2d {
-        Polygon2d { corners }
+    /// Returns a new polygon.
+    pub fn new(corners: Vec<Point2d>) -> Self {
+        Self { corners }
     }
 
     /// Calculates the center of the polygon.

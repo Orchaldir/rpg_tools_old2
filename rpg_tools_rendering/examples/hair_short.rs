@@ -4,14 +4,14 @@ extern crate rpg_tools_rendering;
 use crate::utils::appearance::create_head_with_hair;
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
-use rpg_tools_core::model::character::appearance::hair::ShortHair::FlatTop;
-use rpg_tools_core::model::character::appearance::hair::{Hair, ShortHair};
+use rpg_tools_core::model::character::appearance::hair::short::ShortHair;
+use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::side::Side;
 use rpg_tools_core::model::size::Size::{Large, Medium, Small};
 use Hairline::{Round, Straight, Triangle, WidowsPeak};
-use ShortHair::{BuzzCut, MiddlePart, SidePart};
+use ShortHair::{BuzzCut, FlatTop, MiddlePart, SidePart};
 use Side::{Left, Right};
 
 pub mod utils;

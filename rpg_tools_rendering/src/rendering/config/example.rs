@@ -8,6 +8,7 @@ use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::eye::eyebrow::EyebrowConfig;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::hairline::HairlineConfig;
+use crate::rendering::config::hair::ponytail::PonytailConfig;
 use crate::rendering::config::hair::short::ShortHairConfig;
 use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
@@ -84,6 +85,14 @@ pub fn create_config() -> RenderConfig {
                     medium: 0.2,
                     high: 0.15,
                 },
+            },
+            ponytail: PonytailConfig {
+                width: 0.2,
+                wide_width: 0.4,
+                braid_width: 0.2,
+                bubble_width: 0.3,
+                link_width: 0.05,
+                link_length: 0.1,
             },
             short: ShortHairConfig {
                 side_part_offset: 0.3,

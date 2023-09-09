@@ -1,4 +1,4 @@
-use crate::math::aabb2d::AABB;
+use crate::math::aabb2d::{get_end_x, get_start_x, AABB};
 use crate::math::line2d::Line2d;
 use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
@@ -14,12 +14,12 @@ use Color::Black;
 
 pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     let head_width_factor = config.head.get_mouth_width(head.shape);
-    let head_width = aabb.calculate_from_height(head_width_factor);
+    let head_width = aabb.convert_to_height(head_width_factor);
 
     match &head.mouth {
         Mouth::None => {}
         Mouth::Circle { size, teeth_color } => {
-            let free_y = aabb.calculate_from_height(1.0 - config.head.y_eye);
+            let free_y = aabb.convert_to_height(1.0 - config.head.y_eye);
             let max_free_space = head_width.min(free_y);
             let center = aabb.get_point(0.5, config.head.y_mouth);
             let radius = config
@@ -111,7 +111,7 @@ fn render_2_fangs(
         renderer,
         config,
         fang_height,
-        &aabb.get_point(0.5 - distance_between_fangs / 2.0, config.head.y_mouth),
+        &aabb.get_point(get_start_x(distance_between_fangs), config.head.y_mouth),
         down,
         color,
     );
@@ -119,7 +119,7 @@ fn render_2_fangs(
         renderer,
         config,
         fang_height,
-        &aabb.get_point(0.5 + distance_between_fangs / 2.0, config.head.y_mouth),
+        &aabb.get_point(get_end_x(distance_between_fangs), config.head.y_mouth),
         down,
         color,
     );

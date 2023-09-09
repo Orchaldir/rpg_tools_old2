@@ -163,23 +163,33 @@ impl AxisAlignedBoundingBox {
         self.size.width().min(self.size.height()) / 2
     }
 
-    /// Calculates a value based on the height.
+    /// Converts a height to a factor.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AABB;
-    /// assert_eq!(AABB::simple(2, 3, 30, 100).calculate_from_height(0.8), 80);
+    /// assert_eq!(AABB::simple(2, 3, 30, 100).convert_from_height(80), 0.8);
     /// ```
-    pub fn calculate_from_height(&self, factor: f32) -> u32 {
+    pub fn convert_from_height(&self, height: u32) -> f32 {
+        height as f32 / self.size.height() as f32
+    }
+
+    /// Converts a factor to a height.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::aabb2d::AABB;
+    /// assert_eq!(AABB::simple(2, 3, 30, 100).convert_to_height(0.8), 80);
+    /// ```
+    pub fn convert_to_height(&self, factor: f32) -> u32 {
         (self.size.height() as f32 * factor) as u32
     }
 
-    /// Calculates a value based on the width.
+    /// Converts a factor to a width.
     ///
     /// ```
     ///# use rpg_tools_rendering::math::aabb2d::AABB;
-    /// assert_eq!(AABB::simple(2, 3, 30, 100).calculate_from_width(0.5), 15);
+    /// assert_eq!(AABB::simple(2, 3, 30, 100).convert_to_width(0.5), 15);
     /// ```
-    pub fn calculate_from_width(&self, factor: f32) -> u32 {
+    pub fn convert_to_width(&self, factor: f32) -> u32 {
         (self.size.width() as f32 * factor) as u32
     }
 
@@ -295,10 +305,9 @@ impl AxisAlignedBoundingBox {
     /// assert_eq!(right, Point2d::new(24, 18));
     /// ```
     pub fn get_mirrored_points(&self, width: f32, vertical: f32) -> (Point2d, Point2d) {
-        let half = width / 2.0;
         (
-            self.get_point(0.5 - half, vertical),
-            self.get_point(0.5 + half, vertical),
+            self.get_point(get_start_x(width), vertical),
+            self.get_point(get_end_x(width), vertical),
         )
     }
 
@@ -346,4 +355,14 @@ impl AxisAlignedBoundingBox {
                 .collect(),
         )
     }
+}
+
+/// Returns the start x coordinated, if the width is centered.
+pub fn get_start_x(width: f32) -> f32 {
+    0.5 - width / 2.0
+}
+
+/// Returns the start x coordinated, if the width is centered.
+pub fn get_end_x(width: f32) -> f32 {
+    0.5 + width / 2.0
 }

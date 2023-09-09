@@ -1,4 +1,4 @@
-use crate::math::aabb2d::AABB;
+use crate::math::aabb2d::{get_end_x, get_start_x, AABB};
 use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
@@ -31,10 +31,10 @@ fn render_legs(
     let leg_width = config.body.get_leg_width(body);
     let leg_y = config.body.get_leg_y();
 
-    let left_leg_start_x = 0.5 + legs_width / 2.0 - leg_width;
+    let left_leg_start_x = get_end_x(legs_width) - leg_width;
     let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);
     let leg_size = aabb.size().scale(leg_width, 1.0 - leg_y);
-    let right_leg_x = 0.5 - legs_width / 2.0;
+    let right_leg_x = get_start_x(legs_width);
     let right_leg_start = aabb.get_point(right_leg_x, leg_y);
 
     render_leg(renderer, options, left_leg_start, leg_size);
@@ -79,12 +79,12 @@ fn render_arms(
     let arm_size = aabb
         .size()
         .scale(config.body.get_arm_width(body), config.body.height_arm);
-    let arm_start_x = 0.5 - config.body.get_shoulder_width(body) / 2.0;
+    let arm_start_x = get_start_x(config.body.get_shoulder_width(body));
     let right_arm_start = aabb.get_point(
         arm_start_x - config.body.get_arm_width(body),
         config.body.get_arm_y(),
     );
-    let fat_offset = aabb.calculate_from_height(config.body.get_fat_offset_factor(body) / 2.0);
+    let fat_offset = aabb.convert_to_height(config.body.get_fat_offset_factor(body) / 2.0);
     let polygon = create_arm(arm_size, right_arm_start, fat_offset as i32);
 
     renderer.render_rounded_polygon(&polygon, options);
@@ -122,7 +122,7 @@ fn render_leg(renderer: &mut dyn Renderer, options: &RenderOptions, start: Point
 pub fn calculate_head_aabb(config: &RenderConfig, aabb: &AABB) -> AABB {
     let head_size = config.body.height_head;
 
-    let head_start = aabb.get_point(0.5 - head_size / 2.0, 0.0);
+    let head_start = aabb.get_point(get_start_x(head_size), 0.0);
     let head_size = aabb.size().mul(head_size);
     AABB::new(head_start, head_size)
 }

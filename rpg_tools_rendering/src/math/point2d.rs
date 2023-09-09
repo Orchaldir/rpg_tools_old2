@@ -39,6 +39,16 @@ impl Point2d {
         Self { x, y }
     }
 
+    /// Returns a new point on the y-axis.
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::math::point2d::Point2d;
+    /// assert_eq!(Point2d::vertical(3), Point2d::new(0, 3));
+    /// ```
+    pub const fn vertical(y: i32) -> Self {
+        Self { x: 0, y }
+    }
+
     /// Calculates the euclidean distance to another point.
     ///
     /// ```

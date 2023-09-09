@@ -1,9 +1,11 @@
 use crate::model::character::appearance::hair::bun::BunStyle;
 use crate::model::character::appearance::hair::hairline::Hairline;
 use crate::model::character::appearance::hair::long::LongHairStyle;
+use crate::model::character::appearance::hair::ponytail::position::PonytailPosition;
+use crate::model::character::appearance::hair::ponytail::style::PonytailStyle;
+use crate::model::character::appearance::hair::short::ShortHair;
 use crate::model::color::Color;
 use crate::model::length::Length;
-use crate::model::side::Side;
 use crate::model::size::Size;
 use crate::ui::{UiVisitor, UI};
 use macro_ui::ui;
@@ -12,15 +14,16 @@ use serde::{Deserialize, Serialize};
 pub mod bun;
 pub mod hairline;
 pub mod long;
+pub mod ponytail;
+pub mod short;
 
 /// How does the hair look like?
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum Hair {
-    None,
-    /// Short normal hair.
-    Short {
-        style: ShortHair,
+    Bun {
+        style: BunStyle,
+        size: Size,
         hairline: Hairline,
         color: Color,
     },
@@ -30,24 +33,39 @@ pub enum Hair {
         length: Length,
         color: Color,
     },
-    Bun {
-        style: BunStyle,
-        size: Size,
+    None,
+    Ponytail {
+        position: PonytailPosition,
+        style: PonytailStyle,
+        hairline: Hairline,
+        length: Length,
+        color: Color,
+    },
+    Short {
+        style: ShortHair,
         hairline: Hairline,
         color: Color,
     },
 }
 
-/// Which short hair style?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(tag = "type", content = "c")]
-pub enum ShortHair {
-    /// All hair is equally short.
-    BuzzCut,
-    /// The hair on the top of the head is cut and styled upright to form a flat profile.
-    FlatTop(Size),
-    // Short hair that parts in the middle.
-    MiddlePart,
-    // Short hair that parts on one side.
-    SidePart(Side),
+impl Hair {
+    /// Mirrors along the center axis.
+    pub fn mirror(&self) -> Self {
+        match self {
+            Hair::Ponytail {
+                position,
+                style,
+                hairline,
+                length,
+                color,
+            } => Hair::Ponytail {
+                position: position.mirror(),
+                style: *style,
+                hairline: *hairline,
+                length: *length,
+                color: *color,
+            },
+            _ => *self,
+        }
+    }
 }
