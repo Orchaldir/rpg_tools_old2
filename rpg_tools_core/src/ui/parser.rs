@@ -14,6 +14,10 @@ pub trait UiParser<'a> {
     }
 }
 
+pub fn get_enum<'a, T: From<&'a str>>(parser: &'a dyn UiParser, path: &str) -> T {
+    parser.get_str(path).unwrap_or("").into()
+}
+
 pub struct MockParser<'a> {
     data: HashMap<&'a str, &'a str>,
 }

@@ -36,6 +36,16 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
                     visitor.add_simple_enum(&[#(stringify!(#variants).to_string()),*]);
                 }
             }
+
+            use rpg_tools_core::ui::parser::get_enum;
+
+            #[automatically_derived]
+            impl #name {
+                fn parse(parser: &dyn UiParser, path: &str, spaces: &str) -> #name {
+                    println!("{}Parse simple enum {} with path '{}'", spaces, stringify!(#name), path);
+                    get_enum(parser, path)
+                }
+            }
         };
     } else if is_tuple_enum(data) {
         let field_quotes = visit_enum_variants(data);
