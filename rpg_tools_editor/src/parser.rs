@@ -12,7 +12,7 @@ impl<'a> UrlParser<'a> {
 }
 
 impl<'a> UiParser<'a> for UrlParser<'a> {
-    fn get_str(&self, name: &str) -> Option<&'a str> {
+    fn get_str(&'a self, name: &str) -> Option<&'a str> {
         self.data.get_first(name)
     }
 }

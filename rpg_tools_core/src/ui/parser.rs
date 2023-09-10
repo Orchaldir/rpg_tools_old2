@@ -2,10 +2,10 @@ use std::collections::HashMap;
 
 pub trait UiParser<'a> {
     /// Parse a string from a path.
-    fn get_str(&self, name: &str) -> Option<&'a str>;
+    fn get_str(&'a self, name: &str) -> Option<&'a str>;
 
     /// Parse an integer from a path.
-    fn parse_u32(&self, path: &str, default: u32) -> u32 {
+    fn parse_u32(&'a self, path: &str, default: u32) -> u32 {
         self.get_str(path)
             .iter()
             .flat_map(|s| s.parse::<u32>().ok())
@@ -14,7 +14,7 @@ pub trait UiParser<'a> {
     }
 }
 
-pub fn get_enum<'a, T: From<&'a str>>(parser: &'a dyn UiParser, path: &str) -> T {
+pub fn get_enum<'a, T: From<&'a str>>(parser: &'a dyn UiParser<'a>, path: &str) -> T {
     parser.get_str(path).unwrap_or("").into()
 }
 
