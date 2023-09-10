@@ -163,7 +163,10 @@ fn parse_struct_field(field: &Field) -> TokenStream2 {
             #field_name: parser.parse_u32(&format!("{}.{}", path, stringify!(#field_name)), 0),
         }
     } else {
-        quote! {}
+        let name = &get_field_type(field);
+        quote! {
+            #field_name: #name::parse(parser, &format!("{}.{}", path, stringify!(#field_name)), &format!("  {}", spaces)),
+        }
     }
 }
 

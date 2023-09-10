@@ -8,19 +8,23 @@ use std::collections::HashMap;
 use macro_ui::ui;
 
 #[derive(ui, Debug, Default)]
+pub struct Inner {
+    pub c: u32,
+}
+
+#[derive(ui, Debug, Default)]
 pub struct Test {
     pub a: u32,
     pub b: u32,
-}
-
-impl Test {
-    pub fn new(a: u32, b: u32) -> Self {
-        Self { a, b }
-    }
+    pub inner: Inner,
 }
 
 fn main() {
-    let parser = MockParser::new(HashMap::from([("test.a", "2"), ("test.b", "3")]));
+    let parser = MockParser::new(HashMap::from([
+        ("test.a", "2"),
+        ("test.b", "3"),
+        ("test.inner.c", "4"),
+    ]));
     let test = Test::parse(&parser, "test", "");
     println!("Values:{:?}", test);
 }
