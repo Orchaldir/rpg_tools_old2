@@ -1,12 +1,14 @@
 use crate::parse::{parse_enum_variants, parse_struct_field};
-use crate::utils::{get_field_type, is_integer, is_simple_enum};
+use crate::utils::is_simple_enum;
+use crate::visit::{visit_enum_variants, visit_struct_field};
 use proc_macro::TokenStream;
-use quote::{quote, ToTokens};
+use quote::quote;
 use syn::__private::TokenStream2;
-use syn::{Data, DataEnum, DataStruct, Field, Fields, FieldsNamed, Ident};
+use syn::{Data, DataEnum, DataStruct, Fields, FieldsNamed, Ident};
 
 mod parse;
 mod utils;
+mod visit;
 
 #[proc_macro_derive(ui)]
 pub fn ui_macro_derive(input: TokenStream) -> TokenStream {
@@ -86,42 +88,6 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     }
 }
 
-fn visit_enum_variants(data: &DataEnum) -> TokenStream2 {
-    let mut results: Vec<TokenStream2> = Vec::new();
-
-    for variant in &data.variants {
-        let variant_name = &variant.ident;
-        results.push(quote! {  visitor.enter_tuple_variant(stringify!(#variant_name)); });
-
-        match &variant.fields {
-            Fields::Named(fields) => {
-                results.push(quote! {  println!("{}Add named variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
-
-                for field in &fields.named {
-                    results.push(visit_struct_field(field));
-                }
-            }
-            Fields::Unnamed(fields) => {
-                if fields.unnamed.len() != 1 {
-                    panic!("Tuple enums are only supported with 1 field!")
-                }
-
-                results.push(quote! {  println!("{}Add unnamed variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
-
-                results.push(visit_tuple_field(&fields.unnamed[0], "c"));
-            }
-            Fields::Unit => {
-                results.push(quote! {
-                    println!("{}Add simple variant '{}'!", &inner_spaces, stringify!(#variant_name));
-                    visitor.add_unit_variant(stringify!(#variant_name));
-                });
-            }
-        }
-    }
-
-    quote! { #(#results)* }
-}
-
 fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
     let visited_fields: TokenStream2 = fields.named.iter().map(visit_struct_field).collect();
     let parsed_fields: TokenStream2 = fields.named.iter().map(parse_struct_field).collect();
@@ -147,40 +113,6 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
                     #parsed_fields
                 }
             }
-        }
-    }
-}
-
-fn visit_struct_field(field: &Field) -> TokenStream2 {
-    let field_name = &field.ident;
-
-    if is_integer(field) {
-        quote! {
-            println!("{}Add integer '{}'!", &inner_spaces, stringify!(#field_name));
-            visitor.add_integer(stringify!(#field_name));
-        }
-    } else {
-        let name = &get_field_type(field);
-        quote! {
-            visitor.enter_child(stringify!(#field_name));
-            #name::create_viewer(visitor, &inner_spaces, false);
-            visitor.leave_child();
-        }
-    }
-}
-
-fn visit_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
-    if is_integer(field) {
-        quote! {
-            println!("{}Add integer '{}'!", &inner_spaces, #field_name);
-            visitor.add_integer(#field_name);
-        }
-    } else {
-        let name = &get_field_type(field);
-        quote! {
-            visitor.enter_child(#field_name);
-            #name::create_viewer(visitor, &inner_spaces, true);
-            visitor.leave_child();
         }
     }
 }

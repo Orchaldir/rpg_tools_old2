@@ -1,5 +1,5 @@
 use crate::utils::{get_field_type, is_integer};
-use quote::{quote, ToTokens};
+use quote::quote;
 use syn::__private::TokenStream2;
 use syn::{DataEnum, Field, Fields, Ident};
 
@@ -55,7 +55,7 @@ pub fn parse_struct_field(field: &Field) -> TokenStream2 {
     }
 }
 
-pub fn parse_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
+fn parse_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
     if is_integer(field) {
         quote! {
             parser.parse_u32(&format!("{}.{}", path, #field_name), 0)

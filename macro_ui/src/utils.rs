@@ -21,13 +21,3 @@ pub fn is_simple_enum(data: &DataEnum) -> bool {
 
     true
 }
-
-pub fn is_tuple_enum(data: &DataEnum) -> bool {
-    for variant in &data.variants {
-        if let Fields::Unnamed(..) = variant.fields {
-            return true;
-        }
-    }
-
-    false
-}
