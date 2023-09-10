@@ -1,7 +1,10 @@
+use crate::utils::{get_field_type, is_integer, is_simple_enum};
 use proc_macro::TokenStream;
 use quote::{quote, ToTokens};
 use syn::__private::TokenStream2;
-use syn::{Data, DataEnum, DataStruct, Field, Fields, FieldsNamed, Ident, Type};
+use syn::{Data, DataEnum, DataStruct, Field, Fields, FieldsNamed, Ident};
+
+mod utils;
 
 #[proc_macro_derive(ui)]
 pub fn ui_macro_derive(input: TokenStream) -> TokenStream {
@@ -243,35 +246,4 @@ fn parse_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
             #name::parse(parser, &format!("{}.{}", path, #field_name), &format!("  {}", spaces))
         }
     }
-}
-
-fn get_field_type(field: &Field) -> Option<Ident> {
-    match &field.ty {
-        Type::Path(type_path) => type_path.path.segments.first().map(|s| s.ident.clone()),
-        _ => None,
-    }
-}
-
-fn is_integer(field: &Field) -> bool {
-    matches!(&field.ty, Type::Path(type_path) if type_path.clone().into_token_stream().to_string() == "u32")
-}
-
-fn is_simple_enum(data: &DataEnum) -> bool {
-    for variant in &data.variants {
-        if variant.fields != Fields::Unit {
-            return false;
-        }
-    }
-
-    true
-}
-
-fn is_tuple_enum(data: &DataEnum) -> bool {
-    for variant in &data.variants {
-        if let Fields::Unnamed(..) = variant.fields {
-            return true;
-        }
-    }
-
-    false
 }
