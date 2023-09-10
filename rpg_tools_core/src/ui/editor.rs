@@ -28,10 +28,6 @@ impl EditorVisitor {
         prettify(self.path.last().unwrap())
     }
 
-    pub fn get_path(&self) -> String {
-        self.path.join(".")
-    }
-
     fn enter(&mut self) {
         self.spaces.push_str("  ");
     }
@@ -53,6 +49,10 @@ impl EditorVisitor {
 }
 
 impl UiVisitor for EditorVisitor {
+    fn get_path(&self) -> String {
+        self.path.join(".")
+    }
+
     fn enter_enum(&mut self, variants: &[String]) {
         self.first_variant = true;
         self.add_selection(&format!("{}.type", self.get_path()), variants);

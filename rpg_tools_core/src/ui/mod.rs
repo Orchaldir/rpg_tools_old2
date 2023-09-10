@@ -2,6 +2,8 @@ pub mod editor;
 pub mod viewer;
 
 pub trait UiVisitor {
+    fn get_path(&self) -> String;
+
     fn enter_enum(&mut self, variants: &[String]);
     fn enter_tuple_variant(&mut self, name: &str);
     fn leave_enum(&mut self);
@@ -19,5 +21,5 @@ pub trait UiVisitor {
 
 pub trait UI {
     /// Create a viewer ui.
-    fn create_viewer(visitor: &mut dyn UiVisitor, path: &str, spaces: &str, in_tuple: bool);
+    fn create_viewer(visitor: &mut dyn UiVisitor, spaces: &str, in_tuple: bool);
 }
