@@ -12,10 +12,10 @@ pub fn add_hairlines(
     let hairline_y = config.hair.hairline.y.convert(hairline.get_y_position());
 
     match hairline {
-        Hairline::Round(_) => {
+        Hairline::Round { .. } => {
             add_2_points(corners, aabb, hairline_y, config.hair.hairline.width_round);
         }
-        Hairline::Straight(_) => {
+        Hairline::Straight { .. } => {
             add_2_points(
                 corners,
                 aabb,
@@ -23,7 +23,7 @@ pub fn add_hairlines(
                 config.hair.hairline.width_straight,
             );
         }
-        Hairline::Triangle(_) => {
+        Hairline::Triangle { .. } => {
             add_2_points(
                 corners,
                 aabb,
@@ -31,7 +31,7 @@ pub fn add_hairlines(
                 config.hair.hairline.width_triangle,
             );
         }
-        Hairline::WidowsPeak(_) => {
+        Hairline::WidowsPeak { .. } => {
             let (left, right) =
                 aabb.get_mirrored_points(config.hair.hairline.width_widows_peak, hairline_y);
             let center = aabb.get_point(0.5, hairline_y + config.hair.hairline.height_widows_peak);

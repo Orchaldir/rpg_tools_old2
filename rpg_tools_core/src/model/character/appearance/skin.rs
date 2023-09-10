@@ -9,14 +9,14 @@ use serde::{Deserialize, Serialize};
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type", content = "c")]
 pub enum Skin {
-    Scales(Color),
-    Skin(SkinColor),
-    ExoticSkin(Color),
+    Scales { color: Color },
+    Skin { color: SkinColor },
+    ExoticSkin { color: Color },
 }
 
 impl Default for Skin {
     fn default() -> Self {
-        Self::ExoticSkin(Color::Aqua)
+        Self::ExoticSkin { color: Color::Aqua }
     }
 }
 

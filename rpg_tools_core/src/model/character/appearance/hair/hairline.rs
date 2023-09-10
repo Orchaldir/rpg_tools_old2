@@ -10,30 +10,38 @@ use serde::{Deserialize, Serialize};
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type", content = "c")]
 pub enum Hairline {
-    Round(Size),
-    Straight(Size),
-    Triangle(Size),
+    Round {
+        size: Size,
+    },
+    Straight {
+        size: Size,
+    },
+    Triangle {
+        size: Size,
+    },
     /// ```svgbob
     ///   +----*  *----+
     ///  /      \/      \
     ///  |              |
     /// ```
-    WidowsPeak(Size),
+    WidowsPeak {
+        size: Size,
+    },
 }
 
 impl Hairline {
     pub fn get_y_position(&self) -> Size {
         match self {
-            Hairline::Round(y) => *y,
-            Hairline::Straight(y) => *y,
-            Hairline::Triangle(y) => *y,
-            Hairline::WidowsPeak(y) => *y,
+            Hairline::Round { size } => *size,
+            Hairline::Straight { size } => *size,
+            Hairline::Triangle { size } => *size,
+            Hairline::WidowsPeak { size } => *size,
         }
     }
 }
 
 impl Default for Hairline {
     fn default() -> Self {
-        Self::Round(Size::Medium)
+        Self::Round { size: Size::Medium }
     }
 }

@@ -36,9 +36,9 @@ pub enum SpecialTeeth {
     #[default]
     None,
     /// The 2 lower canine teeth are longer. e.g. orcs
-    LowerFangs(Size),
+    LowerFangs { size: Size },
     /// The 2 upper canine teeth are longer. e.g. snakes, vampires
-    UpperFangs(Size),
+    UpperFangs { size: Size },
 }
 
 /// The color of the teeth.
