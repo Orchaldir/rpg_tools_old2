@@ -160,7 +160,7 @@ fn parse_struct_field(field: &Field) -> TokenStream2 {
 
     if is_integer(field) {
         quote! {
-            #field_name: parser.parse_u32(&format!("{}.{}", path, stringify!(#field_name))),
+            #field_name: parser.parse_u32(&format!("{}.{}", path, stringify!(#field_name)), 0),
         }
     } else {
         quote! {}

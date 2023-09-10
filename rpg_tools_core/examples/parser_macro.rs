@@ -1,14 +1,16 @@
 extern crate macro_convert;
 extern crate rpg_tools_core;
-use rpg_tools_core::ui::parser::UiParser;
+
+use rpg_tools_core::ui::parser::{MockParser, UiParser};
 use rpg_tools_core::ui::{UiVisitor, UI};
+use std::collections::HashMap;
 
 use macro_ui::ui;
 
 #[derive(ui, Debug, Default)]
 pub struct Test {
-    a: u32,
-    b: u32,
+    pub a: u32,
+    pub b: u32,
 }
 
 impl Test {
@@ -18,6 +20,7 @@ impl Test {
 }
 
 fn main() {
-    let test = Test::new(1, 2);
+    let parser = MockParser::new(HashMap::from([("test.a", "2"), ("test.b", "3")]));
+    let test = Test::parse(&parser, "test", "");
     println!("Values:{:?}", test);
 }
