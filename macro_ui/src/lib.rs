@@ -38,7 +38,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             }
         };
     } else if is_tuple_enum(data) {
-        let field_quotes = handle_enum_variants(data);
+        let field_quotes = visit_enum_variants(data);
 
         return quote! {
             #[automatically_derived]
@@ -55,7 +55,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         };
     }
 
-    let field_quotes = handle_enum_variants(data);
+    let field_quotes = visit_enum_variants(data);
 
     quote! {
         #[automatically_derived]
@@ -72,7 +72,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     }
 }
 
-fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
+fn visit_enum_variants(data: &DataEnum) -> TokenStream2 {
     let mut results: Vec<TokenStream2> = Vec::new();
 
     for variant in &data.variants {
@@ -84,7 +84,7 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
                 results.push(quote! {  println!("{}Add named variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
 
                 for field in &fields.named {
-                    results.push(handle_struct_field(field));
+                    results.push(visit_struct_field(field));
                 }
             }
             Fields::Unnamed(fields) => {
@@ -94,7 +94,7 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
 
                 results.push(quote! {  println!("{}Add unnamed variant '{}'!", &inner_spaces, stringify!(#variant_name)); });
 
-                results.push(handle_tuple_field(&fields.unnamed[0], "c"));
+                results.push(visit_tuple_field(&fields.unnamed[0], "c"));
             }
             Fields::Unit => {
                 results.push(quote! {
@@ -109,7 +109,7 @@ fn handle_enum_variants(data: &DataEnum) -> TokenStream2 {
 }
 
 fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
-    let field_quotes: TokenStream2 = fields.named.iter().map(handle_struct_field).collect();
+    let field_quotes: TokenStream2 = fields.named.iter().map(visit_struct_field).collect();
 
     quote! {
         #[automatically_derived]
@@ -134,7 +134,7 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
     }
 }
 
-fn handle_struct_field(field: &Field) -> TokenStream2 {
+fn visit_struct_field(field: &Field) -> TokenStream2 {
     let field_name = &field.ident;
 
     if is_integer(field) {
@@ -152,7 +152,7 @@ fn handle_struct_field(field: &Field) -> TokenStream2 {
     }
 }
 
-fn handle_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
+fn visit_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
     if is_integer(field) {
         quote! {
             println!("{}Add integer '{}'!", &inner_spaces, #field_name);
