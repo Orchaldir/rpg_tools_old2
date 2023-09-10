@@ -25,7 +25,7 @@ pub fn parse_enum_variants(name: &Ident, data: &DataEnum) -> TokenStream2 {
                     panic!("Tuple enums are only supported with 1 field!")
                 }
 
-                let tuple_result = parse_tuple_field(&fields.unnamed[0], "c");
+                let tuple_result = parse_tuple_field(&fields.unnamed[0]);
 
                 quote! {  #name::#variant_name(#tuple_result) }
             }
@@ -55,15 +55,10 @@ pub fn parse_struct_field(field: &Field) -> TokenStream2 {
     }
 }
 
-fn parse_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
-    if is_integer(field) {
-        quote! {
-            parser.parse_u32(&format!("{}.{}", path, #field_name), 0)
-        }
-    } else {
-        let name = &get_field_type(field);
-        quote! {
-            #name::parse(parser, &format!("{}.{}", path, #field_name), &format!("  {}", spaces))
-        }
+fn parse_tuple_field(field: &Field) -> TokenStream2 {
+    let name = &get_field_type(field);
+
+    quote! {
+        #name::parse(parser, path, &format!("  {}", spaces))
     }
 }

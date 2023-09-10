@@ -8,7 +8,7 @@
       width: Average
       skin:
         type: Skin
-        c: Fair
+        color: Fair
     head:
       ears:
         type: Normal
@@ -33,10 +33,10 @@
         type: Short
         style:
           type: SidePart
-          c: Right
+          side: Right
         hairline:
           type: Round
-          c: Medium
+          size: Medium
         color: Yellow
       mouth:
         type: Simple
@@ -52,7 +52,7 @@
       shape: Round
       skin:
         type: Skin
-        c: Fair
+        color: Fair
     height:
       millimetre: 1500
 - id: 1
@@ -65,7 +65,7 @@
       width: Wide
       skin:
         type: Scales
-        c: Red
+        color: Red
     head:
       ears:
         type: Normal
@@ -95,12 +95,12 @@
         width: Medium
         teeth:
           type: UpperFangs
-          c: Large
+          size: Large
         teeth_color: White
       shape: TriangleUp
       skin:
         type: ExoticSkin
-        c: Red
+        color: Red
     height:
       millimetre: 2500
 - id: 2
@@ -138,7 +138,7 @@
       shape: Round
       skin:
         type: Scales
-        c: Purple
+        color: Purple
     height:
       millimetre: 1500
 - id: 3
@@ -151,7 +151,7 @@
       width: Average
       skin:
         type: ExoticSkin
-        c: White
+        color: White
     head:
       ears:
         type: Normal
@@ -177,7 +177,7 @@
         style: Straight
         hairline:
           type: Round
-          c: Medium
+          size: Medium
         length:
           millimetre: 800
         color: SaddleBrown
@@ -187,12 +187,12 @@
         color: Red
         teeth:
           type: UpperFangs
-          c: Small
+          size: Small
         teeth_color: White
       shape: Oval
       skin:
         type: ExoticSkin
-        c: White
+        color: White
     height:
       millimetre: 1500
 - id: 4
@@ -205,7 +205,7 @@
       width: Average
       skin:
         type: ExoticSkin
-        c: Green
+        color: Green
     head:
       ears:
         type: None
@@ -229,12 +229,12 @@
         width: Medium
         teeth:
           type: LowerFangs
-          c: Large
+          size: Large
         teeth_color: White
       shape: Square
       skin:
         type: ExoticSkin
-        c: Green
+        color: Green
     height:
       millimetre: 1500
 - id: 5
@@ -247,7 +247,7 @@
       width: Wide
       skin:
         type: Skin
-        c: Light
+        color: Light
     head:
       ears:
         type: Normal
@@ -274,7 +274,7 @@
           type: MiddlePart
         hairline:
           type: Round
-          c: Medium
+          size: Medium
         color: SaddleBrown
       mouth:
         type: Simple
@@ -291,6 +291,6 @@
       shape: Round
       skin:
         type: Skin
-        c: Light
+        size: Light
     height:
       millimetre: 1000

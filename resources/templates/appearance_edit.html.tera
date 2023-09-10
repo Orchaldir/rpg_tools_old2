@@ -176,19 +176,19 @@
                           <ul>
                             {% if appearance.head.hair.hairline.type == "Round" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Straight" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Triangle" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -205,19 +205,19 @@
                           <ul>
                             {% if appearance.head.hair.hairline.type == "Round" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Straight" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Triangle" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -244,19 +244,19 @@
                           <ul>
                             {% if appearance.head.hair.hairline.type == "Round" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Straight" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Triangle" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -277,12 +277,12 @@
                             {% if appearance.head.hair.style.type == "BuzzCut" %}
                             {% elif appearance.head.hair.style.type == "FlatTop" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.style.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.style.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.style.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.style.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.style.type == "MiddlePart" %}
                             {% elif appearance.head.hair.style.type == "SidePart" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.style.c", options=[ "Left","Right" ], selected=appearance.head.hair.style.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.style.size", options=[ "Left","Right" ], selected=appearance.head.hair.style.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -292,19 +292,19 @@
                           <ul>
                             {% if appearance.head.hair.hairline.type == "Round" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Straight" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Triangle" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -384,11 +384,11 @@
                             {% if appearance.head.mouth.teeth.type == "None" %}
                             {% elif appearance.head.mouth.teeth.type == "LowerFangs" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.size", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.size, update=true) }}
                               </li>
                             {% elif appearance.head.mouth.teeth.type == "UpperFangs" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.size", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -409,11 +409,11 @@
                             {% if appearance.head.mouth.teeth.type == "None" %}
                             {% elif appearance.head.mouth.teeth.type == "LowerFangs" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.size", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.size, update=true) }}
                               </li>
                             {% elif appearance.head.mouth.teeth.type == "UpperFangs" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.size", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -432,15 +432,15 @@
                     <ul>
                       {% if appearance.head.skin.type == "Scales" %}
                         <li>
-                          <b>C:</b> {{ macros::add_select(name="appearance.head.skin.c", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.skin.c, update=true) }}
+                          <b>Color:</b> {{ macros::add_select(name="appearance.head.skin.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.skin.color, update=true) }}
                         </li>
                       {% elif appearance.head.skin.type == "Skin" %}
                         <li>
-                          <b>C:</b> {{ macros::add_select(name="appearance.head.skin.c", options=[ "Fair","Light","Medium","Tan","Dark","VeryDark" ], selected=appearance.head.skin.c, update=true) }}
+                          <b>Color:</b> {{ macros::add_select(name="appearance.head.skin.color", options=[ "Fair","Light","Medium","Tan","Dark","VeryDark" ], selected=appearance.head.skin.color, update=true) }}
                         </li>
                       {% elif appearance.head.skin.type == "ExoticSkin" %}
                         <li>
-                          <b>C:</b> {{ macros::add_select(name="appearance.head.skin.c", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.skin.c, update=true) }}
+                          <b>Color:</b> {{ macros::add_select(name="appearance.head.skin.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.skin.color, update=true) }}
                         </li>
                       {% endif %}
                     </ul>
@@ -468,15 +468,15 @@
                     <ul>
                       {% if appearance.body.skin.type == "Scales" %}
                         <li>
-                          <b>C:</b> {{ macros::add_select(name="appearance.body.skin.c", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.skin.c, update=true) }}
+                          <b>Color:</b> {{ macros::add_select(name="appearance.body.skin.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.skin.color, update=true) }}
                         </li>
                       {% elif appearance.body.skin.type == "Skin" %}
                         <li>
-                          <b>C:</b> {{ macros::add_select(name="appearance.body.skin.c", options=[ "Fair","Light","Medium","Tan","Dark","VeryDark" ], selected=appearance.body.skin.c, update=true) }}
+                          <b>Color:</b> {{ macros::add_select(name="appearance.body.skin.color", options=[ "Fair","Light","Medium","Tan","Dark","VeryDark" ], selected=appearance.body.skin.color, update=true) }}
                         </li>
                       {% elif appearance.body.skin.type == "ExoticSkin" %}
                         <li>
-                          <b>C:</b> {{ macros::add_select(name="appearance.body.skin.c", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.skin.c, update=true) }}
+                          <b>Color:</b> {{ macros::add_select(name="appearance.body.skin.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.skin.color, update=true) }}
                         </li>
                       {% endif %}
                     </ul>
@@ -645,19 +645,19 @@
                           <ul>
                             {% if appearance.head.hair.hairline.type == "Round" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Straight" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Triangle" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -674,19 +674,19 @@
                           <ul>
                             {% if appearance.head.hair.hairline.type == "Round" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Straight" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Triangle" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -713,19 +713,19 @@
                           <ul>
                             {% if appearance.head.hair.hairline.type == "Round" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Straight" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Triangle" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -746,12 +746,12 @@
                             {% if appearance.head.hair.style.type == "BuzzCut" %}
                             {% elif appearance.head.hair.style.type == "FlatTop" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.style.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.style.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.style.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.style.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.style.type == "MiddlePart" %}
                             {% elif appearance.head.hair.style.type == "SidePart" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.style.c", options=[ "Left","Right" ], selected=appearance.head.hair.style.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.style.size", options=[ "Left","Right" ], selected=appearance.head.hair.style.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -761,19 +761,19 @@
                           <ul>
                             {% if appearance.head.hair.hairline.type == "Round" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Straight" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "Triangle" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% elif appearance.head.hair.hairline.type == "WidowsPeak" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.hair.hairline.c", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.hair.hairline.size", options=[ "Small","Medium","Large" ], selected=appearance.head.hair.hairline.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -853,11 +853,11 @@
                             {% if appearance.head.mouth.teeth.type == "None" %}
                             {% elif appearance.head.mouth.teeth.type == "LowerFangs" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.size", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.size, update=true) }}
                               </li>
                             {% elif appearance.head.mouth.teeth.type == "UpperFangs" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.size", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -878,11 +878,11 @@
                             {% if appearance.head.mouth.teeth.type == "None" %}
                             {% elif appearance.head.mouth.teeth.type == "LowerFangs" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.size", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.size, update=true) }}
                               </li>
                             {% elif appearance.head.mouth.teeth.type == "UpperFangs" %}
                               <li>
-                                <b>C:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.c", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.c, update=true) }}
+                                <b>Size:</b> {{ macros::add_select(name="appearance.head.mouth.teeth.size", options=[ "Small","Medium","Large" ], selected=appearance.head.mouth.teeth.size, update=true) }}
                               </li>
                             {% endif %}
                           </ul>
@@ -901,15 +901,15 @@
                     <ul>
                       {% if appearance.head.skin.type == "Scales" %}
                         <li>
-                          <b>C:</b> {{ macros::add_select(name="appearance.head.skin.c", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.skin.c, update=true) }}
+                          <b>Color:</b> {{ macros::add_select(name="appearance.head.skin.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.skin.color, update=true) }}
                         </li>
                       {% elif appearance.head.skin.type == "Skin" %}
                         <li>
-                          <b>C:</b> {{ macros::add_select(name="appearance.head.skin.c", options=[ "Fair","Light","Medium","Tan","Dark","VeryDark" ], selected=appearance.head.skin.c, update=true) }}
+                          <b>Color:</b> {{ macros::add_select(name="appearance.head.skin.color", options=[ "Fair","Light","Medium","Tan","Dark","VeryDark" ], selected=appearance.head.skin.color, update=true) }}
                         </li>
                       {% elif appearance.head.skin.type == "ExoticSkin" %}
                         <li>
-                          <b>C:</b> {{ macros::add_select(name="appearance.head.skin.c", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.skin.c, update=true) }}
+                          <b>Color:</b> {{ macros::add_select(name="appearance.head.skin.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.skin.color, update=true) }}
                         </li>
                       {% endif %}
                     </ul>
