@@ -123,23 +123,25 @@ fn parse_enum_variants(name: &Ident, data: &DataEnum) -> TokenStream2 {
     for variant in &data.variants {
         let variant_name = &variant.ident;
 
-        match &variant.fields {
-            Fields::Named(fields) => {}
+        let variant_result = match &variant.fields {
+            Fields::Named(fields) => {
+                continue;
+            }
             Fields::Unnamed(fields) => {
                 if fields.unnamed.len() != 1 {
                     panic!("Tuple enums are only supported with 1 field!")
                 }
+
+                let tuple_result = parse_tuple_field(&fields.unnamed[0], "c");
+
+                quote! {  #name::#variant_name(#tuple_result) }
             }
             Fields::Unit => {
-                results.push(quote! {  stringify!(#variant_name) => #name::#variant_name, });
-                results.push(quote! {
-                    println!("{}Add simple variant '{}'!", &inner_spaces, stringify!(#variant_name));
-                    visitor.add_unit_variant(stringify!(#variant_name));
-                });
+                quote! {  #name::#variant_name }
             }
-        }
+        };
 
-        results.push(quote! {  stringify!(#variant_name) => { } });
+        results.push(quote! {  stringify!(#variant_name) => #variant_result, });
     }
 
     quote! { #(#results)* }
@@ -219,6 +221,19 @@ fn visit_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
             visitor.enter_child(#field_name);
             #name::create_viewer(visitor, &inner_spaces, true);
             visitor.leave_child();
+        }
+    }
+}
+
+fn parse_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
+    if is_integer(field) {
+        quote! {
+            parser.parse_u32(&format!("{}.{}", path, stringify!(#field_name)), 0)
+        }
+    } else {
+        let name = &get_field_type(field);
+        quote! {
+            #name::parse(parser, &format!("{}.{}", path, stringify!(#field_name)), &format!("  {}", spaces))
         }
     }
 }
