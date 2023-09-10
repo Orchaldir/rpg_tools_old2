@@ -109,7 +109,7 @@ fn visit_enum_variants(data: &DataEnum) -> TokenStream2 {
 }
 
 fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
-    let field_quotes: TokenStream2 = fields.named.iter().map(visit_struct_field).collect();
+    let visited_fields: TokenStream2 = fields.named.iter().map(visit_struct_field).collect();
 
     quote! {
         #[automatically_derived]
@@ -118,7 +118,7 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
                 println!("{}Create Viewer for struct {} with path '{}' & in_tuple={}!", spaces, stringify!(#name), visitor.get_path(), in_tuple);
                 visitor.enter_struct(in_tuple);
                 let inner_spaces = format!("  {}", spaces);
-                #field_quotes
+                #visited_fields
                 visitor.leave_struct(in_tuple);
                 println!("{}Finish Viewer for struct {} with path '{}'!", spaces, stringify!(#name), visitor.get_path());
             }

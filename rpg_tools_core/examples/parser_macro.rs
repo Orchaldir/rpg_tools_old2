@@ -1,6 +1,7 @@
 extern crate macro_convert;
 extern crate rpg_tools_core;
-use rpg_tools_core::ui::{UiParser, UiVisitor, UI};
+use rpg_tools_core::ui::parser::UiParser;
+use rpg_tools_core::ui::{UiVisitor, UI};
 
 use macro_ui::ui;
 

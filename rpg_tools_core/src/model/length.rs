@@ -1,4 +1,5 @@
-use crate::ui::{UiParser, UiVisitor, UI};
+use crate::ui::parser::UiParser;
+use crate::ui::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

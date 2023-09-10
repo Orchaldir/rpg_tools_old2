@@ -1,4 +1,5 @@
 pub mod editor;
+pub mod parser;
 pub mod viewer;
 
 pub trait UiVisitor {
@@ -22,11 +23,4 @@ pub trait UiVisitor {
 pub trait UI {
     /// Create a viewer ui.
     fn create_viewer(visitor: &mut dyn UiVisitor, spaces: &str, in_tuple: bool);
-}
-
-pub trait UiParser {
-    fn enter(&self, name: &str) -> dyn UiParser;
-
-    /// Parse a string from a path.
-    fn get_str<'a>(&self, name: &str) -> &'a str;
 }
