@@ -37,8 +37,6 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
                 }
             }
 
-            use rpg_tools_core::ui::parser::get_enum;
-
             #[automatically_derived]
             impl #name {
                 fn parse(parser: &dyn UiParser, path: &str, spaces: &str) -> #name {
@@ -49,7 +47,8 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         };
     }
 
-    let field_quotes = visit_enum_variants(data);
+    let visited_fields = visit_enum_variants(data);
+    let parsed_fields = parse_enum_variants(name, data);
 
     quote! {
         #[automatically_derived]
@@ -58,7 +57,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
                 println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), visitor.get_path());
                 visitor.enter_enum(&[#(stringify!(#variants).to_string()),*]);
                 let inner_spaces = format!("  {}", spaces);
-                #field_quotes
+                #visited_fields
                 visitor.leave_enum();
                 println!("{}Finish Viewer for enum {} with path '{}'!", spaces, stringify!(#name), visitor.get_path());
             }
@@ -68,12 +67,15 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         impl #name {
             fn parse(parser: &dyn UiParser, path: &str, spaces: &str) -> #name {
                 println!("{}Parse complex enum {} with path '{}'", spaces, stringify!(#name), path);
-                println!("{}type '{}'", spaces, parser.get_str(&format!("{}.type", path)).unwrap_or(""));
+                let t = parser.get_str(&format!("{}.type", path)).unwrap_or("");
+                println!("{}type '{}'", spaces, t);
 
-                //match parser.get_str(&format!("{}.type", path)) {
+                match parser.get_str(&format!("{}.type", path)).unwrap_or("") {
 
-                //}
-                #name::default()
+                    #parsed_fields
+
+                    _ => #name::default(),
+                }
             }
         }
     }
@@ -110,6 +112,34 @@ fn visit_enum_variants(data: &DataEnum) -> TokenStream2 {
                 });
             }
         }
+    }
+
+    quote! { #(#results)* }
+}
+
+fn parse_enum_variants(name: &Ident, data: &DataEnum) -> TokenStream2 {
+    let mut results: Vec<TokenStream2> = Vec::new();
+
+    for variant in &data.variants {
+        let variant_name = &variant.ident;
+
+        match &variant.fields {
+            Fields::Named(fields) => {}
+            Fields::Unnamed(fields) => {
+                if fields.unnamed.len() != 1 {
+                    panic!("Tuple enums are only supported with 1 field!")
+                }
+            }
+            Fields::Unit => {
+                results.push(quote! {  stringify!(#variant_name) => #name::#variant_name, });
+                results.push(quote! {
+                    println!("{}Add simple variant '{}'!", &inner_spaces, stringify!(#variant_name));
+                    visitor.add_unit_variant(stringify!(#variant_name));
+                });
+            }
+        }
+
+        results.push(quote! {  stringify!(#variant_name) => { } });
     }
 
     quote! { #(#results)* }
