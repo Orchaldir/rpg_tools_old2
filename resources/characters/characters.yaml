@@ -291,6 +291,6 @@
       shape: Round
       skin:
         type: Skin
-        size: Light
+        color: Light
     height:
       millimetre: 1000

@@ -31,6 +31,7 @@ pub enum Mouth {
 
 /// Does the character have special teeth?
 #[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "type")]
 pub enum SpecialTeeth {
     #[default]
     None,

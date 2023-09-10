@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 ///
 /// The [`size`](Size) defines the y position of the hairline.
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "type")]
 pub enum Hairline {
     Round {
         size: Size,

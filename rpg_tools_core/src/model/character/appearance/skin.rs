@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 
 /// The skin of a [`Character`](crate::model::character::Character).
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "type")]
 pub enum Skin {
     Scales { color: Color },
     Skin { color: SkinColor },

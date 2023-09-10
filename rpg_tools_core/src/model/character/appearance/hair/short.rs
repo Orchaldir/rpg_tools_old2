@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 
 /// Which short hair style?
 #[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "type")]
 pub enum ShortHair {
     /// All hair is equally short.
     BuzzCut,
