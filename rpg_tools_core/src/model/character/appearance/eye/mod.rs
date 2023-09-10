@@ -19,7 +19,7 @@ pub enum Eyes {
     None,
     One {
         eye: Eye,
-        eyebrow: EyeBrows,
+        eyebrows: EyeBrows,
     },
     Two {
         /// Both eyes are identical.

@@ -119,7 +119,7 @@
           pupil_shape: VerticalSlit
           pupil_color: Blue
           background_color: White
-        eyebrow:
+        eyebrows:
           type: Normal
           color: Fuchsia
           shape: Curved

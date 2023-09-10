@@ -64,34 +64,34 @@
                     </ul>
                   </li>
                   <li>
-                    <b>Eyebrow</b>: {{ appearance.head.eyes.eyebrow.type }}
+                    <b>Eyebrows</b>: {{ appearance.head.eyes.eyebrows.type }}
                     <ul>
-                      {% if appearance.head.eyes.eyebrow.type == "None" %}
-                      {% elif appearance.head.eyes.eyebrow.type == "Normal" %}
+                      {% if appearance.head.eyes.eyebrows.type == "None" %}
+                      {% elif appearance.head.eyes.eyebrows.type == "Normal" %}
                         <li>
-                          <b>Color:</b> {{ appearance.head.eyes.eyebrow.color }}
+                          <b>Color:</b> {{ appearance.head.eyes.eyebrows.color }}
                         </li>
                         <li>
-                          <b>Shape:</b> {{ appearance.head.eyes.eyebrow.shape }}
+                          <b>Shape:</b> {{ appearance.head.eyes.eyebrows.shape }}
                         </li>
                         <li>
-                          <b>Style:</b> {{ appearance.head.eyes.eyebrow.style }}
+                          <b>Style:</b> {{ appearance.head.eyes.eyebrows.style }}
                         </li>
                         <li>
-                          <b>Width:</b> {{ appearance.head.eyes.eyebrow.width }}
+                          <b>Width:</b> {{ appearance.head.eyes.eyebrows.width }}
                         </li>
-                      {% elif appearance.head.eyes.eyebrow.type == "Unibrow" %}
+                      {% elif appearance.head.eyes.eyebrows.type == "Unibrow" %}
                         <li>
-                          <b>Color:</b> {{ appearance.head.eyes.eyebrow.color }}
-                        </li>
-                        <li>
-                          <b>Shape:</b> {{ appearance.head.eyes.eyebrow.shape }}
+                          <b>Color:</b> {{ appearance.head.eyes.eyebrows.color }}
                         </li>
                         <li>
-                          <b>Style:</b> {{ appearance.head.eyes.eyebrow.style }}
+                          <b>Shape:</b> {{ appearance.head.eyes.eyebrows.shape }}
                         </li>
                         <li>
-                          <b>Width:</b> {{ appearance.head.eyes.eyebrow.width }}
+                          <b>Style:</b> {{ appearance.head.eyes.eyebrows.style }}
+                        </li>
+                        <li>
+                          <b>Width:</b> {{ appearance.head.eyes.eyebrows.width }}
                         </li>
                       {% endif %}
                     </ul>
@@ -533,34 +533,34 @@
                     </ul>
                   </li>
                   <li>
-                    <b>Eyebrow</b>: {{ appearance.head.eyes.eyebrow.type }}
+                    <b>Eyebrows</b>: {{ appearance.head.eyes.eyebrows.type }}
                     <ul>
-                      {% if appearance.head.eyes.eyebrow.type == "None" %}
-                      {% elif appearance.head.eyes.eyebrow.type == "Normal" %}
+                      {% if appearance.head.eyes.eyebrows.type == "None" %}
+                      {% elif appearance.head.eyes.eyebrows.type == "Normal" %}
                         <li>
-                          <b>Color:</b> {{ appearance.head.eyes.eyebrow.color }}
+                          <b>Color:</b> {{ appearance.head.eyes.eyebrows.color }}
                         </li>
                         <li>
-                          <b>Shape:</b> {{ appearance.head.eyes.eyebrow.shape }}
+                          <b>Shape:</b> {{ appearance.head.eyes.eyebrows.shape }}
                         </li>
                         <li>
-                          <b>Style:</b> {{ appearance.head.eyes.eyebrow.style }}
+                          <b>Style:</b> {{ appearance.head.eyes.eyebrows.style }}
                         </li>
                         <li>
-                          <b>Width:</b> {{ appearance.head.eyes.eyebrow.width }}
+                          <b>Width:</b> {{ appearance.head.eyes.eyebrows.width }}
                         </li>
-                      {% elif appearance.head.eyes.eyebrow.type == "Unibrow" %}
+                      {% elif appearance.head.eyes.eyebrows.type == "Unibrow" %}
                         <li>
-                          <b>Color:</b> {{ appearance.head.eyes.eyebrow.color }}
-                        </li>
-                        <li>
-                          <b>Shape:</b> {{ appearance.head.eyes.eyebrow.shape }}
+                          <b>Color:</b> {{ appearance.head.eyes.eyebrows.color }}
                         </li>
                         <li>
-                          <b>Style:</b> {{ appearance.head.eyes.eyebrow.style }}
+                          <b>Shape:</b> {{ appearance.head.eyes.eyebrows.shape }}
                         </li>
                         <li>
-                          <b>Width:</b> {{ appearance.head.eyes.eyebrow.width }}
+                          <b>Style:</b> {{ appearance.head.eyes.eyebrows.style }}
+                        </li>
+                        <li>
+                          <b>Width:</b> {{ appearance.head.eyes.eyebrows.width }}
                         </li>
                       {% endif %}
                     </ul>

@@ -25,7 +25,7 @@ fn main() {
     let eyes_options = vec![
         Eyes::One {
             eye,
-            eyebrow: EyeBrows::None,
+            eyebrows: EyeBrows::None,
         },
         Eyes::Two {
             eye,
@@ -56,7 +56,7 @@ fn create_appearance(height: Length, eyes: &Eyes, face: &HeadShape) -> Appearanc
             hair: Hair::None,
             mouth: Mouth::None,
             shape: *face,
-            skin: Skin::Scales(Color::Red),
+            skin: Skin::Scales { color: Color::Red },
         },
         height,
     )
