@@ -13,9 +13,10 @@ pub mod goatee;
 pub mod moustache;
 
 /// How does the beard look like?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum Beard {
+    #[default]
     None,
     Stubble {
         color: Color,

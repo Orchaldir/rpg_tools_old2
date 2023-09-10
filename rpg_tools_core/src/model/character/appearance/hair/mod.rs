@@ -18,7 +18,7 @@ pub mod ponytail;
 pub mod short;
 
 /// How does the hair look like?
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum Hair {
     Bun {
@@ -33,6 +33,7 @@ pub enum Hair {
         length: Length,
         color: Color,
     },
+    #[default]
     None,
     Ponytail(Ponytail),
     Short {
