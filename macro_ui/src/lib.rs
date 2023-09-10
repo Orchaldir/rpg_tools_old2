@@ -123,6 +123,14 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
                 println!("{}Finish Viewer for struct {} with path '{}'!", spaces, stringify!(#name), visitor.get_path());
             }
         }
+
+        #[automatically_derived]
+        impl #name {
+            fn parse(parser: &dyn UiParser, path: &str, spaces: &str) -> #name {
+                println!("{}Parse struct {} with path '{}'", spaces, stringify!(#name), path);
+                #name::default()
+            }
+        }
     }
 }
 

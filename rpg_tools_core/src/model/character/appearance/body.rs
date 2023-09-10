@@ -1,6 +1,6 @@
 use crate::model::character::appearance::skin::Skin;
 use crate::model::width::Width;
-use crate::ui::{UiVisitor, UI};
+use crate::ui::{UiParser, UiVisitor, UI};
 use macro_convert::Convert;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
