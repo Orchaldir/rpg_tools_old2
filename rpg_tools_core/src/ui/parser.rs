@@ -30,6 +30,6 @@ impl<'a> MockParser<'a> {
 
 impl<'a> UiParser<'a> for MockParser<'a> {
     fn get_str(&self, name: &str) -> Option<&'a str> {
-        self.data.get(name).map(|s| *s)
+        self.data.get(name).copied()
     }
 }
