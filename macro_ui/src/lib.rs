@@ -70,7 +70,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
                 let t = parser.get_str(&format!("{}.type", path)).unwrap_or("");
                 println!("{}type '{}'", spaces, t);
 
-                match parser.get_str(&format!("{}.type", path)).unwrap_or("") {
+                match t {
 
                     #parsed_fields
 
@@ -228,12 +228,12 @@ fn visit_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
 fn parse_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
     if is_integer(field) {
         quote! {
-            parser.parse_u32(&format!("{}.{}", path, stringify!(#field_name)), 0)
+            parser.parse_u32(&format!("{}.{}", path, #field_name), 0)
         }
     } else {
         let name = &get_field_type(field);
         quote! {
-            #name::parse(parser, &format!("{}.{}", path, stringify!(#field_name)), &format!("  {}", spaces))
+            #name::parse(parser, &format!("{}.{}", path, #field_name), &format!("  {}", spaces))
         }
     }
 }

@@ -48,7 +48,7 @@ fn main() {
         ("test.inner.c", "4"),
         ("test.simple", "B"),
         ("test.complex.type", "D"),
-        ("test.complex.c", "5"),
+        ("test.complex.c", "6"),
     ]));
     let test = Test::parse(&parser, "test", "");
     println!("Values:{:?}", test);
