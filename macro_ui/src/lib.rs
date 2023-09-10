@@ -47,22 +47,6 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
                 }
             }
         };
-    } else if is_tuple_enum(data) {
-        let field_quotes = visit_enum_variants(data);
-
-        return quote! {
-            #[automatically_derived]
-            impl UI for #name {
-                fn create_viewer(visitor: &mut dyn UiVisitor, spaces: &str, _in_tuple: bool) {
-                    println!("{}Create Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), visitor.get_path());
-                    visitor.enter_enum(&[#(stringify!(#variants).to_string()),*]);
-                    let inner_spaces = format!("  {}", spaces);
-                    #field_quotes
-                    visitor.leave_enum();
-                    println!("{}Finish Viewer for tuple enum {} with path '{}'!", spaces, stringify!(#name), visitor.get_path());
-                }
-            }
-        };
     }
 
     let field_quotes = visit_enum_variants(data);
@@ -77,6 +61,19 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
                 #field_quotes
                 visitor.leave_enum();
                 println!("{}Finish Viewer for enum {} with path '{}'!", spaces, stringify!(#name), visitor.get_path());
+            }
+        }
+
+        #[automatically_derived]
+        impl #name {
+            fn parse(parser: &dyn UiParser, path: &str, spaces: &str) -> #name {
+                println!("{}Parse complex enum {} with path '{}'", spaces, stringify!(#name), path);
+                println!("{}type '{}'", spaces, parser.get_str(&format!("{}.type", path)).unwrap_or(""));
+
+                //match parser.get_str(&format!("{}.type", path)) {
+
+                //}
+                #name::default()
             }
         }
     }

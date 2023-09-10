@@ -16,6 +16,17 @@ pub enum SimpleEnum {
 }
 
 #[derive(ui, Debug, Default)]
+pub enum ComplexEnum {
+    #[default]
+    C,
+    //D(u32),
+    E {
+        d: u32,
+        e: u32,
+    },
+}
+
+#[derive(ui, Debug, Default)]
 pub struct Inner {
     pub c: u32,
 }
@@ -26,6 +37,7 @@ pub struct Test {
     pub b: u32,
     pub inner: Inner,
     pub simple: SimpleEnum,
+    pub complex: ComplexEnum,
 }
 
 fn main() {
@@ -34,6 +46,7 @@ fn main() {
         ("test.b", "3"),
         ("test.inner.c", "4"),
         ("test.simple", "B"),
+        ("test.complex.type", "C"),
     ]));
     let test = Test::parse(&parser, "test", "");
     println!("Values:{:?}", test);
