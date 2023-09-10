@@ -21,10 +21,10 @@ pub enum ComplexEnum {
     #[default]
     C,
     D(u32),
-    /*E {
+    E {
         d: u32,
         e: u32,
-    },*/
+    },
 }
 
 #[derive(ui, Debug, Default)]
@@ -47,8 +47,9 @@ fn main() {
         ("test.b", "3"),
         ("test.inner.c", "4"),
         ("test.simple", "B"),
-        ("test.complex.type", "D"),
-        ("test.complex.c", "6"),
+        ("test.complex.type", "E"),
+        ("test.complex.d", "6"),
+        ("test.complex.e", "7"),
     ]));
     let test = Test::parse(&parser, "test", "");
     println!("Values:{:?}", test);

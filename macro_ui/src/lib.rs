@@ -125,7 +125,14 @@ fn parse_enum_variants(name: &Ident, data: &DataEnum) -> TokenStream2 {
 
         let variant_result = match &variant.fields {
             Fields::Named(fields) => {
-                continue;
+                let parsed_fields: TokenStream2 =
+                    fields.named.iter().map(parse_struct_field).collect();
+
+                quote! {
+                    #name::#variant_name {
+                        #parsed_fields
+                    }
+                }
             }
             Fields::Unnamed(fields) => {
                 if fields.unnamed.len() != 1 {
