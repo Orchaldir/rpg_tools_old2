@@ -110,6 +110,7 @@ fn visit_enum_variants(data: &DataEnum) -> TokenStream2 {
 
 fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
     let visited_fields: TokenStream2 = fields.named.iter().map(visit_struct_field).collect();
+    let parsed_fields: TokenStream2 = fields.named.iter().map(parse_struct_field).collect();
 
     quote! {
         #[automatically_derived]
@@ -128,7 +129,9 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
         impl #name {
             fn parse(parser: &dyn UiParser, path: &str, spaces: &str) -> #name {
                 println!("{}Parse struct {} with path '{}'", spaces, stringify!(#name), path);
-                #name::default()
+                Self {
+                    #parsed_fields
+                }
             }
         }
     }
@@ -149,6 +152,18 @@ fn visit_struct_field(field: &Field) -> TokenStream2 {
             #name::create_viewer(visitor, &inner_spaces, false);
             visitor.leave_child();
         }
+    }
+}
+
+fn parse_struct_field(field: &Field) -> TokenStream2 {
+    let field_name = &field.ident;
+
+    if is_integer(field) {
+        quote! {
+            #field_name: parser.parse_u32(&format!("{}.{}", path, stringify!(#field_name))),
+        }
+    } else {
+        quote! {}
     }
 }
 
