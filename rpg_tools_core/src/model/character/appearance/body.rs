@@ -1,6 +1,6 @@
 use crate::model::character::appearance::skin::Skin;
 use crate::model::width::Width;
-use crate::ui::parser::UiParser;
+use crate::ui::parser::{get_enum, UiParser};
 use crate::ui::{UiVisitor, UI};
 use macro_convert::Convert;
 use macro_ui::ui;

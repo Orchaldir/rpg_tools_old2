@@ -3,7 +3,7 @@ use crate::model::character::appearance::eye::Eyes;
 use crate::model::character::appearance::hair::Hair;
 use crate::model::character::appearance::mouth::Mouth;
 use crate::model::character::appearance::skin::Skin;
-use crate::ui::parser::UiParser;
+use crate::ui::parser::{get_enum, UiParser};
 use crate::ui::{UiVisitor, UI};
 use macro_convert::Convert;
 use macro_ui::ui;

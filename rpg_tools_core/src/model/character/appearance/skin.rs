@@ -1,4 +1,5 @@
 use crate::model::color::Color;
+use crate::ui::parser::{get_enum, UiParser};
 use crate::ui::{UiVisitor, UI};
 use macro_convert::Convert;
 use macro_ui::ui;
