@@ -2,9 +2,9 @@ extern crate macro_convert;
 extern crate rpg_tools_core;
 
 use macro_convert::Convert;
-use rpg_tools_core::ui::parser::get_enum;
-use rpg_tools_core::ui::parser::{MockParser, UiParser};
-use rpg_tools_core::ui::{UiVisitor, UI};
+use macro_core::parser::get_enum;
+use macro_core::parser::{MockParser, UiParser};
+use macro_core::visitor::{UiVisitor, UI};
 use std::collections::HashMap;
 
 use macro_ui::ui;

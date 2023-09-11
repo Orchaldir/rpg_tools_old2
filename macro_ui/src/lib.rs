@@ -6,6 +6,8 @@ use quote::quote;
 use syn::__private::TokenStream2;
 use syn::{Data, DataEnum, DataStruct, Fields, FieldsNamed, Ident};
 
+extern crate macro_core;
+
 mod parse;
 mod utils;
 mod visit;

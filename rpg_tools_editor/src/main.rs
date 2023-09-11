@@ -1,3 +1,4 @@
+extern crate macro_core;
 #[macro_use]
 extern crate rocket;
 

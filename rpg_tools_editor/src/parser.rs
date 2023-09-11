@@ -1,4 +1,4 @@
-use rpg_tools_core::ui::parser::UiParser;
+use macro_core::parser::UiParser;
 use url_encoded_data::UrlEncodedData;
 
 pub struct UrlParser<'a> {

@@ -3,8 +3,8 @@ use crate::model::character::appearance::hair::ponytail::position::PonytailPosit
 use crate::model::character::appearance::hair::ponytail::style::PonytailStyle;
 use crate::model::color::Color;
 use crate::model::length::Length;
-use crate::ui::parser::UiParser;
-use crate::ui::{UiVisitor, UI};
+use macro_core::parser::UiParser;
+use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

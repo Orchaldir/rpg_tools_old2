@@ -1,7 +1,7 @@
 use crate::model::side::Side;
 use crate::model::size::Size;
-use crate::ui::parser::UiParser;
-use crate::ui::{UiVisitor, UI};
+use macro_core::parser::UiParser;
+use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

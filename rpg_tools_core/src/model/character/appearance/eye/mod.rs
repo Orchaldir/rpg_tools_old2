@@ -3,8 +3,8 @@ use crate::model::character::appearance::eye::pupil::PupilShape;
 use crate::model::character::appearance::eye::shape::EyeShape;
 use crate::model::color::Color;
 use crate::model::size::Size;
-use crate::ui::parser::UiParser;
-use crate::ui::{UiVisitor, UI};
+use macro_core::parser::UiParser;
+use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

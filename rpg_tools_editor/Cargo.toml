@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0"
 rocket = "0.5.0-rc.3"
+macro_core = { path = "../macro_core" }
 rpg_tools_core = { path = "../rpg_tools_core" }
 rpg_tools_rendering = { path = "../rpg_tools_rendering" }
 serde = { version = "1.0", features = ["derive"] }

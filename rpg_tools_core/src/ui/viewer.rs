@@ -1,4 +1,4 @@
-use crate::ui::UiVisitor;
+use macro_core::visitor::UiVisitor;
 use titlecase::titlecase;
 
 pub struct ViewerVisitor {
