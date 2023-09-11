@@ -78,6 +78,30 @@ fn test_complex_enum_with_fields() {
     )
 }
 
+#[test]
+fn test_complex_struct() {
+    let parser = MockParser::new(HashMap::from([
+        ("test.a", "2"),
+        ("test.b", "3"),
+        ("test.inner.c", "4"),
+        ("test.simple", "B"),
+        ("test.complex.type", "E"),
+        ("test.complex.d", "6"),
+        ("test.complex.e", "7"),
+    ]));
+
+    assert_eq!(
+        ComplexStruct::parse(&parser, "test", ""),
+        ComplexStruct {
+            a: 2,
+            b: 3,
+            inner: SimpleStruct { c: 4 },
+            simple: SimpleEnum::B,
+            complex: ComplexEnum::E { d: 6, e: 7 },
+        }
+    );
+}
+
 fn assert_simple_enum(text: &str, value: SimpleEnum) {
     let parser = MockParser::new(HashMap::from([("test", text)]));
 
