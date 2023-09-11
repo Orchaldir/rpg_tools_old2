@@ -1,21 +1,32 @@
 use crate::model::color::Color;
-use crate::ui::{UiVisitor, UI};
 use macro_convert::Convert;
+use macro_core::parser::{get_enum, UiParser};
+use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
 /// The skin of a [`Character`](crate::model::character::Character).
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(tag = "type", content = "c")]
+#[serde(tag = "type")]
 pub enum Skin {
-    Scales(Color),
-    Skin(SkinColor),
-    ExoticSkin(Color),
+    Scales { color: Color },
+    NormalSkin { color: SkinColor },
+    ExoticSkin { color: Color },
 }
 
 impl Default for Skin {
     fn default() -> Self {
-        Self::ExoticSkin(Color::Aqua)
+        Self::ExoticSkin { color: Color::Aqua }
+    }
+}
+
+impl Skin {
+    pub fn exotic(color: Color) -> Skin {
+        Self::ExoticSkin { color }
+    }
+
+    pub fn normal(color: SkinColor) -> Skin {
+        Self::NormalSkin { color }
     }
 }
 

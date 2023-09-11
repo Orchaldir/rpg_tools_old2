@@ -114,11 +114,7 @@ pub fn get_middle_part(
     head_shape: HeadShape,
     hairline: Hairline,
 ) -> Polygon2d {
-    let hairline_y = config
-        .hair
-        .short
-        .y_middle_part
-        .convert(hairline.get_y_position());
+    let hairline_y = config.hair.short.y_middle_part.convert(hairline.size);
     let bottom_width = config.head.get_eye_width(head_shape);
     let forehead_width = config.head.get_forehead_width(head_shape);
 

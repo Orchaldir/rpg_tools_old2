@@ -45,7 +45,7 @@ fn create_appearance(height: Length, shape: &EyeShape, face: &HeadShape) -> Appe
             hair: Hair::None,
             mouth: Mouth::None,
             shape: *face,
-            skin: Skin::Scales(Color::Red),
+            skin: Skin::exotic(Color::Red),
         },
         height,
     )

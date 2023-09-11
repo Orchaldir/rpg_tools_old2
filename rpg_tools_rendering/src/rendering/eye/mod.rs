@@ -16,12 +16,12 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     match &head.eyes {
         Eyes::None => {}
-        Eyes::One { eye, eyebrow } => {
+        Eyes::One { eye, eyebrows } => {
             let half_height = config.eye.get_half_height(eye.get_shape(), radius);
             let center = aabb.get_point(0.5, config.head.y_eye);
             let eye_aabb = AABB::with_radii(center, radius, half_height);
             render_eye(renderer, config, &eye_aabb, eye);
-            render_eyebrow(renderer, config, eyebrow, &eye_aabb);
+            render_eyebrow(renderer, config, eyebrows, &eye_aabb);
         }
         Eyes::Two {
             eye,

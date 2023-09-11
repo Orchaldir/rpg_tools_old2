@@ -1,4 +1,5 @@
-use crate::ui::{UiVisitor, UI};
+use macro_core::parser::UiParser;
+use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
@@ -6,7 +7,7 @@ const METRE_FACTOR: f32 = 1000.0;
 const CENTIMETRE_FACTOR: f32 = 10.0;
 
 /// A length or distance. The internal unit is millimetre.
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Length {
     millimetre: u32,
 }

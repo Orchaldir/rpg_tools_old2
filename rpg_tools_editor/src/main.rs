@@ -1,3 +1,4 @@
+extern crate macro_core;
 #[macro_use]
 extern crate rocket;
 
@@ -18,6 +19,7 @@ use std::sync::Mutex;
 
 pub mod appearance;
 pub mod io;
+pub mod parser;
 
 const FILE: &str = "resources/characters/characters.yaml";
 
@@ -155,7 +157,7 @@ fn update_appearance(data: &State<EditorData>, id: usize, update: String) -> Opt
     let result = data
         .get_mut(CharacterId::new(id))
         .map(|character| {
-            character.set_appearance(apply_update_to_appearance(character.appearance(), &update));
+            character.set_appearance(apply_update_to_appearance(&update));
             character
         })
         .map(|character| show_character_template(id, character));
@@ -179,7 +181,7 @@ fn update_appearance_preview(
     println!("Preview appearance of character {} with {:?}", id, update);
 
     data.get_mut(CharacterId::new(id)).map(|character| {
-        *preview = apply_update_to_appearance(character.appearance(), &update);
+        *preview = apply_update_to_appearance(&update);
 
         edit_appearance_template(character, &preview)
     })

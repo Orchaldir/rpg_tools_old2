@@ -1,38 +1,46 @@
 use crate::model::size::Size;
-use crate::ui::{UiVisitor, UI};
+use macro_convert::Convert;
+use macro_core::parser::get_enum;
+use macro_core::parser::UiParser;
+use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
-/// What type of hairline? It is not visible by some hair styles.
-///
-/// The [`size`](Size) defines the y position of the hairline.
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(tag = "type", content = "c")]
-pub enum Hairline {
-    Round(Size),
-    Straight(Size),
-    Triangle(Size),
+/// /// What style of hairline? It is not visible by some hair styles.
+#[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub enum HairlineStyle {
+    #[default]
+    Round,
+    Straight,
+    Triangle,
     /// ```svgbob
     ///   +----*  *----+
     ///  /      \/      \
     ///  |              |
     /// ```
-    WidowsPeak(Size),
+    WidowsPeak,
+}
+
+/// How does the hairline look like?
+
+#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Hairline {
+    pub style: HairlineStyle,
+    /// Defines the y position of the hairline.
+    pub size: Size,
 }
 
 impl Hairline {
-    pub fn get_y_position(&self) -> Size {
-        match self {
-            Hairline::Round(y) => *y,
-            Hairline::Straight(y) => *y,
-            Hairline::Triangle(y) => *y,
-            Hairline::WidowsPeak(y) => *y,
-        }
+    pub fn new(style: HairlineStyle, size: Size) -> Self {
+        Self { style, size }
     }
 }
 
 impl Default for Hairline {
     fn default() -> Self {
-        Self::Round(Size::Medium)
+        Self {
+            style: HairlineStyle::default(),
+            size: Size::Medium,
+        }
     }
 }

@@ -1,12 +1,12 @@
 extern crate macro_ui;
 extern crate rpg_tools_core;
 
-pub mod util;
+pub mod utils;
 
-use crate::util::write_each;
+use crate::utils::write_each;
+use macro_core::visitor::UI;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::ui::editor::EditorVisitor;
-use rpg_tools_core::ui::UI;
 
 fn main() {
     println!("Generate tera code for editor");
@@ -15,7 +15,7 @@ fn main() {
 
     println!("Start visit");
 
-    Appearance::create_viewer(&mut visitor, "start", "", false);
+    Appearance::visit(&mut visitor, "", false);
 
     println!("Finished visit");
 

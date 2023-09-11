@@ -36,7 +36,7 @@ pub fn render_hair_before_head_from_front(
             ShortHair::BuzzCut => {
                 render_buzz_cut(renderer, config, aabb, head.shape, hairline, color)
             }
-            ShortHair::FlatTop(size) => {
+            ShortHair::FlatTop { size } => {
                 let polygon = get_flat_top_front(config, aabb, head.shape, hairline, size);
                 render_polygon(renderer, config, &polygon, color);
             }
@@ -44,7 +44,7 @@ pub fn render_hair_before_head_from_front(
                 let polygon = get_middle_part(config, aabb, head.shape, hairline);
                 render_polygon(renderer, config, &polygon, color);
             }
-            ShortHair::SidePart(side) => {
+            ShortHair::SidePart { side } => {
                 let polygon = get_side_part(config, aabb, head.shape, side);
                 render_polygon(renderer, config, &polygon, color);
             }
@@ -95,7 +95,7 @@ pub fn render_hair_back(
     match head.hair {
         Hair::None => {}
         Hair::Short { style, color, .. } => match style {
-            ShortHair::FlatTop(size) => {
+            ShortHair::FlatTop { size } => {
                 let polygon = get_flat_top_back(config, aabb, head.shape, size);
                 render_polygon(renderer, config, &polygon, color);
             }

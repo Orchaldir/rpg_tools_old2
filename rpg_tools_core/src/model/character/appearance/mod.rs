@@ -1,7 +1,8 @@
 use crate::model::character::appearance::body::Body;
 use crate::model::character::appearance::head::Head;
 use crate::model::length::Length;
-use crate::ui::{UiVisitor, UI};
+use macro_core::parser::UiParser;
+use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

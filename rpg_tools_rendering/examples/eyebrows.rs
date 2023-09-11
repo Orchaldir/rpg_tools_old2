@@ -11,7 +11,7 @@ use rpg_tools_core::model::character::appearance::eye::brow::EyeBrows;
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
-use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
+use rpg_tools_core::model::character::appearance::hair::hairline::{Hairline, HairlineStyle};
 use rpg_tools_core::model::character::appearance::hair::short::ShortHair;
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
@@ -85,7 +85,7 @@ fn create_appearance(
             },
             hair: Hair::Short {
                 style: ShortHair::MiddlePart,
-                hairline: Hairline::Round(Medium),
+                hairline: Hairline::new(HairlineStyle::Round, Medium),
                 color: Color::SaddleBrown,
             },
             mouth: Mouth::Simple {
@@ -95,7 +95,7 @@ fn create_appearance(
                 teeth_color: TeethColor::White,
             },
             shape: HeadShape::Round,
-            skin: Skin::Skin(SkinColor::Light),
+            skin: Skin::normal(SkinColor::Light),
         },
         height,
     )

@@ -1,4 +1,4 @@
-use crate::ui::UiVisitor;
+use macro_core::visitor::UiVisitor;
 use titlecase::titlecase;
 
 pub struct ViewerVisitor {
@@ -28,10 +28,6 @@ impl ViewerVisitor {
         prettify(self.path.last().unwrap())
     }
 
-    pub fn get_path(&self) -> String {
-        self.path.join(".")
-    }
-
     fn enter(&mut self) {
         self.spaces.push_str("  ");
     }
@@ -43,6 +39,10 @@ impl ViewerVisitor {
 }
 
 impl UiVisitor for ViewerVisitor {
+    fn get_path(&self) -> String {
+        self.path.join(".")
+    }
+
     fn enter_enum(&mut self, _variants: &[String]) {
         self.first_variant = true;
         self.lines.push(format!(

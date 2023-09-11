@@ -4,7 +4,7 @@ extern crate rpg_tools_rendering;
 use crate::utils::appearance::create_head_with_hair;
 use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::hair::bun::BunStyle;
-use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
+use rpg_tools_core::model::character::appearance::hair::hairline::{Hairline, HairlineStyle};
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
 use rpg_tools_core::model::color::Color;
@@ -34,7 +34,7 @@ fn create_bun(style: BunStyle, size: Size) -> Hair {
     Hair::Bun {
         style,
         size,
-        hairline: Hairline::Straight(Size::Small),
+        hairline: Hairline::new(HairlineStyle::Straight, Size::Small),
         color: Color::SaddleBrown,
     }
 }

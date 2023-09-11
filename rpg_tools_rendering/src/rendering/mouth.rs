@@ -69,7 +69,7 @@ fn render_special_teeth(
     let up = Orientation::from_degree(270.0);
 
     match teeth {
-        SpecialTeeth::UpperFangs(size) => {
+        SpecialTeeth::UpperFangs { size } => {
             render_2_fangs(
                 renderer,
                 config,
@@ -80,7 +80,7 @@ fn render_special_teeth(
                 *teeth_color,
             );
         }
-        SpecialTeeth::LowerFangs(size) => {
+        SpecialTeeth::LowerFangs { size } => {
             render_2_fangs(
                 renderer,
                 config,
