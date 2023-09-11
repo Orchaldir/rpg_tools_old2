@@ -39,7 +39,12 @@ pub struct ComplexStruct {
 
 #[test]
 fn test_simple_enum() {
-    let parser = MockParser::new(HashMap::from([("test", "A")]));
+    assert_simple_enum("A", SimpleEnum::A);
+    assert_simple_enum("B", SimpleEnum::B);
+}
 
-    assert_eq!(SimpleEnum::parse(&parser, "test", ""), SimpleEnum::A);
+fn assert_simple_enum(text: &str, value: SimpleEnum) {
+    let parser = MockParser::new(HashMap::from([("test", text)]));
+
+    assert_eq!(SimpleEnum::parse(&parser, "test", ""), value);
 }
