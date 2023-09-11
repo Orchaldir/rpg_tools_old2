@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 #[serde(tag = "type")]
 pub enum Skin {
     Scales { color: Color },
-    Skin { color: SkinColor },
+    NormalSkin { color: SkinColor },
     ExoticSkin { color: Color },
 }
 
@@ -25,8 +25,8 @@ impl Skin {
         Self::ExoticSkin { color }
     }
 
-    pub fn skin(color: SkinColor) -> Skin {
-        Self::Skin { color }
+    pub fn normal(color: SkinColor) -> Skin {
+        Self::NormalSkin { color }
     }
 }
 

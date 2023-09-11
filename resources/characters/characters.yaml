@@ -7,7 +7,7 @@
       shape: Rectangle
       width: Average
       skin:
-        type: Skin
+        type: NormalSkin
         color: Fair
     head:
       ears:
@@ -51,7 +51,7 @@
         teeth_color: White
       shape: Round
       skin:
-        type: Skin
+        type: NormalSkin
         color: Fair
     height:
       millimetre: 1500
@@ -246,7 +246,7 @@
       shape: Muscular
       width: Wide
       skin:
-        type: Skin
+        type: NormalSkin
         color: Light
     head:
       ears:
@@ -290,7 +290,7 @@
         teeth_color: White
       shape: Round
       skin:
-        type: Skin
+        type: NormalSkin
         color: Light
     height:
       millimetre: 1000

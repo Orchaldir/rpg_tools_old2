@@ -22,12 +22,12 @@ pub mod utils;
 fn main() {
     let teeth_colors = vec![TeethColor::White, TeethColor::Yellow, TeethColor::Brown];
     let skin = vec![
-        Skin::skin(SkinColor::Fair),
-        Skin::skin(SkinColor::Light),
-        Skin::skin(SkinColor::Medium),
-        Skin::skin(SkinColor::Tan),
-        Skin::skin(SkinColor::Dark),
-        Skin::skin(SkinColor::VeryDark),
+        Skin::normal(SkinColor::Fair),
+        Skin::normal(SkinColor::Light),
+        Skin::normal(SkinColor::Medium),
+        Skin::normal(SkinColor::Tan),
+        Skin::normal(SkinColor::Dark),
+        Skin::normal(SkinColor::VeryDark),
         Skin::exotic(Color::Green),
     ];
 

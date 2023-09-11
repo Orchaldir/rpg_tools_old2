@@ -25,7 +25,7 @@ fn main() {
 }
 
 fn create_appearance(height: Length, width: &Width, shape: &BodyShape) -> Appearance {
-    let skin = Skin::skin(SkinColor::Light);
+    let skin = Skin::normal(SkinColor::Light);
     Appearance::humanoid(
         Body {
             shape: *shape,

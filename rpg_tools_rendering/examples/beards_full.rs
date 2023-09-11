@@ -84,7 +84,7 @@ fn create_appearance(height: Length, beard: &Beard, face: &HeadShape) -> Appeara
                 teeth_color: TeethColor::White,
             },
             shape: *face,
-            skin: Skin::skin(SkinColor::Light),
+            skin: Skin::normal(SkinColor::Light),
         },
         height,
     )
