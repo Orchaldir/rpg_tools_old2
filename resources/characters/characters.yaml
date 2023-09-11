@@ -35,7 +35,7 @@
           type: SidePart
           side: Right
         hairline:
-          type: Round
+          style: Round
           size: Medium
         color: Yellow
       mouth:
@@ -176,7 +176,7 @@
         type: Long
         style: Straight
         hairline:
-          type: Round
+          style: Round
           size: Medium
         length:
           millimetre: 800
@@ -273,7 +273,7 @@
         style:
           type: MiddlePart
         hairline:
-          type: Round
+          style: Round
           size: Medium
         color: SaddleBrown
       mouth:
