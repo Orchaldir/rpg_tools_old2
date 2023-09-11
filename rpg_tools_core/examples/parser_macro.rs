@@ -17,19 +17,19 @@ pub enum SimpleEnum {
 }
 
 #[derive(ui, Debug, Default)]
+pub struct Inner {
+    pub c: u32,
+}
+
+#[derive(ui, Debug, Default)]
 pub enum ComplexEnum {
     #[default]
     C,
-    D(u32),
+    D(Inner),
     E {
         d: u32,
         e: u32,
     },
-}
-
-#[derive(ui, Debug, Default)]
-pub struct Inner {
-    pub c: u32,
 }
 
 #[derive(ui, Debug, Default)]
