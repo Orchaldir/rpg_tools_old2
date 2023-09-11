@@ -1,6 +1,7 @@
 [workspace]
 
 members = [
+    "macro_core",
     "macro_convert",
     "macro_ui",
     "rpg_tools_core",
