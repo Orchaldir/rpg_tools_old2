@@ -15,7 +15,7 @@ fn main() {
 
     println!("Start visit");
 
-    Appearance::create_viewer(&mut visitor, "", false);
+    Appearance::visit(&mut visitor, "", false);
 
     println!("Finished visit");
 

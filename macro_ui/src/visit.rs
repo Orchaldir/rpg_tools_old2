@@ -51,7 +51,7 @@ pub fn visit_struct_field(field: &Field) -> TokenStream2 {
         let name = &get_field_type(field);
         quote! {
             visitor.enter_child(stringify!(#field_name));
-            #name::create_viewer(visitor, &inner_spaces, false);
+            #name::visit(visitor, &inner_spaces, false);
             visitor.leave_child();
         }
     }
@@ -67,7 +67,7 @@ fn visit_tuple_field(field: &Field, field_name: &str) -> TokenStream2 {
         let name = &get_field_type(field);
         quote! {
             visitor.enter_child(#field_name);
-            #name::create_viewer(visitor, &inner_spaces, true);
+            #name::visit(visitor, &inner_spaces, true);
             visitor.leave_child();
         }
     }

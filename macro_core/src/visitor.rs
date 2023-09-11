@@ -17,6 +17,6 @@ pub trait UiVisitor {
 }
 
 pub trait UI {
-    /// Create a viewer ui.
-    fn create_viewer(visitor: &mut dyn UiVisitor, spaces: &str, in_tuple: bool);
+    /// Visit the data structure with a visitor.
+    fn visit(visitor: &mut dyn UiVisitor, spaces: &str, in_tuple: bool);
 }
