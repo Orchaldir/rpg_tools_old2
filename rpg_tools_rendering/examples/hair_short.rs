@@ -18,14 +18,14 @@ pub mod utils;
 
 fn main() {
     let mut short_options = vec![
-        create_hair(FlatTop(Small), Round(Medium)),
-        create_hair(FlatTop(Medium), Straight(Medium)),
-        create_hair(FlatTop(Large), WidowsPeak(Medium)),
+        create_hair(ShortHair::flat_top(Small), Round(Medium)),
+        create_hair(ShortHair::flat_top(Medium), Straight(Medium)),
+        create_hair(ShortHair::flat_top(Large), WidowsPeak(Medium)),
         create_hair(MiddlePart, Round(Small)),
         create_hair(MiddlePart, Round(Medium)),
         create_hair(MiddlePart, Round(Large)),
-        create_hair(SidePart(Left), Round(Small)),
-        create_hair(SidePart(Right), Round(Small)),
+        create_hair(ShortHair::side_part(Left), Round(Small)),
+        create_hair(ShortHair::side_part(Right), Round(Small)),
     ];
     add_all_hairlines(&mut short_options, BuzzCut);
 

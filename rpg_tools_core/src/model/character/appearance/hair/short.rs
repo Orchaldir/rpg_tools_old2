@@ -23,3 +23,13 @@ pub enum ShortHair {
         side: Side,
     },
 }
+
+impl ShortHair {
+    pub fn flat_top(size: Size) -> Self {
+        Self::FlatTop { size }
+    }
+
+    pub fn side_part(side: Side) -> Self {
+        Self::SidePart { side }
+    }
+}
