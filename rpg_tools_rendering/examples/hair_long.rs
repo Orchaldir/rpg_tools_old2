@@ -3,7 +3,7 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::appearance::create_humanoid_with_hair;
 use crate::utils::render::render_2_sets;
-use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
+use rpg_tools_core::model::character::appearance::hair::hairline::{Hairline, HairlineStyle};
 use rpg_tools_core::model::character::appearance::hair::long::LongHairStyle;
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
@@ -34,7 +34,7 @@ fn main() {
 fn create_long(style: LongHairStyle, length: f32) -> Hair {
     Hair::Long {
         style,
-        hairline: Hairline::Straight { size: Size::Medium },
+        hairline: Hairline::new(HairlineStyle::Straight, Size::Medium),
         length: Length::from_metre(length),
         color: Color::SaddleBrown,
     }

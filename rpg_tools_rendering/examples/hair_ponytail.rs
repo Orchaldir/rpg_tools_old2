@@ -3,7 +3,7 @@ extern crate rpg_tools_rendering;
 
 use crate::utils::appearance::create_humanoid_with_hair;
 use crate::utils::render::render_2_sets;
-use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
+use rpg_tools_core::model::character::appearance::hair::hairline::{Hairline, HairlineStyle};
 use rpg_tools_core::model::character::appearance::hair::ponytail::position::PonytailPosition;
 use rpg_tools_core::model::character::appearance::hair::ponytail::style::PonytailStyle;
 use rpg_tools_core::model::character::appearance::hair::ponytail::Ponytail;
@@ -38,7 +38,7 @@ fn create_ponytail(position: PonytailPosition, style: PonytailStyle) -> Hair {
         position,
         style,
         length: Length::from_metre(1.0),
-        hairline: Hairline::Straight { size: Size::Medium },
+        hairline: Hairline::new(HairlineStyle::Straight, Size::Medium),
         color: Color::SaddleBrown,
     })
 }

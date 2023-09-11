@@ -2,6 +2,7 @@ use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
+use rpg_tools_core::model::character::appearance::hair::hairline::HairlineStyle;
 
 pub fn add_hairlines(
     config: &RenderConfig,
@@ -9,13 +10,13 @@ pub fn add_hairlines(
     hairline: Hairline,
     corners: &mut Vec<Point2d>,
 ) {
-    let hairline_y = config.hair.hairline.y.convert(hairline.get_y_position());
+    let hairline_y = config.hair.hairline.y.convert(hairline.size);
 
-    match hairline {
-        Hairline::Round { .. } => {
+    match hairline.style {
+        HairlineStyle::Round { .. } => {
             add_2_points(corners, aabb, hairline_y, config.hair.hairline.width_round);
         }
-        Hairline::Straight { .. } => {
+        HairlineStyle::Straight { .. } => {
             add_2_points(
                 corners,
                 aabb,
@@ -23,7 +24,7 @@ pub fn add_hairlines(
                 config.hair.hairline.width_straight,
             );
         }
-        Hairline::Triangle { .. } => {
+        HairlineStyle::Triangle { .. } => {
             add_2_points(
                 corners,
                 aabb,
@@ -31,7 +32,7 @@ pub fn add_hairlines(
                 config.hair.hairline.width_triangle,
             );
         }
-        Hairline::WidowsPeak { .. } => {
+        HairlineStyle::WidowsPeak { .. } => {
             let (left, right) =
                 aabb.get_mirrored_points(config.hair.hairline.width_widows_peak, hairline_y);
             let center = aabb.get_point(0.5, hairline_y + config.hair.hairline.height_widows_peak);
