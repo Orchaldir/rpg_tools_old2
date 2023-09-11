@@ -52,7 +52,7 @@ fn create_normal(width: Size, teeth: Size) -> Mouth {
     Mouth::Simple {
         beard: Beard::None,
         width,
-        teeth: SpecialTeeth::LowerFangs(teeth),
+        teeth: SpecialTeeth::LowerFangs { size: teeth },
         teeth_color: TeethColor::White,
     }
 }
@@ -81,7 +81,7 @@ fn create_appearance(height: Length, mouth: &Mouth, face: &HeadShape) -> Appeara
             hair: Hair::None,
             mouth: *mouth,
             shape: *face,
-            skin: Skin::Scales(Color::Red),
+            skin: Skin::exotic(Color::Red),
         },
         height,
     )

@@ -20,6 +20,16 @@ impl Default for Skin {
     }
 }
 
+impl Skin {
+    pub fn exotic(color: Color) -> Skin {
+        Self::ExoticSkin { color }
+    }
+
+    pub fn skin(color: SkinColor) -> Skin {
+        Self::Skin { color }
+    }
+}
+
 /// The skin color of a [`Character`](crate::model::character::Character).
 #[derive(Convert, ui, Default, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub enum SkinColor {

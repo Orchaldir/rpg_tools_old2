@@ -58,8 +58,8 @@ fn create_appearance(height: Length, ears: &Ears, face: &HeadShape) -> Appearanc
                 distance: Medium,
             },
             hair: Hair::Short {
-                style: ShortHair::SidePart(Left),
-                hairline: Hairline::Round(Medium),
+                style: ShortHair::SidePart { side: Left },
+                hairline: Hairline::Round { size: Medium },
                 color: Color::Yellow,
             },
             mouth: Mouth::Simple {
@@ -69,7 +69,7 @@ fn create_appearance(height: Length, ears: &Ears, face: &HeadShape) -> Appearanc
                 teeth_color: TeethColor::White,
             },
             shape: *face,
-            skin: Skin::Skin(SkinColor::Light),
+            skin: Skin::skin(SkinColor::Light),
         },
         height,
     )

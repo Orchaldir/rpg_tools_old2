@@ -89,7 +89,7 @@ fn create_appearance(height: Length, beard: &Beard, face: &HeadShape) -> Appeara
             },
             hair: Hair::Short {
                 style: ShortHair::MiddlePart,
-                hairline: Hairline::Round(Medium),
+                hairline: Hairline::Round { size: Medium },
                 color: Color::SaddleBrown,
             },
             mouth: Mouth::Simple {
@@ -99,7 +99,9 @@ fn create_appearance(height: Length, beard: &Beard, face: &HeadShape) -> Appeara
                 teeth_color: TeethColor::White,
             },
             shape: *face,
-            skin: Skin::Skin(SkinColor::Light),
+            skin: Skin::Skin {
+                color: SkinColor::Light,
+            },
         },
         height,
     )

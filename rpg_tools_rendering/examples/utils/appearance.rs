@@ -20,7 +20,9 @@ pub fn create_head_with_hair(height: Length, hair: &Hair, shape: &HeadShape) -> 
 
 pub fn create_humanoid_with_hair(height: Length, hair: &Hair, shape: &HeadShape) -> Appearance {
     Appearance::humanoid(
-        Body::with_skin(Skin::Skin(SkinColor::Light)),
+        Body::with_skin(Skin::Skin {
+            color: SkinColor::Light,
+        }),
         create_head(*shape, hair),
         height,
     )
@@ -50,6 +52,8 @@ fn create_head(shape: HeadShape, hair: &Hair) -> Head {
             teeth_color: TeethColor::White,
         },
         shape,
-        skin: Skin::Skin(SkinColor::Light),
+        skin: Skin::Skin {
+            color: SkinColor::Light,
+        },
     }
 }

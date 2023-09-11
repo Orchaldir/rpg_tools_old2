@@ -22,13 +22,13 @@ pub mod utils;
 fn main() {
     let teeth_colors = vec![TeethColor::White, TeethColor::Yellow, TeethColor::Brown];
     let skin = vec![
-        Skin::Skin(SkinColor::Fair),
-        Skin::Skin(SkinColor::Light),
-        Skin::Skin(SkinColor::Medium),
-        Skin::Skin(SkinColor::Tan),
-        Skin::Skin(SkinColor::Dark),
-        Skin::Skin(SkinColor::VeryDark),
-        Skin::ExoticSkin(Color::Green),
+        Skin::skin(SkinColor::Fair),
+        Skin::skin(SkinColor::Light),
+        Skin::skin(SkinColor::Medium),
+        Skin::skin(SkinColor::Tan),
+        Skin::skin(SkinColor::Dark),
+        Skin::skin(SkinColor::VeryDark),
+        Skin::exotic(Color::Green),
     ];
 
     render_2_sets(
@@ -58,7 +58,7 @@ fn create_appearance(height: Length, skin: &Skin, color: &TeethColor) -> Appeara
             mouth: Mouth::Simple {
                 beard: Beard::None,
                 width: Large,
-                teeth: SpecialTeeth::LowerFangs(Large),
+                teeth: SpecialTeeth::LowerFangs { size: Large },
                 teeth_color: *color,
             },
             shape: HeadShape::Oval,

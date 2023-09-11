@@ -38,7 +38,7 @@ fn create_ponytail(position: PonytailPosition, style: PonytailStyle) -> Hair {
         position,
         style,
         length: Length::from_metre(1.0),
-        hairline: Hairline::Straight(Size::Medium),
+        hairline: Hairline::Straight { size: Size::Medium },
         color: Color::SaddleBrown,
     })
 }

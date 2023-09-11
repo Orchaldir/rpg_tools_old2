@@ -51,7 +51,7 @@ fn create_appearance(height: Length, pupil_shape: &PupilShape, eye_shape: &EyeSh
             hair: Hair::None,
             mouth: Mouth::None,
             shape: HeadShape::Oval,
-            skin: Skin::Skin(SkinColor::Light),
+            skin: Skin::skin(SkinColor::Light),
         },
         height,
     )

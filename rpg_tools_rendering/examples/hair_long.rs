@@ -34,7 +34,7 @@ fn main() {
 fn create_long(style: LongHairStyle, length: f32) -> Hair {
     Hair::Long {
         style,
-        hairline: Hairline::Straight(Size::Medium),
+        hairline: Hairline::Straight { size: Size::Medium },
         length: Length::from_metre(length),
         color: Color::SaddleBrown,
     }
