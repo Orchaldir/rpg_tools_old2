@@ -12,12 +12,12 @@ pub enum SimpleEnum {
     B,
 }
 
-#[derive(ui, Debug, Default)]
+#[derive(ui, Debug, Default, PartialEq)]
 pub struct SimpleStruct {
     pub c: u32,
 }
 
-#[derive(ui, Debug, Default)]
+#[derive(ui, Debug, Default, PartialEq)]
 pub enum ComplexEnum {
     #[default]
     C,
@@ -28,7 +28,7 @@ pub enum ComplexEnum {
     },
 }
 
-#[derive(ui, Debug, Default)]
+#[derive(ui, Debug, Default, PartialEq)]
 pub struct ComplexStruct {
     pub a: u32,
     pub b: u32,
@@ -41,6 +41,16 @@ pub struct ComplexStruct {
 fn test_simple_enum() {
     assert_simple_enum("A", SimpleEnum::A);
     assert_simple_enum("B", SimpleEnum::B);
+}
+
+#[test]
+fn test_simple_struct() {
+    let parser = MockParser::new(HashMap::from([("s.c", "42")]));
+
+    assert_eq!(
+        SimpleStruct::parse(&parser, "s", ""),
+        SimpleStruct { c: 42 }
+    );
 }
 
 fn assert_simple_enum(text: &str, value: SimpleEnum) {
