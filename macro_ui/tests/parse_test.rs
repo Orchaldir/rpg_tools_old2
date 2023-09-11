@@ -58,6 +58,14 @@ fn test_complex_enum_with_simple_variant() {
     assert_complex_enum(HashMap::from([("complex.type", "C")]), ComplexEnum::C)
 }
 
+#[test]
+fn test_complex_enum_with_struct() {
+    assert_complex_enum(
+        HashMap::from([("complex.type", "D"), ("complex.c", "99")]),
+        ComplexEnum::D(SimpleStruct { c: 99 }),
+    )
+}
+
 fn assert_simple_enum(text: &str, value: SimpleEnum) {
     let parser = MockParser::new(HashMap::from([("test", text)]));
 
