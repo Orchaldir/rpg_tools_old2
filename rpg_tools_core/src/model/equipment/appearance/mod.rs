@@ -1,1 +1,1 @@
-pub mod bottoms;
+pub mod pants;
