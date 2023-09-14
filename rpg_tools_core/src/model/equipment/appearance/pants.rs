@@ -1,14 +1,16 @@
 use crate::model::color::Color;
 use macro_convert::Convert;
+use macro_core::parser::{get_enum, UiParser};
+use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
 /// Clothing for the lower body.
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Pants {
-    style: PantsStyle,
-    rise: Rise,
-    color: Color,
+    pub style: PantsStyle,
+    pub rise: Rise,
+    pub color: Color,
 }
 
 /// What style of pants?

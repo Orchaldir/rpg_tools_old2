@@ -16,7 +16,7 @@ pub enum Skin {
 
 impl Default for Skin {
     fn default() -> Self {
-        Self::ExoticSkin { color: Color::Aqua }
+        Skin::normal(SkinColor::default())
     }
 }
 
