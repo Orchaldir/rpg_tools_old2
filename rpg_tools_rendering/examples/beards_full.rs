@@ -18,6 +18,7 @@ use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, T
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
+use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::size::Size::Medium;
 use rpg_tools_core::model::width::Width;
@@ -56,6 +57,7 @@ fn create_appearance(height: Length, beard: &Beard, face: &HeadShape) -> Appeara
             shape: BodyShape::Rectangle,
             width: Width::Average,
             skin: Skin::normal(SkinColor::Light),
+            clothing: Clothing::None,
         },
         Head {
             ears: Ears::Normal {

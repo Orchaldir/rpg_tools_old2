@@ -11,6 +11,7 @@ use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::Mouth;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
+use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::width::Width;
 use rpg_tools_core::model::width::Width::*;
@@ -31,6 +32,7 @@ fn create_appearance(height: Length, width: &Width, shape: &BodyShape) -> Appear
             shape: *shape,
             width: *width,
             skin,
+            clothing: Clothing::None,
         },
         Head {
             ears: Ears::None,
