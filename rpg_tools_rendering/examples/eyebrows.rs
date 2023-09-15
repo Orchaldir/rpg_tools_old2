@@ -23,7 +23,6 @@ use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::size::Size::Medium;
 use rpg_tools_core::model::width::Width;
 
-
 pub mod utils;
 
 fn main() {
