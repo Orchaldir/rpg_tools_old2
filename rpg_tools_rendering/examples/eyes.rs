@@ -52,7 +52,7 @@ fn create_appearance(height: Length, eyes: &Eyes, face: &HeadShape) -> Appearanc
     Appearance::head(
         Head {
             ears: Ears::None,
-            eyes: eyes.clone(),
+            eyes: *eyes,
             hair: Hair::None,
             mouth: Mouth::None,
             shape: *face,
