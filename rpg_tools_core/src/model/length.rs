@@ -1,4 +1,3 @@
-use macro_core::parser::UiParser;
 use macro_core::visitor::UI;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};

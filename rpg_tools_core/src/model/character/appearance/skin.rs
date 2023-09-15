@@ -1,6 +1,6 @@
 use crate::model::color::Color;
 use macro_convert::Convert;
-use macro_core::parser::{get_enum, UiParser};
+use macro_core::parser::get_enum;
 use macro_core::visitor::UI;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
