@@ -50,7 +50,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             impl #name {
                 pub fn parse<'a>(parser: &'a dyn macro_core::parser::UiParser<'a>, path: &str, spaces: &str) -> #name {
                     println!("{}Parse simple enum {} with path '{}'", spaces, stringify!(#name), path);
-                    get_enum(parser, path)
+                    macro_core::parser::get_enum(parser, path)
                 }
             }
         };

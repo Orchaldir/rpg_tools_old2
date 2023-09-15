@@ -1,5 +1,4 @@
 use macro_convert::Convert;
-use macro_core::parser::get_enum;
 use macro_core::parser::MockParser;
 use macro_ui::ui;
 use std::collections::HashMap;

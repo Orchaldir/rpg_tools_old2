@@ -1,6 +1,5 @@
 use crate::model::size::Size;
 use macro_convert::Convert;
-use macro_core::parser::get_enum;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
