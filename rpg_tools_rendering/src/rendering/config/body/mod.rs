@@ -101,4 +101,13 @@ impl BodyConfig {
     pub fn get_foot_radius(&self, body: &Body, aabb: &AABB) -> u32 {
         aabb.convert_to_height(self.foot_factor * self.get_width_factor(body))
     }
+
+    pub fn get_torso_config(&self, shape: BodyShape) -> &TorsoConfig {
+        match shape {
+            BodyShape::Fat => &self.fat,
+            BodyShape::Hourglass => &self.hourglass,
+            BodyShape::Muscular => &self.muscular,
+            BodyShape::Rectangle => &self.rectangle,
+        }
+    }
 }

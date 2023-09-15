@@ -4,6 +4,7 @@ use crate::renderer::Renderer;
 use crate::rendering::body::{calculate_head_aabb, render_body};
 use crate::rendering::config::RenderConfig;
 use crate::rendering::ear::render_ears;
+use crate::rendering::equipment::render_clothing;
 use crate::rendering::eye::render_eyes;
 use crate::rendering::hair::{
     render_hair_back, render_hair_before_head_from_front, render_hair_behind_head_from_front,
@@ -38,6 +39,7 @@ pub fn render_character_from_front(
             let head_aabb = calculate_head_aabb(config, &inner);
             render_head_behind_body_from_front(renderer, config, head, &head_aabb);
             render_body(renderer, config, &inner, body);
+            render_clothing(renderer, config, &inner, body);
             render_head_before_body_from_front(renderer, config, head, &head_aabb);
         }
     }
@@ -57,6 +59,7 @@ pub fn render_character_from_back(
         }
         Appearance::Humanoid { body, head, .. } => {
             render_body(renderer, config, &inner, &body);
+            render_clothing(renderer, config, &inner, &body);
             let head_aabb = calculate_head_aabb(config, &inner);
             render_head_from_back(renderer, config, &head, &head_aabb);
         }

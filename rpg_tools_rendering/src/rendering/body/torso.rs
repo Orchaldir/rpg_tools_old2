@@ -4,7 +4,7 @@ use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
+use rpg_tools_core::model::character::appearance::body::Body;
 
 pub fn render_torso(
     renderer: &mut dyn Renderer,
@@ -14,12 +14,11 @@ pub fn render_torso(
     options: &RenderOptions,
 ) {
     let torso_aabb = config.body.get_torso_aabb(body, aabb);
-    let polygon = match body.shape {
-        BodyShape::Fat => create_torso(&torso_aabb, &config.body, &config.body.fat),
-        BodyShape::Hourglass => create_torso(&torso_aabb, &config.body, &config.body.hourglass),
-        BodyShape::Muscular => create_torso(&torso_aabb, &config.body, &config.body.muscular),
-        BodyShape::Rectangle => create_torso(&torso_aabb, &config.body, &config.body.rectangle),
-    };
+    let polygon = create_torso(
+        &torso_aabb,
+        &config.body,
+        config.body.get_torso_config(body.shape),
+    );
     renderer.render_rounded_polygon(&polygon, options);
 }
 
