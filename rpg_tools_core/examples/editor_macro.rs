@@ -4,7 +4,6 @@ extern crate rpg_tools_core;
 pub mod utils;
 
 use crate::utils::write_each;
-use macro_core::visitor::UI;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::ui::editor::EditorVisitor;
 
