@@ -7,6 +7,7 @@ use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::equipment::appearance::pants::{Pants, PantsStyle, Rise};
+use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::width::Width;
 
@@ -44,7 +45,7 @@ fn create_appearance(height: Length, pants: &Pants, shape: &BodyShape) -> Appear
             shape: *shape,
             width: Width::default(),
             skin: Default::default(),
-            pants: *pants,
+            clothing: Clothing::Simple { pants: *pants },
         },
         Head::default(),
         height,

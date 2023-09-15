@@ -1,5 +1,5 @@
 use crate::model::character::appearance::skin::Skin;
-use crate::model::equipment::appearance::pants::Pants;
+use crate::model::equipment::appearance::Clothing;
 use crate::model::width::Width;
 use macro_convert::Convert;
 use macro_core::parser::{get_enum, UiParser};
@@ -14,7 +14,7 @@ pub struct Body {
     /// How wide is the body?
     pub width: Width,
     pub skin: Skin,
-    pub pants: Pants,
+    pub clothing: Clothing,
 }
 
 impl Default for Body {
@@ -29,7 +29,7 @@ impl Body {
             shape: BodyShape::Rectangle,
             width: Width::Average,
             skin,
-            pants: Pants::default(),
+            clothing: Clothing::None,
         }
     }
 }
