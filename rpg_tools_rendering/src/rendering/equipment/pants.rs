@@ -4,7 +4,7 @@ use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::character::appearance::body::Body;
+use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::equipment::appearance::pants::{Pants, PantsStyle};
 
 pub fn render_pants(
@@ -60,11 +60,10 @@ fn get_pants(
     let top_y = config.get_torso_bottom();
     let mid_y = (top_y + bottom_y) * 0.5;
 
-    builder.add_mirrored_points(aabb, legs_width * 0.95, top_y, false);
     builder.add_mirrored_points(aabb, legs_width, mid_y, false);
     builder.add_mirrored_points(aabb, legs_width, bottom_y, true);
     builder.add_mirrored_points(aabb, inner_width, bottom_y, true);
-    builder.add_mirrored_points(aabb, inner_width * 0.9, top_y, false);
+    builder.add_point(aabb.get_point(0.5, top_y), false);
 
     builder.build()
 }
