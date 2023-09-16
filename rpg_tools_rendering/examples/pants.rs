@@ -17,9 +17,7 @@ fn main() {
     let mut pants = vec![];
 
     for style in PantsStyle::get_all() {
-        for rise in Rise::get_all() {
-            pants.push(create(style, rise))
-        }
+        pants.push(create(style, Rise::Regular))
     }
 
     render_2_sets(
