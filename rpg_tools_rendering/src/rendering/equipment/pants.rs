@@ -31,7 +31,7 @@ fn get_balloon(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let (pants_width, inner_width) = config.pants.get_widths(&config.body, body);
     let top_y = config.body.get_torso_bottom();
     let bottom_y = get_bottom_y(&config.body, body);
-    let mid_y = top_y * 0.6 + bottom_y * 0.4;
+    let mid_y = interpolate(top_y, bottom_y, 0.4);
 
     builder.add_mirrored_points(aabb, pants_width, mid_y, false);
     builder.add_mirrored_points(aabb, pants_width * 1.2, bottom_y, false);
@@ -43,9 +43,7 @@ fn get_balloon(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
 }
 
 fn get_bermuda(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
-    let top_y = config.body.get_torso_bottom();
-    let bottom_y = get_bottom_y(&config.body, body);
-    get_pants(config, aabb, body, (top_y + bottom_y) * 0.5)
+    get_shorter_pants(config, aabb, body, 0.5)
 }
 
 fn get_hot_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
@@ -57,9 +55,13 @@ fn get_regular_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon
 }
 
 fn get_shorts(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
+    get_shorter_pants(config, aabb, body, 0.3)
+}
+
+fn get_shorter_pants(config: &RenderConfig, aabb: &AABB, body: &Body, factor: f32) -> Polygon2d {
     let top_y = config.body.get_torso_bottom();
     let bottom_y = get_bottom_y(&config.body, body);
-    get_pants(config, aabb, body, top_y * 0.7 + bottom_y * 0.3)
+    get_pants(config, aabb, body, interpolate(top_y, bottom_y, factor))
 }
 
 fn get_pants(config: &RenderConfig, aabb: &AABB, body: &Body, bottom_y: f32) -> Polygon2d {
@@ -94,4 +96,8 @@ fn get_base(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder
 
 fn get_bottom_y(config: &BodyConfig, body: &Body) -> f32 {
     1.0 - config.get_foot_radius_factor(body)
+}
+
+fn interpolate(start: f32, end: f32, factor: f32) -> f32 {
+    start * (1.0 - factor) + end * factor
 }
