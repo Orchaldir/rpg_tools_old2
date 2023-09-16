@@ -18,6 +18,7 @@ pub fn render_pants(
     let polygon = match pants.style {
         PantsStyle::HotPants => get_hot_pants(&config.body, aabb, body, pants),
         PantsStyle::Regular => get_regular_pants(&config.body, aabb, body, pants),
+        PantsStyle::Shorts => get_shorts(&config.body, aabb, body, pants),
         _ => get_hot_pants(&config.body, aabb, body, pants),
     };
 
@@ -29,19 +30,35 @@ fn get_hot_pants(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pants) -
 }
 
 fn get_regular_pants(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pants) -> Polygon2d {
+    let bottom_y = 1.0 - config.get_foot_radius_factor(body) - 0.02;
+    get_pants(config, aabb, body, pants, bottom_y)
+}
+
+fn get_shorts(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pants) -> Polygon2d {
+    let top_y = config.get_torso_bottom();
+    let bottom_y = 1.0 - config.get_foot_radius_factor(body) - 0.02;
+    get_pants(config, aabb, body, pants, (top_y + bottom_y) * 0.5)
+}
+
+fn get_pants(
+    config: &BodyConfig,
+    aabb: &AABB,
+    body: &Body,
+    pants: &Pants,
+    bottom_y: f32,
+) -> Polygon2d {
     let mut builder = get_base(config, aabb, body, pants);
     let legs_width = config.get_legs_width(body) * 1.05;
     let leg_width = config.get_leg_width(body) * 1.1;
     let inner_width = legs_width - 2.0 * leg_width;
-    let inner_y = config.get_torso_bottom();
-    let bottom_y = 1.0 - config.get_foot_radius_factor(body) - 0.02;
-    let mid_y = (inner_y + bottom_y) * 0.5;
+    let top_y = config.get_torso_bottom();
+    let mid_y = (top_y + bottom_y) * 0.5;
 
-    builder.add_mirrored_points(aabb, legs_width * 0.95, inner_y, false);
+    builder.add_mirrored_points(aabb, legs_width * 0.95, top_y, false);
     builder.add_mirrored_points(aabb, legs_width, mid_y, false);
     builder.add_mirrored_points(aabb, legs_width, bottom_y, true);
     builder.add_mirrored_points(aabb, inner_width, bottom_y, true);
-    builder.add_mirrored_points(aabb, inner_width * 0.9, inner_y, false);
+    builder.add_mirrored_points(aabb, inner_width * 0.9, top_y, false);
 
     builder.build()
 }
