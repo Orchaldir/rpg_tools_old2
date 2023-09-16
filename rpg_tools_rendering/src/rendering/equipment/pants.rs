@@ -1,4 +1,5 @@
 use crate::math::aabb2d::AABB;
+use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::body::BodyConfig;
@@ -25,16 +26,10 @@ pub fn render_pants(
 fn get_hot_pants(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pants) -> Polygon2d {
     let torso_aabb = config.get_torso_aabb(body, aabb);
     let torso = config.get_torso_config(body.shape);
+    let mut builder = Polygon2dBuilder::new();
 
-    let (lower_left, lower_right) = torso_aabb.get_mirrored_points(torso.hip_width, config.y_lower);
-    let (bottom_left, bottom_right) = torso_aabb.get_mirrored_points(torso.hip_width, 1.0);
+    builder.add_mirrored_points(&torso_aabb, torso.hip_width, config.y_lower, true);
+    builder.add_mirrored_points(&torso_aabb, torso.hip_width, 1.0, false);
 
-    Polygon2d::new(vec![
-        lower_left,
-        lower_left,
-        bottom_left,
-        bottom_right,
-        lower_right,
-        lower_right,
-    ])
+    builder.build()
 }
