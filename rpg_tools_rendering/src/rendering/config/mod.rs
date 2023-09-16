@@ -2,6 +2,7 @@ use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
+use crate::rendering::config::equipment::pants::PantsConfig;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
@@ -12,6 +13,7 @@ use rpg_tools_core::model::color::Color;
 
 pub mod body;
 pub mod ear;
+pub mod equipment;
 pub mod example;
 pub mod eye;
 pub mod hair;
@@ -27,11 +29,12 @@ pub struct RenderConfig {
     pub line_width: u32,
     pub thin_line_width: u32,
     pub body: BodyConfig,
-    pub hair: HairConfig,
-    pub head: HeadConfig,
     pub ear: EarConfig,
     pub eye: EyeConfig,
+    pub hair: HairConfig,
+    pub head: HeadConfig,
     pub mouth: MouthConfig,
+    pub pants: PantsConfig,
 }
 
 impl RenderConfig {

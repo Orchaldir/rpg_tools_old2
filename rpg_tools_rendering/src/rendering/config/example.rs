@@ -5,6 +5,7 @@ use crate::renderer::RenderOptions;
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
+use crate::rendering::config::equipment::pants::PantsConfig;
 use crate::rendering::config::eye::eyebrow::EyebrowConfig;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::hairline::HairlineConfig;
@@ -118,6 +119,9 @@ pub fn create_config() -> RenderConfig {
         ear: create_ear_config(),
         eye: create_eye_config(),
         mouth: create_mouth_config(),
+        pants: PantsConfig {
+            width_padding: 0.05,
+        },
     }
 }
 
