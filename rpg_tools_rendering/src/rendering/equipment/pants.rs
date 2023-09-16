@@ -32,16 +32,14 @@ fn get_regular_pants(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pant
     let mut builder = get_base(config, aabb, body, pants);
     let legs_width = config.get_legs_width(body);
     let leg_width = config.get_leg_width(body);
-    let bottom = 1.0 - config.get_foot_radius_factor(body);
+    let bottom = 1.0 - config.get_foot_radius_factor(body) - 0.02;
+    let inner_width = legs_width - 2.0 * leg_width;
+    let inner_y = config.get_torso_bottom();
 
+    builder.add_mirrored_points(aabb, legs_width, inner_y, false);
     builder.add_mirrored_points(aabb, legs_width, bottom, true);
-    builder.add_mirrored_points(aabb, legs_width - 2.0 * leg_width, bottom, true);
-    builder.add_mirrored_points(
-        aabb,
-        legs_width - 2.0 * leg_width,
-        config.get_torso_bottom(),
-        false,
-    );
+    builder.add_mirrored_points(aabb, inner_width, bottom, true);
+    builder.add_mirrored_points(aabb, inner_width * 0.9, inner_y, false);
 
     builder.build()
 }
