@@ -35,7 +35,7 @@ impl BodyConfig {
     }
 
     pub fn get_leg_width(&self, body: &Body) -> f32 {
-        self.width_leg * self.get_width_factor(body)
+        self.width_leg * self.get_width_factor(body) * self.get_torso_config(body.shape).legs_width
     }
 
     pub fn get_width_factor(&self, body: &Body) -> f32 {
@@ -54,6 +54,7 @@ impl BodyConfig {
     /// The aabb of both legs is limited to the smaller width of shoulders or hip to match *Fat* & *Muscular* [`body shapes`](BodyShape).
     pub fn get_legs_width(&self, body: &Body) -> f32 {
         self.get_shoulder_width(body).min(self.get_hip_width(body))
+            * self.get_torso_config(body.shape).legs_width
     }
 
     pub fn get_shoulder_width(&self, body: &Body) -> f32 {
@@ -103,7 +104,9 @@ impl BodyConfig {
     }
 
     pub fn get_foot_radius(&self, body: &Body, aabb: &AABB) -> u32 {
-        aabb.convert_to_height(self.get_foot_radius_factor(body))
+        aabb.convert_to_height(
+            self.get_foot_radius_factor(body) * self.get_torso_config(body.shape).legs_width,
+        )
     }
 
     pub fn get_foot_radius_factor(&self, body: &Body) -> f32 {
