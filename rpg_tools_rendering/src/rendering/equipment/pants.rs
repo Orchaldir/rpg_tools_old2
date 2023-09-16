@@ -16,6 +16,7 @@ pub fn render_pants(
 ) {
     let options = config.get_options(pants.color);
     let polygon = match pants.style {
+        PantsStyle::Balloon => get_balloon(&config.body, aabb, body),
         PantsStyle::Bermuda => get_bermuda(&config.body, aabb, body),
         PantsStyle::HotPants => get_hot_pants(&config.body, aabb, body),
         PantsStyle::Regular => get_regular_pants(&config.body, aabb, body),
@@ -23,6 +24,24 @@ pub fn render_pants(
     };
 
     renderer.render_rounded_polygon(&polygon, &options);
+}
+
+fn get_balloon(config: &BodyConfig, aabb: &AABB, body: &Body) -> Polygon2d {
+    let mut builder = get_base(config, aabb, body);
+    let legs_width = config.get_legs_width(body) * 1.05;
+    let leg_width = config.get_leg_width(body) * 1.1;
+    let inner_width = legs_width - 2.0 * leg_width;
+    let top_y = config.get_torso_bottom();
+    let bottom_y = get_bottom_y(config, body);
+    let mid_y = top_y * 0.6 + bottom_y * 0.4;
+
+    builder.add_mirrored_points(aabb, legs_width, mid_y, false);
+    builder.add_mirrored_points(aabb, legs_width * 1.2, bottom_y, false);
+    builder.add_mirrored_points(aabb, inner_width * 0.4, bottom_y, false);
+    builder.add_mirrored_points(aabb, inner_width * 0.8, mid_y, false);
+    builder.add_point(aabb.get_point(0.5, top_y), false);
+
+    builder.build()
 }
 
 fn get_bermuda(config: &BodyConfig, aabb: &AABB, body: &Body) -> Polygon2d {
