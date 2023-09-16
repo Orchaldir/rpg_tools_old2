@@ -77,5 +77,5 @@ fn get_base(config: &BodyConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
 }
 
 fn get_bottom_y(config: &BodyConfig, body: &Body) -> f32 {
-    1.0 - config.get_foot_radius_factor(body) - 0.02
+    1.0 - config.get_foot_radius_factor(body)
 }
