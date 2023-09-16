@@ -6,7 +6,7 @@ use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::equipment::appearance::pants::{Pants, PantsStyle, Rise};
+use rpg_tools_core::model::equipment::appearance::pants::{Pants, PantsStyle};
 use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::width::Width;
@@ -17,7 +17,7 @@ fn main() {
     let mut pants = vec![];
 
     for style in PantsStyle::get_all() {
-        pants.push(create(style, Rise::Regular))
+        pants.push(create(style))
     }
 
     render_2_sets(
@@ -29,10 +29,9 @@ fn main() {
     );
 }
 
-fn create(style: PantsStyle, rise: Rise) -> Pants {
+fn create(style: PantsStyle) -> Pants {
     Pants {
         style,
-        rise,
         color: Color::Blue,
     }
 }

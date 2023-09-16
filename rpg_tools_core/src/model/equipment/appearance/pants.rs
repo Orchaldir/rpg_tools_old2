@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 #[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Pants {
     pub style: PantsStyle,
-    pub rise: Rise,
     pub color: Color,
 }
 
@@ -19,13 +18,4 @@ pub enum PantsStyle {
     #[default]
     Regular,
     Shorts,
-}
-
-/// The distance from the crotch seam to the top of the waistband.
-#[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
-pub enum Rise {
-    Low,
-    #[default]
-    Regular,
-    High,
 }
