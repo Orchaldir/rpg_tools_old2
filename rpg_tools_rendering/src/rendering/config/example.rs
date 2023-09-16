@@ -120,6 +120,7 @@ pub fn create_config() -> RenderConfig {
         eye: create_eye_config(),
         mouth: create_mouth_config(),
         pants: PantsConfig {
+            center_offset: 0.03,
             width_padding: 0.05,
         },
     }

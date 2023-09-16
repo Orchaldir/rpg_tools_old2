@@ -27,7 +27,7 @@ pub fn render_pants(
 }
 
 fn get_balloon(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
-    let mut builder = get_base(&config.body, aabb, body);
+    let mut builder = get_base(config, aabb, body);
     let (pants_width, inner_width) = config.pants.get_widths(&config.body, body);
     let top_y = config.body.get_torso_bottom();
     let bottom_y = get_bottom_y(&config.body, body);
@@ -49,7 +49,7 @@ fn get_bermuda(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
 }
 
 fn get_hot_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
-    get_base(&config.body, aabb, body).build()
+    get_base(config, aabb, body).build()
 }
 
 fn get_regular_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
@@ -63,7 +63,7 @@ fn get_shorts(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
 }
 
 fn get_pants(config: &RenderConfig, aabb: &AABB, body: &Body, bottom_y: f32) -> Polygon2d {
-    let mut builder = get_base(&config.body, aabb, body);
+    let mut builder = get_base(config, aabb, body);
     let (pants_width, inner_width) = config.pants.get_widths(&config.body, body);
     let top_y = config.body.get_torso_bottom();
     let mid_y = (top_y + bottom_y) * 0.5;
@@ -76,16 +76,17 @@ fn get_pants(config: &RenderConfig, aabb: &AABB, body: &Body, bottom_y: f32) -> 
     builder.build()
 }
 
-fn get_base(config: &BodyConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
-    let torso_aabb = config.get_torso_aabb(body, aabb);
-    let torso = config.get_torso_config(body.shape);
-    let hip_width = torso.hip_width * 1.05;
+fn get_base(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
+    let torso_aabb = config.body.get_torso_aabb(body, aabb);
+    let hip_width = config.pants.get_hip_width(&config.body, body);
+    let top_y = config.body.y_lower;
+    let center_y = top_y + config.pants.center_offset;
     let mut builder = Polygon2dBuilder::new();
 
     // center curves downwards
-    builder.add_point(torso_aabb.get_point(0.5, config.y_lower + 0.02), false);
+    builder.add_point(torso_aabb.get_point(0.5, center_y), false);
     // rectangle forming the base of the pants
-    builder.add_mirrored_points(&torso_aabb, hip_width, config.y_lower, true);
+    builder.add_mirrored_points(&torso_aabb, hip_width, top_y, true);
     builder.add_mirrored_points(&torso_aabb, hip_width, 1.0, false);
 
     builder
