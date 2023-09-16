@@ -32,9 +32,9 @@ fn get_regular_pants(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pant
     let mut builder = get_base(config, aabb, body, pants);
     let legs_width = config.get_legs_width(body) * 1.05;
     let leg_width = config.get_leg_width(body) * 1.1;
-    let bottom_y = 1.0 - config.get_foot_radius_factor(body) - 0.02;
     let inner_width = legs_width - 2.0 * leg_width;
     let inner_y = config.get_torso_bottom();
+    let bottom_y = 1.0 - config.get_foot_radius_factor(body) - 0.02;
     let mid_y = (inner_y + bottom_y) * 0.5;
 
     builder.add_mirrored_points(aabb, legs_width * 0.95, inner_y, false);
@@ -52,7 +52,9 @@ fn get_base(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pants) -> Pol
     let hip_width = torso.hip_width * 1.02;
     let mut builder = Polygon2dBuilder::new();
 
+    // center curves downwards
     builder.add_point(torso_aabb.get_point(0.5, config.y_lower + 0.02), false);
+    // rectangle forming the base of the pants
     builder.add_mirrored_points(&torso_aabb, hip_width, config.y_lower, true);
     builder.add_mirrored_points(&torso_aabb, hip_width, 1.0, false);
 
