@@ -14,7 +14,8 @@ impl PantsConfig {
         let padding = legs_width * self.width_padding;
         let pants_width = legs_width + padding;
         let pant_width = config.get_leg_width(body) + padding;
+        let inner_width = pants_width - 2.0 * pant_width;
 
-        (pants_width, pant_width)
+        (pants_width, inner_width)
     }
 }

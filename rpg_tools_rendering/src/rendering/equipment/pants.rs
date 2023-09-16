@@ -28,8 +28,7 @@ pub fn render_pants(
 
 fn get_balloon(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let mut builder = get_base(&config.body, aabb, body);
-    let (pants_width, pant_width) = config.pants.get_widths(&config.body, body);
-    let inner_width = pants_width - 2.0 * pant_width;
+    let (pants_width, inner_width) = config.pants.get_widths(&config.body, body);
     let top_y = config.body.get_torso_bottom();
     let bottom_y = get_bottom_y(&config.body, body);
     let mid_y = top_y * 0.6 + bottom_y * 0.4;
@@ -65,8 +64,7 @@ fn get_shorts(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
 
 fn get_pants(config: &RenderConfig, aabb: &AABB, body: &Body, bottom_y: f32) -> Polygon2d {
     let mut builder = get_base(&config.body, aabb, body);
-    let (pants_width, pant_width) = config.pants.get_widths(&config.body, body);
-    let inner_width = pants_width - 2.0 * pant_width;
+    let (pants_width, inner_width) = config.pants.get_widths(&config.body, body);
     let top_y = config.body.get_torso_bottom();
     let mid_y = (top_y + bottom_y) * 0.5;
 
