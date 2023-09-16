@@ -78,12 +78,16 @@ impl BodyConfig {
         self.get_shoulder_width(body).max(self.get_hip_width(body))
     }
 
+    pub fn get_torso_bottom(&self) -> f32 {
+        self.y_torso + self.height_torso
+    }
+
     pub fn get_arm_y(&self) -> f32 {
         self.y_torso + 0.05
     }
 
     pub fn get_leg_y(&self) -> f32 {
-        self.y_torso + self.height_torso - 0.05
+        self.get_torso_bottom() - 0.05
     }
 
     pub fn get_fat_offset_factor(&self, body: &Body) -> f32 {
@@ -99,7 +103,11 @@ impl BodyConfig {
     }
 
     pub fn get_foot_radius(&self, body: &Body, aabb: &AABB) -> u32 {
-        aabb.convert_to_height(self.foot_factor * self.get_width_factor(body))
+        aabb.convert_to_height(self.get_foot_radius_factor(body))
+    }
+
+    pub fn get_foot_radius_factor(&self, body: &Body) -> f32 {
+        self.foot_factor * self.get_width_factor(body)
     }
 
     pub fn get_torso_config(&self, shape: BodyShape) -> &TorsoConfig {
