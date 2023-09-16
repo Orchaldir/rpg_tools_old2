@@ -27,7 +27,7 @@ pub fn render_pants(
 
 fn get_bermuda(config: &BodyConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let top_y = config.get_torso_bottom();
-    let bottom_y = 1.0 - config.get_foot_radius_factor(body) - 0.02;
+    let bottom_y = get_bottom_y(config, body);
     get_pants(config, aabb, body, (top_y + bottom_y) * 0.5)
 }
 
@@ -36,13 +36,12 @@ fn get_hot_pants(config: &BodyConfig, aabb: &AABB, body: &Body) -> Polygon2d {
 }
 
 fn get_regular_pants(config: &BodyConfig, aabb: &AABB, body: &Body) -> Polygon2d {
-    let bottom_y = 1.0 - config.get_foot_radius_factor(body) - 0.02;
-    get_pants(config, aabb, body, bottom_y)
+    get_pants(config, aabb, body, get_bottom_y(config, body))
 }
 
 fn get_shorts(config: &BodyConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let top_y = config.get_torso_bottom();
-    let bottom_y = 1.0 - config.get_foot_radius_factor(body) - 0.02;
+    let bottom_y = get_bottom_y(config, body);
     get_pants(config, aabb, body, top_y * 0.7 + bottom_y * 0.3)
 }
 
@@ -75,4 +74,8 @@ fn get_base(config: &BodyConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
     builder.add_mirrored_points(&torso_aabb, hip_width, 1.0, false);
 
     builder
+}
+
+fn get_bottom_y(config: &BodyConfig, body: &Body) -> f32 {
+    1.0 - config.get_foot_radius_factor(body) - 0.02
 }
