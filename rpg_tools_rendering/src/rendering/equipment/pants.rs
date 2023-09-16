@@ -16,13 +16,19 @@ pub fn render_pants(
 ) {
     let options = config.get_options(pants.color);
     let polygon = match pants.style {
+        PantsStyle::Bermuda => get_bermuda(&config.body, aabb, body, pants),
         PantsStyle::HotPants => get_hot_pants(&config.body, aabb, body, pants),
         PantsStyle::Regular => get_regular_pants(&config.body, aabb, body, pants),
         PantsStyle::Shorts => get_shorts(&config.body, aabb, body, pants),
-        _ => get_hot_pants(&config.body, aabb, body, pants),
     };
 
     renderer.render_rounded_polygon(&polygon, &options);
+}
+
+fn get_bermuda(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pants) -> Polygon2d {
+    let top_y = config.get_torso_bottom();
+    let bottom_y = 1.0 - config.get_foot_radius_factor(body) - 0.02;
+    get_pants(config, aabb, body, pants, (top_y + bottom_y) * 0.5)
 }
 
 fn get_hot_pants(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pants) -> Polygon2d {
@@ -37,7 +43,7 @@ fn get_regular_pants(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pant
 fn get_shorts(config: &BodyConfig, aabb: &AABB, body: &Body, pants: &Pants) -> Polygon2d {
     let top_y = config.get_torso_bottom();
     let bottom_y = 1.0 - config.get_foot_radius_factor(body) - 0.02;
-    get_pants(config, aabb, body, pants, (top_y + bottom_y) * 0.5)
+    get_pants(config, aabb, body, pants, top_y * 0.7 + bottom_y * 0.3)
 }
 
 fn get_pants(
