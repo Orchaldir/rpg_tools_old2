@@ -49,14 +49,9 @@ fn get_shorts(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
 
 fn get_shorter_pants(config: &RenderConfig, aabb: &AABB, body: &Body, factor: f32) -> Polygon2d {
     let top_y = config.body.get_torso_bottom();
-    let bottom_y = config.pants.get_bottom_y(&config.body, body);
-    get_pants(
-        config,
-        aabb,
-        body,
-        interpolate(top_y, bottom_y, factor),
-        false,
-    )
+    let full_bottom_y = config.pants.get_bottom_y(&config.body, body);
+    let bottom_y = interpolate(top_y, full_bottom_y, factor);
+    get_pants(config, aabb, body, bottom_y, false)
 }
 
 fn get_pants(
