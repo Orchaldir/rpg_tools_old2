@@ -121,6 +121,7 @@ pub fn create_config() -> RenderConfig {
         mouth: create_mouth_config(),
         pants: PantsConfig {
             center_offset: 0.03,
+            bottom_offset: 0.01,
             width_padding: 0.05,
         },
     }

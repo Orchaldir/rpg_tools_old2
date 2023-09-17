@@ -5,6 +5,7 @@ use rpg_tools_core::model::character::appearance::body::Body;
 #[derive(Debug, PartialEq)]
 pub struct PantsConfig {
     pub center_offset: f32,
+    pub bottom_offset: f32,
     pub width_padding: f32,
 }
 
@@ -23,5 +24,9 @@ impl PantsConfig {
     pub fn get_hip_width(&self, config: &BodyConfig, body: &Body) -> f32 {
         let torso = config.get_torso_config(body.shape);
         torso.hip_width * (1.0 + self.width_padding)
+    }
+
+    pub fn get_bottom_y(&self, config: &BodyConfig, body: &Body) -> f32 {
+        1.0 - config.get_foot_radius_factor(body) - self.bottom_offset
     }
 }

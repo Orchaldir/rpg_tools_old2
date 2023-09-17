@@ -104,13 +104,13 @@ impl BodyConfig {
     }
 
     pub fn get_foot_radius(&self, body: &Body, aabb: &AABB) -> u32 {
-        aabb.convert_to_height(
-            self.get_foot_radius_factor(body) * self.get_torso_config(body.shape).legs_width,
-        )
+        aabb.convert_to_height(self.get_foot_radius_factor(body))
     }
 
     pub fn get_foot_radius_factor(&self, body: &Body) -> f32 {
-        self.foot_factor * self.get_width_factor(body)
+        self.foot_factor
+            * self.get_width_factor(body)
+            * self.get_torso_config(body.shape).legs_width
     }
 
     pub fn get_torso_config(&self, shape: BodyShape) -> &TorsoConfig {
