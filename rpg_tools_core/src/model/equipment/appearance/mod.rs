@@ -1,4 +1,5 @@
 use crate::model::equipment::appearance::pants::Pants;
+use crate::model::equipment::appearance::shirt::Shirt;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
@@ -12,5 +13,6 @@ pub enum Clothing {
     None,
     Simple {
         pants: Pants,
+        shirt: Shirt,
     },
 }

@@ -13,7 +13,7 @@ pub fn render_clothing(
     aabb: &AABB,
     body: &Body,
 ) {
-    if let Clothing::Simple { pants } = &body.clothing {
+    if let Clothing::Simple { pants, .. } = &body.clothing {
         render_pants(renderer, config, aabb, body, pants)
     }
 }

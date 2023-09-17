@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 /// The shirt of the [`character`](crate::model::character::Character).
 #[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Shirt {
-    pub sleeves: Sleeves,
+    pub sleeve_style: SleeveStyle,
     pub neckline: Neckline,
     pub color: Color,
 }
@@ -24,7 +24,7 @@ pub enum Neckline {
 
 /// What style of sleeves?
 #[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
-pub enum Sleeves {
+pub enum SleeveStyle {
     #[default]
     Long,
     None,
