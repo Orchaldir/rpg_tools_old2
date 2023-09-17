@@ -31,11 +31,12 @@ fn get_balloon(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let top_y = config.body.get_torso_bottom();
     let bottom_y = config.pants.get_bottom_y(&config.body, body);
     let mid_y = interpolate(top_y, bottom_y, 0.5);
+    let balloon_extra = pants_width * config.pants.balloon_padding;
 
     builder.add_mirrored_points(aabb, pants_width, mid_y, false);
-    builder.add_mirrored_points(aabb, pants_width * 1.2, bottom_y, false);
-    builder.add_mirrored_points(aabb, inner_width * 0.4, bottom_y, false);
-    builder.add_mirrored_points(aabb, inner_width * 0.8, mid_y, false);
+    builder.add_mirrored_points(aabb, pants_width + balloon_extra, bottom_y, false);
+    builder.add_mirrored_points(aabb, inner_width - balloon_extra, bottom_y, false);
+    builder.add_mirrored_points(aabb, inner_width, mid_y, false);
     builder.add_point(aabb.get_point(0.5, top_y), false);
 
     builder.build()

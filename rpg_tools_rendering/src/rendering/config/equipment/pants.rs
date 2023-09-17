@@ -9,6 +9,7 @@ pub struct PantsConfig {
     pub offset_center: f32,
     pub offset_bottom: f32,
     pub width_padding: f32,
+    pub balloon_padding: f32,
 }
 
 impl PantsConfig {

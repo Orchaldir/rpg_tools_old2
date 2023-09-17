@@ -125,6 +125,7 @@ pub fn create_config() -> RenderConfig {
             offset_center: 0.03,
             offset_bottom: 0.01,
             width_padding: 0.05,
+            balloon_padding: 0.2,
         },
     }
 }
