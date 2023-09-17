@@ -14,9 +14,10 @@ pub fn render_shirt(
     aabb: &AABB,
     body: &Body,
     shirt: &Shirt,
+    from_front: bool,
 ) {
     render_sleeves(renderer, &config, aabb, body, shirt);
-    render_torso(renderer, &config, aabb, body, shirt);
+    render_torso(renderer, &config, aabb, body, shirt, from_front);
 }
 
 fn render_torso(
@@ -25,12 +26,17 @@ fn render_torso(
     aabb: &AABB,
     body: &Body,
     shirt: &Shirt,
+    from_front: bool,
 ) {
     let options = config.get_options(shirt.color);
     let torso_aabb = config.body.get_torso_aabb(body, aabb);
     let torso = config.body.get_torso_config(body.shape);
     let mut builder = create_torso(&torso_aabb, &config.body, torso);
-    add_neckline(&torso_aabb, torso, shirt, &mut builder);
+
+    if from_front {
+        add_neckline(&torso_aabb, torso, shirt, &mut builder);
+    }
+
     let polygon = builder.build();
     renderer.render_rounded_polygon(&polygon, &options);
 }
