@@ -28,6 +28,7 @@ fn add_neckline(aabb: &AABB, torso: &TorsoConfig, shirt: &Shirt, builder: &mut P
         Neckline::Boat => add_round(&aabb, torso, builder, 0.7, 0.05),
         Neckline::Crew => add_round(&aabb, torso, builder, 0.3, 0.1),
         Neckline::DeepV => add_v(&aabb, torso, builder, 0.4),
+        Neckline::None => {}
         Neckline::Scoop => add_round(&aabb, torso, builder, 0.5, 0.2),
         Neckline::V => add_v(&aabb, torso, builder, 0.2),
     }
@@ -42,7 +43,7 @@ fn add_round(
 ) {
     let width = torso.shoulder_width * width;
     builder.add_mirrored_points(&aabb, width, 0.0, true);
-    builder.add_mirrored_points(&aabb, width, depth, false);
+    builder.add_mirrored_points(&aabb, width * 0.7, depth, false);
 }
 
 fn add_v(aabb: &&AABB, torso: &TorsoConfig, builder: &mut Polygon2dBuilder, depth: f32) {

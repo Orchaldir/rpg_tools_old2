@@ -15,9 +15,10 @@ pub struct Shirt {
 #[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Neckline {
     Boat,
-    #[default]
     Crew,
     DeepV,
+    #[default]
+    None,
     Scoop,
     V,
 }
