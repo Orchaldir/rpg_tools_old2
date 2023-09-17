@@ -7,7 +7,19 @@ use serde::{Deserialize, Serialize};
 #[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Shirt {
     pub sleeves: Sleeves,
+    pub neckline: Neckline,
     pub color: Color,
+}
+
+/// What style of neckline?
+#[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub enum Neckline {
+    Boat,
+    #[default]
+    Crew,
+    DeepV,
+    Scoop,
+    V,
 }
 
 /// What style of sleeves?
