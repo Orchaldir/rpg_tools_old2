@@ -61,6 +61,7 @@ pub fn render_character_from_back(
         Appearance::Humanoid { body, head, .. } => {
             render_body(renderer, config, &inner, &body);
             render_clothing(renderer, config, &inner, &body);
+            render_hands(renderer, config, &inner, &body);
             let head_aabb = calculate_head_aabb(config, &inner);
             render_head_from_back(renderer, config, &head, &head_aabb);
         }
