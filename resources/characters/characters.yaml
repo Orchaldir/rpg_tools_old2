@@ -162,7 +162,7 @@
       clothing:
         type: Simple
         pants:
-          style: Regular
+          style: Balloon
           color: Red
     head:
       ears:
