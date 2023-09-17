@@ -26,10 +26,8 @@ pub fn render_pants(
 }
 
 fn get_balloon(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
-    let (pants_width, _inner_width) = config.pants.get_widths(&config.body, body);
     let bottom_y = config.pants.get_bottom_y(&config.body, body);
-    let balloon_extra = pants_width * config.pants.balloon_padding;
-    get_pants(config, aabb, body, bottom_y, balloon_extra)
+    get_pants(config, aabb, body, bottom_y, true)
 }
 
 fn get_bermuda(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
@@ -42,7 +40,7 @@ fn get_hot_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
 
 fn get_regular_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let bottom_y = config.pants.get_bottom_y(&config.body, body);
-    get_pants(config, aabb, body, bottom_y, 0.0)
+    get_pants(config, aabb, body, bottom_y, false)
 }
 
 fn get_shorts(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
@@ -57,7 +55,7 @@ fn get_shorter_pants(config: &RenderConfig, aabb: &AABB, body: &Body, factor: f3
         aabb,
         body,
         interpolate(top_y, bottom_y, factor),
-        0.0,
+        false,
     )
 }
 
@@ -66,17 +64,24 @@ fn get_pants(
     aabb: &AABB,
     body: &Body,
     bottom_y: f32,
-    balloon_extra: f32,
+    is_balloon: bool,
 ) -> Polygon2d {
     let mut builder = get_base(config, aabb, body);
     let (pants_width, inner_width) = config.pants.get_widths(&config.body, body);
     let top_y = config.body.get_torso_bottom();
     let mid_y = (top_y + bottom_y) * 0.5;
-    let is_sharp = balloon_extra <= 0.0;
 
     builder.add_mirrored_points(aabb, pants_width, mid_y, false);
-    builder.add_mirrored_points(aabb, pants_width + balloon_extra, bottom_y, is_sharp);
-    builder.add_mirrored_points(aabb, inner_width - balloon_extra, bottom_y, is_sharp);
+
+    if is_balloon {
+        let balloon_extra = pants_width * config.pants.balloon_padding;
+        builder.add_mirrored_points(aabb, pants_width + balloon_extra, bottom_y, false);
+        builder.add_mirrored_points(aabb, inner_width - balloon_extra, bottom_y, false);
+    } else {
+        builder.add_mirrored_points(aabb, pants_width, bottom_y, true);
+        builder.add_mirrored_points(aabb, inner_width, bottom_y, true);
+    }
+
     builder.add_mirrored_points(aabb, inner_width, mid_y, false);
     builder.add_point(aabb.get_point(0.5, top_y), false);
 
