@@ -22,17 +22,16 @@ use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
 use rpg_tools_core::model::size::Size::Medium;
 use rpg_tools_core::model::width::Width;
-use std::vec;
 
 pub mod utils;
 
 fn main() {
     let mut options = Vec::new();
 
-    for is_unibrow in vec![false, true] {
+    for is_unibrow in &[false, true] {
         for style in EyebrowStyle::get_all() {
             for width in Width::get_all() {
-                options.push((is_unibrow, style, width));
+                options.push((*is_unibrow, style, width));
             }
         }
     }

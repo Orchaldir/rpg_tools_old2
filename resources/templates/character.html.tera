@@ -438,6 +438,25 @@
                 {% endif %}
               </ul>
             </li>
+            <li>
+              <b>Clothing</b>: {{ appearance.body.clothing.type }}
+              <ul>
+                {% if appearance.body.clothing.type == "None" %}
+                {% elif appearance.body.clothing.type == "Simple" %}
+                  <li>
+                    <b>Pants</b>
+                    <ul>
+                      <li>
+                        <b>Style:</b> {{ appearance.body.clothing.pants.style }}
+                      </li>
+                      <li>
+                        <b>Color:</b> {{ appearance.body.clothing.pants.color }}
+                      </li>
+                    </ul>
+                  </li>
+                {% endif %}
+              </ul>
+            </li>
           </ul>
         </li>
         <li>

@@ -4,8 +4,6 @@ use crate::model::character::appearance::hair::Hair;
 use crate::model::character::appearance::mouth::Mouth;
 use crate::model::character::appearance::skin::Skin;
 use macro_convert::Convert;
-use macro_core::parser::{get_enum, UiParser};
-use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

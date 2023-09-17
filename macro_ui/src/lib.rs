@@ -39,8 +39,8 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
     if is_simple_enum(data) {
         return quote! {
             #[automatically_derived]
-            impl UI for #name {
-                fn visit(visitor: &mut dyn UiVisitor, spaces: &str, _in_tuple: bool) {
+            impl macro_core::visitor::UI for #name {
+                fn visit(visitor: &mut dyn macro_core::visitor::UiVisitor, spaces: &str, _in_tuple: bool) {
                     println!("{}Add simple enum {} with path '{}'!", spaces, stringify!(#name), visitor.get_path());
                     visitor.add_simple_enum(&[#(stringify!(#variants).to_string()),*]);
                 }
@@ -48,9 +48,9 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
 
             #[automatically_derived]
             impl #name {
-                pub fn parse<'a>(parser: &'a dyn UiParser<'a>, path: &str, spaces: &str) -> #name {
+                pub fn parse<'a>(parser: &'a dyn macro_core::parser::UiParser<'a>, path: &str, spaces: &str) -> #name {
                     println!("{}Parse simple enum {} with path '{}'", spaces, stringify!(#name), path);
-                    get_enum(parser, path)
+                    macro_core::parser::get_enum(parser, path)
                 }
             }
         };
@@ -61,8 +61,8 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
 
     quote! {
         #[automatically_derived]
-        impl UI for #name {
-            fn visit(visitor: &mut dyn UiVisitor, spaces: &str, _in_tuple: bool) {
+        impl macro_core::visitor::UI for #name {
+            fn visit(visitor: &mut dyn macro_core::visitor::UiVisitor, spaces: &str, _in_tuple: bool) {
                 println!("{}Create Viewer for enum {} with path '{}'!", spaces, stringify!(#name), visitor.get_path());
                 visitor.enter_enum(&[#(stringify!(#variants).to_string()),*]);
                 let inner_spaces = format!("  {}", spaces);
@@ -74,7 +74,7 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
 
         #[automatically_derived]
         impl #name {
-            pub fn parse<'a>(parser: &'a dyn UiParser<'a>, path: &str, spaces: &str) -> #name {
+            pub fn parse<'a>(parser: &'a dyn macro_core::parser::UiParser<'a>, path: &str, spaces: &str) -> #name {
                 println!("{}Parse complex enum {} with path '{}'", spaces, stringify!(#name), path);
                 let t = parser.get_str(&format!("{}.type", path)).unwrap_or("");
                 println!("{}type '{}'", spaces, t);
@@ -96,8 +96,8 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
 
     quote! {
         #[automatically_derived]
-        impl UI for #name {
-            fn visit(visitor: &mut dyn UiVisitor, spaces: &str, in_tuple: bool) {
+        impl macro_core::visitor::UI for #name {
+            fn visit(visitor: &mut dyn macro_core::visitor::UiVisitor, spaces: &str, in_tuple: bool) {
                 println!("{}Create Viewer for struct {} with path '{}' & in_tuple={}!", spaces, stringify!(#name), visitor.get_path(), in_tuple);
                 visitor.enter_struct(in_tuple);
                 let inner_spaces = format!("  {}", spaces);
@@ -109,7 +109,7 @@ fn handle_struct(name: &Ident, fields: &FieldsNamed) -> TokenStream2 {
 
         #[automatically_derived]
         impl #name {
-            pub fn parse<'a>(parser: &'a dyn UiParser<'a>, path: &str, spaces: &str) -> #name {
+            pub fn parse<'a>(parser: &'a dyn macro_core::parser::UiParser<'a>, path: &str, spaces: &str) -> #name {
                 println!("{}Parse struct {} with path '{}'", spaces, stringify!(#name), path);
                 Self {
                     #parsed_fields

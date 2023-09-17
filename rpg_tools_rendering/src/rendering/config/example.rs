@@ -5,6 +5,7 @@ use crate::renderer::RenderOptions;
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
+use crate::rendering::config::equipment::pants::PantsConfig;
 use crate::rendering::config::eye::eyebrow::EyebrowConfig;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::hairline::HairlineConfig;
@@ -50,21 +51,25 @@ pub fn create_config() -> RenderConfig {
                 shoulder_width: 0.64,
                 waist_width: 0.82,
                 hip_width: 1.0,
+                legs_width: 1.0,
             },
             hourglass: TorsoConfig {
                 shoulder_width: 1.0,
                 waist_width: 0.7,
                 hip_width: 1.0,
+                legs_width: 0.85,
             },
             muscular: TorsoConfig {
                 shoulder_width: 1.0,
                 waist_width: 0.82,
                 hip_width: 0.64,
+                legs_width: 1.0,
             },
             rectangle: TorsoConfig {
                 shoulder_width: 1.0,
                 waist_width: 1.0,
                 hip_width: 1.0,
+                legs_width: 0.9,
             },
             width_arm: 0.1,
             width_leg: 0.14,
@@ -114,6 +119,14 @@ pub fn create_config() -> RenderConfig {
         ear: create_ear_config(),
         eye: create_eye_config(),
         mouth: create_mouth_config(),
+        pants: PantsConfig {
+            height_bermuda: 0.5,
+            height_shorts: 0.3,
+            offset_center: 0.03,
+            offset_bottom: 0.01,
+            width_padding: 0.05,
+            balloon_padding: 0.2,
+        },
     }
 }
 

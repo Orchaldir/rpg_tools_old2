@@ -35,7 +35,7 @@ impl BodyConfig {
     }
 
     pub fn get_leg_width(&self, body: &Body) -> f32 {
-        self.width_leg * self.get_width_factor(body)
+        self.width_leg * self.get_width_factor(body) * self.get_torso_config(body.shape).legs_width
     }
 
     pub fn get_width_factor(&self, body: &Body) -> f32 {
@@ -54,6 +54,7 @@ impl BodyConfig {
     /// The aabb of both legs is limited to the smaller width of shoulders or hip to match *Fat* & *Muscular* [`body shapes`](BodyShape).
     pub fn get_legs_width(&self, body: &Body) -> f32 {
         self.get_shoulder_width(body).min(self.get_hip_width(body))
+            * self.get_torso_config(body.shape).legs_width
     }
 
     pub fn get_shoulder_width(&self, body: &Body) -> f32 {
@@ -78,12 +79,16 @@ impl BodyConfig {
         self.get_shoulder_width(body).max(self.get_hip_width(body))
     }
 
+    pub fn get_torso_bottom(&self) -> f32 {
+        self.y_torso + self.height_torso
+    }
+
     pub fn get_arm_y(&self) -> f32 {
         self.y_torso + 0.05
     }
 
     pub fn get_leg_y(&self) -> f32 {
-        self.y_torso + self.height_torso - 0.05
+        self.get_torso_bottom() - 0.05
     }
 
     pub fn get_fat_offset_factor(&self, body: &Body) -> f32 {
@@ -99,6 +104,21 @@ impl BodyConfig {
     }
 
     pub fn get_foot_radius(&self, body: &Body, aabb: &AABB) -> u32 {
-        aabb.convert_to_height(self.foot_factor * self.get_width_factor(body))
+        aabb.convert_to_height(self.get_foot_radius_factor(body))
+    }
+
+    pub fn get_foot_radius_factor(&self, body: &Body) -> f32 {
+        self.foot_factor
+            * self.get_width_factor(body)
+            * self.get_torso_config(body.shape).legs_width
+    }
+
+    pub fn get_torso_config(&self, shape: BodyShape) -> &TorsoConfig {
+        match shape {
+            BodyShape::Fat => &self.fat,
+            BodyShape::Hourglass => &self.hourglass,
+            BodyShape::Muscular => &self.muscular,
+            BodyShape::Rectangle => &self.rectangle,
+        }
     }
 }

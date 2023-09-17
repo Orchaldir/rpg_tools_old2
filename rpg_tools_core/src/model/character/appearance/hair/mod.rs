@@ -6,8 +6,6 @@ use crate::model::character::appearance::hair::short::ShortHair;
 use crate::model::color::Color;
 use crate::model::length::Length;
 use crate::model::size::Size;
-use macro_core::parser::UiParser;
-use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

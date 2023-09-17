@@ -26,7 +26,6 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
         let default: Ident = get_default(data);
 
         return quote! {
-            use std::fmt;
 
             #[automatically_derived]
             impl #name {
@@ -36,8 +35,8 @@ fn handle_enum(name: &Ident, data: &DataEnum) -> TokenStream2 {
             }
 
             #[automatically_derived]
-            impl fmt::Display for #name {
-                fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            impl std::fmt::Display for #name {
+                fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
                     write!(f, "{:?}", self)
                 }
             }

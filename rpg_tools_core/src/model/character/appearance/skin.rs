@@ -1,7 +1,5 @@
 use crate::model::color::Color;
 use macro_convert::Convert;
-use macro_core::parser::{get_enum, UiParser};
-use macro_core::visitor::{UiVisitor, UI};
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
@@ -16,7 +14,7 @@ pub enum Skin {
 
 impl Default for Skin {
     fn default() -> Self {
-        Self::ExoticSkin { color: Color::Aqua }
+        Skin::normal(SkinColor::default())
     }
 }
 
