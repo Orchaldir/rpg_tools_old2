@@ -84,7 +84,7 @@ impl BodyConfig {
     }
 
     pub fn get_arm_y(&self) -> f32 {
-        self.y_torso + 0.05
+        self.y_torso + 0.02
     }
 
     pub fn get_leg_y(&self) -> f32 {
