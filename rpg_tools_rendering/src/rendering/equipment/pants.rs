@@ -26,20 +26,10 @@ pub fn render_pants(
 }
 
 fn get_balloon(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
-    let mut builder = get_base(config, aabb, body);
-    let (pants_width, inner_width) = config.pants.get_widths(&config.body, body);
-    let top_y = config.body.get_torso_bottom();
+    let (pants_width, _inner_width) = config.pants.get_widths(&config.body, body);
     let bottom_y = config.pants.get_bottom_y(&config.body, body);
-    let mid_y = interpolate(top_y, bottom_y, 0.5);
     let balloon_extra = pants_width * config.pants.balloon_padding;
-
-    builder.add_mirrored_points(aabb, pants_width, mid_y, false);
-    builder.add_mirrored_points(aabb, pants_width + balloon_extra, bottom_y, false);
-    builder.add_mirrored_points(aabb, inner_width - balloon_extra, bottom_y, false);
-    builder.add_mirrored_points(aabb, inner_width, mid_y, false);
-    builder.add_point(aabb.get_point(0.5, top_y), false);
-
-    builder.build()
+    get_pants(config, aabb, body, bottom_y, balloon_extra)
 }
 
 fn get_bermuda(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
@@ -52,7 +42,7 @@ fn get_hot_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
 
 fn get_regular_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let bottom_y = config.pants.get_bottom_y(&config.body, body);
-    get_pants(config, aabb, body, bottom_y)
+    get_pants(config, aabb, body, bottom_y, 0.0)
 }
 
 fn get_shorts(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
@@ -62,18 +52,32 @@ fn get_shorts(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
 fn get_shorter_pants(config: &RenderConfig, aabb: &AABB, body: &Body, factor: f32) -> Polygon2d {
     let top_y = config.body.get_torso_bottom();
     let bottom_y = config.pants.get_bottom_y(&config.body, body);
-    get_pants(config, aabb, body, interpolate(top_y, bottom_y, factor))
+    get_pants(
+        config,
+        aabb,
+        body,
+        interpolate(top_y, bottom_y, factor),
+        0.0,
+    )
 }
 
-fn get_pants(config: &RenderConfig, aabb: &AABB, body: &Body, bottom_y: f32) -> Polygon2d {
+fn get_pants(
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    bottom_y: f32,
+    balloon_extra: f32,
+) -> Polygon2d {
     let mut builder = get_base(config, aabb, body);
     let (pants_width, inner_width) = config.pants.get_widths(&config.body, body);
     let top_y = config.body.get_torso_bottom();
     let mid_y = (top_y + bottom_y) * 0.5;
+    let is_sharp = balloon_extra <= 0.0;
 
     builder.add_mirrored_points(aabb, pants_width, mid_y, false);
-    builder.add_mirrored_points(aabb, pants_width, bottom_y, true);
-    builder.add_mirrored_points(aabb, inner_width, bottom_y, true);
+    builder.add_mirrored_points(aabb, pants_width + balloon_extra, bottom_y, is_sharp);
+    builder.add_mirrored_points(aabb, inner_width - balloon_extra, bottom_y, is_sharp);
+    builder.add_mirrored_points(aabb, inner_width, mid_y, false);
     builder.add_point(aabb.get_point(0.5, top_y), false);
 
     builder.build()
