@@ -2,14 +2,26 @@ use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::renderer::Renderer;
 use crate::rendering::body::torso::create_torso;
+use crate::rendering::body::{get_left_arm, get_left_arm_short};
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
-use rpg_tools_core::model::equipment::appearance::shirt::{Neckline, Shirt};
+use rpg_tools_core::model::equipment::appearance::shirt::{Neckline, Shirt, SleeveStyle};
 
 pub fn render_shirt(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    shirt: &Shirt,
+) {
+    render_torso(renderer, &config, aabb, body, shirt);
+    render_sleeves(renderer, &config, aabb, body, shirt);
+}
+
+fn render_torso(
+    renderer: &mut dyn Renderer,
+    config: &&RenderConfig,
     aabb: &AABB,
     body: &Body,
     shirt: &Shirt,
@@ -21,6 +33,26 @@ pub fn render_shirt(
     add_neckline(&torso_aabb, torso, shirt, &mut builder);
     let polygon = builder.build();
     renderer.render_rounded_polygon(&polygon, &options);
+}
+
+fn render_sleeves(
+    renderer: &mut dyn Renderer,
+    config: &&RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    shirt: &Shirt,
+) {
+    let options = config.get_options(shirt.color);
+
+    let polygon = match shirt.sleeve_style {
+        SleeveStyle::Long => get_left_arm(config, aabb, body),
+        SleeveStyle::None => return,
+        SleeveStyle::Short => get_left_arm_short(config, aabb, body),
+    }
+    .build();
+
+    renderer.render_rounded_polygon(&polygon, &options);
+    renderer.render_rounded_polygon(&aabb.mirrored(&polygon), &options);
 }
 
 fn add_neckline(aabb: &AABB, torso: &TorsoConfig, shirt: &Shirt, builder: &mut Polygon2dBuilder) {

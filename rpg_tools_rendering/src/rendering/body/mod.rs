@@ -82,7 +82,7 @@ fn render_arms(
     renderer.render_rounded_polygon(&aabb.mirrored(&polygon), options);
 }
 
-fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
+pub fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
     let mut builder = get_left_arm_short(config, aabb, body);
     let width = config.body.get_arm_width(body);
     let bottom_x = get_end_x(config.body.get_torso_width(body));
@@ -94,7 +94,7 @@ fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBui
     builder
 }
 
-fn get_left_arm_short(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
+pub fn get_left_arm_short(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
     let mut builder = Polygon2dBuilder::new();
     let width = config.body.get_arm_width(body);
     let top_x = get_end_x(config.body.get_shoulder_width(body) * 0.94);
