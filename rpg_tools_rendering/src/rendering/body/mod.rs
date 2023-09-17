@@ -1,6 +1,7 @@
 use crate::math::aabb2d::{get_end_x, get_start_x, AABB};
 use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
+use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::math::polygon2d::Polygon2d;
 use crate::math::size2d::Size2d;
 use crate::renderer::{RenderOptions, Renderer};
@@ -15,7 +16,7 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
     let options = config.get_skin_options(&body.skin);
 
     render_legs(renderer, config, aabb, body, &options);
-    render_arms(renderer, config, &aabb, body, &options);
+    render_arms(renderer, config, aabb, body, &options);
     render_hands(renderer, config, aabb, body, &options);
     render_torso(renderer, config, aabb, body, &options);
 }
@@ -72,45 +73,30 @@ fn render_hands(
 fn render_arms(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
-    aabb: &&AABB,
+    aabb: &AABB,
     body: &Body,
     options: &RenderOptions,
 ) {
-    let arm_size = aabb
-        .size()
-        .scale(config.body.get_arm_width(body), config.body.height_arm);
-    let arm_start_x = get_start_x(config.body.get_shoulder_width(body));
-    let right_arm_start = aabb.get_point(
-        arm_start_x - config.body.get_arm_width(body),
-        config.body.get_arm_y(),
-    );
-    let fat_offset = aabb.convert_to_height(config.body.get_fat_offset_factor(body) / 2.0);
-    let polygon = create_arm(arm_size, right_arm_start, fat_offset as i32);
+    let polygon = get_left_arm(config, aabb, body);
 
     renderer.render_rounded_polygon(&polygon, options);
     renderer.render_rounded_polygon(&aabb.mirrored(&polygon), options);
 }
 
-fn create_arm(arm_size: Size2d, right_arm_start: Point2d, offset: i32) -> Polygon2d {
-    let right_arm = AABB::new(right_arm_start, arm_size);
-    let mut polygon: Polygon2d = (&right_arm).into();
+fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
+    let mut builder = Polygon2dBuilder::new();
+    let width = config.body.get_arm_width(body);
+    let height = config.body.height_arm;
+    let x = get_end_x(config.body.get_shoulder_width(body));
+    let y = config.body.get_arm_y();
 
-    if offset != 0 {
-        let corners = polygon.corners_mut();
+    builder.add_point(aabb.get_point(x, y), true);
+    builder.add_point_cw(aabb.get_point(x + width, y), false);
+    builder.add_point(aabb.get_point(x, y + 0.2), true);
+    builder.add_point(aabb.get_point(x, y + height), false);
+    builder.add_point_cw(aabb.get_point(x + width, y + height), false);
 
-        update_corner(corners, 2, offset);
-        update_corner(corners, 3, offset);
-    }
-
-    polygon.create_sharp_corner(1);
-
-    polygon
-}
-
-fn update_corner(corners: &mut [Point2d], index: usize, offset: i32) {
-    if let Some(p) = corners.get_mut(index) {
-        p.x -= offset;
-    }
+    builder.build()
 }
 
 fn render_leg(renderer: &mut dyn Renderer, options: &RenderOptions, start: Point2d, size: Size2d) {
