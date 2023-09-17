@@ -15,8 +15,8 @@ pub fn render_shirt(
     body: &Body,
     shirt: &Shirt,
 ) {
-    render_torso(renderer, &config, aabb, body, shirt);
     render_sleeves(renderer, &config, aabb, body, shirt);
+    render_torso(renderer, &config, aabb, body, shirt);
 }
 
 fn render_torso(

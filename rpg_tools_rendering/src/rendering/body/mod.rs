@@ -16,7 +16,6 @@ pub fn render_body(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
 
     render_legs(renderer, config, aabb, body, &options);
     render_arms(renderer, config, aabb, body, &options);
-    render_hands(renderer, config, aabb, body, &options);
     render_torso(renderer, config, aabb, body, &options);
 }
 
@@ -50,13 +49,8 @@ fn render_legs(
     renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, options);
 }
 
-fn render_hands(
-    renderer: &mut dyn Renderer,
-    config: &RenderConfig,
-    aabb: &AABB,
-    body: &Body,
-    options: &RenderOptions,
-) {
+pub fn render_hands(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, body: &Body) {
+    let options = config.get_skin_options(&body.skin);
     let hand_radius = config.body.get_hand_radius(body, aabb);
     let distance_between_hands = config.body.get_shoulder_width(body)
         + config.body.get_arm_width(body)
@@ -65,8 +59,8 @@ fn render_hands(
     let (left_hand_center, right_hand_center) =
         aabb.get_mirrored_points(distance_between_hands, hand_y);
 
-    renderer.render_circle(&left_hand_center, hand_radius, options);
-    renderer.render_circle(&right_hand_center, hand_radius, options);
+    renderer.render_circle(&left_hand_center, hand_radius, &options);
+    renderer.render_circle(&right_hand_center, hand_radius, &options);
 }
 
 fn render_arms(
