@@ -2,7 +2,6 @@ use crate::math::aabb2d::{get_end_x, get_start_x, AABB};
 use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::builder::Polygon2dBuilder;
-use crate::math::polygon2d::Polygon2d;
 use crate::math::size2d::Size2d;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::body::torso::render_torso;
@@ -77,27 +76,37 @@ fn render_arms(
     body: &Body,
     options: &RenderOptions,
 ) {
-    let polygon = get_left_arm(config, aabb, body);
+    let polygon = get_left_arm(config, aabb, body).build();
 
     renderer.render_rounded_polygon(&polygon, options);
     renderer.render_rounded_polygon(&aabb.mirrored(&polygon), options);
 }
 
-fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
+fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
+    let mut builder = get_left_arm_short(config, aabb, body);
+    let width = config.body.get_arm_width(body);
+    let bottom_x = get_end_x(config.body.get_torso_width(body));
+    let y = config.body.get_arm_y() + config.body.height_arm;
+
+    builder.add_point(aabb.get_point(bottom_x, y), false);
+    builder.add_point_cw(aabb.get_point(bottom_x + width, y), false);
+
+    builder
+}
+
+fn get_left_arm_short(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
     let mut builder = Polygon2dBuilder::new();
     let width = config.body.get_arm_width(body);
-    let height = config.body.height_arm;
     let top_x = get_end_x(config.body.get_shoulder_width(body) * 0.94);
-    let bottom_x = get_end_x(config.body.get_torso_width(body));
     let y = config.body.get_arm_y();
+    let mid_y = y + 0.2;
 
     builder.add_point(aabb.get_point(top_x, y), true);
     builder.add_point_cw(aabb.get_point(top_x + width, y), false);
-    builder.add_point(aabb.get_point(top_x, y + 0.2), true);
-    builder.add_point(aabb.get_point(bottom_x, y + height), false);
-    builder.add_point_cw(aabb.get_point(bottom_x + width, y + height), false);
+    builder.add_point(aabb.get_point(top_x, mid_y), true);
+    builder.add_point_cw(aabb.get_point(top_x + width, mid_y), true);
 
-    builder.build()
+    builder
 }
 
 fn render_leg(renderer: &mut dyn Renderer, options: &RenderOptions, start: Point2d, size: Size2d) {
