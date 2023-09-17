@@ -437,6 +437,25 @@
                       {% endif %}
                     </ul>
                   </li>
+                  <li>
+                    <b>Clothing:</b> {{ macros::add_select(name="appearance.body.clothing.type", options=[ "None","Simple" ], selected=appearance.body.clothing.type, update=true) }}
+                    <ul>
+                      {% if appearance.body.clothing.type == "None" %}
+                      {% elif appearance.body.clothing.type == "Simple" %}
+                        <li>
+                          <b>Pants</b>
+                          <ul>
+                            <li>
+                              <b>Style:</b> {{ macros::add_select(name="appearance.body.clothing.pants.style", options=[ "Balloon","Bermuda","HotPants","Regular","Shorts" ], selected=appearance.body.clothing.pants.style, update=true) }}
+                            </li>
+                            <li>
+                              <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.pants.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.pants.color, update=true) }}
+                            </li>
+                          </ul>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
                 </ul>
               </li>
               <li>
