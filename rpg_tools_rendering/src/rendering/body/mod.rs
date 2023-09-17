@@ -87,7 +87,7 @@ fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let mut builder = Polygon2dBuilder::new();
     let width = config.body.get_arm_width(body);
     let height = config.body.height_arm;
-    let top_x = get_end_x(config.body.get_shoulder_width(body));
+    let top_x = get_end_x(config.body.get_shoulder_width(body) * 0.94);
     let bottom_x = get_end_x(config.body.get_torso_width(body));
     let y = config.body.get_arm_y();
 
