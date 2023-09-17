@@ -37,12 +37,14 @@ fn add_neckline(
             builder.add_mirrored_points(&aabb, width, 0.0, true);
             builder.add_mirrored_points(&aabb, width, 0.1, false);
         }
-        Neckline::DeepV => {}
+        Neckline::DeepV => add_v(&aabb, torso, builder, 0.4),
         Neckline::Scoop => {}
-        Neckline::V => {
-            let width = torso.shoulder_width / 3.0;
-            builder.add_mirrored_points(&aabb, width, 0.0, true);
-            builder.add_point(aabb.get_point(0.5, 0.2), true);
-        }
+        Neckline::V => add_v(&aabb, torso, builder, 0.2),
     }
+}
+
+fn add_v(aabb: &&AABB, torso: &TorsoConfig, builder: &mut Polygon2dBuilder, depth: f32) {
+    let width = torso.shoulder_width / 3.0;
+    builder.add_mirrored_points(&aabb, width, 0.0, true);
+    builder.add_point(aabb.get_point(0.5, depth), true);
 }
