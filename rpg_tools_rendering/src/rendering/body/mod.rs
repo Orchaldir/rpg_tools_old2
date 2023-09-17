@@ -87,14 +87,15 @@ fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let mut builder = Polygon2dBuilder::new();
     let width = config.body.get_arm_width(body);
     let height = config.body.height_arm;
-    let x = get_end_x(config.body.get_shoulder_width(body));
+    let top_x = get_end_x(config.body.get_shoulder_width(body));
+    let bottom_x = get_end_x(config.body.get_torso_width(body));
     let y = config.body.get_arm_y();
 
-    builder.add_point(aabb.get_point(x, y), true);
-    builder.add_point_cw(aabb.get_point(x + width, y), false);
-    builder.add_point(aabb.get_point(x, y + 0.2), true);
-    builder.add_point(aabb.get_point(x, y + height), false);
-    builder.add_point_cw(aabb.get_point(x + width, y + height), false);
+    builder.add_point(aabb.get_point(top_x, y), true);
+    builder.add_point_cw(aabb.get_point(top_x + width, y), false);
+    builder.add_point(aabb.get_point(top_x, y + 0.2), true);
+    builder.add_point(aabb.get_point(bottom_x, y + height), false);
+    builder.add_point_cw(aabb.get_point(bottom_x + width, y + height), false);
 
     builder.build()
 }
