@@ -74,12 +74,12 @@ fn add_round(
     depth: f32,
 ) {
     let width = torso.shoulder_width * width;
-    builder.add_mirrored_points(&aabb, width, 0.0, true);
-    builder.add_mirrored_points(&aabb, width * 0.7, depth, false);
+    builder.add_mirrored_points(aabb, width, 0.0, true);
+    builder.add_mirrored_points(aabb, width * 0.7, depth, false);
 }
 
 fn add_v(aabb: &&AABB, torso: &TorsoConfig, builder: &mut Polygon2dBuilder, depth: f32) {
     let width = torso.shoulder_width / 3.0;
-    builder.add_mirrored_points(&aabb, width, 0.0, true);
+    builder.add_mirrored_points(aabb, width, 0.0, true);
     builder.add_point(aabb.get_point(0.5, depth), true);
 }
