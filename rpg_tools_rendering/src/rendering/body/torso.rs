@@ -26,11 +26,11 @@ pub fn render_torso(
 pub fn create_torso(aabb: &AABB, config: &BodyConfig, torso: &TorsoConfig) -> Polygon2dBuilder {
     let mut builder = Polygon2dBuilder::new();
 
-    builder.add_mirrored_points(&aabb, torso.shoulder_width, 0.0, false);
-    builder.add_mirrored_points(&aabb, torso.shoulder_width, config.y_upper, false);
-    builder.add_mirrored_points(&aabb, torso.waist_width, config.y_waist, false);
-    builder.add_mirrored_points(&aabb, torso.hip_width, config.y_lower, false);
     builder.add_mirrored_points(&aabb, torso.hip_width, 1.0, false);
+    builder.add_mirrored_points(&aabb, torso.hip_width, config.y_lower, false);
+    builder.add_mirrored_points(&aabb, torso.waist_width, config.y_waist, false);
+    builder.add_mirrored_points(&aabb, torso.shoulder_width, config.y_upper, false);
+    builder.add_mirrored_points(&aabb, torso.shoulder_width, 0.0, false);
 
     builder
 }
