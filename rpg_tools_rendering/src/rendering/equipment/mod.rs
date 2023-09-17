@@ -16,7 +16,7 @@ pub fn render_clothing(
     body: &Body,
 ) {
     if let Clothing::Simple { pants, shirt } = &body.clothing {
-        render_pants(renderer, config, aabb, body, pants);
         render_shirt(renderer, config, aabb, body, shirt);
+        render_pants(renderer, config, aabb, body, pants);
     }
 }
