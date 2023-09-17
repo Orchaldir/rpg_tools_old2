@@ -3,6 +3,7 @@ use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
 pub mod pants;
+pub mod shirt;
 
 #[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
