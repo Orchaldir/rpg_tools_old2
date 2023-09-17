@@ -42,7 +42,7 @@ fn get_balloon(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
 }
 
 fn get_bermuda(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
-    get_shorter_pants(config, aabb, body, 0.5)
+    get_shorter_pants(config, aabb, body, config.pants.height_bermuda)
 }
 
 fn get_hot_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
@@ -55,7 +55,7 @@ fn get_regular_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon
 }
 
 fn get_shorts(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
-    get_shorter_pants(config, aabb, body, 0.3)
+    get_shorter_pants(config, aabb, body, config.pants.height_shorts)
 }
 
 fn get_shorter_pants(config: &RenderConfig, aabb: &AABB, body: &Body, factor: f32) -> Polygon2d {
@@ -82,7 +82,7 @@ fn get_base(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder
     let torso_aabb = config.body.get_torso_aabb(body, aabb);
     let hip_width = config.pants.get_hip_width(&config.body, body);
     let top_y = config.body.y_lower;
-    let center_y = top_y + config.pants.center_offset;
+    let center_y = top_y + config.pants.offset_center;
     let mut builder = Polygon2dBuilder::new();
 
     // center curves downwards

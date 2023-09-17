@@ -4,8 +4,10 @@ use rpg_tools_core::model::character::appearance::body::Body;
 /// The rendering config of the [`pants`](Pants).
 #[derive(Debug, PartialEq)]
 pub struct PantsConfig {
-    pub center_offset: f32,
-    pub bottom_offset: f32,
+    pub height_bermuda: f32,
+    pub height_shorts: f32,
+    pub offset_center: f32,
+    pub offset_bottom: f32,
     pub width_padding: f32,
 }
 
@@ -27,6 +29,6 @@ impl PantsConfig {
     }
 
     pub fn get_bottom_y(&self, config: &BodyConfig, body: &Body) -> f32 {
-        1.0 - config.get_foot_radius_factor(body) - self.bottom_offset
+        1.0 - config.get_foot_radius_factor(body) - self.offset_bottom
     }
 }
