@@ -77,7 +77,7 @@ fn render_arms(
 }
 
 pub fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
-    let mut builder = get_left_arm_short(config, aabb, body);
+    let mut builder = get_left_arm_short(config, aabb, body, false);
     let width = config.body.get_arm_width(body);
     let bottom_x = get_end_x(config.body.get_torso_width(body));
     let y = config.body.get_arm_y() + config.body.height_arm;
@@ -88,17 +88,24 @@ pub fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2
     builder
 }
 
-pub fn get_left_arm_short(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
+pub fn get_left_arm_short(
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    bottom_sharp: bool,
+) -> Polygon2dBuilder {
     let mut builder = Polygon2dBuilder::new();
     let width = config.body.get_arm_width(body);
     let top_x = get_end_x(config.body.get_shoulder_width(body) * 0.94);
+    let bottom_x = get_end_x(config.body.get_torso_width(body));
     let y = config.body.get_arm_y();
     let mid_y = y + 0.2;
 
     builder.add_point(aabb.get_point(top_x, y), true);
     builder.add_point_cw(aabb.get_point(top_x + width, y), false);
-    builder.add_point(aabb.get_point(top_x, mid_y), true);
-    builder.add_point_cw(aabb.get_point(top_x + width, mid_y), true);
+    builder.add_point(aabb.get_point(top_x, y + 0.1), true);
+    builder.add_point(aabb.get_point(bottom_x, mid_y), bottom_sharp);
+    builder.add_point_cw(aabb.get_point(bottom_x + width, mid_y), bottom_sharp);
 
     builder
 }

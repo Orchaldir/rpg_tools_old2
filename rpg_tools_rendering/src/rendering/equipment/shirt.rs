@@ -53,7 +53,7 @@ fn render_sleeves(
     let polygon = match shirt.sleeve_style {
         SleeveStyle::Long => get_left_arm(config, aabb, body),
         SleeveStyle::None => return,
-        SleeveStyle::Short => get_left_arm_short(config, aabb, body),
+        SleeveStyle::Short => get_left_arm_short(config, aabb, body, true),
     }
     .build();
 
