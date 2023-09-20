@@ -35,6 +35,8 @@ fn render_torso(
 
     if from_front {
         add_neckline(&torso_aabb, torso, shirt, &mut builder);
+    } else {
+        add_straight(&torso_aabb, torso, &mut builder)
     }
 
     let polygon = builder.build();
@@ -66,14 +68,14 @@ fn add_neckline(aabb: &AABB, torso: &TorsoConfig, shirt: &Shirt, builder: &mut P
         Neckline::Boat => add_round(&aabb, torso, builder, 0.7, 0.05),
         Neckline::Crew => add_round(&aabb, torso, builder, 0.3, 0.1),
         Neckline::DeepV => add_v(&aabb, torso, builder, 0.4),
-        Neckline::None => {}
+        Neckline::None => add_straight(&aabb, torso, builder),
         Neckline::Scoop => add_round(&aabb, torso, builder, 0.5, 0.2),
         Neckline::V => add_v(&aabb, torso, builder, 0.2),
     }
 }
 
 fn add_round(
-    aabb: &&AABB,
+    aabb: &AABB,
     torso: &TorsoConfig,
     builder: &mut Polygon2dBuilder,
     width: f32,
@@ -84,8 +86,13 @@ fn add_round(
     builder.add_mirrored_points(aabb, width * 0.7, depth, false);
 }
 
-fn add_v(aabb: &&AABB, torso: &TorsoConfig, builder: &mut Polygon2dBuilder, depth: f32) {
+fn add_v(aabb: &AABB, torso: &TorsoConfig, builder: &mut Polygon2dBuilder, depth: f32) {
     let width = torso.shoulder_width / 3.0;
     builder.add_mirrored_points(aabb, width, 0.0, true);
     builder.add_point(aabb.get_point(0.5, depth), true);
+}
+
+fn add_straight(aabb: &AABB, torso: &TorsoConfig, builder: &mut Polygon2dBuilder) {
+    let width = torso.shoulder_width / 3.0;
+    builder.add_mirrored_points(aabb, width, 0.0, true);
 }
