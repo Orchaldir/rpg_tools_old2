@@ -91,16 +91,16 @@ impl BodyConfig {
         self.get_torso_bottom() - 0.05
     }
 
-    pub fn get_fat_offset_factor(&self, body: &Body) -> f32 {
-        if body.shape == BodyShape::Fat {
-            self.get_hip_width(body) - self.get_shoulder_width(body)
-        } else {
-            0.0
-        }
+    pub fn get_distance_between_hands(&self, body: &Body) -> f32 {
+        self.get_torso_width(body) + 0.08
     }
 
     pub fn get_hand_radius(&self, body: &Body, aabb: &AABB) -> u32 {
-        aabb.convert_to_height(self.hand_factor * self.get_width_factor(body))
+        aabb.convert_to_height(self.get_hand_radius_factor(body))
+    }
+
+    pub fn get_hand_radius_factor(&self, body: &Body) -> f32 {
+        self.hand_factor * self.get_width_factor(body)
     }
 
     pub fn get_foot_radius(&self, body: &Body, aabb: &AABB) -> u32 {

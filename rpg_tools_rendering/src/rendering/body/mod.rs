@@ -6,6 +6,7 @@ use crate::math::size2d::Size2d;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::body::torso::render_torso;
 use crate::rendering::config::RenderConfig;
+use crate::rendering::equipment::pants::interpolate;
 use rpg_tools_core::model::character::appearance::body::Body;
 use std::ops::Mul;
 
@@ -52,9 +53,8 @@ fn render_legs(
 pub fn render_hands(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, body: &Body) {
     let options = config.get_skin_options(&body.skin);
     let hand_radius = config.body.get_hand_radius(body, aabb);
-    let distance_between_hands = config.body.get_shoulder_width(body)
-        + config.body.get_arm_width(body)
-        + config.body.get_fat_offset_factor(body);
+    let distance_between_hands =
+        config.body.get_distance_between_hands(body) + config.body.get_hand_radius_factor(body);
     let hand_y = config.body.get_arm_y() + config.body.height_arm;
     let (left_hand_center, right_hand_center) =
         aabb.get_mirrored_points(distance_between_hands, hand_y);
@@ -79,7 +79,7 @@ fn render_arms(
 pub fn get_left_arm(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder {
     let mut builder = get_left_arm_short(config, aabb, body, false);
     let width = config.body.get_arm_width(body);
-    let bottom_x = get_end_x(config.body.get_torso_width(body));
+    let bottom_x = get_end_x(config.body.get_distance_between_hands(body));
     let y = config.body.get_arm_y() + config.body.height_arm;
 
     builder.add_point(aabb.get_point(bottom_x, y), false);
@@ -97,7 +97,8 @@ pub fn get_left_arm_short(
     let mut builder = Polygon2dBuilder::new();
     let width = config.body.get_arm_width(body);
     let top_x = get_end_x(config.body.get_shoulder_width(body) * 0.94);
-    let bottom_x = get_end_x(config.body.get_torso_width(body));
+    let bottom_x = get_end_x(config.body.get_distance_between_hands(body));
+    let bottom_x = interpolate(top_x, bottom_x, 0.7);
     let y = config.body.get_arm_y();
     let mid_y = y + 0.2;
 
