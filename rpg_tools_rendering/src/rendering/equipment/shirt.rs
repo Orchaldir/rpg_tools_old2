@@ -65,12 +65,12 @@ fn render_sleeves(
 
 fn add_neckline(aabb: &AABB, torso: &TorsoConfig, shirt: &Shirt, builder: &mut Polygon2dBuilder) {
     match shirt.neckline {
-        Neckline::Boat => add_round(&aabb, torso, builder, 0.7, 0.05),
-        Neckline::Crew => add_round(&aabb, torso, builder, 0.3, 0.1),
-        Neckline::DeepV => add_v(&aabb, torso, builder, 0.4),
-        Neckline::None => add_straight(&aabb, torso, builder),
-        Neckline::Scoop => add_round(&aabb, torso, builder, 0.5, 0.2),
-        Neckline::V => add_v(&aabb, torso, builder, 0.2),
+        Neckline::Boat => add_round(aabb, torso, builder, 0.7, 0.05),
+        Neckline::Crew => add_round(aabb, torso, builder, 0.3, 0.1),
+        Neckline::DeepV => add_v(aabb, torso, builder, 0.4),
+        Neckline::None => add_straight(aabb, torso, builder),
+        Neckline::Scoop => add_round(aabb, torso, builder, 0.5, 0.2),
+        Neckline::V => add_v(aabb, torso, builder, 0.2),
     }
 }
 
@@ -87,8 +87,7 @@ fn add_round(
 }
 
 fn add_v(aabb: &AABB, torso: &TorsoConfig, builder: &mut Polygon2dBuilder, depth: f32) {
-    let width = torso.shoulder_width / 3.0;
-    builder.add_mirrored_points(aabb, width, 0.0, true);
+    add_straight(aabb, torso, builder);
     builder.add_point(aabb.get_point(0.5, depth), true);
 }
 
