@@ -454,6 +454,20 @@
                       </li>
                     </ul>
                   </li>
+                  <li>
+                    <b>Shirt</b>
+                    <ul>
+                      <li>
+                        <b>Sleeve Style:</b> {{ appearance.body.clothing.shirt.sleeve_style }}
+                      </li>
+                      <li>
+                        <b>Neckline:</b> {{ appearance.body.clothing.shirt.neckline }}
+                      </li>
+                      <li>
+                        <b>Color:</b> {{ appearance.body.clothing.shirt.color }}
+                      </li>
+                    </ul>
+                  </li>
                 {% endif %}
               </ul>
             </li>

@@ -99,6 +99,6 @@ fn get_base(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2dBuilder
     builder
 }
 
-fn interpolate(start: f32, end: f32, factor: f32) -> f32 {
+pub fn interpolate(start: f32, end: f32, factor: f32) -> f32 {
     start * (1.0 - factor) + end * factor
 }

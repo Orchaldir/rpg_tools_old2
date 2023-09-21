@@ -14,6 +14,10 @@
         pants:
           style: Regular
           color: Blue
+        shirt:
+          sleeve_style: Long
+          neckline: Crew
+          color: White
     head:
       ears:
         type: Normal
@@ -164,6 +168,10 @@
         pants:
           style: Balloon
           color: Red
+        shirt:
+          sleeve_style: Long
+          neckline: DeepV
+          color: Red
     head:
       ears:
         type: Normal
@@ -221,7 +229,11 @@
       clothing:
         type: Simple
         pants:
-          style: Regular
+          style: Shorts
+          color: Purple
+        shirt:
+          sleeve_style: None
+          neckline: Crew
           color: Purple
     head:
       ears:
@@ -269,6 +281,10 @@
         type: Simple
         pants:
           style: Regular
+          color: Gray
+        shirt:
+          sleeve_style: Short
+          neckline: Crew
           color: Gray
     head:
       ears:

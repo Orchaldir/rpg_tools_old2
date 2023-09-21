@@ -453,6 +453,20 @@
                             </li>
                           </ul>
                         </li>
+                        <li>
+                          <b>Shirt</b>
+                          <ul>
+                            <li>
+                              <b>Sleeve Style:</b> {{ macros::add_select(name="appearance.body.clothing.shirt.sleeve_style", options=[ "Long","None","Short" ], selected=appearance.body.clothing.shirt.sleeve_style, update=true) }}
+                            </li>
+                            <li>
+                              <b>Neckline:</b> {{ macros::add_select(name="appearance.body.clothing.shirt.neckline", options=[ "Boat","Crew","DeepV","None","Scoop","V" ], selected=appearance.body.clothing.shirt.neckline, update=true) }}
+                            </li>
+                            <li>
+                              <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.shirt.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.shirt.color, update=true) }}
+                            </li>
+                          </ul>
+                        </li>
                       {% endif %}
                     </ul>
                   </li>

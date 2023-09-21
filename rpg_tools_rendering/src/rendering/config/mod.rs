@@ -3,6 +3,7 @@ use crate::renderer::RenderOptions;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::equipment::pants::PantsConfig;
+use crate::rendering::config::equipment::shirt::ShirtConfig;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
@@ -35,6 +36,7 @@ pub struct RenderConfig {
     pub head: HeadConfig,
     pub mouth: MouthConfig,
     pub pants: PantsConfig,
+    pub shirt: ShirtConfig,
 }
 
 impl RenderConfig {

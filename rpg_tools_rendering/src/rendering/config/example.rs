@@ -6,6 +6,7 @@ use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::equipment::pants::PantsConfig;
+use crate::rendering::config::equipment::shirt::ShirtConfig;
 use crate::rendering::config::eye::eyebrow::EyebrowConfig;
 use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::hairline::HairlineConfig;
@@ -126,6 +127,16 @@ pub fn create_config() -> RenderConfig {
             offset_bottom: 0.01,
             width_padding: 0.05,
             balloon_padding: 0.2,
+        },
+        shirt: ShirtConfig {
+            boat_depth: 0.05,
+            boat_width: 0.7,
+            crew_depth: 0.1,
+            crew_width: 0.3,
+            deep_v_depth: 0.4,
+            scoop_depth: 0.2,
+            scoop_width: 0.5,
+            v_depth: 0.2,
         },
     }
 }
