@@ -4,6 +4,7 @@ use crate::renderer::Renderer;
 use crate::rendering::body::torso::create_torso;
 use crate::rendering::body::{get_left_arm, get_left_arm_short};
 use crate::rendering::config::body::torso::TorsoConfig;
+use crate::rendering::config::equipment::shirt::ShirtConfig;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::equipment::appearance::shirt::{Neckline, Shirt, SleeveStyle};
@@ -16,13 +17,13 @@ pub fn render_shirt(
     shirt: &Shirt,
     from_front: bool,
 ) {
-    render_sleeves(renderer, &config, aabb, body, shirt);
-    render_torso(renderer, &config, aabb, body, shirt, from_front);
+    render_sleeves(renderer, config, aabb, body, shirt);
+    render_torso(renderer, config, aabb, body, shirt, from_front);
 }
 
 fn render_torso(
     renderer: &mut dyn Renderer,
-    config: &&RenderConfig,
+    config: &RenderConfig,
     aabb: &AABB,
     body: &Body,
     shirt: &Shirt,
@@ -34,7 +35,7 @@ fn render_torso(
     let mut builder = create_torso(&torso_aabb, &config.body, torso);
 
     if from_front {
-        add_neckline(&torso_aabb, torso, shirt, &mut builder);
+        add_neckline(&torso_aabb, &config.shirt, torso, shirt, &mut builder);
     } else {
         add_straight(&torso_aabb, torso, &mut builder)
     }
@@ -45,7 +46,7 @@ fn render_torso(
 
 fn render_sleeves(
     renderer: &mut dyn Renderer,
-    config: &&RenderConfig,
+    config: &RenderConfig,
     aabb: &AABB,
     body: &Body,
     shirt: &Shirt,
@@ -63,14 +64,20 @@ fn render_sleeves(
     renderer.render_rounded_polygon(&aabb.mirrored(&polygon), &options);
 }
 
-fn add_neckline(aabb: &AABB, torso: &TorsoConfig, shirt: &Shirt, builder: &mut Polygon2dBuilder) {
+fn add_neckline(
+    aabb: &AABB,
+    config: &ShirtConfig,
+    torso: &TorsoConfig,
+    shirt: &Shirt,
+    builder: &mut Polygon2dBuilder,
+) {
     match shirt.neckline {
-        Neckline::Boat => add_round(aabb, torso, builder, 0.7, 0.05),
-        Neckline::Crew => add_round(aabb, torso, builder, 0.3, 0.1),
-        Neckline::DeepV => add_v(aabb, torso, builder, 0.4),
+        Neckline::Boat => add_round(aabb, torso, builder, config.boat_width, config.boat_depth),
+        Neckline::Crew => add_round(aabb, torso, builder, config.crew_width, config.crew_depth),
+        Neckline::DeepV => add_v(aabb, torso, builder, config.deep_v_depth),
         Neckline::None => add_straight(aabb, torso, builder),
-        Neckline::Scoop => add_round(aabb, torso, builder, 0.5, 0.2),
-        Neckline::V => add_v(aabb, torso, builder, 0.2),
+        Neckline::Scoop => add_round(aabb, torso, builder, config.scoop_width, config.scoop_depth),
+        Neckline::V => add_v(aabb, torso, builder, config.v_depth),
     }
 }
 
