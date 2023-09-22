@@ -41,6 +41,7 @@ fn create_appearance(height: Length, pants: &Pants, shape: &BodyShape) -> Appear
             width: Default::default(),
             skin: Default::default(),
             clothing: Clothing::Simple {
+                footwear: Default::default(),
                 pants: *pants,
                 shirt: Default::default(),
             },

@@ -16,7 +16,12 @@ pub fn render_clothing(
     body: &Body,
     from_front: bool,
 ) {
-    if let Clothing::Simple { pants, shirt } = &body.clothing {
+    if let Clothing::Simple {
+        footwear,
+        pants,
+        shirt,
+    } = &body.clothing
+    {
         render_shirt(renderer, config, aabb, body, shirt, from_front);
         render_pants(renderer, config, aabb, body, pants);
     }
