@@ -13,11 +13,12 @@ use rpg_tools_rendering::rendering::character::{
     render_character_from_front,
 };
 use rpg_tools_rendering::rendering::config::example::{create_border_options, create_config};
+use std::fmt::Display;
 
 pub fn render_2_sets<T, S>(
     filename: &str,
-    rows: Vec<T>,
-    columns: Vec<S>,
+    rows: Vec<(String, T)>,
+    columns: Vec<(String, S)>,
     create: fn(Length, &T, &S) -> Appearance,
     back_too: bool,
 ) {
@@ -34,11 +35,11 @@ pub fn render_2_sets<T, S>(
     let mut svg_builder = SvgBuilder::new(svg_size);
     let mut start = Point2d::default();
 
-    for eyes in rows.iter() {
+    for (row_name, row) in rows.iter() {
         start.x = 0;
 
-        for realistic in columns.iter() {
-            let appearance = create(height, eyes, realistic);
+        for (column_name, column) in columns.iter() {
+            let appearance = create(height, row, column);
             let size = calculate_character_size(&config, &appearance);
             let aabb_front = AABB::new(start, size);
 
@@ -60,4 +61,11 @@ pub fn render_2_sets<T, S>(
 
     let svg = svg_builder.finish();
     svg.save(filename).unwrap();
+}
+
+pub fn add_names<T: Display>(values: Vec<T>) -> Vec<(String, T)> {
+    values
+        .into_iter()
+        .map(|value| (value.to_string(), value))
+        .collect()
 }
