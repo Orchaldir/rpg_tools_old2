@@ -1,7 +1,7 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::render::render_2_sets;
+use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
@@ -16,21 +16,28 @@ fn main() {
 
     for neckline in Neckline::get_all() {
         for sleeve_style in SleeveStyle::get_all() {
-            shirts.push(Shirt {
-                sleeve_style,
-                neckline,
-                color: Color::Aqua,
-            })
+            shirts.push(create(neckline, sleeve_style))
         }
     }
 
     render_2_sets(
         "shirts.svg",
         shirts,
-        BodyShape::get_all(),
+        add_names(BodyShape::get_all()),
         create_appearance,
         false,
     );
+}
+
+fn create(neckline: Neckline, sleeve_style: SleeveStyle) -> (String, Shirt) {
+    (
+        format!("{} {}", neckline, sleeve_style),
+        Shirt {
+            sleeve_style,
+            neckline,
+            color: Color::Aqua,
+        },
+    )
 }
 
 fn create_appearance(height: Length, shirt: &Shirt, shape: &BodyShape) -> Appearance {
