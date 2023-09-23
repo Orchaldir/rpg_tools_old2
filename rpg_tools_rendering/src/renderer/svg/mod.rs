@@ -7,6 +7,7 @@ use crate::math::size2d::Size2d;
 use crate::renderer::svg::path::{
     path_from_circle_arc, path_from_line, path_from_polygon, path_from_rounded_polygon,
 };
+use crate::renderer::text::TextOptions;
 use crate::renderer::{RenderOptions, Renderer};
 use anyhow::Result;
 use std::fs::File;
@@ -161,10 +162,16 @@ impl Renderer for SvgBuilder {
         ));
     }
 
-    fn render_text(&mut self, text: &str, center: &Point2d, size: u32) {
+    fn render_text(
+        &mut self,
+        text: &str,
+        center: &Point2d,
+        orientation: Orientation,
+        options: &TextOptions,
+    ) {
         self.lines.push(format!(
-            "  <text x=\"{}\" y=\"{}\" font-size=\"{}px\" text-anchor=\"middle\">{}</text>",
-            center.x, center.y, size, text
+            "  <text x=\"{}\" y=\"{}\" transform=\"rotate({})\" fill=\"{}\" font-size=\"{}px\" text-anchor=\"middle\">{}</text>",
+            center.x, center.y, orientation.to_degree(), options.color, options.size, text
         ));
     }
 }
