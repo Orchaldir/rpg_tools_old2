@@ -126,7 +126,7 @@ pub fn create_config() -> RenderConfig {
             height_ankle: 0.02,
             height_knee: 0.12,
             height_sole: 0.02,
-            width_shaft: 1.0,
+            width_shaft: 1.05,
             width_sole: 1.1,
         },
         pants: PantsConfig {

@@ -94,8 +94,9 @@ fn get_pants(
             builder.add_mirrored_points(aabb, inner_width - balloon_extra, bottom_y, false);
         }
         BottomStyle::BootsOverPants => {
-            builder.add_mirrored_points(aabb, pants_width, bottom_y, false);
-            builder.add_mirrored_points(aabb, inner_width, bottom_y, false);
+            let padding = config.body.get_legs_width(body) * config.pants.width_padding;
+            builder.add_mirrored_points(aabb, pants_width - padding, bottom_y, true);
+            builder.add_mirrored_points(aabb, inner_width + padding, bottom_y, true);
         }
         BottomStyle::Sharp => {
             builder.add_mirrored_points(aabb, pants_width, bottom_y, true);
