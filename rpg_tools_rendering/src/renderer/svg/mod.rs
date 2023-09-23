@@ -160,6 +160,13 @@ impl Renderer for SvgBuilder {
             to_style(options),
         ));
     }
+
+    fn render_text(&mut self, text: &str, center: &Point2d, size: u32) {
+        self.lines.push(format!(
+            "  <text x=\"{}\" y=\"{}\" font-size=\"{}px\">{}</text>",
+            center.x, center.y, size, text
+        ));
+    }
 }
 
 fn to_style(options: &RenderOptions) -> String {

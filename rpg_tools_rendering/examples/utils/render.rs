@@ -34,6 +34,8 @@ pub fn render_2_sets<T, S>(
     );
     let mut svg_builder = SvgBuilder::new(svg_size);
     let mut start = Point2d::default();
+    let text_size = size.height() / 20;
+    let column_text_offset = Point2d::new((size.width() / 2) as i32, text_size as i32);
 
     for (row_name, row) in rows.iter() {
         start.x = 0;
@@ -52,6 +54,9 @@ pub fn render_2_sets<T, S>(
                 svg_builder.render_rectangle(&aabb_back, &options);
                 render_character_from_back(&mut svg_builder, &config, &aabb_back, &appearance);
             }
+
+            let text_center = start + column_text_offset;
+            svg_builder.render_text(column_name, &text_center, text_size);
 
             start.x += size.width() as i32;
         }

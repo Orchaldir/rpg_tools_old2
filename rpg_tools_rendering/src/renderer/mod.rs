@@ -110,4 +110,7 @@ pub trait Renderer {
 
     /// Renders an axis aligned rectangle.
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions);
+
+    /// Renders a centered text.
+    fn render_text(&mut self, text: &str, center: &Point2d, size: u32);
 }
