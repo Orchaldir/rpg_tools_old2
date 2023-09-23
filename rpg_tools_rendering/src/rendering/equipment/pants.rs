@@ -6,6 +6,12 @@ use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::equipment::appearance::pants::{Pants, PantsStyle};
 
+enum BottomStyle {
+    Balloon,
+    BootsOverPants,
+    Sharp,
+}
+
 pub fn render_pants(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
@@ -28,7 +34,7 @@ pub fn render_pants(
 
 fn get_balloon(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let bottom_y = config.pants.get_bottom_y(&config.body, body);
-    get_pants(config, aabb, body, bottom_y, true)
+    get_pants(config, aabb, body, bottom_y, BottomStyle::Balloon)
 }
 
 fn get_bermuda(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
@@ -45,11 +51,15 @@ fn get_regular_pants(
     body: &Body,
     shaft_y: Option<f32>,
 ) -> Polygon2d {
-    let bottom_y = config
-        .pants
-        .get_bottom_y(&config.body, body)
-        .min(shaft_y.unwrap_or(1.0));
-    get_pants(config, aabb, body, bottom_y, false)
+    let bottom_y = config.pants.get_bottom_y(&config.body, body);
+    let shaft_y = shaft_y.unwrap_or(1.0);
+    let (bottom_y, style) = if bottom_y > shaft_y {
+        (shaft_y, BottomStyle::BootsOverPants)
+    } else {
+        (bottom_y, BottomStyle::Sharp)
+    };
+
+    get_pants(config, aabb, body, bottom_y, style)
 }
 
 fn get_shorts(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
@@ -60,7 +70,7 @@ fn get_shorter_pants(config: &RenderConfig, aabb: &AABB, body: &Body, factor: f3
     let top_y = config.body.get_torso_bottom();
     let full_bottom_y = config.pants.get_bottom_y(&config.body, body);
     let bottom_y = interpolate(top_y, full_bottom_y, factor);
-    get_pants(config, aabb, body, bottom_y, false)
+    get_pants(config, aabb, body, bottom_y, BottomStyle::Sharp)
 }
 
 fn get_pants(
@@ -68,7 +78,7 @@ fn get_pants(
     aabb: &AABB,
     body: &Body,
     bottom_y: f32,
-    is_balloon: bool,
+    style: BottomStyle,
 ) -> Polygon2d {
     let mut builder = get_base(config, aabb, body);
     let (pants_width, inner_width) = config.pants.get_widths(&config.body, body);
@@ -77,13 +87,20 @@ fn get_pants(
 
     builder.add_mirrored_points(aabb, pants_width, mid_y, false);
 
-    if is_balloon {
-        let balloon_extra = pants_width * config.pants.balloon_padding;
-        builder.add_mirrored_points(aabb, pants_width + balloon_extra, bottom_y, false);
-        builder.add_mirrored_points(aabb, inner_width - balloon_extra, bottom_y, false);
-    } else {
-        builder.add_mirrored_points(aabb, pants_width, bottom_y, true);
-        builder.add_mirrored_points(aabb, inner_width, bottom_y, true);
+    match style {
+        BottomStyle::Balloon => {
+            let balloon_extra = pants_width * config.pants.balloon_padding;
+            builder.add_mirrored_points(aabb, pants_width + balloon_extra, bottom_y, false);
+            builder.add_mirrored_points(aabb, inner_width - balloon_extra, bottom_y, false);
+        }
+        BottomStyle::BootsOverPants => {
+            builder.add_mirrored_points(aabb, pants_width, bottom_y, false);
+            builder.add_mirrored_points(aabb, inner_width, bottom_y, false);
+        }
+        BottomStyle::Sharp => {
+            builder.add_mirrored_points(aabb, pants_width, bottom_y, true);
+            builder.add_mirrored_points(aabb, inner_width, bottom_y, true);
+        }
     }
 
     builder.add_mirrored_points(aabb, inner_width, mid_y, false);
