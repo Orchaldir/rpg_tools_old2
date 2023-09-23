@@ -31,7 +31,7 @@ fn main() {
 
 fn create(neckline: Neckline, sleeve_style: SleeveStyle) -> (String, Shirt) {
     (
-        format!("{} {}", neckline, sleeve_style),
+        format!("{} - {}", neckline, sleeve_style),
         Shirt {
             sleeve_style,
             neckline,
