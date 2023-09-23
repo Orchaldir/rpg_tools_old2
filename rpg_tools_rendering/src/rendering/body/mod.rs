@@ -27,21 +27,21 @@ fn render_legs(
     body: &Body,
     options: &RenderOptions,
 ) {
-    let legs_width = config.body.get_legs_width(body);
     let leg_width = config.body.get_leg_width(body);
     let leg_y = config.body.get_leg_y();
+    let foot_y = config.body.get_foot_y();
+    let left_leg_start_x = config.body.get_left_leg_x(body);
+    let right_leg_x = config.body.get_right_leg_x(body);
 
-    let left_leg_start_x = get_end_x(legs_width) - leg_width;
     let left_leg_start = aabb.get_point(left_leg_start_x, leg_y);
-    let leg_size = aabb.size().scale(leg_width, 1.0 - leg_y);
-    let right_leg_x = get_start_x(legs_width);
     let right_leg_start = aabb.get_point(right_leg_x, leg_y);
+    let leg_size = aabb.size().scale(leg_width, foot_y - leg_y);
 
     render_leg(renderer, options, left_leg_start, leg_size);
     render_leg(renderer, options, right_leg_start, leg_size);
 
-    let left_foot_center = aabb.get_point(left_leg_start_x + leg_width / 2.0, 1.0);
-    let right_foot_center = aabb.get_point(right_leg_x + leg_width / 2.0, 1.0);
+    let left_foot_center = aabb.get_point(left_leg_start_x + leg_width / 2.0, foot_y);
+    let right_foot_center = aabb.get_point(right_leg_x + leg_width / 2.0, foot_y);
     let foot_radius = config.body.get_foot_radius(body, aabb);
     let offset = Orientation::from_degree(0.0);
     let angle = Orientation::from_degree(180.0);

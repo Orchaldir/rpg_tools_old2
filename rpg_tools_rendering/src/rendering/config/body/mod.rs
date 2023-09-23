@@ -1,4 +1,4 @@
-use crate::math::aabb2d::{get_start_x, AABB};
+use crate::math::aabb2d::{get_end_x, get_start_x, AABB};
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::width::WidthConfig;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
@@ -91,6 +91,10 @@ impl BodyConfig {
         self.get_torso_bottom() - 0.05
     }
 
+    pub fn get_foot_y(&self) -> f32 {
+        1.0
+    }
+
     pub fn get_distance_between_hands(&self, body: &Body) -> f32 {
         self.get_torso_width(body) + 0.08
     }
@@ -111,6 +115,17 @@ impl BodyConfig {
         self.foot_factor
             * self.get_width_factor(body)
             * self.get_torso_config(body.shape).legs_width
+    }
+
+    pub fn get_left_leg_x(&self, body: &Body) -> f32 {
+        let legs_width = self.get_legs_width(body);
+        let leg_width = self.get_leg_width(body);
+        get_end_x(legs_width) - leg_width
+    }
+
+    pub fn get_right_leg_x(&self, body: &Body) -> f32 {
+        let legs_width = self.get_legs_width(body);
+        get_start_x(legs_width)
     }
 
     pub fn get_torso_config(&self, shape: BodyShape) -> &TorsoConfig {
