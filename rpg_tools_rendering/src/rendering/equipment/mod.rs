@@ -26,6 +26,6 @@ pub fn render_clothing(
     {
         render_shirt(renderer, config, aabb, body, shirt, from_front);
         render_pants(renderer, config, aabb, body, pants);
-        render_footwear(renderer, config, aabb, body, footwear);
+        render_footwear(renderer, config, aabb, body, footwear, from_front);
     }
 }

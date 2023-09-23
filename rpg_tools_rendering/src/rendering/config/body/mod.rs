@@ -1,4 +1,5 @@
 use crate::math::aabb2d::{get_end_x, get_start_x, AABB};
+use crate::math::point2d::Point2d;
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::width::WidthConfig;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
@@ -115,6 +116,17 @@ impl BodyConfig {
         self.foot_factor
             * self.get_width_factor(body)
             * self.get_torso_config(body.shape).legs_width
+    }
+
+    pub fn get_feet_centers(&self, body: &Body, aabb: &AABB) -> (Point2d, Point2d) {
+        let leg_half = self.get_leg_width(body) / 2.0;
+        let foot_y = self.get_foot_y();
+        let left_leg_start_x = self.get_left_leg_x(body);
+        let right_leg_x = self.get_right_leg_x(body);
+        let left = aabb.get_point(left_leg_start_x + leg_half, foot_y);
+        let right = aabb.get_point(right_leg_x + leg_half, foot_y);
+
+        (left, right)
     }
 
     pub fn get_left_leg_x(&self, body: &Body) -> f32 {
