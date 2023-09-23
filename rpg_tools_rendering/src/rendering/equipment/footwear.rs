@@ -76,7 +76,7 @@ fn render_shaft(
 ) {
     let width = config.body.get_leg_width(body) * config.footwear.width_shaft;
     let y_end = config.body.y_foot;
-    let y_start = y_end - height - config.body.get_foot_radius_factor(body);
+    let y_start = config.footwear.to_y(&config.body, body, height);
     let mut builder = Polygon2dBuilder::new();
 
     builder.add_horizontal_pair(aabb, width, center_x, y_start, true);

@@ -30,6 +30,6 @@ impl PantsConfig {
     }
 
     pub fn get_bottom_y(&self, config: &BodyConfig, body: &Body) -> f32 {
-        1.0 - config.get_foot_radius_factor(body) - self.offset_bottom
+        config.y_foot - config.get_foot_radius_factor(body) - self.offset_bottom
     }
 }

@@ -12,13 +12,14 @@ pub fn render_pants(
     aabb: &AABB,
     body: &Body,
     pants: &Pants,
+    shaft_y: Option<f32>,
 ) {
     let options = config.get_options(pants.color);
     let polygon = match pants.style {
         PantsStyle::Balloon => get_balloon(config, aabb, body),
         PantsStyle::Bermuda => get_bermuda(config, aabb, body),
         PantsStyle::HotPants => get_hot_pants(config, aabb, body),
-        PantsStyle::Regular => get_regular_pants(config, aabb, body),
+        PantsStyle::Regular => get_regular_pants(config, aabb, body, shaft_y),
         PantsStyle::Shorts => get_shorts(config, aabb, body),
     };
 
@@ -38,8 +39,16 @@ fn get_hot_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     get_base(config, aabb, body).build()
 }
 
-fn get_regular_pants(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
-    let bottom_y = config.pants.get_bottom_y(&config.body, body);
+fn get_regular_pants(
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    shaft_y: Option<f32>,
+) -> Polygon2d {
+    let bottom_y = config
+        .pants
+        .get_bottom_y(&config.body, body)
+        .min(shaft_y.unwrap_or(1.0));
     get_pants(config, aabb, body, bottom_y, false)
 }
 
