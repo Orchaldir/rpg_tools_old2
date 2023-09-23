@@ -25,7 +25,13 @@ pub fn render_clothing(
     } = &body.clothing
     {
         render_shirt(renderer, config, aabb, body, shirt, from_front);
-        render_pants(renderer, config, aabb, body, pants);
-        render_footwear(renderer, config, aabb, body, footwear, from_front);
+
+        if footwear.style.is_over_pants() {
+            render_pants(renderer, config, aabb, body, pants);
+            render_footwear(renderer, config, aabb, body, footwear, from_front);
+        } else {
+            render_footwear(renderer, config, aabb, body, footwear, from_front);
+            render_pants(renderer, config, aabb, body, pants);
+        }
     }
 }

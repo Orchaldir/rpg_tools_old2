@@ -21,3 +21,9 @@ pub enum FootwearStyle {
     Shoes,
     Slippers,
 }
+
+impl FootwearStyle {
+    pub fn is_over_pants(&self) -> bool {
+        *self == Self::KneeHighBoots
+    }
+}
