@@ -1,9 +1,10 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::renderer::Renderer;
+use crate::rendering::body::render_feet;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
-use rpg_tools_core::model::equipment::appearance::footwear::Footwear;
+use rpg_tools_core::model::equipment::appearance::footwear::{Footwear, FootwearStyle};
 
 pub fn render_footwear(
     renderer: &mut dyn Renderer,
@@ -13,7 +14,21 @@ pub fn render_footwear(
     footwear: &Footwear,
     from_front: bool,
 ) {
+    let options = config.get_options(footwear.color);
+
+    if is_foot_visible(footwear.style, from_front) {
+        render_feet(renderer, config, aabb, body, &options);
+    }
+
     render_soles(renderer, config, aabb, body, footwear);
+}
+
+fn is_foot_visible(style: FootwearStyle, from_front: bool) -> bool {
+    match style {
+        FootwearStyle::Sandals => false,
+        FootwearStyle::Slippers => from_front,
+        _ => true,
+    }
 }
 
 fn render_soles(

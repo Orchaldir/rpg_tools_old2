@@ -42,7 +42,7 @@ fn render_legs(
     render_leg(renderer, options, right_leg_start, leg_size);
 }
 
-fn render_feet(
+pub fn render_feet(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
