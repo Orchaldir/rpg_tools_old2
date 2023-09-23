@@ -40,14 +40,14 @@ fn render_legs(
     render_leg(renderer, options, left_leg_start, leg_size);
     render_leg(renderer, options, right_leg_start, leg_size);
 
-    let left_foot_start = aabb.get_point(left_leg_start_x + leg_width / 2.0, 1.0);
-    let right_foot_start = aabb.get_point(right_leg_x + leg_width / 2.0, 1.0);
+    let left_foot_center = aabb.get_point(left_leg_start_x + leg_width / 2.0, 1.0);
+    let right_foot_center = aabb.get_point(right_leg_x + leg_width / 2.0, 1.0);
     let foot_radius = config.body.get_foot_radius(body, aabb);
     let offset = Orientation::from_degree(0.0);
     let angle = Orientation::from_degree(180.0);
 
-    renderer.render_circle_arc(&left_foot_start, foot_radius, offset, angle, options);
-    renderer.render_circle_arc(&right_foot_start, foot_radius, offset, angle, options);
+    renderer.render_circle_arc(&left_foot_center, foot_radius, offset, angle, options);
+    renderer.render_circle_arc(&right_foot_center, foot_radius, offset, angle, options);
 }
 
 pub fn render_hands(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, body: &Body) {
