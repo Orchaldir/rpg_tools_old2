@@ -38,10 +38,11 @@ pub fn render_2_sets<T, S>(
     );
     let mut svg_builder = SvgBuilder::new(svg_size);
     let mut start = Point2d::default();
-    let text_size = size.height() / 20;
+    let text_size = size.height() / 15;
     let text_options = TextOptions::new(WebColor::from_color(Color::Black), text_size);
     let column_text_offset = Point2d::new((size.width() / 2) as i32, text_size as i32);
     let column_orientation = Orientation::default();
+    let row_orientation = Orientation::from_degree(270.0);
 
     for (row_name, row) in rows.iter() {
         start.x = 0;
@@ -66,6 +67,9 @@ pub fn render_2_sets<T, S>(
 
             start.x += size.width() as i32;
         }
+
+        let text_center = Point2d::new(text_size as i32, start.y + size.height() as i32 / 2);
+        svg_builder.render_text(row_name, &text_center, row_orientation, &text_options);
 
         start.y += (size.height() * row_size) as i32;
     }

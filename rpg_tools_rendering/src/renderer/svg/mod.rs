@@ -170,8 +170,9 @@ impl Renderer for SvgBuilder {
         options: &TextOptions,
     ) {
         self.lines.push(format!(
-            "  <text x=\"{}\" y=\"{}\" transform=\"rotate({})\" fill=\"{}\" font-size=\"{}px\" text-anchor=\"middle\">{}</text>",
-            center.x, center.y, orientation.to_degree(), options.color, options.size, text
+            "  <text x=\"{}\" y=\"{}\" transform=\"rotate({},{},{})\" fill=\"{}\" font-size=\"{}px\" text-anchor=\"middle\">{}</text>",
+            center.x, center.y, orientation.to_degree(),center.x, center.y,
+            options.color, options.size, text
         ));
     }
 }
