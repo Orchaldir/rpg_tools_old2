@@ -1,5 +1,4 @@
 use crate::model::color::Color;
-use crate::model::width::Width;
 use macro_convert::Convert;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
@@ -9,7 +8,7 @@ use serde::{Deserialize, Serialize};
 pub struct Footwear {
     pub color: Color,
     pub style: FootwearStyle,
-    pub sole: Sole,
+    pub sole: Color,
 }
 
 /// What style of [`footwear`](Footwear)?
@@ -21,11 +20,4 @@ pub enum FootwearStyle {
     #[default]
     Shoe,
     Slippers,
-}
-
-/// The sole of [`footwear`](Footwear).
-#[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
-pub struct Sole {
-    pub color: Color,
-    pub width: Width,
 }

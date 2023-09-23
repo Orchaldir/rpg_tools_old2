@@ -5,10 +5,9 @@ use crate::utils::render::render_2_sets;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::equipment::appearance::footwear::{Footwear, FootwearStyle, Sole};
+use rpg_tools_core::model::equipment::appearance::footwear::{Footwear, FootwearStyle};
 use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
-use rpg_tools_core::model::width::Width;
 
 pub mod utils;
 
@@ -16,9 +15,7 @@ fn main() {
     let mut options = Vec::new();
 
     for style in FootwearStyle::get_all() {
-        for width in Width::get_all() {
-            options.push(create(style, width));
-        }
+        options.push(create(style));
     }
 
     render_2_sets(
@@ -26,18 +23,15 @@ fn main() {
         options,
         BodyShape::get_all(),
         create_appearance,
-        true,
+        false,
     );
 }
 
-fn create(style: FootwearStyle, width: Width) -> Footwear {
+fn create(style: FootwearStyle) -> Footwear {
     Footwear {
         color: Color::SaddleBrown,
         style,
-        sole: Sole {
-            color: Color::Gray,
-            width,
-        },
+        sole: Color::Gray,
     }
 }
 

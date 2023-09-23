@@ -4,7 +4,6 @@ use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::equipment::appearance::footwear::Footwear;
-use rpg_tools_core::model::width::Width;
 
 pub fn render_footwear(
     renderer: &mut dyn Renderer,
@@ -38,15 +37,10 @@ fn render_sole(
     footwear: &Footwear,
     center_x: f32,
 ) {
-    let options = config.get_options(footwear.sole.color);
-    let width = config.body.get_foot_radius_factor(body) * 2.0;
+    let options = config.get_options(footwear.sole);
+    let width = config.body.get_foot_radius_factor(body) * 2.0 * 1.05;
     let y_start = config.body.y_foot;
-    let y_end = y_start
-        + match footwear.sole.width {
-            Width::Thin => 0.02,
-            Width::Average => 0.04,
-            Width::Wide => 0.06,
-        };
+    let y_end = y_start + 0.02;
     let mut builder = Polygon2dBuilder::new();
 
     builder.add_horizontal_pair(aabb, width, center_x, y_start, true);
