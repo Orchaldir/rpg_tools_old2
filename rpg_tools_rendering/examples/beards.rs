@@ -1,7 +1,7 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::render::render_2_sets;
+use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::beard::goatee::GoateeStyle;
 use rpg_tools_core::model::character::appearance::beard::goatee::GoateeStyle::*;
 use rpg_tools_core::model::character::appearance::beard::moustache::MoustacheStyle;
@@ -27,9 +27,12 @@ pub mod utils;
 
 fn main() {
     let short_options = vec![
-        Beard::Stubble {
-            color: Color::SaddleBrown,
-        },
+        (
+            "Stubble".to_string(),
+            Beard::Stubble {
+                color: Color::SaddleBrown,
+            },
+        ),
         create_moustache(Handlebar),
         create_moustache(FuManchu),
         create_moustache(Pencil),
@@ -40,34 +43,43 @@ fn main() {
         create_goatee(Goatee),
         create_goatee(SoulPatch),
         create_goatee(VanDyke),
-        Beard::GoateeAndMoustache {
-            moustache: Handlebar,
-            goatee: VanDyke,
-            color: Color::SaddleBrown,
-        },
+        (
+            "Handlebar - VanDyke".to_string(),
+            Beard::GoateeAndMoustache {
+                moustache: Handlebar,
+                goatee: VanDyke,
+                color: Color::SaddleBrown,
+            },
+        ),
     ];
 
     render_2_sets(
         "beards.svg",
         short_options,
-        HeadShape::get_all(),
+        add_names(HeadShape::get_all()),
         create_appearance,
         false,
     );
 }
 
-fn create_goatee(goatee: GoateeStyle) -> Beard {
-    Beard::Goatee {
-        goatee,
-        color: Color::SaddleBrown,
-    }
+fn create_goatee(goatee: GoateeStyle) -> (String, Beard) {
+    (
+        goatee.to_string(),
+        Beard::Goatee {
+            goatee,
+            color: Color::SaddleBrown,
+        },
+    )
 }
 
-fn create_moustache(moustache: MoustacheStyle) -> Beard {
-    Beard::Moustache {
-        moustache,
-        color: Color::SaddleBrown,
-    }
+fn create_moustache(moustache: MoustacheStyle) -> (String, Beard) {
+    (
+        format!("{} Moustache", moustache),
+        Beard::Moustache {
+            moustache,
+            color: Color::SaddleBrown,
+        },
+    )
 }
 
 fn create_appearance(height: Length, beard: &Beard, face: &HeadShape) -> Appearance {

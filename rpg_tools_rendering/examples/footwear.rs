@@ -31,7 +31,7 @@ fn create(style: FootwearStyle) -> (String, Footwear) {
     (
         style.to_string(),
         Footwear {
-            color: Color::SaddleBrown,
+            color: Color::Blue,
             style,
             sole: Color::Gray,
         },
