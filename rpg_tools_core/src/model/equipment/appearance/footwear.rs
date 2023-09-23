@@ -14,10 +14,10 @@ pub struct Footwear {
 /// What style of [`footwear`](Footwear)?
 #[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub enum FootwearStyle {
-    Boot,
-    KneeHighBoot,
+    Boots,
+    KneeHighBoots,
     Sandals,
     #[default]
-    Shoe,
+    Shoes,
     Slippers,
 }

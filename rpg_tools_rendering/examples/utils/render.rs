@@ -43,6 +43,7 @@ pub fn render_2_sets<T, S>(
     let column_text_offset = Point2d::new((size.width() / 2) as i32, text_size as i32);
     let column_orientation = Orientation::default();
     let row_orientation = Orientation::from_degree(270.0);
+    let next_row = Point2d::new(0, size.width() as i32);
 
     for (row_name, row) in rows.iter() {
         start.x = 0;
@@ -56,7 +57,7 @@ pub fn render_2_sets<T, S>(
             render_character_from_front(&mut svg_builder, &config, &aabb_front, &appearance);
 
             if back_too {
-                let start_back = start + Point2d::new(0, size.width() as i32);
+                let start_back = start + next_row;
                 let aabb_back = AABB::new(start_back, size);
                 svg_builder.render_rectangle(&aabb_back, &options);
                 render_character_from_back(&mut svg_builder, &config, &aabb_back, &appearance);
@@ -70,6 +71,11 @@ pub fn render_2_sets<T, S>(
 
         let text_center = Point2d::new(text_size as i32, start.y + size.height() as i32 / 2);
         svg_builder.render_text(row_name, &text_center, row_orientation, &text_options);
+
+        if back_too {
+            let text_center = text_center + next_row;
+            svg_builder.render_text("Back", &text_center, row_orientation, &text_options);
+        }
 
         start.y += (size.height() * row_size) as i32;
     }

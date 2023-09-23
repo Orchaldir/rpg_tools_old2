@@ -23,7 +23,7 @@ fn main() {
         options,
         add_names(BodyShape::get_all()),
         create_appearance,
-        false,
+        true,
     );
 }
 
