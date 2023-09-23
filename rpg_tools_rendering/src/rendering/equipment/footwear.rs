@@ -17,8 +17,22 @@ pub fn render_footwear(
     let options = config.get_options(footwear.color);
 
     match footwear.style {
-        FootwearStyle::Boots => render_shafts(renderer, config, aabb, body, &options, 0.02),
-        FootwearStyle::KneeHighBoots => render_shafts(renderer, config, aabb, body, &options, 0.12),
+        FootwearStyle::Boots => render_shafts(
+            renderer,
+            config,
+            aabb,
+            body,
+            &options,
+            config.footwear.height_ankle,
+        ),
+        FootwearStyle::KneeHighBoots => render_shafts(
+            renderer,
+            config,
+            aabb,
+            body,
+            &options,
+            config.footwear.height_knee,
+        ),
         _ => {}
     }
 
@@ -60,7 +74,7 @@ fn render_shaft(
     center_x: f32,
     height: f32,
 ) {
-    let width = config.body.get_leg_width(body);
+    let width = config.body.get_leg_width(body) * config.footwear.width_shaft;
     let y_end = config.body.y_foot;
     let y_start = y_end - height - config.body.get_foot_radius_factor(body);
     let mut builder = Polygon2dBuilder::new();
@@ -94,9 +108,9 @@ fn render_sole(
     center_x: f32,
 ) {
     let options = config.get_options(footwear.sole);
-    let width = config.body.get_foot_radius_factor(body) * 2.0 * 1.05;
+    let width = config.body.get_foot_radius_factor(body) * 2.0 * config.footwear.width_sole;
     let y_start = config.body.y_foot;
-    let y_end = y_start + 0.02;
+    let y_end = y_start + config.footwear.height_sole;
     let mut builder = Polygon2dBuilder::new();
 
     builder.add_horizontal_pair(aabb, width, center_x, y_start, true);
