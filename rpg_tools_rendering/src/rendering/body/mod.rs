@@ -30,7 +30,7 @@ fn render_legs(
 ) {
     let leg_width = config.body.get_leg_width(body);
     let leg_y = config.body.get_leg_y();
-    let foot_y = config.body.get_foot_y();
+    let foot_y = config.body.y_foot;
     let left_leg_start_x = config.body.get_left_leg_x(body);
     let right_leg_x = config.body.get_right_leg_x(body);
 

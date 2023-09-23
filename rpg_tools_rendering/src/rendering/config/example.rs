@@ -78,6 +78,7 @@ pub fn create_config() -> RenderConfig {
             y_upper: 0.3,
             y_waist: 0.5,
             y_lower: 0.75,
+            y_foot: 1.0,
         },
         hair: HairConfig {
             hairline: HairlineConfig {

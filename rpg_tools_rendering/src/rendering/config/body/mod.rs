@@ -28,6 +28,7 @@ pub struct BodyConfig {
     pub y_upper: f32,
     pub y_waist: f32,
     pub y_lower: f32,
+    pub y_foot: f32,
 }
 
 impl BodyConfig {
@@ -92,10 +93,6 @@ impl BodyConfig {
         self.get_torso_bottom() - 0.05
     }
 
-    pub fn get_foot_y(&self) -> f32 {
-        1.0
-    }
-
     pub fn get_distance_between_hands(&self, body: &Body) -> f32 {
         self.get_torso_width(body) + 0.08
     }
@@ -118,13 +115,18 @@ impl BodyConfig {
             * self.get_torso_config(body.shape).legs_width
     }
 
-    pub fn get_feet_centers(&self, body: &Body, aabb: &AABB) -> (Point2d, Point2d) {
+    pub fn get_feet_center_x(&self, body: &Body) -> (f32, f32) {
         let leg_half = self.get_leg_width(body) / 2.0;
-        let foot_y = self.get_foot_y();
         let left_leg_start_x = self.get_left_leg_x(body);
         let right_leg_x = self.get_right_leg_x(body);
-        let left = aabb.get_point(left_leg_start_x + leg_half, foot_y);
-        let right = aabb.get_point(right_leg_x + leg_half, foot_y);
+
+        (left_leg_start_x + leg_half, right_leg_x + leg_half)
+    }
+
+    pub fn get_feet_centers(&self, body: &Body, aabb: &AABB) -> (Point2d, Point2d) {
+        let (left_x, right_x) = self.get_feet_center_x(body);
+        let left = aabb.get_point(left_x, self.y_foot);
+        let right = aabb.get_point(right_x, self.y_foot);
 
         (left, right)
     }
