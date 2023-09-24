@@ -26,34 +26,24 @@ fn main() {
                 eyebrows: EyeBrows::None,
             },
         ),
-        (
-            "Two Close".to_string(),
-            Eyes::Two {
-                eye,
-                eyebrows: EyeBrows::None,
-                distance: Size::Small,
-            },
-        ),
-        (
-            "Two Medium".to_string(),
-            Eyes::Two {
-                eye,
-                eyebrows: EyeBrows::None,
-                distance: Size::Medium,
-            },
-        ),
-        (
-            "Two Far".to_string(),
-            Eyes::Two {
-                eye,
-                eyebrows: EyeBrows::None,
-                distance: Size::Large,
-            },
-        ),
+        create_two(eye, Size::Small),
+        create_two(eye, Size::Medium),
+        create_two(eye, Size::Large),
     ];
     let faces = add_names(HeadShape::get_all());
 
     render_2_sets("eyes.svg", eyes_options, faces, create_appearance, false);
+}
+
+fn create_two(eye: Eye, distance: Size) -> (String, Eyes) {
+    (
+        format!("Two + {}", distance),
+        Eyes::Two {
+            eye,
+            eyebrows: EyeBrows::None,
+            distance,
+        },
+    )
 }
 
 fn create_appearance(height: Length, eyes: &Eyes, face: &HeadShape) -> Appearance {

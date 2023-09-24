@@ -1,34 +1,22 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::render::render_2_sets;
-use rpg_tools_core::model::character::appearance::ear::Ears;
+use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
-use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
-use rpg_tools_core::model::character::appearance::mouth::Mouth;
-use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
-use rpg_tools_core::model::size::Size;
 
 pub mod utils;
 
 fn main() {
-    let eye_shapes = vec![EyeShape::Almond, EyeShape::Ellipse, EyeShape::Circle];
-    let pupil_shapes = vec![
-        PupilShape::Circle,
-        PupilShape::HorizontalSlit,
-        PupilShape::VerticalSlit,
-    ];
-
     render_2_sets(
         "pupil_shapes.svg",
-        pupil_shapes,
-        eye_shapes,
+        add_names(PupilShape::get_all()),
+        add_names(EyeShape::get_all()),
         create_appearance,
         false,
     );
@@ -37,7 +25,7 @@ fn main() {
 fn create_appearance(height: Length, pupil_shape: &PupilShape, eye_shape: &EyeShape) -> Appearance {
     Appearance::head(
         Head {
-            ears: Ears::None,
+            ears: Default::default(),
             eyes: Eyes::Two {
                 eye: Eye::Normal {
                     eye_shape: *eye_shape,
@@ -46,12 +34,12 @@ fn create_appearance(height: Length, pupil_shape: &PupilShape, eye_shape: &EyeSh
                     background_color: Color::Yellow,
                 },
                 eyebrows: Default::default(),
-                distance: Size::Medium,
+                distance: Default::default(),
             },
-            hair: Hair::None,
-            mouth: Mouth::None,
+            hair: Default::default(),
+            mouth: Default::default(),
             shape: HeadShape::Oval,
-            skin: Skin::normal(SkinColor::Light),
+            skin: Default::default(),
         },
         height,
     )

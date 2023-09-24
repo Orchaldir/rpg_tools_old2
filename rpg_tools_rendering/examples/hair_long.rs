@@ -2,7 +2,7 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::appearance::create_humanoid_with_hair;
-use crate::utils::render::render_2_sets;
+use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::hair::long::LongHairStyle;
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
@@ -23,17 +23,20 @@ fn main() {
     render_2_sets(
         "hair_long.svg",
         options,
-        HeadShape::get_all(),
+        add_names(HeadShape::get_all()),
         create_humanoid_with_hair,
         true,
     );
 }
 
-fn create_long(style: LongHairStyle, length: f32) -> Hair {
-    Hair::Long {
-        style,
-        hairline: Default::default(),
-        length: Length::from_metre(length),
-        color: Color::SaddleBrown,
-    }
+fn create_long(style: LongHairStyle, length: f32) -> (String, Hair) {
+    (
+        format!("{} + {} m", style, length),
+        Hair::Long {
+            style,
+            hairline: Default::default(),
+            length: Length::from_metre(length),
+            color: Color::SaddleBrown,
+        },
+    )
 }
