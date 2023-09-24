@@ -7,7 +7,6 @@ use crate::rendering::beard::full::{
 use crate::rendering::beard::goatee::{get_goat_patch, get_goatee, get_soul_patch, get_van_dyke};
 use crate::rendering::beard::moustache::*;
 use crate::rendering::config::RenderConfig;
-use crate::rendering::head::render_head_shape_with_option;
 use rpg_tools_core::model::character::appearance::beard::full::FullBeardStyle;
 use rpg_tools_core::model::character::appearance::beard::goatee::GoateeStyle;
 use rpg_tools_core::model::character::appearance::beard::moustache::MoustacheStyle;
@@ -135,11 +134,9 @@ fn render_stubble(
     color: Color,
 ) {
     let options = config.without_line(color);
-    let line = config.get_line_options(1.0);
     let polygon = get_stubble(config, aabb, head.shape);
 
     renderer.render_rounded_polygon(&polygon, &options);
-    render_head_shape_with_option(renderer, config, aabb, line, head.shape);
 }
 
 fn get_stubble(config: &RenderConfig, aabb: &AABB, head_shape: HeadShape) -> Polygon2d {

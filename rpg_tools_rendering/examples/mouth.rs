@@ -1,12 +1,9 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::render::render_2_sets;
+use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::beard::Beard;
-use rpg_tools_core::model::character::appearance::ear::Ears;
-use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
-use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::Skin;
@@ -36,49 +33,58 @@ fn main() {
         create_female(Medium),
         create_female(Large),
     ];
-    let faces = HeadShape::get_all();
+    let faces = add_names(HeadShape::get_all());
 
     render_2_sets("mouth.svg", shape_options, faces, create_appearance, false);
 }
 
-fn create_circle(size: Size) -> Mouth {
-    Mouth::Circle {
-        size,
-        teeth_color: TeethColor::White,
-    }
+fn create_circle(size: Size) -> (String, Mouth) {
+    (
+        format!("Circle + {:?}", size),
+        Mouth::Circle {
+            size,
+            teeth_color: TeethColor::White,
+        },
+    )
 }
 
-fn create_normal(width: Size, teeth: Size) -> Mouth {
-    Mouth::Simple {
-        beard: Beard::None,
-        width,
-        teeth: SpecialTeeth::LowerFangs { size: teeth },
-        teeth_color: TeethColor::White,
-    }
+fn create_normal(width: Size, teeth: Size) -> (String, Mouth) {
+    (
+        format!("{:?} + {:?}", width, teeth),
+        Mouth::Simple {
+            beard: Beard::None,
+            width,
+            teeth: SpecialTeeth::LowerFangs { size: teeth },
+            teeth_color: TeethColor::White,
+        },
+    )
 }
 
-fn create_female(width: Size) -> Mouth {
-    Mouth::Female {
-        width,
-        color: Color::White,
-        teeth: SpecialTeeth::None,
-        teeth_color: TeethColor::White,
-    }
+fn create_female(width: Size) -> (String, Mouth) {
+    (
+        format!("Female + {:?}", width),
+        Mouth::Female {
+            width,
+            color: Color::White,
+            teeth: SpecialTeeth::None,
+            teeth_color: TeethColor::White,
+        },
+    )
 }
 
 fn create_appearance(height: Length, mouth: &Mouth, face: &HeadShape) -> Appearance {
     Appearance::head(
         Head {
-            ears: Ears::None,
+            ears: Default::default(),
             eyes: Eyes::Two {
                 eye: Eye::Simple {
-                    eye_shape: EyeShape::Ellipse,
+                    eye_shape: Default::default(),
                     color: Color::Yellow,
                 },
                 eyebrows: Default::default(),
-                distance: Medium,
+                distance: Default::default(),
             },
-            hair: Hair::None,
+            hair: Default::default(),
             mouth: *mouth,
             shape: *face,
             skin: Skin::exotic(Color::Red),

@@ -2,6 +2,7 @@ use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
+use crate::rendering::config::equipment::footwear::FootwearConfig;
 use crate::rendering::config::equipment::pants::PantsConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
 use crate::rendering::config::eye::EyeConfig;
@@ -35,6 +36,7 @@ pub struct RenderConfig {
     pub hair: HairConfig,
     pub head: HeadConfig,
     pub mouth: MouthConfig,
+    pub footwear: FootwearConfig,
     pub pants: PantsConfig,
     pub shirt: ShirtConfig,
 }

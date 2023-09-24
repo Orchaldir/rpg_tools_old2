@@ -4,9 +4,11 @@ use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::color::WebColor;
+use crate::renderer::text::TextOptions;
 
 pub mod color;
 pub mod svg;
+pub mod text;
 
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct RenderOptions {
@@ -110,4 +112,13 @@ pub trait Renderer {
 
     /// Renders an axis aligned rectangle.
     fn render_rectangle(&mut self, aabb: &AABB, options: &RenderOptions);
+
+    /// Renders a centered text.
+    fn render_text(
+        &mut self,
+        text: &str,
+        center: &Point2d,
+        orientation: Orientation,
+        options: &TextOptions,
+    );
 }

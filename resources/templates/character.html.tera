@@ -444,6 +444,20 @@
                 {% if appearance.body.clothing.type == "None" %}
                 {% elif appearance.body.clothing.type == "Simple" %}
                   <li>
+                    <b>Footwear</b>
+                    <ul>
+                      <li>
+                        <b>Color:</b> {{ appearance.body.clothing.footwear.color }}
+                      </li>
+                      <li>
+                        <b>Style:</b> {{ appearance.body.clothing.footwear.style }}
+                      </li>
+                      <li>
+                        <b>Sole:</b> {{ appearance.body.clothing.footwear.sole }}
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
                     <b>Pants</b>
                     <ul>
                       <li>

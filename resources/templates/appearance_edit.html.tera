@@ -443,6 +443,20 @@
                       {% if appearance.body.clothing.type == "None" %}
                       {% elif appearance.body.clothing.type == "Simple" %}
                         <li>
+                          <b>Footwear</b>
+                          <ul>
+                            <li>
+                              <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.footwear.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.footwear.color, update=true) }}
+                            </li>
+                            <li>
+                              <b>Style:</b> {{ macros::add_select(name="appearance.body.clothing.footwear.style", options=[ "Boots","KneeHighBoots","Sandals","Shoes","Slippers" ], selected=appearance.body.clothing.footwear.style, update=true) }}
+                            </li>
+                            <li>
+                              <b>Sole:</b> {{ macros::add_select(name="appearance.body.clothing.footwear.sole", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.footwear.sole, update=true) }}
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
                           <b>Pants</b>
                           <ul>
                             <li>

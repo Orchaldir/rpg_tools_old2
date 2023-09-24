@@ -1,14 +1,8 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
-use crate::utils::render::render_2_sets;
-use rpg_tools_core::model::character::appearance::beard::Beard;
-use rpg_tools_core::model::character::appearance::ear::Ears;
-use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
-use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
-use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
-use rpg_tools_core::model::character::appearance::hair::Hair;
-use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
+use crate::utils::render::{add_names, render_2_sets};
+use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
@@ -20,48 +14,46 @@ use Size::Large;
 pub mod utils;
 
 fn main() {
-    let teeth_colors = vec![TeethColor::White, TeethColor::Yellow, TeethColor::Brown];
     let skin = vec![
-        Skin::normal(SkinColor::Fair),
-        Skin::normal(SkinColor::Light),
-        Skin::normal(SkinColor::Medium),
-        Skin::normal(SkinColor::Tan),
-        Skin::normal(SkinColor::Dark),
-        Skin::normal(SkinColor::VeryDark),
-        Skin::exotic(Color::Green),
+        create_normal(SkinColor::Fair),
+        create_normal(SkinColor::Light),
+        create_normal(SkinColor::Medium),
+        create_normal(SkinColor::Tan),
+        create_normal(SkinColor::Dark),
+        create_normal(SkinColor::VeryDark),
+        create_exotic(Color::Green),
     ];
 
     render_2_sets(
         "teeth_colors.svg",
         skin,
-        teeth_colors,
+        add_names(TeethColor::get_all()),
         create_appearance,
         false,
     );
 }
 
+fn create_normal(color: SkinColor) -> (String, Skin) {
+    (format!("{}", color), Skin::normal(color))
+}
+
+fn create_exotic(color: Color) -> (String, Skin) {
+    (format!("Exotic {}", color), Skin::exotic(color))
+}
+
 fn create_appearance(height: Length, skin: &Skin, color: &TeethColor) -> Appearance {
     Appearance::head(
         Head {
-            ears: Ears::None,
-            eyes: Eyes::Two {
-                eye: Eye::Normal {
-                    eye_shape: EyeShape::Ellipse,
-                    pupil_shape: PupilShape::Circle,
-                    pupil_color: Color::Blue,
-                    background_color: Color::White,
-                },
-                eyebrows: Default::default(),
-                distance: Size::Small,
-            },
-            hair: Hair::None,
+            ears: Default::default(),
+            eyes: Default::default(),
+            hair: Default::default(),
             mouth: Mouth::Simple {
-                beard: Beard::None,
+                beard: Default::default(),
                 width: Large,
                 teeth: SpecialTeeth::LowerFangs { size: Large },
                 teeth_color: *color,
             },
-            shape: HeadShape::Oval,
+            shape: Default::default(),
             skin: *skin,
         },
         height,

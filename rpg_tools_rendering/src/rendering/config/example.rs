@@ -5,6 +5,7 @@ use crate::renderer::RenderOptions;
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
+use crate::rendering::config::equipment::footwear::FootwearConfig;
 use crate::rendering::config::equipment::pants::PantsConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
 use crate::rendering::config::eye::eyebrow::EyebrowConfig;
@@ -78,6 +79,7 @@ pub fn create_config() -> RenderConfig {
             y_upper: 0.3,
             y_waist: 0.5,
             y_lower: 0.75,
+            y_foot: 1.0,
         },
         hair: HairConfig {
             hairline: HairlineConfig {
@@ -120,6 +122,13 @@ pub fn create_config() -> RenderConfig {
         ear: create_ear_config(),
         eye: create_eye_config(),
         mouth: create_mouth_config(),
+        footwear: FootwearConfig {
+            height_ankle: 0.02,
+            height_knee: 0.12,
+            height_sole: 0.02,
+            width_shaft: 1.05,
+            width_sole: 1.1,
+        },
         pants: PantsConfig {
             height_bermuda: 0.5,
             height_shorts: 0.3,

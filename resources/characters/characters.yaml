@@ -11,6 +11,10 @@
         color: Fair
       clothing:
         type: Simple
+        footwear:
+          color: Blue
+          style: Shoes
+          sole: Gray
         pants:
           style: Regular
           color: Blue
@@ -165,6 +169,10 @@
         color: White
       clothing:
         type: Simple
+        footwear:
+          color: Red
+          style: Shoes
+          sole: Gray
         pants:
           style: Balloon
           color: Red
@@ -228,6 +236,10 @@
         color: Green
       clothing:
         type: Simple
+        footwear:
+          color: SaddleBrown
+          style: Sandals
+          sole: Gray
         pants:
           style: Shorts
           color: Purple
@@ -279,6 +291,10 @@
         color: Light
       clothing:
         type: Simple
+        footwear:
+          color: SaddleBrown
+          style: KneeHighBoots
+          sole: Gray
         pants:
           style: Regular
           color: Gray
