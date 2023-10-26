@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 /// The belt of the [`character`](crate::model::character::Character).
 #[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Belt {
-    pub buckle: BuckleStyle,
+    pub buckle: Buckle,
     pub color: Color,
 }
 

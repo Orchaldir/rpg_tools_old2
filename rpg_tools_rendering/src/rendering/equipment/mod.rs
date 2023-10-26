@@ -7,6 +7,7 @@ use crate::rendering::equipment::shirt::render_shirt;
 use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::equipment::appearance::Clothing;
 
+pub mod belt;
 pub mod footwear;
 pub mod pants;
 pub mod shirt;

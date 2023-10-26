@@ -1,5 +1,5 @@
 use crate::model::color::Color;
-use crate::model::equipment::appearance::belt::Buckle;
+use crate::model::equipment::appearance::belt::Belt;
 use macro_convert::Convert;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 pub struct Pants {
     pub style: PantsStyle,
     pub color: Color,
-    pub buckle: Buckle,
+    pub belt: Belt,
 }
 
 /// What style of [`pants`](Pants)?

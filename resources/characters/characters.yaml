@@ -18,6 +18,11 @@
         pants:
           style: Regular
           color: Blue
+          belt:
+            buckle:
+              style: Box
+              color: Gray
+            color: Black
         shirt:
           sleeve_style: Long
           neckline: Crew
@@ -176,6 +181,11 @@
         pants:
           style: Balloon
           color: Red
+          belt:
+            buckle:
+              style: Box
+              color: Gray
+            color: Black
         shirt:
           sleeve_style: Long
           neckline: DeepV
@@ -243,6 +253,11 @@
         pants:
           style: Shorts
           color: Purple
+          belt:
+            buckle:
+              style: Box
+              color: Gray
+            color: Black
         shirt:
           sleeve_style: None
           neckline: Crew
@@ -298,6 +313,11 @@
         pants:
           style: Regular
           color: Gray
+          belt:
+            buckle:
+              style: Box
+              color: Gray
+            color: SaddleBrown
         shirt:
           sleeve_style: Short
           neckline: Crew
