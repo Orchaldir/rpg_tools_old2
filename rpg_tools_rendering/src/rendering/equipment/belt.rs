@@ -31,7 +31,7 @@ fn render_band(
 
 fn get_band(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let torso_aabb = config.body.get_torso_aabb(body, aabb);
-    let hip_width = config.pants.get_hip_width(&config.body, body);
+    let hip_width = config.pants.get_hip_width(&config.body, body) + 0.04;
     let top_y = config.body.y_lower + 0.04;
     let top_center_y = top_y + config.pants.offset_center;
     let bottom_y = top_y + 0.1;
