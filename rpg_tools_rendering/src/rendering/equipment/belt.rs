@@ -4,7 +4,7 @@ use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
-use rpg_tools_core::model::equipment::appearance::belt::Belt;
+use rpg_tools_core::model::equipment::appearance::belt::{Belt, Buckle, BuckleStyle};
 
 pub fn render_belt(
     renderer: &mut dyn Renderer,
@@ -14,6 +14,7 @@ pub fn render_belt(
     belt: &Belt,
 ) {
     render_band(renderer, config, aabb, body, belt);
+    render_buckle(renderer, config, aabb, &belt.buckle);
 }
 
 fn render_band(
@@ -27,6 +28,19 @@ fn render_band(
     let polygon = get_band(config, aabb, body);
 
     renderer.render_rounded_polygon(&polygon, &options);
+}
+
+fn render_buckle(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, buckle: &Buckle) {
+    let options = config.get_options(buckle.color);
+    let box_aabb = config
+        .belt
+        .get_buckle_aabb(aabb, &config.body, &config.pants);
+
+    match buckle.style {
+        BuckleStyle::Box => renderer.render_rectangle(&box_aabb, &options),
+        BuckleStyle::Frame => renderer.render_rectangle(&box_aabb, &options),
+        BuckleStyle::Plate => renderer.render_ellipse_aabb(&box_aabb, &options),
+    }
 }
 
 fn get_band(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
