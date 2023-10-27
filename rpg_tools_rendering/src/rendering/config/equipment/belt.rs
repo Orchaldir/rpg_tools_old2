@@ -66,7 +66,8 @@ impl BeltConfig {
         body_config: &BodyConfig,
         pants_config: &PantsConfig,
     ) -> Point2d {
-        let center_y = self.get_top_center_y(body_config, pants_config) + self.height * 0.5;
+        let center_y =
+            self.get_top_side_y(body_config) + pants_config.offset_center * 0.6 + self.height * 0.5;
         aabb.get_point(0.5, center_y)
     }
 
