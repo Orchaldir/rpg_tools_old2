@@ -35,4 +35,17 @@ impl BeltConfig {
     pub fn get_bottom_center_y(&self, body_config: &BodyConfig, pants_config: &PantsConfig) -> f32 {
         self.get_bottom_side_y(body_config) + pants_config.offset_center
     }
+
+    pub fn get_y_values(
+        &self,
+        body_config: &BodyConfig,
+        pants_config: &PantsConfig,
+    ) -> (f32, f32, f32, f32) {
+        (
+            self.get_top_side_y(body_config),
+            self.get_top_center_y(body_config, pants_config),
+            self.get_bottom_side_y(body_config),
+            self.get_bottom_center_y(body_config, pants_config),
+        )
+    }
 }
