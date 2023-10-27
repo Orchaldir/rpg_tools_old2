@@ -19,6 +19,7 @@ pub struct BeltConfig {
 pub struct BuckleConfig {
     pub height: f32,
     pub width: f32,
+    pub frame_border: f32,
 }
 
 impl BeltConfig {

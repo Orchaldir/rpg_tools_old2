@@ -130,6 +130,7 @@ pub fn create_config() -> RenderConfig {
             buckle: BuckleConfig {
                 height: 0.12,
                 width: 0.24,
+                frame_border: 0.15,
             },
         },
         footwear: FootwearConfig {
