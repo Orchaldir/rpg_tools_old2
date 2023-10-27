@@ -13,8 +13,9 @@ pub fn render_belt(
     body: &Body,
     belt: &Belt,
 ) {
-    render_band(renderer, config, aabb, body, belt);
-    render_buckle(renderer, config, aabb, &belt.buckle);
+    let torso_aabb = config.body.get_torso_aabb(body, aabb);
+    render_band(renderer, config, &torso_aabb, body, belt);
+    render_buckle(renderer, config, &torso_aabb, &belt.buckle);
 }
 
 fn render_band(
@@ -44,17 +45,16 @@ fn render_buckle(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB
 }
 
 fn get_band(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
-    let torso_aabb = config.body.get_torso_aabb(body, aabb);
     let hip_width = config.belt.get_width(&config.body, &config.pants, body);
     let (top_y, top_center_y, bottom_y, bottom_center_y) =
         config.belt.get_y_values(&config.body, &config.pants);
     let mut builder = Polygon2dBuilder::new();
 
     // center curves downwards
-    builder.add_point(torso_aabb.get_point(0.5, top_center_y), false);
-    builder.add_mirrored_points(&torso_aabb, hip_width, top_y, true);
-    builder.add_mirrored_points(&torso_aabb, hip_width, bottom_y, true);
-    builder.add_point(torso_aabb.get_point(0.5, bottom_center_y), false);
+    builder.add_point(aabb.get_point(0.5, top_center_y), false);
+    builder.add_mirrored_points(aabb, hip_width, top_y, true);
+    builder.add_mirrored_points(aabb, hip_width, bottom_y, true);
+    builder.add_point(aabb.get_point(0.5, bottom_center_y), false);
 
     builder.build()
 }
