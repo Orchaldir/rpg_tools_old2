@@ -43,6 +43,7 @@ fn render_buckle(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB
 
     match buckle.style {
         BuckleStyle::Box => renderer.render_rectangle(&box_aabb, &options),
+        BuckleStyle::Circle => renderer.render_circle_aabb(&box_aabb, &options),
         BuckleStyle::Frame => {
             let box_polygon = Polygon2d::new(box_aabb.corners());
             let frame_border = box_aabb.convert_to_width(config.belt.buckle.frame_border);

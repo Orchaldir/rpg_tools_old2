@@ -183,7 +183,7 @@
           color: Red
           belt:
             buckle:
-              style: Box
+              style: Circle
               color: Gray
             color: Black
         shirt:

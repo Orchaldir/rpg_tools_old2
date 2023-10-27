@@ -21,6 +21,7 @@ pub struct Buckle {
 #[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub enum BuckleStyle {
     Box,
+    Circle,
     #[default]
     Frame,
     Plate,
