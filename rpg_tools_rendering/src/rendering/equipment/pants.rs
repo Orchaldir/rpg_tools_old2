@@ -3,7 +3,6 @@ use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
-use crate::rendering::equipment::belt::render_belt;
 use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::equipment::appearance::pants::{Pants, PantsStyle};
 
@@ -31,8 +30,6 @@ pub fn render_pants(
     };
 
     renderer.render_rounded_polygon(&polygon, &options);
-
-    render_belt(renderer, config, aabb, body, &pants.belt);
 }
 
 fn get_balloon(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {

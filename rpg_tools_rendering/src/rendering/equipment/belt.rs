@@ -12,10 +12,14 @@ pub fn render_belt(
     aabb: &AABB,
     body: &Body,
     belt: &Belt,
+    from_front: bool,
 ) {
     let torso_aabb = config.body.get_torso_aabb(body, aabb);
     render_band(renderer, config, &torso_aabb, body, belt);
-    render_buckle(renderer, config, &torso_aabb, &belt.buckle);
+
+    if from_front {
+        render_buckle(renderer, config, &torso_aabb, &belt.buckle);
+    }
 }
 
 fn render_band(
