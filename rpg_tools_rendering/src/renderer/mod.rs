@@ -107,6 +107,14 @@ pub trait Renderer {
     /// Renders a polygon.
     fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions);
 
+    /// Renders a polygon with a hole.
+    fn render_polygon_with_hole(
+        &mut self,
+        polygon: &Polygon2d,
+        hole: &Polygon2d,
+        options: &RenderOptions,
+    );
+
     /// Renders a polygon with rounded corners.
     fn render_rounded_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions);
 

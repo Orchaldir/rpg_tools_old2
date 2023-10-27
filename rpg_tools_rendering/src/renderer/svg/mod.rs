@@ -5,7 +5,8 @@ use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::math::size2d::Size2d;
 use crate::renderer::svg::path::{
-    path_from_circle_arc, path_from_line, path_from_polygon, path_from_rounded_polygon,
+    path_from_circle_arc, path_from_line, path_from_polygon, path_from_polygon_with_hole,
+    path_from_rounded_polygon,
 };
 use crate::renderer::text::TextOptions;
 use crate::renderer::{RenderOptions, Renderer};
@@ -145,6 +146,15 @@ impl Renderer for SvgBuilder {
 
     fn render_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {
         self.render_path(&path_from_polygon(polygon), options);
+    }
+
+    fn render_polygon_with_hole(
+        &mut self,
+        polygon: &Polygon2d,
+        hole: &Polygon2d,
+        options: &RenderOptions,
+    ) {
+        self.render_path(&path_from_polygon_with_hole(polygon, hole), options);
     }
 
     fn render_rounded_polygon(&mut self, polygon: &Polygon2d, options: &RenderOptions) {

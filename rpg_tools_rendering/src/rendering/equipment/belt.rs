@@ -43,7 +43,12 @@ fn render_buckle(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB
 
     match buckle.style {
         BuckleStyle::Box => renderer.render_rectangle(&box_aabb, &options),
-        BuckleStyle::Frame => renderer.render_rectangle(&box_aabb, &options),
+        BuckleStyle::Frame => {
+            let box_polygon = Polygon2d::new(box_aabb.corners());
+            let frame_border = box_aabb.convert_to_width(0.1);
+            let hole_polygon = Polygon2d::new(box_aabb.shrink(frame_border).corners());
+            renderer.render_polygon_with_hole(&box_polygon, &hole_polygon, &options)
+        }
         BuckleStyle::Plate => renderer.render_ellipse_aabb(&box_aabb, &options),
     }
 }

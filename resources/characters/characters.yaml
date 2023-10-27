@@ -20,8 +20,8 @@
           color: Blue
           belt:
             buckle:
-              style: Box
-              color: Gray
+              style: Frame
+              color: Silver
             color: SaddleBrown
         shirt:
           sleeve_style: Long
@@ -315,8 +315,8 @@
           color: Gray
           belt:
             buckle:
-              style: Box
-              color: Gray
+              style: Plate
+              color: Yellow
             color: SaddleBrown
         shirt:
           sleeve_style: Short

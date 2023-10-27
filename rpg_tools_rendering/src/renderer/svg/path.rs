@@ -69,6 +69,12 @@ fn path_from_corners(corners: &[Point2d]) -> String {
     path
 }
 
+pub fn path_from_polygon_with_hole(polygon: &Polygon2d, hole: &Polygon2d) -> String {
+    let polygon_path = path_from_polygon(polygon);
+    let hole_path = path_from_polygon(&hole.reverse());
+    format!("{} {}", polygon_path, hole_path)
+}
+
 /// Returns the SVG path of a polygon using quadratic Bézier curves.
 /// Each curve goes from the midpoint of one polygon side to the midpoint of the next.
 /// The corner between those polygon sides is the control point.

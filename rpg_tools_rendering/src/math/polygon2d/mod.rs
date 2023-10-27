@@ -143,6 +143,14 @@ impl Polygon2d {
 
         Polygon2d::new(corners)
     }
+
+    /// Reverses the order of the corners.
+    pub fn reverse(&self) -> Polygon2d {
+        let mut corners = self.corners.clone();
+        corners.reverse();
+
+        Polygon2d::new(corners)
+    }
 }
 
 impl From<&AABB> for Polygon2d {
