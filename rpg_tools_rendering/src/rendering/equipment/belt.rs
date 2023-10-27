@@ -32,10 +32,10 @@ fn render_band(
 fn get_band(config: &RenderConfig, aabb: &AABB, body: &Body) -> Polygon2d {
     let torso_aabb = config.body.get_torso_aabb(body, aabb);
     let hip_width = config.belt.get_width(&config.body, &config.pants, body);
-    let top_y = config.body.y_lower + config.belt.y_offset;
-    let top_center_y = top_y + config.pants.offset_center;
-    let bottom_y = top_y + config.belt.height;
-    let bottom_center_y = bottom_y + config.pants.offset_center;
+    let top_y = config.belt.get_top_side_y(&config.body);
+    let top_center_y = config.belt.get_top_center_y(&config.body, &config.pants);
+    let bottom_y = config.belt.get_bottom_side_y(&config.body);
+    let bottom_center_y = config.belt.get_bottom_center_y(&config.body, &config.pants);
     let mut builder = Polygon2dBuilder::new();
 
     // center curves downwards
