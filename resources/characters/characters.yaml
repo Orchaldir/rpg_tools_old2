@@ -22,7 +22,7 @@
             buckle:
               style: Box
               color: Gray
-            color: Black
+            color: SaddleBrown
         shirt:
           sleeve_style: Long
           neckline: Crew
