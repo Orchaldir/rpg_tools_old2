@@ -125,7 +125,7 @@ pub fn create_config() -> RenderConfig {
         mouth: create_mouth_config(),
         belt: BeltConfig {
             y_offset: 0.04,
-            width: 0.1,
+            height: 0.1,
             thickness: 0.02,
         },
         footwear: FootwearConfig {
