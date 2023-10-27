@@ -465,6 +465,25 @@
                             <li>
                               <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.pants.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.pants.color, update=true) }}
                             </li>
+                            <li>
+                              <b>Belt</b>
+                              <ul>
+                                <li>
+                                  <b>Buckle</b>
+                                  <ul>
+                                    <li>
+                                      <b>Style:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.buckle.style", options=[ "Box","Circle","Frame","Plate" ], selected=appearance.body.clothing.pants.belt.buckle.style, update=true) }}
+                                    </li>
+                                    <li>
+                                      <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.buckle.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.pants.belt.buckle.color, update=true) }}
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li>
+                                  <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.pants.belt.color, update=true) }}
+                                </li>
+                              </ul>
+                            </li>
                           </ul>
                         </li>
                         <li>
