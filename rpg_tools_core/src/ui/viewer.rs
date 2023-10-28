@@ -36,6 +36,16 @@ impl ViewerVisitor {
         self.spaces.pop();
         self.spaces.pop();
     }
+
+    fn enter_list(&mut self) {
+        self.lines.push(format!("{}<ul>", self.spaces));
+        self.enter();
+    }
+
+    fn leave_list(&mut self) {
+        self.leave();
+        self.lines.push(format!("{}</ul>", self.spaces));
+    }
 }
 
 impl UiVisitor for ViewerVisitor {
@@ -51,8 +61,7 @@ impl UiVisitor for ViewerVisitor {
             self.get_name(),
             self.get_path()
         ));
-        self.lines.push(format!("{}<ul>", self.spaces));
-        self.enter();
+        self.enter_list();
     }
 
     fn enter_tuple_variant(&mut self, name: &str) {
@@ -79,18 +88,24 @@ impl UiVisitor for ViewerVisitor {
     fn leave_enum(&mut self) {
         self.leave();
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
-        self.leave();
-        self.lines.push(format!("{}</ul>", self.spaces));
+        self.leave_list()
     }
 
     fn enter_option(&mut self) {
         self.lines
-            .push(format!("{}{{% if {} %}}", self.spaces, self.get_path(),));
-        self.enter();
+            .push(format!("{}<b>{}</b>", self.spaces, self.get_name(),));
+        self.lines.push(format!(
+            "{}{{% if {}.available %}}",
+            self.spaces,
+            self.get_path(),
+        ));
+        self.enter_list();
+        self.enter_child("value");
     }
 
     fn leave_option(&mut self) {
-        self.leave();
+        self.leave_child();
+        self.leave_list();
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
     }
 
@@ -102,15 +117,13 @@ impl UiVisitor for ViewerVisitor {
         } else {
             self.lines
                 .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
-            self.lines.push(format!("{}<ul>", self.spaces));
-            self.enter();
+            self.enter_list();
         }
     }
 
     fn leave_struct(&mut self, in_tuple: bool) {
         if !in_tuple {
-            self.leave();
-            self.lines.push(format!("{}</ul>", self.spaces));
+            self.leave_list();
         }
         self.in_tuple = in_tuple;
     }
