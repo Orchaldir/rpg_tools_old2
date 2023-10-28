@@ -8,6 +8,28 @@ pub fn get_field_type(field: &Field) -> Option<Ident> {
     }
 }
 
+pub fn get_option_type(field: &Field) -> Option<Ident> {
+    match &field.ty {
+        Type::Path(type_path) => {
+            if let Some(segment) = type_path.path.segments.first() {
+                return match &segment.arguments {
+                    PathArguments::AngleBracketed(args) => {
+                        if let Some(GenericArgument::Type(t)) = args.args.first() {
+                            if let Type::Path(type_path) = t {
+                                return type_path.path.segments.first().map(|s| s.ident.clone());
+                            }
+                        }
+                        None
+                    }
+                    _ => None,
+                };
+            }
+            None
+        }
+        _ => None,
+    }
+}
+
 pub fn is_integer(field: &Field) -> bool {
     is_type(&field.ty, "u32")
 }

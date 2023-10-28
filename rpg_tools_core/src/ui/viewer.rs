@@ -83,6 +83,17 @@ impl UiVisitor for ViewerVisitor {
         self.lines.push(format!("{}</ul>", self.spaces));
     }
 
+    fn enter_option(&mut self) {
+        self.lines
+            .push(format!("{}{{% if {} %}}", self.spaces, self.get_path(),));
+        self.enter();
+    }
+
+    fn leave_option(&mut self) {
+        self.leave();
+        self.lines.push(format!("{}{{% endif %}}", self.spaces));
+    }
+
     fn enter_struct(&mut self, in_tuple: bool) {
         if in_tuple {
             self.lines.pop();

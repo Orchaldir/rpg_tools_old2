@@ -88,6 +88,14 @@ impl UiVisitor for EditorVisitor {
         self.lines.push(format!("{}</ul>", self.spaces));
     }
 
+    fn enter_option(&mut self) {
+        todo!()
+    }
+
+    fn leave_option(&mut self) {
+        todo!()
+    }
+
     fn enter_struct(&mut self, in_tuple: bool) {
         if in_tuple {
             self.lines.pop();
