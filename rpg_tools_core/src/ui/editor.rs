@@ -89,11 +89,21 @@ impl UiVisitor for EditorVisitor {
     }
 
     fn enter_option(&mut self) {
-        todo!()
+        self.add_selection(
+            &format!("{}.available", self.get_path()),
+            &vec!["true".to_string(), "false".to_string()],
+        );
+        self.lines.push(format!(
+            "{}{{% if {}.available == \"true\" %}}",
+            self.spaces,
+            self.get_path(),
+        ));
+        self.enter();
     }
 
     fn leave_option(&mut self) {
-        todo!()
+        self.leave();
+        self.lines.push(format!("{}{{% endif %}}", self.spaces));
     }
 
     fn enter_struct(&mut self, in_tuple: bool) {
