@@ -4,6 +4,15 @@ pub trait UiParser<'a> {
     /// Parse a string from a path.
     fn get_str(&'a self, name: &str) -> Option<&'a str>;
 
+    /// Parse an bool from a path.
+    fn parse_bool(&'a self, path: &str) -> bool {
+        self.get_str(path)
+            .iter()
+            .flat_map(|s| s.parse::<bool>().ok())
+            .next()
+            .unwrap_or(false)
+    }
+
     /// Parse an integer from a path.
     fn parse_u32(&'a self, path: &str, default: u32) -> u32 {
         self.get_str(path)
