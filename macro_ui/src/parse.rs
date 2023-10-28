@@ -50,8 +50,8 @@ pub fn parse_struct_field(field: &Field) -> TokenStream2 {
     } else if is_option(field) {
         let option_type = &get_option_type(field);
         quote! {
-            #field_name: if parser.get_str(&format!("{}.{}", path, stringify!(#field_name))).is_some() {
-                Some(#option_type::parse(parser, &format!("{}.{}", path, stringify!(#field_name)), &format!("  {}", spaces)))
+            #field_name: if parser.parse_bool(&format!("{}.{}.available", path, stringify!(#field_name))) {
+                Some(#option_type::parse(parser, &format!("{}.{}.value", path, stringify!(#field_name)), &format!("  {}", spaces)))
             } else {
                 Option::None
             },
