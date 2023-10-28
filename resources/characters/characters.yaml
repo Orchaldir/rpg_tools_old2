@@ -181,11 +181,7 @@
         pants:
           style: Balloon
           color: Red
-          belt:
-            buckle:
-              style: Circle
-              color: Gray
-            color: Black
+          belt: null
         shirt:
           sleeve_style: Long
           neckline: DeepV
@@ -253,11 +249,7 @@
         pants:
           style: Shorts
           color: Purple
-          belt:
-            buckle:
-              style: Box
-              color: Gray
-            color: Black
+          belt: null
         shirt:
           sleeve_style: None
           neckline: Crew

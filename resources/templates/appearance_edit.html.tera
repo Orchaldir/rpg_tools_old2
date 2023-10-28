@@ -468,6 +468,8 @@
                             <li>
                               {% if appearance.body.clothing.pants.belt %}
                               <b>Belt Availability:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.availability", options=[ "true","false" ], selected="true", update=true) }}
+                            </li>
+                            <li>
                               <b>Belt</b>
                               <ul>
                                 <li>
