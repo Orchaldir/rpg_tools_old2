@@ -37,6 +37,16 @@ impl EditorVisitor {
         self.spaces.pop();
     }
 
+    fn enter_list(&mut self) {
+        self.lines.push(format!("{}<ul>", self.spaces));
+        self.enter();
+    }
+
+    fn leave_list(&mut self) {
+        self.leave();
+        self.lines.push(format!("{}</ul>", self.spaces));
+    }
+
     fn add_selection(&mut self, path: &str, variants: &[String]) {
         self.lines.push(format!(
             "{0}<b>{1}:</b> {{{{ macros::add_select(name=\"{2}\", options=[ {3} ], selected={2}, update=true) }}}}",
@@ -56,8 +66,7 @@ impl UiVisitor for EditorVisitor {
     fn enter_enum(&mut self, variants: &[String]) {
         self.first_variant = true;
         self.add_selection(&format!("{}.type", self.get_path()), variants);
-        self.lines.push(format!("{}<ul>", self.spaces));
-        self.enter();
+        self.enter_list();
     }
 
     fn enter_tuple_variant(&mut self, name: &str) {
@@ -84,8 +93,7 @@ impl UiVisitor for EditorVisitor {
     fn leave_enum(&mut self) {
         self.leave();
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
-        self.leave();
-        self.lines.push(format!("{}</ul>", self.spaces));
+        self.leave_list();
     }
 
     fn enter_option(&mut self) {
@@ -114,15 +122,13 @@ impl UiVisitor for EditorVisitor {
         } else {
             self.lines
                 .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
-            self.lines.push(format!("{}<ul>", self.spaces));
-            self.enter();
+            self.enter_list();
         }
     }
 
     fn leave_struct(&mut self, in_tuple: bool) {
         if !in_tuple {
-            self.leave();
-            self.lines.push(format!("{}</ul>", self.spaces));
+            self.leave_list();
         }
         self.in_tuple = in_tuple;
     }
