@@ -468,22 +468,29 @@
                       </li>
                       <li>
                         <b>Belt</b>
+                        {% if appearance.body.clothing.pants.belt.available %}
                         <ul>
                           <li>
-                            <b>Buckle</b>
+                            <b>Value</b>
                             <ul>
                               <li>
-                                <b>Style:</b> {{ appearance.body.clothing.pants.belt.buckle.style }}
+                                <b>Buckle</b>
+                                <ul>
+                                  <li>
+                                    <b>Style:</b> {{ appearance.body.clothing.pants.belt.value.buckle.style }}
+                                  </li>
+                                  <li>
+                                    <b>Color:</b> {{ appearance.body.clothing.pants.belt.value.buckle.color }}
+                                  </li>
+                                </ul>
                               </li>
                               <li>
-                                <b>Color:</b> {{ appearance.body.clothing.pants.belt.buckle.color }}
+                                <b>Color:</b> {{ appearance.body.clothing.pants.belt.value.color }}
                               </li>
                             </ul>
                           </li>
-                          <li>
-                            <b>Color:</b> {{ appearance.body.clothing.pants.belt.color }}
-                          </li>
                         </ul>
+                        {% endif %}
                       </li>
                     </ul>
                   </li>

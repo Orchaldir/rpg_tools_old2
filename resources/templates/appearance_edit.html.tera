@@ -466,23 +466,30 @@
                               <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.pants.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.pants.color, update=true) }}
                             </li>
                             <li>
-                              <b>Belt</b>
+                              <b>Belt:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.available", options=[ "true","false" ], selected=appearance.body.clothing.pants.belt.available, update=true) }}
+                              {% if appearance.body.clothing.pants.belt.available == "true" %}
                               <ul>
                                 <li>
-                                  <b>Buckle</b>
+                                  <b>Value</b>
                                   <ul>
                                     <li>
-                                      <b>Style:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.buckle.style", options=[ "Box","Circle","Frame","Plate" ], selected=appearance.body.clothing.pants.belt.buckle.style, update=true) }}
+                                      <b>Buckle</b>
+                                      <ul>
+                                        <li>
+                                          <b>Style:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.value.buckle.style", options=[ "Box","Circle","Frame","Plate" ], selected=appearance.body.clothing.pants.belt.value.buckle.style, update=true) }}
+                                        </li>
+                                        <li>
+                                          <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.value.buckle.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.pants.belt.value.buckle.color, update=true) }}
+                                        </li>
+                                      </ul>
                                     </li>
                                     <li>
-                                      <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.buckle.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.pants.belt.buckle.color, update=true) }}
+                                      <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.value.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.pants.belt.value.color, update=true) }}
                                     </li>
                                   </ul>
                                 </li>
-                                <li>
-                                  <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.pants.belt.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.pants.belt.color, update=true) }}
-                                </li>
                               </ul>
+                              {% endif %}
                             </li>
                           </ul>
                         </li>

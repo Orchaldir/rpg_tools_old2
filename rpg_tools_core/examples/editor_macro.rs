@@ -4,16 +4,9 @@ extern crate rpg_tools_core;
 pub mod utils;
 
 use crate::utils::write_each;
-use macro_core::visitor::{visit_option, UI};
-use macro_ui::ui;
-use rpg_tools_core::model::size::Size;
+use macro_core::visitor::UI;
+use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::ui::editor::EditorVisitor;
-use serde::{Deserialize, Serialize};
-
-#[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
-pub struct Test {
-    pub option: Option<Size>,
-}
 
 fn main() {
     println!("Generate tera code for editor");
@@ -22,7 +15,7 @@ fn main() {
 
     println!("Start visit");
 
-    Test::visit(&mut visitor, "", false);
+    Appearance::visit(&mut visitor, "", false);
 
     println!("Finished visit");
 

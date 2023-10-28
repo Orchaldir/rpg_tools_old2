@@ -1,6 +1,7 @@
 use crate::model::color::Color;
 use crate::model::equipment::appearance::belt::Belt;
 use macro_convert::Convert;
+use macro_core::visitor::visit_option;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
