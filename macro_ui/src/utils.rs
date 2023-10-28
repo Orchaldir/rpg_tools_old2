@@ -9,7 +9,7 @@ pub fn get_field_type(field: &Field) -> Option<Ident> {
 }
 
 pub fn is_integer(field: &Field) -> bool {
-    matches!(&field.ty, Type::Path(type_path) if type_path.clone().into_token_stream().to_string() == "u32")
+    is_type(&field.ty, "u32")
 }
 
 pub fn is_option(field: &Field) -> bool {
@@ -23,7 +23,7 @@ pub fn is_option_u32(field: &Field) -> bool {
                 return match &segment.arguments {
                     PathArguments::AngleBracketed(args) => {
                         if let Some(GenericArgument::Type(t)) = args.args.first() {
-                            return matches!(t, Type::Path(type_path) if type_path.clone().into_token_stream().to_string() == "u32");
+                            return is_type(t, "u32");
                         }
                         false
                     }
@@ -44,4 +44,8 @@ pub fn is_simple_enum(data: &DataEnum) -> bool {
     }
 
     true
+}
+
+fn is_type(t: &Type, desired: &str) -> bool {
+    matches!(t, Type::Path(type_path) if type_path.clone().into_token_stream().to_string() == desired)
 }
