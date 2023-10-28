@@ -1,5 +1,6 @@
 use quote::ToTokens;
-use syn::{DataEnum, Field, Fields, GenericArgument, Ident, PathArguments, Type};
+use syn::PathArguments::AngleBracketed;
+use syn::{DataEnum, Field, Fields, GenericArgument, Ident, Type};
 
 pub fn get_field_type(field: &Field) -> Option<Ident> {
     match &field.ty {
@@ -9,25 +10,16 @@ pub fn get_field_type(field: &Field) -> Option<Ident> {
 }
 
 pub fn get_option_type(field: &Field) -> Option<Ident> {
-    match &field.ty {
-        Type::Path(type_path) => {
-            if let Some(segment) = type_path.path.segments.first() {
-                return match &segment.arguments {
-                    PathArguments::AngleBracketed(args) => {
-                        if let Some(GenericArgument::Type(Type::Path(type_path))) =
-                            args.args.first()
-                        {
-                            return type_path.path.segments.first().map(|s| s.ident.clone());
-                        }
-                        None
-                    }
-                    _ => None,
-                };
+    if let Some(Type::Path(type_path)) = &field.ty {
+        if let Some(segment) = type_path.path.segments.first() {
+            if let Some(AngleBracketed(args)) = &segment.arguments {
+                if let Some(GenericArgument::Type(Type::Path(type_path))) = args.args.first() {
+                    return type_path.path.segments.first().map(|s| s.ident.clone());
+                }
             }
-            None
         }
-        _ => None,
     }
+    None
 }
 
 pub fn is_integer(field: &Field) -> bool {

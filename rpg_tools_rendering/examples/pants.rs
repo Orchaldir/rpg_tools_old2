@@ -33,6 +33,7 @@ fn create(style: PantsStyle) -> (String, Pants) {
         Pants {
             style,
             color: Color::Blue,
+            belt: None,
         },
     )
 }
