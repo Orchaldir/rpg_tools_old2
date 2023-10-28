@@ -95,16 +95,14 @@ impl UiVisitor for ViewerVisitor {
         self.lines
             .push(format!("{}<b>{}</b>", self.spaces, self.get_name(),));
         self.lines.push(format!(
-            "{}{{% if {}.available %}}",
+            "{}{{% if {} %}}",
             self.spaces,
             self.get_path(),
         ));
         self.enter_list();
-        self.enter_child("value");
     }
 
     fn leave_option(&mut self) {
-        self.leave_child();
         self.leave_list();
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
     }
