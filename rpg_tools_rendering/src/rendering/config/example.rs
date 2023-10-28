@@ -5,6 +5,7 @@ use crate::renderer::RenderOptions;
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::ear::EarConfig;
+use crate::rendering::config::equipment::belt::{BeltConfig, BuckleConfig};
 use crate::rendering::config::equipment::footwear::FootwearConfig;
 use crate::rendering::config::equipment::pants::PantsConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
@@ -122,6 +123,16 @@ pub fn create_config() -> RenderConfig {
         ear: create_ear_config(),
         eye: create_eye_config(),
         mouth: create_mouth_config(),
+        belt: BeltConfig {
+            y_offset: 0.04,
+            height: 0.1,
+            thickness: 0.02,
+            buckle: BuckleConfig {
+                height: 0.12,
+                width: 0.24,
+                frame_border: 0.15,
+            },
+        },
         footwear: FootwearConfig {
             height_ankle: 0.02,
             height_knee: 0.12,

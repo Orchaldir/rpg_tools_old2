@@ -24,8 +24,12 @@ impl EditorVisitor {
         &self.lines
     }
 
+    fn get_pretty_name(&self) -> String {
+        prettify(&self.get_name())
+    }
+
     fn get_name(&self) -> String {
-        prettify(self.path.last().unwrap())
+        self.path.last().unwrap().clone()
     }
 
     fn enter(&mut self) {
@@ -37,13 +41,28 @@ impl EditorVisitor {
         self.spaces.pop();
     }
 
+    fn enter_list(&mut self) {
+        self.lines.push(format!("{}<ul>", self.spaces));
+        self.enter();
+    }
+
+    fn leave_list(&mut self) {
+        self.leave();
+        self.lines.push(format!("{}</ul>", self.spaces));
+    }
+
     fn add_selection(&mut self, path: &str, variants: &[String]) {
+        self.add_named_selection(&self.get_pretty_name(), path, variants, path);
+    }
+
+    fn add_named_selection(&mut self, name: &str, path: &str, variants: &[String], selected: &str) {
         self.lines.push(format!(
-            "{0}<b>{1}:</b> {{{{ macros::add_select(name=\"{2}\", options=[ {3} ], selected={2}, update=true) }}}}",
+            "{}<b>{}:</b> {{{{ macros::add_select(name=\"{}\", options=[ {} ], selected={}, update=true) }}}}",
             self.spaces,
-            self.get_name(),
+            name,
             path,
             variants.iter().map(|v| format!("\"{}\"", v)).collect::<Vec<_>>().join(","),
+            selected,
         ));
     }
 }
@@ -56,8 +75,7 @@ impl UiVisitor for EditorVisitor {
     fn enter_enum(&mut self, variants: &[String]) {
         self.first_variant = true;
         self.add_selection(&format!("{}.type", self.get_path()), variants);
-        self.lines.push(format!("{}<ul>", self.spaces));
-        self.enter();
+        self.enter_list();
     }
 
     fn enter_tuple_variant(&mut self, name: &str) {
@@ -84,8 +102,32 @@ impl UiVisitor for EditorVisitor {
     fn leave_enum(&mut self) {
         self.leave();
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
-        self.leave();
-        self.lines.push(format!("{}</ul>", self.spaces));
+        self.leave_list();
+    }
+
+    fn enter_option(&mut self) {
+        self.lines
+            .push(format!("{}{{% if {} %}}", self.spaces, self.get_path(),));
+        self.add_named_selection(
+            &format!("{} Availability", self.get_pretty_name()),
+            &format!("{}.availability", self.get_path()),
+            &["true".to_string(), "false".to_string()],
+            "\"true\"",
+        );
+        let name = self.get_name();
+        self.leave_child();
+        self.enter_child(&name);
+    }
+
+    fn leave_option(&mut self) {
+        self.lines.push(format!("{}{{% else %}}", self.spaces));
+        self.add_named_selection(
+            &format!("{} Availability", self.get_pretty_name()),
+            &format!("{}.availability", self.get_path()),
+            &["true".to_string(), "false".to_string()],
+            "\"false\"",
+        );
+        self.lines.push(format!("{}{{% endif %}}", self.spaces));
     }
 
     fn enter_struct(&mut self, in_tuple: bool) {
@@ -95,16 +137,14 @@ impl UiVisitor for EditorVisitor {
             self.path.pop();
         } else {
             self.lines
-                .push(format!("{}<b>{}</b>", self.spaces, self.get_name()));
-            self.lines.push(format!("{}<ul>", self.spaces));
-            self.enter();
+                .push(format!("{}<b>{}</b>", self.spaces, self.get_pretty_name()));
+            self.enter_list();
         }
     }
 
     fn leave_struct(&mut self, in_tuple: bool) {
         if !in_tuple {
-            self.leave();
-            self.lines.push(format!("{}</ul>", self.spaces));
+            self.leave_list();
         }
         self.in_tuple = in_tuple;
     }

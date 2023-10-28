@@ -1,4 +1,4 @@
-use crate::utils::{get_field_type, is_integer};
+use crate::utils::{get_field_type, get_option_type, is_integer, is_option};
 use quote::quote;
 use syn::__private::TokenStream2;
 use syn::{DataEnum, Field, Fields, Ident};
@@ -46,6 +46,15 @@ pub fn parse_struct_field(field: &Field) -> TokenStream2 {
     if is_integer(field) {
         quote! {
             #field_name: parser.parse_u32(&format!("{}.{}", path, stringify!(#field_name)), 0),
+        }
+    } else if is_option(field) {
+        let option_type = &get_option_type(field);
+        quote! {
+            #field_name: if parser.parse_bool(&format!("{}.{}.availability", path, stringify!(#field_name))) {
+                Some(#option_type::parse(parser, &format!("{}.{}", path, stringify!(#field_name)), &format!("  {}", spaces)))
+            } else {
+                Option::None
+            },
         }
     } else {
         let name = &get_field_type(field);

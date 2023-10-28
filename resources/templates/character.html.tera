@@ -466,6 +466,27 @@
                       <li>
                         <b>Color:</b> {{ appearance.body.clothing.pants.color }}
                       </li>
+                      <li>
+                        {% if appearance.body.clothing.pants.belt %}
+                        <b>Belt</b>
+                        <ul>
+                          <li>
+                            <b>Buckle</b>
+                            <ul>
+                              <li>
+                                <b>Style:</b> {{ appearance.body.clothing.pants.belt.buckle.style }}
+                              </li>
+                              <li>
+                                <b>Color:</b> {{ appearance.body.clothing.pants.belt.buckle.color }}
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <b>Color:</b> {{ appearance.body.clothing.pants.belt.color }}
+                          </li>
+                        </ul>
+                        {% endif %}
+                      </li>
                     </ul>
                   </li>
                   <li>

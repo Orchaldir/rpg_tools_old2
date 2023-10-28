@@ -18,6 +18,11 @@
         pants:
           style: Regular
           color: Blue
+          belt:
+            buckle:
+              style: Frame
+              color: Silver
+            color: SaddleBrown
         shirt:
           sleeve_style: Long
           neckline: Crew
@@ -176,6 +181,7 @@
         pants:
           style: Balloon
           color: Red
+          belt: null
         shirt:
           sleeve_style: Long
           neckline: DeepV
@@ -243,6 +249,7 @@
         pants:
           style: Shorts
           color: Purple
+          belt: null
         shirt:
           sleeve_style: None
           neckline: Crew
@@ -298,6 +305,11 @@
         pants:
           style: Regular
           color: Gray
+          belt:
+            buckle:
+              style: Plate
+              color: Yellow
+            color: SaddleBrown
         shirt:
           sleeve_style: Short
           neckline: Crew

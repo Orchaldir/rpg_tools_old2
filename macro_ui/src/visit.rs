@@ -1,4 +1,4 @@
-use crate::utils::{get_field_type, is_integer};
+use crate::utils::{get_field_type, get_option_type, is_integer, is_option};
 use quote::quote;
 use syn::__private::TokenStream2;
 use syn::{DataEnum, Field, Fields};
@@ -46,6 +46,14 @@ pub fn visit_struct_field(field: &Field) -> TokenStream2 {
         quote! {
             println!("{}Add integer '{}'!", &inner_spaces, stringify!(#field_name));
             visitor.add_integer(stringify!(#field_name));
+        }
+    } else if is_option(field) {
+        let option_type = &get_option_type(field);
+        quote! {
+            println!("{}Add option for '{}'!", &inner_spaces, stringify!(#option_type));
+            visitor.enter_child(stringify!(#field_name));
+            visit_option::<#option_type>(visitor, &inner_spaces);
+            visitor.leave_child();
         }
     } else {
         let name = &get_field_type(field);

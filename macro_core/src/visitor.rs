@@ -5,6 +5,9 @@ pub trait UiVisitor {
     fn enter_tuple_variant(&mut self, name: &str);
     fn leave_enum(&mut self);
 
+    fn enter_option(&mut self);
+    fn leave_option(&mut self);
+
     fn enter_struct(&mut self, in_tuple: bool);
     fn leave_struct(&mut self, in_tuple: bool);
 
@@ -19,4 +22,10 @@ pub trait UiVisitor {
 pub trait UI {
     /// Visit the data structure with a visitor.
     fn visit(visitor: &mut dyn UiVisitor, spaces: &str, in_tuple: bool);
+}
+
+pub fn visit_option<T: UI>(visitor: &mut dyn UiVisitor, spaces: &str) {
+    visitor.enter_option();
+    T::visit(visitor, spaces, false);
+    visitor.leave_option();
 }

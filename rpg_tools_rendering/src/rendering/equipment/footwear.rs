@@ -83,7 +83,7 @@ fn render_shaft(
     builder.add_horizontal_pair(aabb, width, center_x, y_end, true);
     let polygon = builder.build();
 
-    renderer.render_polygon(&polygon, &options);
+    renderer.render_polygon(&polygon, options);
 }
 
 fn render_soles(
