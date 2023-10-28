@@ -48,16 +48,17 @@ impl EditorVisitor {
     }
 
     fn add_selection(&mut self, path: &str, variants: &[String]) {
-        self.add_named_selection(&self.get_name(), path, variants);
+        self.add_named_selection(&self.get_name(), path, variants, path);
     }
 
-    fn add_named_selection(&mut self, name: &str, path: &str, variants: &[String]) {
+    fn add_named_selection(&mut self, name: &str, path: &str, variants: &[String], selected: &str) {
         self.lines.push(format!(
-            "{0}<b>{1}:</b> {{{{ macros::add_select(name=\"{2}\", options=[ {3} ], selected={2}, update=true) }}}}",
+            "{}<b>{}:</b> {{{{ macros::add_select(name=\"{}\", options=[ {} ], selected={}, update=true) }}}}",
             self.spaces,
             name,
             path,
             variants.iter().map(|v| format!("\"{}\"", v)).collect::<Vec<_>>().join(","),
+            selected,
         ));
     }
 }
@@ -101,22 +102,24 @@ impl UiVisitor for EditorVisitor {
     }
 
     fn enter_option(&mut self) {
-        self.add_selection(
-            &format!("{}.available", self.get_path()),
+        self.lines
+            .push(format!("{}{{% if {} %}}", self.spaces, self.get_path(),));
+        self.add_named_selection(
+            &format!("{} Availability", self.get_name()),
+            &format!("{}.availability", self.get_path()),
             &vec!["true".to_string(), "false".to_string()],
+            "true",
         );
-        self.lines.push(format!(
-            "{}{{% if {}.available == \"true\" %}}",
-            self.spaces,
-            self.get_path(),
-        ));
-        self.enter_list();
-        self.enter_child("value");
     }
 
     fn leave_option(&mut self) {
-        self.leave_child();
-        self.leave_list();
+        self.lines.push(format!("{}{{% else %}}", self.spaces));
+        self.add_named_selection(
+            &format!("{} Availability", self.get_name()),
+            &format!("{}.availability", self.get_path()),
+            &vec!["true".to_string(), "false".to_string()],
+            "false",
+        );
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
     }
 
