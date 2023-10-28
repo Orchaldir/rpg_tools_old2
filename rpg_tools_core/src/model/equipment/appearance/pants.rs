@@ -9,7 +9,7 @@ use serde::{Deserialize, Serialize};
 pub struct Pants {
     pub style: PantsStyle,
     pub color: Color,
-    pub belt: Belt,
+    pub belt: Option<Belt>,
 }
 
 /// What style of [`pants`](Pants)?

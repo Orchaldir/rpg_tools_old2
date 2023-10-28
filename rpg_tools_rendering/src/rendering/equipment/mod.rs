@@ -33,12 +33,16 @@ pub fn render_clothing(
                 .footwear
                 .get_shaft_y(&config.body, body, footwear.style);
             render_pants(renderer, config, aabb, body, pants, shaft_y);
-            render_belt(renderer, config, aabb, body, &pants.belt, from_front);
+            if let Some(belt) = &pants.belt {
+                render_belt(renderer, config, aabb, body, belt, from_front);
+            }
             render_footwear(renderer, config, aabb, body, footwear, from_front);
         } else {
             render_footwear(renderer, config, aabb, body, footwear, from_front);
             render_pants(renderer, config, aabb, body, pants, None);
-            render_belt(renderer, config, aabb, body, &pants.belt, from_front);
+            if let Some(belt) = &pants.belt {
+                render_belt(renderer, config, aabb, body, belt, from_front);
+            }
         }
     }
 }
