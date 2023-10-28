@@ -111,7 +111,7 @@ impl UiVisitor for EditorVisitor {
         self.add_named_selection(
             &format!("{} Availability", self.get_pretty_name()),
             &format!("{}.availability", self.get_path()),
-            &vec!["true".to_string(), "false".to_string()],
+            &["true".to_string(), "false".to_string()],
             "\"true\"",
         );
         let name = self.get_name();
@@ -124,7 +124,7 @@ impl UiVisitor for EditorVisitor {
         self.add_named_selection(
             &format!("{} Availability", self.get_pretty_name()),
             &format!("{}.availability", self.get_path()),
-            &vec!["true".to_string(), "false".to_string()],
+            &["true".to_string(), "false".to_string()],
             "\"false\"",
         );
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
