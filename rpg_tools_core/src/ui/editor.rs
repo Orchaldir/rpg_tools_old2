@@ -108,7 +108,7 @@ impl UiVisitor for EditorVisitor {
             &format!("{} Availability", self.get_name()),
             &format!("{}.availability", self.get_path()),
             &vec!["true".to_string(), "false".to_string()],
-            "true",
+            "\"true\"",
         );
     }
 
@@ -118,7 +118,7 @@ impl UiVisitor for EditorVisitor {
             &format!("{} Availability", self.get_name()),
             &format!("{}.availability", self.get_path()),
             &vec!["true".to_string(), "false".to_string()],
-            "false",
+            "\"false\"",
         );
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
     }
