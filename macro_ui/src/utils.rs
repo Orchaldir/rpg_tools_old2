@@ -10,9 +10,9 @@ pub fn get_field_type(field: &Field) -> Option<Ident> {
 }
 
 pub fn get_option_type(field: &Field) -> Option<Ident> {
-    if let Some(Type::Path(type_path)) = &field.ty {
+    if let Type::Path(type_path) = &field.ty {
         if let Some(segment) = type_path.path.segments.first() {
-            if let Some(AngleBracketed(args)) = &segment.arguments {
+            if let AngleBracketed(args) = &segment.arguments {
                 if let Some(GenericArgument::Type(Type::Path(type_path))) = args.args.first() {
                     return type_path.path.segments.first().map(|s| s.ident.clone());
                 }
