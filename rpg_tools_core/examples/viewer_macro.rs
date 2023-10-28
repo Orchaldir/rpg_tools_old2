@@ -4,7 +4,7 @@ extern crate rpg_tools_core;
 pub mod utils;
 
 use crate::utils::write_each;
-use macro_core::visitor::{UI, visit_option};
+use macro_core::visitor::{visit_option, UI};
 use macro_ui::ui;
 use rpg_tools_core::model::size::Size;
 use rpg_tools_core::ui::viewer::ViewerVisitor;
