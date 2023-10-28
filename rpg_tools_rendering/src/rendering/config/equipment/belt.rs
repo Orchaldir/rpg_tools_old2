@@ -5,7 +5,7 @@ use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::equipment::pants::PantsConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
 
-/// The rendering config of the [`belt`](Belt).
+/// The rendering config of the [`belt`](rpg_tools_core::model::equipment::appearance::belt::Belt).
 #[derive(Debug, PartialEq)]
 pub struct BeltConfig {
     pub y_offset: f32,
@@ -14,7 +14,7 @@ pub struct BeltConfig {
     pub buckle: BuckleConfig,
 }
 
-/// The rendering config of the [`belt`](Belt).
+/// The rendering config of the [`buckle`](rpg_tools_core::model::equipment::appearance::belt::Buckle).
 #[derive(Debug, PartialEq)]
 pub struct BuckleConfig {
     pub height: f32,

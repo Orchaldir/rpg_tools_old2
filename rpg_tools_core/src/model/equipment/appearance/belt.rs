@@ -10,14 +10,14 @@ pub struct Belt {
     pub color: Color,
 }
 
-/// The pants of the [`character`](crate::model::character::Character).
+/// The buckle of a [`belt`](Belt).
 #[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Buckle {
     pub style: BuckleStyle,
     pub color: Color,
 }
 
-/// The style of [`buckle`](Buckle).
+/// The style of a [`buckle`](Buckle).
 #[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub enum BuckleStyle {
     Box,
