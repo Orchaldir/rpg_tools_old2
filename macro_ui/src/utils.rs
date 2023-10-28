@@ -22,10 +22,8 @@ pub fn is_option_u32(field: &Field) -> bool {
             if let Some(segment) = type_path.path.segments.first() {
                 return match &segment.arguments {
                     PathArguments::AngleBracketed(args) => {
-                        if let Some(arg) = args.args.first() {
-                            if let GenericArgument::Type(t) = arg {
-                                return matches!(t, Type::Path(type_path) if type_path.clone().into_token_stream().to_string().to_string() == "u32");
-                            }
+                        if let Some(GenericArgument::Type(t)) = args.args.first() {
+                            return matches!(t, Type::Path(type_path) if type_path.clone().into_token_stream().to_string() == "u32");
                         }
                         false
                     }
