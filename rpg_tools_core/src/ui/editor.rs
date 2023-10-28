@@ -48,10 +48,14 @@ impl EditorVisitor {
     }
 
     fn add_selection(&mut self, path: &str, variants: &[String]) {
+        self.add_named_selection(&self.get_name(), path, variants);
+    }
+
+    fn add_named_selection(&mut self, name: &str, path: &str, variants: &[String]) {
         self.lines.push(format!(
             "{0}<b>{1}:</b> {{{{ macros::add_select(name=\"{2}\", options=[ {3} ], selected={2}, update=true) }}}}",
             self.spaces,
-            self.get_name(),
+            name,
             path,
             variants.iter().map(|v| format!("\"{}\"", v)).collect::<Vec<_>>().join(","),
         ));
@@ -106,11 +110,13 @@ impl UiVisitor for EditorVisitor {
             self.spaces,
             self.get_path(),
         ));
-        self.enter();
+        self.enter_list();
+        self.enter_child("value");
     }
 
     fn leave_option(&mut self) {
-        self.leave();
+        self.leave_child();
+        self.leave_list();
         self.lines.push(format!("{}{{% endif %}}", self.spaces));
     }
 
