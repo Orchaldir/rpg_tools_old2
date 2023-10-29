@@ -12,18 +12,21 @@ pub enum Eyewear {
     #[default]
     None,
     Glasses {
-        frame_color: Color,
-        frame_type: FrameType,
-        lens_color: Color,
-        lens_shape: LensShape,
+        style: LensStyle,
     },
     Monocle {
-        frame_color: Color,
-        frame_type: FrameType,
-        lens_color: Color,
-        lens_shape: LensShape,
+        style: LensStyle,
         side: Side,
     },
+}
+
+/// The style of a [`eyewear's`](Eyewear) lens.
+#[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct LensStyle {
+    pub frame_color: Color,
+    pub frame_type: FrameType,
+    pub lens_color: Color,
+    pub lens_shape: LensShape,
 }
 
 /// The frame of the [`eyewear's`](Eyewear).
