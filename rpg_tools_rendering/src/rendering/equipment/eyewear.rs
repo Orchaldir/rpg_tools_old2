@@ -1,11 +1,13 @@
 use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
+use crate::math::size2d::Size2d;
 use crate::renderer::color::WebColor;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::equipment::appearance::eyewear::{
     Eyewear, FrameType, LensShape, LensStyle,
 };
+use std::ops::{Add, Div};
 
 pub fn render_eyewear(
     renderer: &mut dyn Renderer,
@@ -33,6 +35,23 @@ fn render_glasses(
 ) {
     render_lens(renderer, config, style, left, radius);
     render_lens(renderer, config, style, right, radius);
+    render_bridge(renderer, style, left, right, radius);
+}
+
+fn render_bridge(
+    renderer: &mut dyn Renderer,
+    style: &LensStyle,
+    left: &Point2d,
+    right: &Point2d,
+    radius: u32,
+) {
+    let width = left.calculate_distance(right) as u32 - 2 * radius;
+    let height = (width as f32 * 0.1 * get_thickness(style.frame_type)) as u32;
+    let center = left.add(*right).div(2.0);
+    let aabb = AABB::with_center(center, Size2d::new(width, height));
+    let options = RenderOptions::no_line(WebColor::from_color(style.frame_color));
+
+    renderer.render_rectangle(&aabb, &options);
 }
 
 fn render_lens(
@@ -43,9 +62,9 @@ fn render_lens(
     radius: u32,
 ) {
     let options = match style.frame_type {
-        FrameType::Horn => create_frame_config(config, style, 6.0),
-        FrameType::FullRimmed => create_frame_config(config, style, 3.0),
-        FrameType::Wire => create_frame_config(config, style, 1.0),
+        FrameType::Horn | FrameType::FullRimmed | FrameType::Wire => {
+            create_frame_config(config, style, get_thickness(style.frame_type))
+        }
         FrameType::Rimless => config.without_line(style.lens_color),
     };
     let radius_y = (radius as f32 * 0.8) as u32;
@@ -66,4 +85,13 @@ fn create_frame_config(config: &RenderConfig, style: &LensStyle, thickness: f32)
         WebColor::from_color(style.frame_color),
         (config.line_width as f32 * thickness) as u32,
     )
+}
+
+fn get_thickness(frame_type: FrameType) -> f32 {
+    match frame_type {
+        FrameType::Horn => 6.0,
+        FrameType::FullRimmed => 3.0,
+        FrameType::Wire => 1.0,
+        FrameType::Rimless => 0.0,
+    }
 }
