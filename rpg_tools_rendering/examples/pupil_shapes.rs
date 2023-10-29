@@ -35,6 +35,7 @@ fn create_appearance(height: Length, pupil_shape: &PupilShape, eye_shape: &EyeSh
                 },
                 eyebrows: Default::default(),
                 distance: Default::default(),
+                eyewear: Default::default(),
             },
             hair: Default::default(),
             mouth: Default::default(),

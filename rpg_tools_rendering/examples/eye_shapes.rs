@@ -32,6 +32,7 @@ fn create_appearance(height: Length, shape: &EyeShape, face: &HeadShape) -> Appe
                 },
                 eyebrows: Default::default(),
                 distance: Default::default(),
+                eyewear: Default::default(),
             },
             hair: Default::default(),
             mouth: Default::default(),

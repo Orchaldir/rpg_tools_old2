@@ -5,7 +5,6 @@ use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
-use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::Mouth;
 use rpg_tools_core::model::character::appearance::skin::Skin;
@@ -39,7 +38,7 @@ fn main() {
                     },
                     eyebrows: Default::default(),
                 },
-                hair: Hair::None,
+                hair: Default::default(),
                 mouth: Mouth::None,
                 shape: *shape,
                 skin: Skin::Scales { color: Color::Red },
