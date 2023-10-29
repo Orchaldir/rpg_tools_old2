@@ -27,6 +27,7 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
             eye,
             eyebrows,
             distance,
+            ..
         } => {
             let half_height = config.eye.get_half_height(eye.get_shape(), radius);
             let distance_between_eyes = config

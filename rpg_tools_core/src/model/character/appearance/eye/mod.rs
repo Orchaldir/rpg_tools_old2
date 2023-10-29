@@ -2,6 +2,7 @@ use crate::model::character::appearance::eye::brow::EyeBrows;
 use crate::model::character::appearance::eye::pupil::PupilShape;
 use crate::model::character::appearance::eye::shape::EyeShape;
 use crate::model::color::Color;
+use crate::model::equipment::appearance::eyewear::Eyewear;
 use crate::model::size::Size;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
@@ -10,7 +11,7 @@ pub mod brow;
 pub mod pupil;
 pub mod shape;
 
-/// How many eyes does the character have?
+/// How many [`eyes`](Eye) does the [`character`](crate::model::character::Character) have?
 #[derive(ui, Clone, Copy, Debug, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum Eyes {
@@ -25,6 +26,7 @@ pub enum Eyes {
         eyebrows: EyeBrows,
         /// What is the distance between the eyes?
         distance: Size,
+        eyewear: Eyewear,
     },
 }
 
@@ -34,6 +36,7 @@ impl Default for Eyes {
             eye: Eye::default(),
             eyebrows: EyeBrows::default(),
             distance: Size::Medium,
+            eyewear: Eyewear::None,
         }
     }
 }
