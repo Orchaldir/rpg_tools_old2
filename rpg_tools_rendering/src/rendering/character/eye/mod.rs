@@ -42,7 +42,7 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
             render_eye(renderer, config, &right_aabb, eye);
 
             render_eyebrows(renderer, config, eyebrows, &left_aabb, &right_aabb);
-            render_eyewear(renderer, config, eyewear, &left, &right, head_width_factor);
+            render_eyewear(renderer, config, eyewear, &left, &right, radius);
         }
     }
 }
