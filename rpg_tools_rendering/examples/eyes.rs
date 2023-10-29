@@ -42,6 +42,7 @@ fn create_two(eye: Eye, distance: Size) -> (String, Eyes) {
             eye,
             eyebrows: EyeBrows::None,
             distance,
+            eyewear: Default::default(),
         },
     )
 }

@@ -41,6 +41,7 @@ fn create_head(shape: HeadShape, hair: &Hair) -> Head {
             },
             eyebrows: Default::default(),
             distance: Medium,
+            eyewear: Default::default(),
         },
         hair: *hair,
         mouth: Mouth::Simple {
