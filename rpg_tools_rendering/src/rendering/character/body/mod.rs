@@ -4,7 +4,7 @@ use crate::math::point2d::Point2d;
 use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::math::size2d::Size2d;
 use crate::renderer::{RenderOptions, Renderer};
-use crate::rendering::body::torso::render_torso;
+use crate::rendering::character::body::torso::render_torso;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::equipment::pants::interpolate;
 use rpg_tools_core::model::character::appearance::body::Body;

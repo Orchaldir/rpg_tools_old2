@@ -4,7 +4,9 @@ use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
-use crate::rendering::beard::{render_beard_behind_mouth, render_beard_in_front_of_mouth};
+use crate::rendering::character::beard::{
+    render_beard_behind_mouth, render_beard_in_front_of_mouth,
+};
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};

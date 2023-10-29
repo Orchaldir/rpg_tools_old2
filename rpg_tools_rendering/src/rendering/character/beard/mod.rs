@@ -1,11 +1,13 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
-use crate::rendering::beard::full::{
+use crate::rendering::character::beard::full::{
     get_full_forked, get_full_rectangle, get_full_triangle, get_full_wide,
 };
-use crate::rendering::beard::goatee::{get_goat_patch, get_goatee, get_soul_patch, get_van_dyke};
-use crate::rendering::beard::moustache::*;
+use crate::rendering::character::beard::goatee::{
+    get_goat_patch, get_goatee, get_soul_patch, get_van_dyke,
+};
+use crate::rendering::character::beard::moustache::*;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::beard::full::FullBeardStyle;
 use rpg_tools_core::model::character::appearance::beard::goatee::GoateeStyle;

@@ -1,19 +1,27 @@
 use crate::math::aabb2d::AABB;
 use crate::math::size2d::Size2d;
 use crate::renderer::Renderer;
-use crate::rendering::body::{calculate_head_aabb, render_body, render_hands};
-use crate::rendering::config::RenderConfig;
-use crate::rendering::ear::render_ears;
-use crate::rendering::equipment::render_clothing;
-use crate::rendering::eye::render_eyes;
-use crate::rendering::hair::{
+use crate::rendering::character::body::{calculate_head_aabb, render_body, render_hands};
+use crate::rendering::character::hair::{
     render_hair_back, render_hair_before_head_from_front, render_hair_behind_head_from_front,
 };
-use crate::rendering::head::render_head_shape;
-use crate::rendering::mouth::render_mouth;
+use crate::rendering::config::RenderConfig;
+use crate::rendering::equipment::render_clothing;
+use ear::render_ears;
+use eye::render_eyes;
+use head::render_head_shape;
+use mouth::render_mouth;
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::length::Length;
+
+pub mod beard;
+pub mod body;
+pub mod ear;
+pub mod eye;
+pub mod hair;
+pub mod head;
+pub mod mouth;
 
 pub fn calculate_character_size(config: &RenderConfig, appearance: &Appearance) -> Size2d {
     calculate_size(config, appearance.calculate_height())

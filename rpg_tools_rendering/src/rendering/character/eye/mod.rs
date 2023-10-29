@@ -1,8 +1,8 @@
 use crate::math::aabb2d::AABB;
 use crate::renderer::Renderer;
+use crate::rendering::character::eye::eyebrow::{render_eyebrow, render_eyebrows};
 use crate::rendering::config::RenderConfig;
 use crate::rendering::equipment::eyewear::render_eyewear;
-use crate::rendering::eye::eyebrow::{render_eyebrow, render_eyebrows};
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
