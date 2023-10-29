@@ -89,9 +89,8 @@ fn create_frame_config(config: &RenderConfig, style: &LensStyle, thickness: f32)
 
 fn get_thickness(frame_type: FrameType) -> f32 {
     match frame_type {
-        FrameType::Horn => 6.0,
+        FrameType::Horn => 5.0,
         FrameType::FullRimmed => 3.0,
-        FrameType::Wire => 1.0,
-        FrameType::Rimless => 0.0,
+        FrameType::Wire | FrameType::Rimless => 1.0,
     }
 }
