@@ -1,3 +1,4 @@
+use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
@@ -38,10 +39,14 @@ fn render_lens(
     radius: u32,
 ) {
     let options = config.without_line(style.lens_color);
+    let radius_y = (radius as f32 * 0.8) as u32;
 
     match style.lens_shape {
         LensShape::Circle => renderer.render_circle(center, radius, &options),
-        LensShape::Oval => {}
-        LensShape::Rectangle => {}
+        LensShape::Oval => renderer.render_ellipse(center, radius, radius_y, &options),
+        LensShape::Rectangle => {
+            let aabb = AABB::with_radii(*center, radius, radius_y);
+            renderer.render_rectangle(&aabb, &options);
+        }
     }
 }
