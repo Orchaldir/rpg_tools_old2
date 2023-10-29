@@ -43,12 +43,10 @@ fn render_lens(
     radius: u32,
 ) {
     let options = match style.frame_type {
-        FrameType::Wire => RenderOptions::new(
-            WebColor::from_color(style.lens_color),
-            WebColor::from_color(style.frame_color),
-            config.line_width,
-        ),
-        _ => config.without_line(style.lens_color),
+        FrameType::Horn => create_frame_config(config, style, 6.0),
+        FrameType::FullRimmed => create_frame_config(config, style, 3.0),
+        FrameType::Wire => create_frame_config(config, style, 1.0),
+        FrameType::Rimless => config.without_line(style.lens_color),
     };
     let radius_y = (radius as f32 * 0.8) as u32;
 
@@ -60,4 +58,12 @@ fn render_lens(
             renderer.render_rectangle(&aabb, &options);
         }
     }
+}
+
+fn create_frame_config(config: &RenderConfig, style: &LensStyle, thickness: f32) -> RenderOptions {
+    RenderOptions::new(
+        WebColor::from_color(style.lens_color),
+        WebColor::from_color(style.frame_color),
+        (config.line_width as f32 * thickness) as u32,
+    )
 }

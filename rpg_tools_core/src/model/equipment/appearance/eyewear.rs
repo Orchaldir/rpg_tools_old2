@@ -32,9 +32,9 @@ pub struct LensStyle {
 /// The frame of the [`eyewear's`](Eyewear).
 #[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub enum FrameType {
+    Horn,
     #[default]
     FullRimmed,
-    SemiRimless,
     Rimless,
     Wire,
 }
