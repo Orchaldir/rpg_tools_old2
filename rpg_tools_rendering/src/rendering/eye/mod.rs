@@ -1,6 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
+use crate::rendering::equipment::eyewear::render_eyewear;
 use crate::rendering::eye::eyebrow::{render_eyebrow, render_eyebrows};
 use rpg_tools_core::model::character::appearance::eye::pupil::PupilShape;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
@@ -27,7 +28,7 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
             eye,
             eyebrows,
             distance,
-            ..
+            eyewear,
         } => {
             let half_height = config.eye.get_half_height(eye.get_shape(), radius);
             let distance_between_eyes = config
@@ -41,6 +42,7 @@ pub fn render_eyes(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AA
             render_eye(renderer, config, &right_aabb, eye);
 
             render_eyebrows(renderer, config, eyebrows, &left_aabb, &right_aabb);
+            render_eyewear(renderer, config, eyewear, &left, &right, head_width_factor);
         }
     }
 }

@@ -9,6 +9,7 @@ use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::equipment::appearance::Clothing;
 
 pub mod belt;
+pub mod eyewear;
 pub mod footwear;
 pub mod pants;
 pub mod shirt;
