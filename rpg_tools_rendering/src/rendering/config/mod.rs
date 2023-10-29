@@ -71,14 +71,6 @@ impl RenderConfig {
         )
     }
 
-    pub fn with_thickness(&self, color: Color, width_factor: f32) -> RenderOptions {
-        RenderOptions::new(
-            WebColor::from_color(color),
-            self.line_color.clone(),
-            (self.line_width as f32 * width_factor) as u32,
-        )
-    }
-
     pub fn get_skin_options(&self, skin: &Skin) -> RenderOptions {
         RenderOptions::new(
             self.get_skin_color(skin),
