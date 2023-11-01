@@ -5,7 +5,7 @@ use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
-use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
+use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth};
 use rpg_tools_core::model::character::appearance::skin::Skin;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
@@ -43,7 +43,7 @@ fn create_circle(size: Size) -> (String, Mouth) {
         format!("Circle + {:?}", size),
         Mouth::Circle {
             size,
-            teeth_color: TeethColor::White,
+            teeth_color: Default::default(),
         },
     )
 }
@@ -55,7 +55,7 @@ fn create_normal(width: Size, teeth: Size) -> (String, Mouth) {
             beard: Beard::None,
             width,
             teeth: SpecialTeeth::LowerFangs { size: teeth },
-            teeth_color: TeethColor::White,
+            teeth_color: Default::default(),
         },
     )
 }
@@ -66,8 +66,8 @@ fn create_female(width: Size) -> (String, Mouth) {
         Mouth::Female {
             width,
             color: Color::White,
-            teeth: SpecialTeeth::None,
-            teeth_color: TeethColor::White,
+            teeth: Default::default(),
+            teeth_color: Default::default(),
         },
     )
 }
@@ -83,6 +83,7 @@ fn create_appearance(height: Length, mouth: &Mouth, face: &HeadShape) -> Appeara
                 },
                 eyebrows: Default::default(),
                 distance: Default::default(),
+                eyewear: Default::default(),
             },
             hair: Default::default(),
             mouth: *mouth,

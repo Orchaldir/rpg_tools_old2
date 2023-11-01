@@ -1,7 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::renderer::{RenderOptions, Renderer};
-use crate::rendering::body::render_feet;
+use crate::rendering::character::body::render_feet;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::equipment::appearance::footwear::{Footwear, FootwearStyle};

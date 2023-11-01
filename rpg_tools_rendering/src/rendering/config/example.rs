@@ -4,8 +4,10 @@ use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::body::BodyConfig;
+use crate::rendering::config::color::ColorConfig;
 use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::equipment::belt::{BeltConfig, BuckleConfig};
+use crate::rendering::config::equipment::eyewear::EyewearConfig;
 use crate::rendering::config::equipment::footwear::FootwearConfig;
 use crate::rendering::config::equipment::pants::PantsConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
@@ -36,6 +38,14 @@ pub fn create_config() -> RenderConfig {
         line_color: WebColor::from_color(Color::Black),
         line_width: 5,
         thin_line_width: 1,
+        color: ColorConfig {
+            skin_fair: WebColor::from_rgb(254, 228, 208),
+            skin_light: WebColor::from_rgb(232, 198, 175),
+            skin_medium: WebColor::from_rgb(175, 118, 88),
+            skin_tan: WebColor::from_rgb(156, 89, 60),
+            skin_dark: WebColor::from_rgb(122, 68, 44),
+            skin_very_dark: WebColor::from_rgb(58, 26, 13),
+        },
         body: BodyConfig {
             width: WidthConfig {
                 thin: 0.8,
@@ -132,6 +142,14 @@ pub fn create_config() -> RenderConfig {
                 width: 0.24,
                 frame_border: 0.15,
             },
+        },
+        eyewear: EyewearConfig {
+            bridge_factor: 0.1,
+            radius_factor: 1.4,
+            radius_y_factor: 0.8,
+            thickness_horn: 3.0,
+            thickness_rimmed: 2.0,
+            thickness_wire: 1.0,
         },
         footwear: FootwearConfig {
             height_ankle: 0.02,

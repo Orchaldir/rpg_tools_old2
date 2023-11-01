@@ -11,7 +11,6 @@ use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::length::Length;
-use rpg_tools_core::model::size::Size::Medium;
 use rpg_tools_core::model::width::Width;
 
 pub mod utils;
@@ -66,7 +65,8 @@ fn create_appearance(
                         width,
                     }
                 },
-                distance: Medium,
+                distance: Default::default(),
+                eyewear: Default::default(),
             },
             hair: Hair::Short {
                 style: Default::default(),

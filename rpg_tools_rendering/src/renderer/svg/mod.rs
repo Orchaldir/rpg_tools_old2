@@ -4,6 +4,7 @@ use crate::math::orientation::Orientation;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::math::size2d::Size2d;
+use crate::renderer::color::WebColor;
 use crate::renderer::svg::path::{
     path_from_circle_arc, path_from_line, path_from_polygon, path_from_polygon_with_hole,
     path_from_rounded_polygon,
@@ -189,14 +190,29 @@ impl Renderer for SvgBuilder {
 
 fn to_style(options: &RenderOptions) -> String {
     format!(
-        "fill:{};stroke:{};stroke-width:{}",
+        "{};{};stroke-width:{}",
         match &options.fill_color {
-            None => "none".to_string(),
-            Some(color) => color.to_string().to_lowercase(),
+            None => "fill:none".to_string(),
+            Some(color) => to_color(color, "fill"),
         },
-        options.line_color.to_string().to_lowercase(),
+        to_color(&options.line_color, "stroke"),
         options.line_width
     )
+}
+
+fn to_color(color: &WebColor, text: &str) -> String {
+    match color {
+        WebColor::Transparent(name, transparency) => {
+            let opacity = 1.0 - (*transparency as f32 / 255.0);
+            format!(
+                "{0}:{1};{0}-opacity:{2}",
+                text,
+                name.to_lowercase(),
+                opacity
+            )
+        }
+        _ => format!("{}:{}", text, color.to_string().to_lowercase()),
+    }
 }
 
 #[cfg(test)]

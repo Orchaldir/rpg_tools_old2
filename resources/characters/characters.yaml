@@ -47,6 +47,14 @@
           style: Winged
           width: Wide
         distance: Medium
+        eyewear:
+          type: Glasses
+          style:
+            frame_color: Black
+            frame_type: FullRimmed
+            lens_color: Aqua
+            lens_shape: Oval
+            lens_transparency: High
       hair:
         type: Short
         style:
@@ -106,6 +114,8 @@
           style: Even
           width: Wide
         distance: Medium
+        eyewear:
+          type: None
       hair:
         type: None
       mouth:
@@ -206,6 +216,8 @@
           style: Even
           width: Wide
         distance: Medium
+        eyewear:
+          type: None
       hair:
         type: Long
         style: Straight
@@ -268,6 +280,8 @@
         eyebrows:
           type: None
         distance: Medium
+        eyewear:
+          type: None
       hair:
         type: None
       mouth:
@@ -334,6 +348,15 @@
           style: Even
           width: Average
         distance: Medium
+        eyewear:
+          type: Monocle
+          style:
+            frame_color: Yellow
+            frame_type: FullRimmed
+            lens_color: Aqua
+            lens_shape: Circle
+            lens_transparency: High
+          side: Right
       hair:
         type: Short
         style:

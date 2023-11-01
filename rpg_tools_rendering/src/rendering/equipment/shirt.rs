@@ -1,8 +1,8 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::renderer::Renderer;
-use crate::rendering::body::torso::create_torso;
-use crate::rendering::body::{get_left_arm, get_left_arm_short};
+use crate::rendering::character::body::torso::create_torso;
+use crate::rendering::character::body::{get_left_arm, get_left_arm_short};
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
 use crate::rendering::config::RenderConfig;

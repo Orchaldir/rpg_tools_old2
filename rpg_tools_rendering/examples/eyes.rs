@@ -2,7 +2,6 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::render::{add_names, render_2_sets};
-use rpg_tools_core::model::character::appearance::eye::brow::EyeBrows;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
 use rpg_tools_core::model::character::appearance::eye::{Eye, Eyes};
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
@@ -23,7 +22,7 @@ fn main() {
             "One".to_string(),
             Eyes::One {
                 eye,
-                eyebrows: EyeBrows::None,
+                eyebrows: Default::default(),
             },
         ),
         create_two(eye, Size::Small),
@@ -40,8 +39,9 @@ fn create_two(eye: Eye, distance: Size) -> (String, Eyes) {
         format!("Two + {}", distance),
         Eyes::Two {
             eye,
-            eyebrows: EyeBrows::None,
+            eyebrows: Default::default(),
             distance,
+            eyewear: Default::default(),
         },
     )
 }
