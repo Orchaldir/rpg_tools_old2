@@ -144,6 +144,7 @@ pub fn create_config() -> RenderConfig {
             },
         },
         eyewear: EyewearConfig {
+            radius_factor: 1.4,
             thickness_horn: 5.0,
             thickness_rimmed: 3.0,
             thickness_wire: 1.0,

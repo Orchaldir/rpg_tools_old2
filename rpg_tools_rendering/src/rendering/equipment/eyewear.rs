@@ -16,7 +16,8 @@ pub fn render_eyewear(
     right: &Point2d,
     radius: u32,
 ) {
-    let radius = (radius as f32 * 1.2) as u32;
+    let radius = config.eyewear.get_radius(radius);
+
     match eyewear {
         Eyewear::None => {}
         Eyewear::Glasses { style } => render_glasses(renderer, config, style, left, right, radius),
