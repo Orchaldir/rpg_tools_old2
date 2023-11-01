@@ -349,7 +349,14 @@
           width: Average
         distance: Medium
         eyewear:
-          type: None
+          type: Monocle
+          style:
+            frame_color: Yellow
+            frame_type: FullRimmed
+            lens_color: Aqua
+            lens_shape: Circle
+            lens_transparency: High
+          side: Right
       hair:
         type: Short
         style:

@@ -7,6 +7,7 @@ use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::equipment::appearance::eyewear::{
     Eyewear, FrameType, LensShape, LensStyle,
 };
+use rpg_tools_core::model::side::Side;
 use std::ops::{Add, Div};
 
 pub fn render_eyewear(
@@ -21,7 +22,10 @@ pub fn render_eyewear(
     match eyewear {
         Eyewear::None => {}
         Eyewear::Glasses { style } => render_glasses(renderer, config, style, left, right, radius),
-        Eyewear::Monocle { .. } => {}
+        Eyewear::Monocle { style, side } => match side {
+            Side::Left => render_lens(renderer, config, style, left, radius),
+            Side::Right => render_lens(renderer, config, style, right, radius),
+        },
     }
 }
 
