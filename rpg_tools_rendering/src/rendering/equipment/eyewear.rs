@@ -70,7 +70,7 @@ fn render_lens(
         style,
         config.eyewear.get_frame_thickness(style.frame_type),
     );
-    let radius_y = (radius as f32 * 0.8) as u32;
+    let radius_y = config.eyewear.get_radius_y(radius);
 
     match style.lens_shape {
         LensShape::Circle => renderer.render_circle(center, radius, &options),
