@@ -158,6 +158,58 @@
                         <li>
                           <b>Distance:</b> {{ macros::add_select(name="appearance.head.eyes.distance", options=[ "Small","Medium","Large" ], selected=appearance.head.eyes.distance, update=true) }}
                         </li>
+                        <li>
+                          <b>Eyewear:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.type", options=[ "None","Glasses","Monocle" ], selected=appearance.head.eyes.eyewear.type, update=true) }}
+                          <ul>
+                            {% if appearance.head.eyes.eyewear.type == "None" %}
+                            {% elif appearance.head.eyes.eyewear.type == "Glasses" %}
+                              <li>
+                                <b>Style</b>
+                                <ul>
+                                  <li>
+                                    <b>Frame Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.frame_color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyewear.style.frame_color, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Frame Type:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.frame_type", options=[ "Horn","FullRimmed","Rimless","Wire" ], selected=appearance.head.eyes.eyewear.style.frame_type, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyewear.style.lens_color, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_shape", options=[ "Circle","Oval","Rectangle" ], selected=appearance.head.eyes.eyewear.style.lens_shape, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Transparency:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_transparency", options=[ "Opaque","Low","Medium","High" ], selected=appearance.head.eyes.eyewear.style.lens_transparency, update=true) }}
+                                  </li>
+                                </ul>
+                              </li>
+                            {% elif appearance.head.eyes.eyewear.type == "Monocle" %}
+                              <li>
+                                <b>Style</b>
+                                <ul>
+                                  <li>
+                                    <b>Frame Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.frame_color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyewear.style.frame_color, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Frame Type:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.frame_type", options=[ "Horn","FullRimmed","Rimless","Wire" ], selected=appearance.head.eyes.eyewear.style.frame_type, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyewear.style.lens_color, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_shape", options=[ "Circle","Oval","Rectangle" ], selected=appearance.head.eyes.eyewear.style.lens_shape, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Transparency:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_transparency", options=[ "Opaque","Low","Medium","High" ], selected=appearance.head.eyes.eyewear.style.lens_transparency, update=true) }}
+                                  </li>
+                                </ul>
+                              </li>
+                              <li>
+                                <b>Side:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.side", options=[ "Left","Right" ], selected=appearance.head.eyes.eyewear.side, update=true) }}
+                              </li>
+                            {% endif %}
+                          </ul>
+                        </li>
                       {% endif %}
                     </ul>
                   </li>
@@ -655,6 +707,58 @@
                         </li>
                         <li>
                           <b>Distance:</b> {{ macros::add_select(name="appearance.head.eyes.distance", options=[ "Small","Medium","Large" ], selected=appearance.head.eyes.distance, update=true) }}
+                        </li>
+                        <li>
+                          <b>Eyewear:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.type", options=[ "None","Glasses","Monocle" ], selected=appearance.head.eyes.eyewear.type, update=true) }}
+                          <ul>
+                            {% if appearance.head.eyes.eyewear.type == "None" %}
+                            {% elif appearance.head.eyes.eyewear.type == "Glasses" %}
+                              <li>
+                                <b>Style</b>
+                                <ul>
+                                  <li>
+                                    <b>Frame Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.frame_color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyewear.style.frame_color, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Frame Type:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.frame_type", options=[ "Horn","FullRimmed","Rimless","Wire" ], selected=appearance.head.eyes.eyewear.style.frame_type, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyewear.style.lens_color, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_shape", options=[ "Circle","Oval","Rectangle" ], selected=appearance.head.eyes.eyewear.style.lens_shape, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Transparency:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_transparency", options=[ "Opaque","Low","Medium","High" ], selected=appearance.head.eyes.eyewear.style.lens_transparency, update=true) }}
+                                  </li>
+                                </ul>
+                              </li>
+                            {% elif appearance.head.eyes.eyewear.type == "Monocle" %}
+                              <li>
+                                <b>Style</b>
+                                <ul>
+                                  <li>
+                                    <b>Frame Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.frame_color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyewear.style.frame_color, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Frame Type:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.frame_type", options=[ "Horn","FullRimmed","Rimless","Wire" ], selected=appearance.head.eyes.eyewear.style.frame_type, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Color:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.head.eyes.eyewear.style.lens_color, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Shape:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_shape", options=[ "Circle","Oval","Rectangle" ], selected=appearance.head.eyes.eyewear.style.lens_shape, update=true) }}
+                                  </li>
+                                  <li>
+                                    <b>Lens Transparency:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.style.lens_transparency", options=[ "Opaque","Low","Medium","High" ], selected=appearance.head.eyes.eyewear.style.lens_transparency, update=true) }}
+                                  </li>
+                                </ul>
+                              </li>
+                              <li>
+                                <b>Side:</b> {{ macros::add_select(name="appearance.head.eyes.eyewear.side", options=[ "Left","Right" ], selected=appearance.head.eyes.eyewear.side, update=true) }}
+                              </li>
+                            {% endif %}
+                          </ul>
                         </li>
                       {% endif %}
                     </ul>

@@ -159,6 +159,58 @@
                   <li>
                     <b>Distance:</b> {{ appearance.head.eyes.distance }}
                   </li>
+                  <li>
+                    <b>Eyewear</b>: {{ appearance.head.eyes.eyewear.type }}
+                    <ul>
+                      {% if appearance.head.eyes.eyewear.type == "None" %}
+                      {% elif appearance.head.eyes.eyewear.type == "Glasses" %}
+                        <li>
+                          <b>Style</b>
+                          <ul>
+                            <li>
+                              <b>Frame Color:</b> {{ appearance.head.eyes.eyewear.style.frame_color }}
+                            </li>
+                            <li>
+                              <b>Frame Type:</b> {{ appearance.head.eyes.eyewear.style.frame_type }}
+                            </li>
+                            <li>
+                              <b>Lens Color:</b> {{ appearance.head.eyes.eyewear.style.lens_color }}
+                            </li>
+                            <li>
+                              <b>Lens Shape:</b> {{ appearance.head.eyes.eyewear.style.lens_shape }}
+                            </li>
+                            <li>
+                              <b>Lens Transparency:</b> {{ appearance.head.eyes.eyewear.style.lens_transparency }}
+                            </li>
+                          </ul>
+                        </li>
+                      {% elif appearance.head.eyes.eyewear.type == "Monocle" %}
+                        <li>
+                          <b>Style</b>
+                          <ul>
+                            <li>
+                              <b>Frame Color:</b> {{ appearance.head.eyes.eyewear.style.frame_color }}
+                            </li>
+                            <li>
+                              <b>Frame Type:</b> {{ appearance.head.eyes.eyewear.style.frame_type }}
+                            </li>
+                            <li>
+                              <b>Lens Color:</b> {{ appearance.head.eyes.eyewear.style.lens_color }}
+                            </li>
+                            <li>
+                              <b>Lens Shape:</b> {{ appearance.head.eyes.eyewear.style.lens_shape }}
+                            </li>
+                            <li>
+                              <b>Lens Transparency:</b> {{ appearance.head.eyes.eyewear.style.lens_transparency }}
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <b>Side:</b> {{ appearance.head.eyes.eyewear.side }}
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </li>
                 {% endif %}
               </ul>
             </li>
@@ -651,6 +703,58 @@
                   </li>
                   <li>
                     <b>Distance:</b> {{ appearance.head.eyes.distance }}
+                  </li>
+                  <li>
+                    <b>Eyewear</b>: {{ appearance.head.eyes.eyewear.type }}
+                    <ul>
+                      {% if appearance.head.eyes.eyewear.type == "None" %}
+                      {% elif appearance.head.eyes.eyewear.type == "Glasses" %}
+                        <li>
+                          <b>Style</b>
+                          <ul>
+                            <li>
+                              <b>Frame Color:</b> {{ appearance.head.eyes.eyewear.style.frame_color }}
+                            </li>
+                            <li>
+                              <b>Frame Type:</b> {{ appearance.head.eyes.eyewear.style.frame_type }}
+                            </li>
+                            <li>
+                              <b>Lens Color:</b> {{ appearance.head.eyes.eyewear.style.lens_color }}
+                            </li>
+                            <li>
+                              <b>Lens Shape:</b> {{ appearance.head.eyes.eyewear.style.lens_shape }}
+                            </li>
+                            <li>
+                              <b>Lens Transparency:</b> {{ appearance.head.eyes.eyewear.style.lens_transparency }}
+                            </li>
+                          </ul>
+                        </li>
+                      {% elif appearance.head.eyes.eyewear.type == "Monocle" %}
+                        <li>
+                          <b>Style</b>
+                          <ul>
+                            <li>
+                              <b>Frame Color:</b> {{ appearance.head.eyes.eyewear.style.frame_color }}
+                            </li>
+                            <li>
+                              <b>Frame Type:</b> {{ appearance.head.eyes.eyewear.style.frame_type }}
+                            </li>
+                            <li>
+                              <b>Lens Color:</b> {{ appearance.head.eyes.eyewear.style.lens_color }}
+                            </li>
+                            <li>
+                              <b>Lens Shape:</b> {{ appearance.head.eyes.eyewear.style.lens_shape }}
+                            </li>
+                            <li>
+                              <b>Lens Transparency:</b> {{ appearance.head.eyes.eyewear.style.lens_transparency }}
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <b>Side:</b> {{ appearance.head.eyes.eyewear.side }}
+                        </li>
+                      {% endif %}
+                    </ul>
                   </li>
                 {% endif %}
               </ul>
