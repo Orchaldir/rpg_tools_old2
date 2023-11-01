@@ -84,9 +84,9 @@ fn render_head_before_body_from_front(
 ) {
     render_ears(renderer, config, aabb, head);
     render_head_shape(renderer, config, aabb, head);
-    render_eyes(renderer, config, aabb, head);
     render_hair_before_head_from_front(renderer, config, aabb, head);
     render_mouth(renderer, config, aabb, head);
+    render_eyes(renderer, config, aabb, head);
 }
 
 fn render_head_behind_body_from_front(
