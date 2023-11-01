@@ -37,7 +37,14 @@ pub fn create_config() -> RenderConfig {
         line_color: WebColor::from_color(Color::Black),
         line_width: 5,
         thin_line_width: 1,
-        color: ColorConfig {},
+        color: ColorConfig {
+            skin_fair: WebColor::from_rgb(254, 228, 208),
+            skin_light: WebColor::from_rgb(232, 198, 175),
+            skin_medium: WebColor::from_rgb(175, 118, 88),
+            skin_tan: WebColor::from_rgb(156, 89, 60),
+            skin_dark: WebColor::from_rgb(122, 68, 44),
+            skin_very_dark: WebColor::from_rgb(58, 26, 13),
+        },
         body: BodyConfig {
             width: WidthConfig {
                 thin: 0.8,
