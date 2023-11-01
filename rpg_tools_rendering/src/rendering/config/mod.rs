@@ -4,6 +4,7 @@ use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::color::ColorConfig;
 use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::equipment::belt::BeltConfig;
+use crate::rendering::config::equipment::eyewear::EyewearConfig;
 use crate::rendering::config::equipment::footwear::FootwearConfig;
 use crate::rendering::config::equipment::pants::PantsConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
@@ -41,6 +42,7 @@ pub struct RenderConfig {
     pub head: HeadConfig,
     pub mouth: MouthConfig,
     pub belt: BeltConfig,
+    pub eyewear: EyewearConfig,
     pub footwear: FootwearConfig,
     pub pants: PantsConfig,
     pub shirt: ShirtConfig,

@@ -7,6 +7,7 @@ use crate::rendering::config::body::BodyConfig;
 use crate::rendering::config::color::ColorConfig;
 use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::equipment::belt::{BeltConfig, BuckleConfig};
+use crate::rendering::config::equipment::eyewear::EyewearConfig;
 use crate::rendering::config::equipment::footwear::FootwearConfig;
 use crate::rendering::config::equipment::pants::PantsConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
@@ -141,6 +142,11 @@ pub fn create_config() -> RenderConfig {
                 width: 0.24,
                 frame_border: 0.15,
             },
+        },
+        eyewear: EyewearConfig {
+            thickness_horn: 5.0,
+            thickness_rimmed: 3.0,
+            thickness_wire: 1.0,
         },
         footwear: FootwearConfig {
             height_ankle: 0.02,
