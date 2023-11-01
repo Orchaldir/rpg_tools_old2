@@ -50,8 +50,7 @@ fn render_bridge(
     radius: u32,
 ) {
     let width = left.calculate_distance(right) as u32 - 2 * radius;
-    let height =
-        (width as f32 * 0.1 * config.eyewear.get_bridge_thickness(style.frame_type)) as u32;
+    let height = config.eyewear.get_bridge_height(width, style.frame_type);
     let center = left.add(*right).div(2.0);
     let aabb = AABB::with_center(center, Size2d::new(width, height));
     let options = RenderOptions::no_line(WebColor::from_color(style.frame_color));

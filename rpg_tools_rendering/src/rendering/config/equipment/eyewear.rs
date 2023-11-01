@@ -3,6 +3,7 @@ use rpg_tools_core::model::equipment::appearance::eyewear::FrameType;
 /// The rendering config of the [`eyewear`](rpg_tools_core::model::equipment::appearance::eyewear::Eyewear).
 #[derive(Debug, PartialEq)]
 pub struct EyewearConfig {
+    pub bridge_factor: f32,
     pub radius_factor: f32,
     pub thickness_horn: f32,
     pub thickness_rimmed: f32,
@@ -14,11 +15,12 @@ impl EyewearConfig {
         (eye_radius as f32 * self.radius_factor) as u32
     }
 
-    pub fn get_bridge_thickness(&self, frame_type: FrameType) -> f32 {
-        match frame_type {
+    pub fn get_bridge_height(&self, width: u32, frame_type: FrameType) -> u32 {
+        let thickness = match frame_type {
             FrameType::Rimless => self.thickness_wire,
             _ => self.get_frame_thickness(frame_type),
-        }
+        };
+        (width as f32 * self.bridge_factor * thickness) as u32
     }
 
     pub fn get_frame_thickness(&self, frame_type: FrameType) -> f32 {
