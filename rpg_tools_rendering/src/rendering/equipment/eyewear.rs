@@ -46,7 +46,7 @@ fn render_bridge(
     radius: u32,
 ) {
     let width = left.calculate_distance(right) as u32 - 2 * radius;
-    let height = (width as f32 * 0.1 * get_thickness(style.frame_type)) as u32;
+    let height = (width as f32 * 0.1 * get_bridge_thickness(style.frame_type)) as u32;
     let center = left.add(*right).div(2.0);
     let aabb = AABB::with_center(center, Size2d::new(width, height));
     let options = RenderOptions::no_line(WebColor::from_color(style.frame_color));
@@ -61,12 +61,7 @@ fn render_lens(
     center: &Point2d,
     radius: u32,
 ) {
-    let options = match style.frame_type {
-        FrameType::Horn | FrameType::FullRimmed | FrameType::Wire => {
-            create_frame_config(config, style, get_thickness(style.frame_type))
-        }
-        FrameType::Rimless => config.without_line(style.lens_color),
-    };
+    let options = create_frame_config(config, style, get_thickness(style.frame_type));
     let radius_y = (radius as f32 * 0.8) as u32;
 
     match style.lens_shape {
@@ -81,16 +76,26 @@ fn render_lens(
 
 fn create_frame_config(config: &RenderConfig, style: &LensStyle, thickness: f32) -> RenderOptions {
     RenderOptions::new(
-        WebColor::from_color(style.lens_color),
+        config
+            .color
+            .get_transparent_color(style.lens_color, style.lens_transparency),
         WebColor::from_color(style.frame_color),
         (config.line_width as f32 * thickness) as u32,
     )
+}
+
+fn get_bridge_thickness(frame_type: FrameType) -> f32 {
+    match frame_type {
+        FrameType::Rimless => 1.0,
+        _ => get_thickness(frame_type),
+    }
 }
 
 fn get_thickness(frame_type: FrameType) -> f32 {
     match frame_type {
         FrameType::Horn => 5.0,
         FrameType::FullRimmed => 3.0,
-        FrameType::Wire | FrameType::Rimless => 1.0,
+        FrameType::Wire => 1.0,
+        FrameType::Rimless => 0.0,
     }
 }

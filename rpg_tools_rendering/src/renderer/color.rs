@@ -21,9 +21,14 @@ pub enum WebColor {
 }
 
 impl WebColor {
-    /// Returns a new RGB color.
+    /// Returns a new web color.
     pub fn from_color(color: Color) -> WebColor {
         WebColor::Name(color.to_string())
+    }
+
+    /// Returns a new transparent web color.
+    pub fn transparent(color: Color, transparency: u8) -> WebColor {
+        WebColor::Transparent(color.to_string(), transparency)
     }
 
     /// Returns a new RGB color.
