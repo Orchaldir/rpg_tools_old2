@@ -44,6 +44,7 @@ fn create_appearance(height: Length, lens_shape: &LensShape, frame_type: &FrameT
                         frame_type: *frame_type,
                         lens_color: Color::Aqua,
                         lens_shape: *lens_shape,
+                        lens_transparency: Default::default(),
                     },
                 },
             },

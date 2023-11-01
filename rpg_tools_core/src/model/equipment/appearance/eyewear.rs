@@ -1,5 +1,6 @@
 use crate::model::color::Color;
 use crate::model::side::Side;
+use crate::model::transparency::Transparency;
 use macro_convert::Convert;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
@@ -27,6 +28,7 @@ pub struct LensStyle {
     pub frame_type: FrameType,
     pub lens_color: Color,
     pub lens_shape: LensShape,
+    pub lens_transparency: Transparency,
 }
 
 /// The frame of the [`eyewear's`](Eyewear).
