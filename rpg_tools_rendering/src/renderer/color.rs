@@ -34,6 +34,26 @@ impl WebColor {
     pub fn from_rgba(r: u8, g: u8, b: u8, a: u8) -> WebColor {
         WebColor::RBGA { r, g, b, a }
     }
+
+    /// Converts a string to a color, if possible:
+    ///
+    /// ```
+    ///# use rpg_tools_rendering::renderer::color::WebColor;
+    /// assert_eq!(WebColor::convert("#FFA500").unwrap(), WebColor::from_rgb(255, 165, 0));
+    /// ```
+    pub fn convert(hex_code: &str) -> Option<WebColor> {
+        if !hex_code.starts_with('#') {
+            return None;
+        } else if hex_code.len() != 7 {
+            return None;
+        }
+
+        let r: u8 = u8::from_str_radix(&hex_code[1..3], 16).ok()?;
+        let g: u8 = u8::from_str_radix(&hex_code[3..5], 16).ok()?;
+        let b: u8 = u8::from_str_radix(&hex_code[5..7], 16).ok()?;
+
+        Some(WebColor::from_rgb(r, g, b))
+    }
 }
 
 impl Display for WebColor {
@@ -51,5 +71,35 @@ impl Display for WebColor {
             WebColor::RBG { r, g, b } => write!(f, "#{:02x}{:02x}{:02x}", r, *g, *b),
             WebColor::RBGA { r, g, b, a } => write!(f, "#{:02x}{:02x}{:02x}{:02x}", r, *g, *b, *a),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_from_empty_string() {
+        assert!(WebColor::convert("").is_none());
+    }
+
+    #[test]
+    fn test_from_string_invalid_start() {
+        assert!(WebColor::convert("FFA500").is_none());
+    }
+
+    #[test]
+    fn test_from_string_part() {
+        assert!(WebColor::convert("#").is_none());
+        assert!(WebColor::convert("#FF").is_none());
+        assert!(WebColor::convert("#FFA5").is_none());
+        assert!(WebColor::convert("#FFA50").is_none());
+    }
+
+    #[test]
+    fn test_from_string_ignore_case() {
+        let orange = WebColor::from_rgb(255, 165, 0);
+        assert_eq!(WebColor::convert("#FFA500").unwrap(), orange);
+        assert_eq!(WebColor::convert("#ffa500").unwrap(), orange);
     }
 }
