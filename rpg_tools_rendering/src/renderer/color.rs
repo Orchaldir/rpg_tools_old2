@@ -40,11 +40,12 @@ impl WebColor {
     /// ```
     ///# use rpg_tools_rendering::renderer::color::WebColor;
     /// assert_eq!(WebColor::convert("#FFA500").unwrap(), WebColor::from_rgb(255, 165, 0));
+    /// assert_eq!(WebColor::convert("#FFA50040").unwrap(), WebColor::from_rgba(255, 165, 0, 64));
     /// ```
     pub fn convert(hex_code: &str) -> Option<WebColor> {
         if !hex_code.starts_with('#') {
             return None;
-        } else if hex_code.len() != 7 {
+        } else if hex_code.len() != 7 && hex_code.len() != 9 {
             return None;
         }
 
@@ -52,7 +53,13 @@ impl WebColor {
         let g: u8 = u8::from_str_radix(&hex_code[3..5], 16).ok()?;
         let b: u8 = u8::from_str_radix(&hex_code[5..7], 16).ok()?;
 
-        Some(WebColor::from_rgb(r, g, b))
+        if hex_code.len() == 7 {
+            return Some(WebColor::from_rgb(r, g, b));
+        }
+
+        let a: u8 = u8::from_str_radix(&hex_code[7..9], 16).ok()?;
+
+        Some(WebColor::from_rgba(r, g, b, a))
     }
 }
 
@@ -89,11 +96,12 @@ mod tests {
     }
 
     #[test]
-    fn test_from_string_part() {
+    fn test_from_string_wrong_length() {
         assert!(WebColor::convert("#").is_none());
         assert!(WebColor::convert("#FF").is_none());
         assert!(WebColor::convert("#FFA5").is_none());
         assert!(WebColor::convert("#FFA50").is_none());
+        assert!(WebColor::convert("#FFA500FFA5").is_none());
     }
 
     #[test]
