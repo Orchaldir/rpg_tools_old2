@@ -31,7 +31,7 @@ pub struct LensStyle {
     pub lens_transparency: Transparency,
 }
 
-/// The frame of the [`eyewear's`](Eyewear).
+/// The frame of the [`eyewear`](Eyewear).
 #[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub enum FrameType {
     Horn,

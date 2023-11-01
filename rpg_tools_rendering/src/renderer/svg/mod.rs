@@ -204,12 +204,12 @@ fn to_color(color: &WebColor, text: &str) -> String {
     match color {
         WebColor::Transparent(name, transparency) => {
             let opacity = 1.0 - (*transparency as f32 / 255.0);
-            return format!(
+            format!(
                 "{0}:{1};{0}-opacity:{2}",
                 text,
                 name.to_lowercase(),
                 opacity
-            );
+            )
         }
         _ => format!("{}:{}", text, color.to_string().to_lowercase()),
     }
