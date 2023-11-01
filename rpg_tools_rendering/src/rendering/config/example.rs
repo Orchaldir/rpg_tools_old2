@@ -147,8 +147,8 @@ pub fn create_config() -> RenderConfig {
             bridge_factor: 0.1,
             radius_factor: 1.4,
             radius_y_factor: 0.8,
-            thickness_horn: 5.0,
-            thickness_rimmed: 3.0,
+            thickness_horn: 3.0,
+            thickness_rimmed: 2.0,
             thickness_wire: 1.0,
         },
         footwear: FootwearConfig {

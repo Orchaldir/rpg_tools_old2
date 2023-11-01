@@ -51,7 +51,7 @@
           type: Glasses
           style:
             frame_color: Black
-            frame_type: Wire
+            frame_type: FullRimmed
             lens_color: Aqua
             lens_shape: Oval
             lens_transparency: High

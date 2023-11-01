@@ -1,12 +1,10 @@
 use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
-use crate::math::size2d::Size2d;
 use crate::renderer::color::WebColor;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::equipment::appearance::eyewear::{Eyewear, LensShape, LensStyle};
 use rpg_tools_core::model::side::Side;
-use std::ops::{Add, Div};
 
 pub fn render_eyewear(
     renderer: &mut dyn Renderer,
@@ -49,13 +47,14 @@ fn render_bridge(
     right: &Point2d,
     radius: u32,
 ) {
-    let width = left.calculate_distance(right) as u32 - 2 * radius;
-    let height = config.eyewear.get_bridge_height(width, style.frame_type);
-    let center = left.add(*right).div(2.0);
-    let aabb = AABB::with_center(center, Size2d::new(width, height));
-    let options = RenderOptions::no_line(WebColor::from_color(style.frame_color));
+    let options = config.line_with_color(
+        style.frame_color,
+        config.eyewear.get_bridge_thickness(style.frame_type),
+    );
+    let start = Point2d::new(left.x + radius as i32, left.y);
+    let end = Point2d::new(right.x - radius as i32, right.y);
 
-    renderer.render_rectangle(&aabb, &options);
+    renderer.render_line(&(start, end).into(), &options);
 }
 
 fn render_lens(

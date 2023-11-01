@@ -20,12 +20,11 @@ impl EyewearConfig {
         (radius_x as f32 * self.radius_y_factor) as u32
     }
 
-    pub fn get_bridge_height(&self, width: u32, frame_type: FrameType) -> u32 {
-        let thickness = match frame_type {
+    pub fn get_bridge_thickness(&self, frame_type: FrameType) -> f32 {
+        match frame_type {
             FrameType::Rimless => self.thickness_wire,
             _ => self.get_frame_thickness(frame_type),
-        };
-        (width as f32 * self.bridge_factor * thickness) as u32
+        }
     }
 
     pub fn get_frame_thickness(&self, frame_type: FrameType) -> f32 {
