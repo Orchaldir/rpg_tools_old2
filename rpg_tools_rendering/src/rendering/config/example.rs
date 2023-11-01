@@ -4,6 +4,7 @@ use crate::renderer::color::WebColor;
 use crate::renderer::RenderOptions;
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::body::BodyConfig;
+use crate::rendering::config::color::ColorConfig;
 use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::equipment::belt::{BeltConfig, BuckleConfig};
 use crate::rendering::config::equipment::footwear::FootwearConfig;
@@ -36,6 +37,7 @@ pub fn create_config() -> RenderConfig {
         line_color: WebColor::from_color(Color::Black),
         line_width: 5,
         thin_line_width: 1,
+        color: ColorConfig {},
         body: BodyConfig {
             width: WidthConfig {
                 thin: 0.8,
