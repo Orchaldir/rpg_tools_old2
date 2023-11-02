@@ -25,6 +25,7 @@ pub fn render_clothing(
         footwear,
         pants,
         shirt,
+        ..
     } = &body.clothing
     {
         render_shirt(renderer, config, aabb, body, shirt, from_front);
