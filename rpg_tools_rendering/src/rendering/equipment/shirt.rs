@@ -7,8 +7,9 @@ use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
+use rpg_tools_core::model::equipment::appearance::option::neckline::Neckline;
 use rpg_tools_core::model::equipment::appearance::option::sleeve::SleeveStyle;
-use rpg_tools_core::model::equipment::appearance::shirt::{Neckline, Shirt};
+use rpg_tools_core::model::equipment::appearance::shirt::Shirt;
 
 pub fn render_shirt(
     renderer: &mut dyn Renderer,
