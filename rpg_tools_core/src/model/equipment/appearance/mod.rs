@@ -2,7 +2,6 @@ use crate::model::equipment::appearance::footwear::Footwear;
 use crate::model::equipment::appearance::outerwear::Outerwear;
 use crate::model::equipment::appearance::pants::Pants;
 use crate::model::equipment::appearance::shirt::Shirt;
-use macro_core::visitor::visit_option;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
@@ -23,6 +22,6 @@ pub enum Clothing {
         footwear: Footwear,
         pants: Pants,
         shirt: Shirt,
-        outerwear: Option<Outerwear>,
+        outerwear: Outerwear,
     },
 }
