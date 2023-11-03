@@ -3,16 +3,15 @@ use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
 use rpg_tools_core::model::equipment::appearance::option::neckline::Neckline;
-use rpg_tools_core::model::equipment::appearance::shirt::Shirt;
 
 pub fn add_neckline(
     aabb: &AABB,
     config: &ShirtConfig,
     torso: &TorsoConfig,
-    shirt: &Shirt,
+    neckline: Neckline,
     builder: &mut Polygon2dBuilder,
 ) {
-    match shirt.neckline {
+    match neckline {
         Neckline::Boat => add_round(aabb, torso, builder, config.boat_width, config.boat_depth),
         Neckline::Crew => add_round(aabb, torso, builder, config.crew_width, config.crew_depth),
         Neckline::DeepV => add_v(aabb, torso, builder, config.deep_v_depth),
