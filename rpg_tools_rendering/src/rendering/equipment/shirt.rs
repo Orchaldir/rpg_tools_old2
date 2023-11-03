@@ -37,7 +37,7 @@ fn render_torso(
     let options = config.get_options(shirt.color);
     let torso_aabb = config.body.get_torso_aabb(body, aabb);
     let torso = config.body.get_torso_config(body.shape);
-    let mut builder = create_torso(&torso_aabb, &config.body, torso);
+    let mut builder = create_torso(&torso_aabb, &config.body, torso, 0.0);
 
     if from_front {
         add_neckline(&torso_aabb, &config.shirt, torso, shirt, &mut builder);

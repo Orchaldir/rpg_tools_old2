@@ -13,7 +13,7 @@ pub struct PantsConfig {
 }
 
 impl PantsConfig {
-    /// Returns the width of pants and the space between the individuals pants.
+    /// Returns the width of the pants and the space between the individuals pants in the body aabb.
     pub fn get_widths(&self, config: &BodyConfig, body: &Body) -> (f32, f32) {
         let legs_width = config.get_legs_width(body);
         let padding = legs_width * self.width_padding;
@@ -24,6 +24,7 @@ impl PantsConfig {
         (pants_width, inner_width)
     }
 
+    /// Returns the width of the hip in the torso aabb.
     pub fn get_hip_width(&self, config: &BodyConfig, body: &Body) -> f32 {
         let torso = config.get_torso_config(body.shape);
         torso.hip_width * (1.0 + self.width_padding)

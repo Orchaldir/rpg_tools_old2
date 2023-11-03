@@ -45,13 +45,17 @@ fn render_torso(
     let options = config.get_options(coat.color);
     let torso_aabb = config.body.get_torso_aabb(body, aabb);
     let torso = config.body.get_torso_config(body.shape);
-    let mut builder = create_torso(&torso_aabb, &config.body, torso);
+    let mut builder = create_torso(&torso_aabb, &config.body, torso, 0.1);
 
     add_straight_neckline(&torso_aabb, torso, &mut builder);
 
     builder.reverse();
 
     let (pants_width, _inner_width) = config.pants.get_widths(&config.body, body);
+    let pants_width = pants_width + 0.03;
+    let hip_width =
+        config.pants.get_hip_width(&config.body, body) * config.body.get_torso_width(body);
+    let width = hip_width.max(pants_width);
 
     let y_factor = match coat.length {
         OuterwearLength::Hip => config.pants.height_shorts,
@@ -60,7 +64,7 @@ fn render_torso(
     };
     let y = interpolate_pants_y(config, body, y_factor);
 
-    builder.add_mirrored_points(aabb, pants_width, y, true);
+    builder.add_mirrored_points(aabb, width, y, true);
 
     let polygon = builder.build();
     renderer.render_rounded_polygon(&polygon, &options);
