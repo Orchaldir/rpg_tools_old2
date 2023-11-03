@@ -1,6 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::math::point2d::Point2d;
 use crate::math::polygon2d::Polygon2d;
+use std::mem;
 
 /// Defines a polygons as a list of [`points`](Point2d).
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
@@ -22,6 +23,7 @@ impl Polygon2dBuilder {
     pub fn reverse(&mut self) {
         self.right_corners.reverse();
         self.left_corners.reverse();
+        mem::swap(&mut self.right_corners, &mut self.left_corners);
     }
 
     /// Adds mirrored points of the [`aabb`](crate::math::aabb2d::AxisAlignedBoundingBox).

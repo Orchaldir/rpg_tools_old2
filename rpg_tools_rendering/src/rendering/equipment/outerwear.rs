@@ -2,10 +2,11 @@ use crate::math::aabb2d::AABB;
 use crate::renderer::Renderer;
 use crate::rendering::character::body::torso::create_torso;
 use crate::rendering::config::RenderConfig;
+use crate::rendering::equipment::pants::interpolate_pants_y;
 use crate::rendering::equipment::part::neckline::add_straight_neckline;
 use crate::rendering::equipment::part::sleeve::render_sleeves;
 use rpg_tools_core::model::character::appearance::body::Body;
-use rpg_tools_core::model::equipment::appearance::outerwear::{Coat, Outerwear};
+use rpg_tools_core::model::equipment::appearance::outerwear::{Coat, Outerwear, OuterwearLength};
 
 pub fn render_outerwear(
     renderer: &mut dyn Renderer,
@@ -49,6 +50,17 @@ fn render_torso(
     add_straight_neckline(&torso_aabb, torso, &mut builder);
 
     builder.reverse();
+
+    let (pants_width, _inner_width) = config.pants.get_widths(&config.body, body);
+
+    let y_factor = match coat.length {
+        OuterwearLength::Hip => config.pants.height_shorts,
+        OuterwearLength::Knee => config.pants.height_bermuda,
+        OuterwearLength::Ankle => config.pants.get_bottom_y(&config.body, body),
+    };
+    let y = interpolate_pants_y(config, body, y_factor);
+
+    builder.add_mirrored_points(aabb, pants_width, y, true);
 
     let polygon = builder.build();
     renderer.render_rounded_polygon(&polygon, &options);
