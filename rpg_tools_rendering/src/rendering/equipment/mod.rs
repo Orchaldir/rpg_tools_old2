@@ -14,6 +14,7 @@ pub mod eyewear;
 pub mod footwear;
 pub mod outerwear;
 pub mod pants;
+pub mod part;
 pub mod shirt;
 
 pub fn render_clothing(
