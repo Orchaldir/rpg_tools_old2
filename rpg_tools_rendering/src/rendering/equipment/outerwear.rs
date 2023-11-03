@@ -48,6 +48,8 @@ fn render_torso(
 
     add_straight_neckline(&torso_aabb, torso, &mut builder);
 
+    builder.reverse();
+
     let polygon = builder.build();
     renderer.render_rounded_polygon(&polygon, &options);
 }

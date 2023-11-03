@@ -18,6 +18,12 @@ impl Polygon2dBuilder {
         }
     }
 
+    // Reverses the order of corners.
+    pub fn reverse(&mut self) {
+        self.right_corners.reverse();
+        self.left_corners.reverse();
+    }
+
     /// Adds mirrored points of the [`aabb`](crate::math::aabb2d::AxisAlignedBoundingBox).
     pub fn add_mirrored_points(
         &mut self,
