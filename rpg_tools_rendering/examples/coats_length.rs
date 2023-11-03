@@ -12,15 +12,15 @@ use rpg_tools_core::model::length::Length;
 pub mod utils;
 
 fn main() {
-    let mut pants = vec![];
+    let mut lengths = vec![];
 
     for length in OuterwearLength::get_all() {
-        pants.push(create(length))
+        lengths.push(create(length))
     }
 
     render_2_sets(
         "coats-length.svg",
-        pants,
+        lengths,
         add_names(BodyShape::get_all()),
         create_appearance,
         false,
