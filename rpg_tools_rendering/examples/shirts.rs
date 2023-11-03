@@ -50,6 +50,7 @@ fn create_appearance(height: Length, shirt: &Shirt, shape: &BodyShape) -> Appear
                 footwear: Default::default(),
                 pants: Default::default(),
                 shirt: *shirt,
+                outerwear: Default::default(),
             },
         },
         Default::default(),
