@@ -4,6 +4,7 @@ extern crate rpg_tools_rendering;
 use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::Appearance;
+use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::equipment::appearance::outerwear::{Coat, Outerwear, OuterwearLength};
 use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
@@ -34,7 +35,7 @@ fn create(length: OuterwearLength) -> (String, Coat) {
             length,
             neckline: Default::default(),
             closing: Default::default(),
-            color: Default::default(),
+            color: Color::Blue,
             belt: None,
         },
     )

@@ -7,6 +7,7 @@ use crate::rendering::config::body::torso::TorsoConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
 use crate::rendering::config::RenderConfig;
 use rpg_tools_core::model::character::appearance::body::Body;
+use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::equipment::appearance::option::neckline::Neckline;
 use rpg_tools_core::model::equipment::appearance::option::sleeve::SleeveStyle;
 use rpg_tools_core::model::equipment::appearance::shirt::Shirt;
@@ -19,7 +20,14 @@ pub fn render_shirt(
     shirt: &Shirt,
     from_front: bool,
 ) {
-    render_sleeves(renderer, config, aabb, body, shirt);
+    render_sleeves(
+        renderer,
+        config,
+        aabb,
+        body,
+        shirt.sleeve_style,
+        shirt.color,
+    );
     render_torso(renderer, config, aabb, body, shirt, from_front);
 }
 
@@ -46,16 +54,17 @@ fn render_torso(
     renderer.render_rounded_polygon(&polygon, &options);
 }
 
-fn render_sleeves(
+pub fn render_sleeves(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,
     body: &Body,
-    shirt: &Shirt,
+    sleeve_style: SleeveStyle,
+    sleeve_color: Color,
 ) {
-    let options = config.get_options(shirt.color);
+    let options = config.get_options(sleeve_color);
 
-    let polygon = match shirt.sleeve_style {
+    let polygon = match sleeve_style {
         SleeveStyle::Long => get_left_arm(config, aabb, body),
         SleeveStyle::None => return,
         SleeveStyle::Short => get_left_arm_short(config, aabb, body, true),
