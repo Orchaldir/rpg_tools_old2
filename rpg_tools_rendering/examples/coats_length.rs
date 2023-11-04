@@ -5,7 +5,10 @@ use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::equipment::appearance::outerwear::{Coat, Outerwear, OuterwearLength};
+use rpg_tools_core::model::equipment::appearance::option::button::{Button, ButtonColumn};
+use rpg_tools_core::model::equipment::appearance::outerwear::{
+    ClosingOption, Coat, Outerwear, OuterwearLength,
+};
 use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
 
@@ -34,7 +37,15 @@ fn create(length: OuterwearLength) -> (String, Coat) {
             sleeve: Default::default(),
             length,
             neckline: Default::default(),
-            closing: Default::default(),
+            closing: ClosingOption::DoubleBreasted {
+                buttons: ButtonColumn {
+                    button: Button {
+                        size: Default::default(),
+                        color: Color::Orange,
+                    },
+                    count: 5,
+                },
+            },
             color: Color::Blue,
             belt: None,
         },
