@@ -8,35 +8,6 @@ use macro_core::visitor::visit_option;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
-/// The outerwear of the [`character`](crate::model::character::Character).
-#[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(tag = "type")]
-pub enum Outerwear {
-    #[default]
-    None,
-    Cloak(Cloak),
-    Coat {
-        style: Coat,
-    },
-}
-
-/// A cloak is an [`outerwear`](Outerwear).
-#[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
-pub struct Cloak {
-    pub status: CloakStatus,
-    pub outer_color: Color,
-    pub inner_color: Color,
-}
-
-/// How long is the [`outerwear`](Outerwear)?
-#[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
-pub enum CloakStatus {
-    #[default]
-    Closed,
-    Open,
-    Backwards,
-}
-
 /// A coat is an [`outerwear`](Outerwear).
 #[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Coat {

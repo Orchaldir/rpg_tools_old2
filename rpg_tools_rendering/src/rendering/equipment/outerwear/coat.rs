@@ -8,26 +8,11 @@ use crate::rendering::equipment::part::neckline::get_neckline_bottom_y;
 use crate::rendering::equipment::part::sleeve::render_sleeves;
 use crate::rendering::equipment::shirt::create_shirt;
 use rpg_tools_core::model::character::appearance::body::Body;
-use rpg_tools_core::model::equipment::appearance::outerwear::{
-    ClosingOption, Coat, Outerwear, OuterwearLength,
+use rpg_tools_core::model::equipment::appearance::outerwear::coat::{
+    ClosingOption, Coat, OuterwearLength,
 };
 
-pub fn render_outerwear(
-    renderer: &mut dyn Renderer,
-    config: &RenderConfig,
-    aabb: &AABB,
-    body: &Body,
-    outerwear: &Outerwear,
-    from_front: bool,
-) {
-    match outerwear {
-        Outerwear::None => {}
-        Outerwear::Coat { style } => render_coat(renderer, config, aabb, body, style, from_front),
-        _ => {}
-    }
-}
-
-fn render_coat(
+pub fn render_coat(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
     aabb: &AABB,

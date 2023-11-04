@@ -7,7 +7,8 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::equipment::appearance::option::button::{Button, ButtonColumn};
 use rpg_tools_core::model::equipment::appearance::option::neckline::Neckline;
-use rpg_tools_core::model::equipment::appearance::outerwear::{ClosingOption, Coat, Outerwear};
+use rpg_tools_core::model::equipment::appearance::outerwear::coat::{ClosingOption, Coat};
+use rpg_tools_core::model::equipment::appearance::outerwear::Outerwear;
 use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
 
