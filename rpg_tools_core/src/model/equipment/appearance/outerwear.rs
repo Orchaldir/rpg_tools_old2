@@ -48,7 +48,9 @@ pub enum ClosingOption {
     SingleBreasted {
         buttons: ButtonColumn,
     },
-    DoubleBreasted,
+    DoubleBreasted {
+        buttons: ButtonColumn,
+    },
     Zipper {
         color: Color,
     },

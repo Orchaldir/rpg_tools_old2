@@ -85,9 +85,29 @@ fn render_closing(
     match coat.closing {
         ClosingOption::None => {}
         ClosingOption::SingleBreasted { buttons } => {
-            render_buttons(renderer, config, aabb, buttons, top_y, bottom_y)
+            render_buttons(renderer, config, aabb, buttons, top_y, bottom_y, 0.5)
         }
-        ClosingOption::DoubleBreasted => {}
+        ClosingOption::DoubleBreasted { buttons } => {
+            let offset = 0.05;
+            render_buttons(
+                renderer,
+                config,
+                aabb,
+                buttons,
+                top_y,
+                bottom_y,
+                0.5 - offset,
+            );
+            render_buttons(
+                renderer,
+                config,
+                aabb,
+                buttons,
+                top_y,
+                bottom_y,
+                0.5 + offset,
+            );
+        }
         ClosingOption::Zipper { color } => {
             let option = config.line_with_color(color, 1.0);
             let top = aabb.get_point(0.5, top_y);
@@ -106,6 +126,7 @@ fn render_buttons(
     buttons: ButtonColumn,
     top_y: f32,
     bottom_y: f32,
+    x: f32,
 ) {
     let option = config.without_line(buttons.button.color);
     let distance = bottom_y - top_y;
@@ -118,7 +139,7 @@ fn render_buttons(
     });
 
     for _i in 0..buttons.count {
-        let center = aabb.get_point(0.5, y);
+        let center = aabb.get_point(x, y);
         renderer.render_circle(&center, radius, &option);
         y += step;
     }

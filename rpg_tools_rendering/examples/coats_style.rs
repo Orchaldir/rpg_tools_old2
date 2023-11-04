@@ -22,9 +22,14 @@ fn main() {
         count: 4,
     };
     let options = vec![
+        ("None".to_string(), ClosingOption::None),
         (
             "Single Breasted".to_string(),
             ClosingOption::SingleBreasted { buttons },
+        ),
+        (
+            "Double Breasted".to_string(),
+            ClosingOption::DoubleBreasted { buttons },
         ),
         (
             "Zipper".to_string(),
