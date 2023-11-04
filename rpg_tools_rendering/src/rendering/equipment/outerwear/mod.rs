@@ -1,9 +1,7 @@
 use crate::math::aabb2d::AABB;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
-use crate::rendering::equipment::outerwear::cloak::{
-    render_cloak_before_body, render_cloak_behind_body,
-};
+use crate::rendering::equipment::outerwear::cloak::render_cloak_behind_body;
 use crate::rendering::equipment::outerwear::coat::render_coat;
 use crate::rendering::equipment::pants::interpolate_pants_y;
 use rpg_tools_core::model::character::appearance::body::Body;

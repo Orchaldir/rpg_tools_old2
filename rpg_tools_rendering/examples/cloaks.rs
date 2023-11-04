@@ -5,7 +5,8 @@ use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::equipment::appearance::outerwear::cloak::{Cloak, CloakStatus};
+use rpg_tools_core::model::equipment::appearance::outerwear::cloak::Cloak;
+use rpg_tools_core::model::equipment::appearance::outerwear::coat::OuterwearLength;
 use rpg_tools_core::model::equipment::appearance::outerwear::Outerwear;
 use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
@@ -15,16 +16,16 @@ pub mod utils;
 fn main() {
     render_2_sets(
         "cloaks.svg",
-        add_names(CloakStatus::get_all()),
+        add_names(OuterwearLength::get_all()),
         add_names(BodyShape::get_all()),
         create_appearance,
         true,
     );
 }
 
-fn create_appearance(height: Length, status: &CloakStatus, shape: &BodyShape) -> Appearance {
+fn create_appearance(height: Length, length: &OuterwearLength, shape: &BodyShape) -> Appearance {
     let cloak = Cloak {
-        status: *status,
+        length: *length,
         outer_color: Color::Navy,
         inner_color: Color::Blue,
     };
