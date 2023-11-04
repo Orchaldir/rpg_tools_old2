@@ -5,6 +5,7 @@ use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
+use rpg_tools_core::model::equipment::appearance::option::button::{Button, ButtonColumn};
 use rpg_tools_core::model::equipment::appearance::option::neckline::Neckline;
 use rpg_tools_core::model::equipment::appearance::outerwear::{ClosingOption, Coat, Outerwear};
 use rpg_tools_core::model::equipment::appearance::Clothing;
@@ -13,10 +14,23 @@ use rpg_tools_core::model::length::Length;
 pub mod utils;
 
 fn main() {
-    let options = vec![(
-        "Zipper".to_string(),
-        ClosingOption::Zipper { color: Color::Gray },
-    )];
+    let buttons = ButtonColumn {
+        button: Button {
+            size: Default::default(),
+            color: Color::Silver,
+        },
+        count: 4,
+    };
+    let options = vec![
+        (
+            "Single Breasted".to_string(),
+            ClosingOption::SingleBreasted { buttons },
+        ),
+        (
+            "Zipper".to_string(),
+            ClosingOption::Zipper { color: Color::Gray },
+        ),
+    ];
 
     render_2_sets(
         "coats-style.svg",

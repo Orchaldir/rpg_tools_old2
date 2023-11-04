@@ -84,7 +84,20 @@ fn render_closing(
 
     match coat.closing {
         ClosingOption::None => {}
-        ClosingOption::SingleBreasted => {}
+        ClosingOption::SingleBreasted { buttons } => {
+            let option = config.without_line(buttons.button.color);
+            let padding = 0.1;
+            let distance = bottom_y - top_y - padding;
+            let step = distance / (buttons.count + 1) as f32;
+            let mut y = top_y + padding / 2.0;
+            let radius = aabb.convert_to_height(0.01);
+
+            for _i in 0..buttons.count {
+                let center = aabb.get_point(0.5, y);
+                renderer.render_circle(&center, radius, &option);
+                y += step;
+            }
+        }
         ClosingOption::DoubleBreasted => {}
         ClosingOption::Zipper { color } => {
             let option = config.line_with_color(color, 1.0);

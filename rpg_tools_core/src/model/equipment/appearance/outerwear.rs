@@ -1,5 +1,6 @@
 use crate::model::color::Color;
 use crate::model::equipment::appearance::belt::Belt;
+use crate::model::equipment::appearance::option::button::ButtonColumn;
 use crate::model::equipment::appearance::option::neckline::Neckline;
 use crate::model::equipment::appearance::option::sleeve::SleeveStyle;
 use macro_convert::Convert;
@@ -44,7 +45,9 @@ pub enum OuterwearLength {
 pub enum ClosingOption {
     #[default]
     None,
-    SingleBreasted,
+    SingleBreasted {
+        buttons: ButtonColumn,
+    },
     DoubleBreasted,
     Zipper {
         color: Color,
