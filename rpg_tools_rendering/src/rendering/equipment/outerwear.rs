@@ -64,6 +64,7 @@ fn render_torso(
     let y = get_bottom_y(config, body, coat);
 
     builder.add_mirrored_points(aabb, width, y, true);
+    builder.add_point(aabb.get_point(0.5,  y  + 0.01), false);
 
     let polygon = builder.build();
     renderer.render_rounded_polygon(&polygon, &options);
