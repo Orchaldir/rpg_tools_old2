@@ -23,6 +23,7 @@ pub fn render_outerwear(
     match outerwear {
         Outerwear::None => {}
         Outerwear::Coat { style } => render_coat(renderer, config, aabb, body, style, from_front),
+        _ => {}
     }
 }
 
