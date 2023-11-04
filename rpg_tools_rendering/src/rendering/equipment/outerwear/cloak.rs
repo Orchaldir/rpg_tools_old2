@@ -34,20 +34,13 @@ pub fn render_cloak_behind_body(
     let torso = config.body.get_torso_config(body.shape);
     let mut builder = Polygon2dBuilder::new();
     let y_factor = get_bottom_y(config, body, OuterwearLength::Ankle);
+    let shoulder_width = torso.shoulder_width + 0.2;
+    let bottom_width = shoulder_width * config.body.get_torso_width(body);
 
-    builder.add_mirrored_points(&torso_aabb, torso.shoulder_width, 0.0, false);
-    builder.add_mirrored_points(
-        &torso_aabb,
-        torso.shoulder_width,
-        config.body.y_upper,
-        false,
-    );
-    builder.add_mirrored_points(
-        aabb,
-        torso.shoulder_width * config.body.get_torso_width(body),
-        y_factor,
-        true,
-    );
+    builder.add_mirrored_points(&torso_aabb, shoulder_width, -0.05, false);
+    builder.add_mirrored_points(&torso_aabb, shoulder_width, config.body.y_upper, false);
+    builder.add_mirrored_points(aabb, bottom_width, y_factor, true);
+    builder.add_point(aabb.get_point(0.5, y_factor - 0.01), false);
 
     let polygon = builder.build();
     renderer.render_rounded_polygon(&polygon, &options);
