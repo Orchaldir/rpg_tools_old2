@@ -5,6 +5,7 @@ use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
+use rpg_tools_core::model::equipment::appearance::belt::{Belt, Buckle};
 use rpg_tools_core::model::equipment::appearance::option::button::{Button, ButtonColumn};
 use rpg_tools_core::model::equipment::appearance::outerwear::coat::{
     ClosingOption, Coat, OuterwearLength,
@@ -48,7 +49,13 @@ fn create(length: OuterwearLength) -> (String, Coat) {
                 },
             },
             color: Color::Blue,
-            belt: None,
+            belt: Some(Belt {
+                buckle: Buckle {
+                    style: Default::default(),
+                    color: Color::Orange,
+                },
+                color: Color::SaddleBrown,
+            }),
         },
     )
 }

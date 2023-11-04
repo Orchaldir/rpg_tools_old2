@@ -3,6 +3,7 @@ use crate::math::line2d::Line2d;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
+use crate::rendering::equipment::belt::render_belt;
 use crate::rendering::equipment::outerwear::get_bottom_y;
 use crate::rendering::equipment::part::button::render_buttons;
 use crate::rendering::equipment::part::neckline::get_neckline_bottom_y;
@@ -24,6 +25,10 @@ pub fn render_coat(
 
     if from_front {
         render_closing(renderer, config, aabb, body, coat);
+    }
+
+    if let Some(belt) = &coat.belt {
+        render_belt(renderer, config, aabb, body, belt, from_front);
     }
 }
 
