@@ -1,5 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::builder::Polygon2dBuilder;
+use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::equipment::outerwear::get_bottom_y;
@@ -15,6 +16,12 @@ pub fn render_cloak_behind_body(
     from_front: bool,
 ) {
     let options = config.get_options(cloak.get_color(!from_front));
+    let polygon = get_cloak_polygon(config, aabb, body, cloak);
+
+    renderer.render_rounded_polygon(&polygon, &options);
+}
+
+fn get_cloak_polygon(config: &RenderConfig, aabb: &AABB, body: &Body, cloak: &Cloak) -> Polygon2d {
     let torso_aabb = config.body.get_torso_aabb(body, aabb);
     let torso = config.body.get_torso_config(body.shape);
     let mut builder = Polygon2dBuilder::new();
@@ -27,6 +34,5 @@ pub fn render_cloak_behind_body(
     builder.add_mirrored_points(aabb, bottom_width, y_factor, true);
     builder.add_point(aabb.get_point(0.5, y_factor - 0.01), false);
 
-    let polygon = builder.build();
-    renderer.render_rounded_polygon(&polygon, &options);
+    builder.build()
 }

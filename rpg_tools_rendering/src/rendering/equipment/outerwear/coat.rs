@@ -1,5 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::math::line2d::Line2d;
+use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::equipment::outerwear::get_bottom_y;
@@ -35,6 +36,18 @@ fn render_torso(
     from_front: bool,
 ) {
     let options = config.get_options(coat.color);
+    let polygon = get_torso_polygon(config, aabb, body, coat, from_front);
+
+    renderer.render_rounded_polygon(&polygon, &options);
+}
+
+fn get_torso_polygon(
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    coat: &Coat,
+    from_front: bool,
+) -> Polygon2d {
     let mut builder = create_shirt(config, aabb, body, coat.neckline, from_front, 0.1);
 
     builder.reverse();
@@ -50,8 +63,7 @@ fn render_torso(
     builder.add_mirrored_points(aabb, width, y, true);
     builder.add_point(aabb.get_point(0.5, y + 0.01), false);
 
-    let polygon = builder.build();
-    renderer.render_rounded_polygon(&polygon, &options);
+    builder.build()
 }
 
 fn render_closing(
