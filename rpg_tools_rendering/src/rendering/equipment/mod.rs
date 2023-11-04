@@ -3,7 +3,9 @@ use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::equipment::belt::render_belt;
 use crate::rendering::equipment::footwear::render_footwear;
-use crate::rendering::equipment::outerwear::render_outerwear;
+use crate::rendering::equipment::outerwear::{
+    render_outerwear_before_body, render_outerwear_behind_body,
+};
 use crate::rendering::equipment::pants::render_pants;
 use crate::rendering::equipment::shirt::render_shirt;
 use rpg_tools_core::model::character::appearance::body::Body;
@@ -31,6 +33,7 @@ pub fn render_clothing(
         outerwear,
     } = &body.clothing
     {
+        render_outerwear_behind_body(renderer, config, aabb, body, outerwear, from_front);
         render_shirt(renderer, config, aabb, body, shirt, from_front);
 
         if footwear.style.is_over_pants() {
@@ -50,6 +53,6 @@ pub fn render_clothing(
             }
         }
 
-        render_outerwear(renderer, config, aabb, body, outerwear, from_front);
+        render_outerwear_before_body(renderer, config, aabb, body, outerwear, from_front);
     }
 }
