@@ -22,7 +22,7 @@ pub fn render_outerwear_before_body(
     match outerwear {
         Outerwear::None => {}
         Outerwear::Cloak(cloak) => {
-            if from_front == false {
+            if !from_front {
                 render_cloak_behind_body(renderer, config, aabb, body, cloak, from_front)
             }
         }
@@ -39,7 +39,7 @@ pub fn render_outerwear_behind_body(
     from_front: bool,
 ) {
     if let Outerwear::Cloak(cloak) = outerwear {
-        if from_front == true {
+        if from_front {
             render_cloak_behind_body(renderer, config, aabb, body, cloak, from_front);
         }
     }
