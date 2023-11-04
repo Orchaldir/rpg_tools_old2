@@ -79,17 +79,14 @@ fn render_closing(
         .body
         .from_torso_to_body(get_neckline_bottom_y(&config.shirt, coat.neckline));
     let bottom_y = get_bottom_y(config, body, coat);
-    let top = aabb.get_point(0.5, top_y);
-    let bottom = aabb.get_point(0.5, bottom_y);
 
     match coat.closing {
         ClosingOption::None => {}
         ClosingOption::SingleBreasted { buttons } => {
             let option = config.without_line(buttons.button.color);
-            let padding = 0.1;
-            let distance = bottom_y - top_y - padding;
-            let step = distance / (buttons.count + 1) as f32;
-            let mut y = top_y + padding / 2.0;
+            let distance = bottom_y - top_y;
+            let step = distance / buttons.count as f32;
+            let mut y = top_y + step / 2.0;
             let radius = aabb.convert_to_height(0.01);
 
             for _i in 0..buttons.count {
@@ -101,6 +98,8 @@ fn render_closing(
         ClosingOption::DoubleBreasted => {}
         ClosingOption::Zipper { color } => {
             let option = config.line_with_color(color, 1.0);
+            let top = aabb.get_point(0.5, top_y);
+            let bottom = aabb.get_point(0.5, bottom_y);
             let line = Line2d::new(vec![top, bottom]);
 
             renderer.render_line(&line, &option);
