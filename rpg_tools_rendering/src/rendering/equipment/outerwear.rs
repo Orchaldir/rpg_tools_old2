@@ -7,7 +7,9 @@ use crate::rendering::equipment::part::neckline::get_neckline_bottom_y;
 use crate::rendering::equipment::part::sleeve::render_sleeves;
 use crate::rendering::equipment::shirt::create_shirt;
 use rpg_tools_core::model::character::appearance::body::Body;
-use rpg_tools_core::model::equipment::appearance::outerwear::{Coat, Outerwear, OuterwearLength};
+use rpg_tools_core::model::equipment::appearance::outerwear::{
+    ClosingOption, Coat, Outerwear, OuterwearLength,
+};
 
 pub fn render_outerwear(
     renderer: &mut dyn Renderer,
@@ -73,16 +75,24 @@ fn render_closing(
     body: &Body,
     coat: &Coat,
 ) {
-    let option = config.get_line_options(1.0);
     let top_y = config
         .body
         .from_torso_to_body(get_neckline_bottom_y(&config.shirt, coat.neckline));
     let bottom_y = get_bottom_y(config, body, coat);
     let top = aabb.get_point(0.5, top_y);
     let bottom = aabb.get_point(0.5, bottom_y);
-    let line = Line2d::new(vec![top, bottom]);
 
-    renderer.render_line(&line, &option);
+    match coat.closing {
+        ClosingOption::None => {}
+        ClosingOption::SingleBreasted => {}
+        ClosingOption::DoubleBreasted => {}
+        ClosingOption::Zipper { color } => {
+            let option = config.line_with_color(color, 1.0);
+            let line = Line2d::new(vec![top, bottom]);
+
+            renderer.render_line(&line, &option);
+        }
+    }
 }
 
 fn get_bottom_y(config: &RenderConfig, body: &Body, coat: &Coat) -> f32 {

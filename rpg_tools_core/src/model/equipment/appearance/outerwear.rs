@@ -39,11 +39,14 @@ pub enum OuterwearLength {
 }
 
 /// How is the [`outerwear`](Outerwear) closed?
-#[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "type")]
 pub enum ClosingOption {
     #[default]
     None,
     SingleBreasted,
     DoubleBreasted,
-    Zipper,
+    Zipper {
+        color: Color,
+    },
 }

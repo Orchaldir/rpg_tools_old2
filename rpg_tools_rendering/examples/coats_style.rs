@@ -13,10 +13,15 @@ use rpg_tools_core::model::length::Length;
 pub mod utils;
 
 fn main() {
+    let options = vec![(
+        "Zipper".to_string(),
+        ClosingOption::Zipper { color: Color::Gray },
+    )];
+
     render_2_sets(
         "coats-style.svg",
         add_names(Neckline::get_all()),
-        add_names(ClosingOption::get_all()),
+        options,
         create_appearance,
         false,
     );
