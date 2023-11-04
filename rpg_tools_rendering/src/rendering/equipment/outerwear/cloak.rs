@@ -42,7 +42,12 @@ pub fn render_cloak_behind_body(
         config.body.y_upper,
         false,
     );
-    builder.add_mirrored_points(&torso_aabb, torso.shoulder_width, y_factor, true);
+    builder.add_mirrored_points(
+        aabb,
+        torso.shoulder_width * config.body.get_torso_width(body),
+        y_factor,
+        true,
+    );
 
     let polygon = builder.build();
     renderer.render_rounded_polygon(&polygon, &options);

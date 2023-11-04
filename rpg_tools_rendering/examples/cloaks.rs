@@ -18,7 +18,7 @@ fn main() {
         add_names(CloakStatus::get_all()),
         add_names(BodyShape::get_all()),
         create_appearance,
-        false,
+        true,
     );
 }
 

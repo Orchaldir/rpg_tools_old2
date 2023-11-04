@@ -3,15 +3,12 @@ use crate::math::line2d::Line2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::equipment::outerwear::get_bottom_y;
-use crate::rendering::equipment::pants::interpolate_pants_y;
 use crate::rendering::equipment::part::button::render_buttons;
 use crate::rendering::equipment::part::neckline::get_neckline_bottom_y;
 use crate::rendering::equipment::part::sleeve::render_sleeves;
 use crate::rendering::equipment::shirt::create_shirt;
 use rpg_tools_core::model::character::appearance::body::Body;
-use rpg_tools_core::model::equipment::appearance::outerwear::coat::{
-    ClosingOption, Coat, OuterwearLength,
-};
+use rpg_tools_core::model::equipment::appearance::outerwear::coat::{ClosingOption, Coat};
 
 pub fn render_coat(
     renderer: &mut dyn Renderer,
