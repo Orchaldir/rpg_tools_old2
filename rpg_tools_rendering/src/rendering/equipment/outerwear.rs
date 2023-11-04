@@ -64,7 +64,7 @@ fn render_torso(
     let y = get_bottom_y(config, body, coat);
 
     builder.add_mirrored_points(aabb, width, y, true);
-    builder.add_point(aabb.get_point(0.5,  y  + 0.01), false);
+    builder.add_point(aabb.get_point(0.5, y + 0.01), false);
 
     let polygon = builder.build();
     renderer.render_rounded_polygon(&polygon, &options);
@@ -109,7 +109,7 @@ fn render_closing(
             );
         }
         ClosingOption::Zipper { color } => {
-            let option = config.line_with_color(color, 1.0);
+            let option = config.line_with_color(color, 2.0);
             let top = aabb.get_point(0.5, top_y);
             let bottom = aabb.get_point(0.5, bottom_y);
             let line = Line2d::new(vec![top, bottom]);

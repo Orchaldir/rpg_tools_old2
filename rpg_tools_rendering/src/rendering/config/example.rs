@@ -175,6 +175,7 @@ pub fn create_config() -> RenderConfig {
             scoop_depth: 0.2,
             scoop_width: 0.5,
             v_depth: 0.2,
+            very_deep_v_depth: 0.6,
         },
     }
 }
