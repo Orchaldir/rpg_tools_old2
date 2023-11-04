@@ -42,3 +42,14 @@ pub fn add_straight_neckline(aabb: &AABB, torso: &TorsoConfig, builder: &mut Pol
     let width = torso.shoulder_width / 3.0;
     builder.add_mirrored_points(aabb, width, 0.0, true);
 }
+
+pub fn get_neckline_bottom_y(config: &ShirtConfig, neckline: Neckline) -> f32 {
+    match neckline {
+        Neckline::Boat => config.boat_depth,
+        Neckline::Crew => config.crew_depth,
+        Neckline::DeepV => config.deep_v_depth,
+        Neckline::None => 0.0,
+        Neckline::Scoop => config.scoop_depth,
+        Neckline::V => config.v_depth,
+    }
+}

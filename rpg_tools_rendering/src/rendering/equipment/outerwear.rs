@@ -1,7 +1,9 @@
 use crate::math::aabb2d::AABB;
+use crate::math::line2d::Line2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::equipment::pants::interpolate_pants_y;
+use crate::rendering::equipment::part::neckline::get_neckline_bottom_y;
 use crate::rendering::equipment::part::sleeve::render_sleeves;
 use crate::rendering::equipment::shirt::create_shirt;
 use rpg_tools_core::model::character::appearance::body::Body;
@@ -30,7 +32,11 @@ fn render_coat(
     from_front: bool,
 ) {
     render_sleeves(renderer, config, aabb, body, coat.sleeve, coat.color);
-    render_torso(renderer, config, aabb, body, coat, from_front)
+    render_torso(renderer, config, aabb, body, coat, from_front);
+
+    if from_front {
+        render_closing(renderer, config, aabb, body, coat);
+    }
 }
 
 fn render_torso(
@@ -52,15 +58,38 @@ fn render_torso(
         config.pants.get_hip_width(&config.body, body) * config.body.get_torso_width(body);
     let width = hip_width.max(pants_width);
 
-    let y_factor = match coat.length {
-        OuterwearLength::Hip => config.pants.height_shorts,
-        OuterwearLength::Knee => config.pants.height_bermuda,
-        OuterwearLength::Ankle => config.pants.get_bottom_y(&config.body, body),
-    };
-    let y = interpolate_pants_y(config, body, y_factor);
+    let y = get_bottom_y(config, body, coat);
 
     builder.add_mirrored_points(aabb, width, y, true);
 
     let polygon = builder.build();
     renderer.render_rounded_polygon(&polygon, &options);
+}
+
+fn render_closing(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    coat: &Coat,
+) {
+    let option = config.get_line_options(1.0);
+    let top_y = config
+        .body
+        .from_torso_to_body(get_neckline_bottom_y(&config.shirt, coat.neckline));
+    let bottom_y = get_bottom_y(config, body, coat);
+    let top = aabb.get_point(0.5, top_y);
+    let bottom = aabb.get_point(0.5, bottom_y);
+    let line = Line2d::new(vec![top, bottom]);
+
+    renderer.render_line(&line, &option);
+}
+
+fn get_bottom_y(config: &RenderConfig, body: &Body, coat: &Coat) -> f32 {
+    let y_factor = match coat.length {
+        OuterwearLength::Hip => config.pants.height_shorts,
+        OuterwearLength::Knee => config.pants.height_bermuda,
+        OuterwearLength::Ankle => config.pants.get_bottom_y(&config.body, body),
+    };
+    interpolate_pants_y(config, body, y_factor)
 }
