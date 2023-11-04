@@ -25,11 +25,7 @@ pub fn render_cloak_behind_body(
     cloak: &Cloak,
     from_front: bool,
 ) {
-    let options = config.get_options(if from_front {
-        cloak.inner_color
-    } else {
-        cloak.outer_color
-    });
+    let options = config.get_options(cloak.get_color(!from_front));
     let torso_aabb = config.body.get_torso_aabb(body, aabb);
     let torso = config.body.get_torso_config(body.shape);
     let mut builder = Polygon2dBuilder::new();
