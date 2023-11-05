@@ -19,14 +19,8 @@ pub fn render_outerwear_before_body(
     outerwear: &Outerwear,
     from_front: bool,
 ) {
-    match outerwear {
-        Outerwear::None => {}
-        Outerwear::Cloak(cloak) => {
-            if !from_front {
-                render_cloak_behind_body(renderer, config, aabb, body, cloak, from_front)
-            }
-        }
-        Outerwear::Coat { style } => render_coat(renderer, config, aabb, body, style, from_front),
+    if let Outerwear::Coat { style } = outerwear {
+        render_coat(renderer, config, aabb, body, style, from_front);
     }
 }
 
@@ -41,6 +35,21 @@ pub fn render_outerwear_behind_body(
     if let Outerwear::Cloak(cloak) = outerwear {
         if from_front {
             render_cloak_behind_body(renderer, config, aabb, body, cloak, from_front);
+        }
+    }
+}
+
+pub fn render_outerwear_over_hands(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    outerwear: &Outerwear,
+    from_front: bool,
+) {
+    if let Outerwear::Cloak(cloak) = outerwear {
+        if !from_front {
+            render_cloak_behind_body(renderer, config, aabb, body, cloak, from_front)
         }
     }
 }

@@ -4,7 +4,7 @@ use crate::rendering::config::RenderConfig;
 use crate::rendering::equipment::belt::render_belt;
 use crate::rendering::equipment::footwear::render_footwear;
 use crate::rendering::equipment::outerwear::{
-    render_outerwear_before_body, render_outerwear_behind_body,
+    render_outerwear_before_body, render_outerwear_behind_body, render_outerwear_over_hands,
 };
 use crate::rendering::equipment::pants::render_pants;
 use crate::rendering::equipment::shirt::render_shirt;
@@ -54,5 +54,17 @@ pub fn render_clothing(
         }
 
         render_outerwear_before_body(renderer, config, aabb, body, outerwear, from_front);
+    }
+}
+
+pub fn render_clothing_over_hands(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    from_front: bool,
+) {
+    if let Clothing::Simple { outerwear, .. } = &body.clothing {
+        render_outerwear_over_hands(renderer, config, aabb, body, outerwear, from_front);
     }
 }
