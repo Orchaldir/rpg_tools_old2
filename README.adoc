@@ -4,10 +4,13 @@ This repo is a collection of tools for game masters of tabletop role-playing gam
 
 == Characters
 
-By combing different appearance options, a large number of characters can be generated.
+By combing different appearance & clothing options, a large number of characters can be generated.
 
 .An Elf
 image:resources/characters/elf.svg[An Elf,width=50%]
+
+.An Orc
+image:resources/characters/orc.svg[An Orc,width=50%]
 
 .A Vampire
 image:resources/characters/vampire.svg[A Vampire,width=50%]
