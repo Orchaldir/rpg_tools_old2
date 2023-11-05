@@ -18,8 +18,8 @@ pub fn render_outerwear_before_body(
     outerwear: &Outerwear,
     from_front: bool,
 ) {
-    if let Outerwear::Coat { style } = outerwear {
-        render_coat(renderer, config, aabb, body, style, from_front);
+    if let Outerwear::Coat(coat) = outerwear {
+        render_coat(renderer, config, aabb, body, coat, from_front);
     }
 }
 

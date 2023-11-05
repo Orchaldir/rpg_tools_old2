@@ -575,94 +575,89 @@
                               </li>
                             {% elif appearance.body.clothing.outerwear.type == "Coat" %}
                               <li>
-                                <b>Style</b>
+                                <b>Sleeve:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.sleeve", options=[ "Long","None","Short" ], selected=appearance.body.clothing.outerwear.sleeve, update=true) }}
+                              </li>
+                              <li>
+                                <b>Length:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.length", options=[ "Hip","Knee","Ankle" ], selected=appearance.body.clothing.outerwear.length, update=true) }}
+                              </li>
+                              <li>
+                                <b>Neckline:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.neckline", options=[ "Boat","Crew","DeepV","None","Scoop","V","VeryDeepV" ], selected=appearance.body.clothing.outerwear.neckline, update=true) }}
+                              </li>
+                              <li>
+                                <b>Closing:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.closing.type", options=[ "None","SingleBreasted","DoubleBreasted","Zipper" ], selected=appearance.body.clothing.outerwear.closing.type, update=true) }}
+                                <ul>
+                                  {% if appearance.body.clothing.outerwear.closing.type == "None" %}
+                                  {% elif appearance.body.clothing.outerwear.closing.type == "SingleBreasted" %}
+                                    <li>
+                                      <b>Buttons</b>
+                                      <ul>
+                                        <li>
+                                          <b>Button</b>
+                                          <ul>
+                                            <li>
+                                              <b>Size:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.closing.buttons.button.size", options=[ "Small","Medium","Large" ], selected=appearance.body.clothing.outerwear.closing.buttons.button.size, update=true) }}
+                                            </li>
+                                            <li>
+                                              <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.closing.buttons.button.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.closing.buttons.button.color, update=true) }}
+                                            </li>
+                                          </ul>
+                                        </li>
+                                        <li><b>Count:</b> <input type="number" step="1" id="appearance.body.clothing.outerwear.closing.buttons.count" name="appearance.body.clothing.outerwear.closing.buttons.count" value="{{ appearance.body.clothing.outerwear.closing.buttons.count }}" onchange="updateAppearancePreview();"></li>
+                                      </ul>
+                                    </li>
+                                  {% elif appearance.body.clothing.outerwear.closing.type == "DoubleBreasted" %}
+                                    <li>
+                                      <b>Buttons</b>
+                                      <ul>
+                                        <li>
+                                          <b>Button</b>
+                                          <ul>
+                                            <li>
+                                              <b>Size:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.closing.buttons.button.size", options=[ "Small","Medium","Large" ], selected=appearance.body.clothing.outerwear.closing.buttons.button.size, update=true) }}
+                                            </li>
+                                            <li>
+                                              <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.closing.buttons.button.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.closing.buttons.button.color, update=true) }}
+                                            </li>
+                                          </ul>
+                                        </li>
+                                        <li><b>Count:</b> <input type="number" step="1" id="appearance.body.clothing.outerwear.closing.buttons.count" name="appearance.body.clothing.outerwear.closing.buttons.count" value="{{ appearance.body.clothing.outerwear.closing.buttons.count }}" onchange="updateAppearancePreview();"></li>
+                                      </ul>
+                                    </li>
+                                  {% elif appearance.body.clothing.outerwear.closing.type == "Zipper" %}
+                                    <li>
+                                      <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.closing.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.closing.color, update=true) }}
+                                    </li>
+                                  {% endif %}
+                                </ul>
+                              </li>
+                              <li>
+                                <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.color, update=true) }}
+                              </li>
+                              <li>
+                                {% if appearance.body.clothing.outerwear.belt %}
+                                <b>Belt Availability:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.belt.availability", options=[ "true","false" ], selected="true", update=true) }}
+                              </li>
+                              <li>
+                                <b>Belt</b>
                                 <ul>
                                   <li>
-                                    <b>Sleeve:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.sleeve", options=[ "Long","None","Short" ], selected=appearance.body.clothing.outerwear.style.sleeve, update=true) }}
-                                  </li>
-                                  <li>
-                                    <b>Length:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.length", options=[ "Hip","Knee","Ankle" ], selected=appearance.body.clothing.outerwear.style.length, update=true) }}
-                                  </li>
-                                  <li>
-                                    <b>Neckline:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.neckline", options=[ "Boat","Crew","DeepV","None","Scoop","V","VeryDeepV" ], selected=appearance.body.clothing.outerwear.style.neckline, update=true) }}
-                                  </li>
-                                  <li>
-                                    <b>Closing:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.closing.type", options=[ "None","SingleBreasted","DoubleBreasted","Zipper" ], selected=appearance.body.clothing.outerwear.style.closing.type, update=true) }}
-                                    <ul>
-                                      {% if appearance.body.clothing.outerwear.style.closing.type == "None" %}
-                                      {% elif appearance.body.clothing.outerwear.style.closing.type == "SingleBreasted" %}
-                                        <li>
-                                          <b>Buttons</b>
-                                          <ul>
-                                            <li>
-                                              <b>Button</b>
-                                              <ul>
-                                                <li>
-                                                  <b>Size:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.closing.buttons.button.size", options=[ "Small","Medium","Large" ], selected=appearance.body.clothing.outerwear.style.closing.buttons.button.size, update=true) }}
-                                                </li>
-                                                <li>
-                                                  <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.closing.buttons.button.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.style.closing.buttons.button.color, update=true) }}
-                                                </li>
-                                              </ul>
-                                            </li>
-                                            <li><b>Count:</b> <input type="number" step="1" id="appearance.body.clothing.outerwear.style.closing.buttons.count" name="appearance.body.clothing.outerwear.style.closing.buttons.count" value="{{ appearance.body.clothing.outerwear.style.closing.buttons.count }}" onchange="updateAppearancePreview();"></li>
-                                          </ul>
-                                        </li>
-                                      {% elif appearance.body.clothing.outerwear.style.closing.type == "DoubleBreasted" %}
-                                        <li>
-                                          <b>Buttons</b>
-                                          <ul>
-                                            <li>
-                                              <b>Button</b>
-                                              <ul>
-                                                <li>
-                                                  <b>Size:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.closing.buttons.button.size", options=[ "Small","Medium","Large" ], selected=appearance.body.clothing.outerwear.style.closing.buttons.button.size, update=true) }}
-                                                </li>
-                                                <li>
-                                                  <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.closing.buttons.button.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.style.closing.buttons.button.color, update=true) }}
-                                                </li>
-                                              </ul>
-                                            </li>
-                                            <li><b>Count:</b> <input type="number" step="1" id="appearance.body.clothing.outerwear.style.closing.buttons.count" name="appearance.body.clothing.outerwear.style.closing.buttons.count" value="{{ appearance.body.clothing.outerwear.style.closing.buttons.count }}" onchange="updateAppearancePreview();"></li>
-                                          </ul>
-                                        </li>
-                                      {% elif appearance.body.clothing.outerwear.style.closing.type == "Zipper" %}
-                                        <li>
-                                          <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.closing.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.style.closing.color, update=true) }}
-                                        </li>
-                                      {% endif %}
-                                    </ul>
-                                  </li>
-                                  <li>
-                                    <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.style.color, update=true) }}
-                                  </li>
-                                  <li>
-                                    {% if appearance.body.clothing.outerwear.style.belt %}
-                                    <b>Belt Availability:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.belt.availability", options=[ "true","false" ], selected="true", update=true) }}
-                                  </li>
-                                  <li>
-                                    <b>Belt</b>
+                                    <b>Buckle</b>
                                     <ul>
                                       <li>
-                                        <b>Buckle</b>
-                                        <ul>
-                                          <li>
-                                            <b>Style:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.belt.buckle.style", options=[ "Box","Circle","Frame","Plate" ], selected=appearance.body.clothing.outerwear.style.belt.buckle.style, update=true) }}
-                                          </li>
-                                          <li>
-                                            <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.belt.buckle.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.style.belt.buckle.color, update=true) }}
-                                          </li>
-                                        </ul>
+                                        <b>Style:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.belt.buckle.style", options=[ "Box","Circle","Frame","Plate" ], selected=appearance.body.clothing.outerwear.belt.buckle.style, update=true) }}
                                       </li>
                                       <li>
-                                        <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.belt.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.style.belt.color, update=true) }}
+                                        <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.belt.buckle.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.belt.buckle.color, update=true) }}
                                       </li>
                                     </ul>
-                                    {% else %}
-                                    <b>Belt Availability:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.belt.availability", options=[ "true","false" ], selected="false", update=true) }}
-                                    {% endif %}
+                                  </li>
+                                  <li>
+                                    <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.belt.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.outerwear.belt.color, update=true) }}
                                   </li>
                                 </ul>
+                                {% else %}
+                                <b>Belt Availability:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.belt.availability", options=[ "true","false" ], selected="false", update=true) }}
+                                {% endif %}
                               </li>
                             {% endif %}
                           </ul>

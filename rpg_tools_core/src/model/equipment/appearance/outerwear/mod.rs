@@ -14,9 +14,7 @@ pub enum Outerwear {
     #[default]
     None,
     Cloak(Cloak),
-    Coat {
-        style: Coat,
-    },
+    Coat(Coat),
 }
 
 /// How long is the [`outerwear`](Outerwear)?

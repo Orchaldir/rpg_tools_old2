@@ -48,6 +48,14 @@ fn main() {
 }
 
 fn create_appearance(height: Length, neckline: &Neckline, closing: &ClosingOption) -> Appearance {
+    let coat = Coat {
+        sleeve: Default::default(),
+        length: Default::default(),
+        neckline: *neckline,
+        closing: *closing,
+        color: Color::Blue,
+        belt: None,
+    };
     Appearance::humanoid(
         Body {
             shape: Default::default(),
@@ -57,16 +65,7 @@ fn create_appearance(height: Length, neckline: &Neckline, closing: &ClosingOptio
                 footwear: Default::default(),
                 pants: Default::default(),
                 shirt: Default::default(),
-                outerwear: Outerwear::Coat {
-                    style: Coat {
-                        sleeve: Default::default(),
-                        length: Default::default(),
-                        neckline: *neckline,
-                        closing: *closing,
-                        color: Color::Blue,
-                        belt: None,
-                    },
-                },
+                outerwear: Outerwear::Coat(coat),
             },
         },
         Default::default(),

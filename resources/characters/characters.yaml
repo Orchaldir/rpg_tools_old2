@@ -275,19 +275,18 @@
           color: Black
         outerwear:
           type: Coat
-          style:
-            sleeve: Long
-            length: Knee
-            neckline: DeepV
-            closing:
-              type: SingleBreasted
-              buttons:
-                button:
-                  size: Medium
-                  color: Silver
-                count: 5
-            color: White
-            belt: null
+          sleeve: Long
+          length: Knee
+          neckline: DeepV
+          closing:
+            type: SingleBreasted
+            buttons:
+              button:
+                size: Medium
+                color: Silver
+              count: 5
+          color: White
+          belt: null
     head:
       ears:
         type: None
