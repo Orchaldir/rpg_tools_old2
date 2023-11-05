@@ -7,7 +7,7 @@
     <img id="preview" src="/appearance/preview/front.svg" alt="Front Preview" width="75%"/>
     <img id="preview" src="/appearance/preview/back.svg" alt="Back Preview" width="75%"/>
   </div>
-  <div class="text">
+  <div class="editor">
     <form id="appearanceForm" action="/appearance/{{ id }}/preview" method="post">
       <ul>
         <li>

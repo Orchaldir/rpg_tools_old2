@@ -27,6 +27,8 @@
           sleeve_style: Long
           neckline: Crew
           color: White
+        outerwear:
+          type: None
     head:
       ears:
         type: Normal
@@ -196,6 +198,8 @@
           sleeve_style: Long
           neckline: DeepV
           color: Red
+        outerwear:
+          type: None
     head:
       ears:
         type: Normal
@@ -266,6 +270,8 @@
           sleeve_style: None
           neckline: Crew
           color: Purple
+        outerwear:
+          type: None
     head:
       ears:
         type: None
@@ -328,6 +334,8 @@
           sleeve_style: Short
           neckline: Crew
           color: Gray
+        outerwear:
+          type: None
     head:
       ears:
         type: Normal
