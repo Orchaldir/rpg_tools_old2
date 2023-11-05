@@ -28,7 +28,10 @@
           neckline: Crew
           color: White
         outerwear:
-          type: None
+          type: Cloak
+          length: Ankle
+          outer_color: Blue
+          inner_color: Blue
     head:
       ears:
         type: Normal
