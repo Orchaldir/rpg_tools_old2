@@ -1,5 +1,5 @@
 [package]
-name = "rpg_tools_core"
+name = "rpg_tools_ui"
 version = "0.3.0"
 edition = "2021"
 
@@ -9,4 +9,6 @@ edition = "2021"
 macro_core = { path = "../macro_core" }
 macro_convert = { path = "../macro_convert" }
 macro_ui = { path = "../macro_ui" }
+rpg_tools_core = { path = "../rpg_tools_core" }
 serde = { version = "1.0", features = ["derive"] }
+titlecase = "2.2"
