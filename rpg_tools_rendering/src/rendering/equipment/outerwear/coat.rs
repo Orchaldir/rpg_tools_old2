@@ -53,12 +53,19 @@ fn get_torso_polygon(
     coat: &Coat,
     from_front: bool,
 ) -> Polygon2d {
-    let mut builder = create_shirt(config, aabb, body, coat.neckline, from_front, 0.1);
+    let mut builder = create_shirt(
+        config,
+        aabb,
+        body,
+        coat.neckline,
+        from_front,
+        config.outerwear.padding_coat_hip,
+    );
 
     builder.reverse();
 
     let (pants_width, _inner_width) = config.pants.get_widths(&config.body, body);
-    let pants_width = pants_width + 0.03;
+    let pants_width = pants_width + config.outerwear.padding_coat_pants;
     let hip_width =
         config.pants.get_hip_width(&config.body, body) * config.body.get_torso_width(body);
     let width = hip_width.max(pants_width);
@@ -66,7 +73,10 @@ fn get_torso_polygon(
     let y = get_bottom_y(config, body, coat.length);
 
     builder.add_mirrored_points(aabb, width, y, true);
-    builder.add_point(aabb.get_point(0.5, y + 0.01), false);
+    builder.add_point(
+        aabb.get_point(0.5, y + config.outerwear.curve_offset),
+        false,
+    );
 
     builder.build()
 }
@@ -89,7 +99,7 @@ fn render_closing(
             render_buttons(renderer, config, aabb, buttons, top_y, bottom_y, 0.5)
         }
         ClosingOption::DoubleBreasted { buttons } => {
-            let offset = 0.05;
+            let offset = config.outerwear.double_breasted_offset;
             render_buttons(
                 renderer,
                 config,
@@ -110,7 +120,7 @@ fn render_closing(
             );
         }
         ClosingOption::Zipper { color } => {
-            let option = config.line_with_color(color, 2.0);
+            let option = config.line_with_color(color, config.outerwear.zipper_width);
             let top = aabb.get_point(0.5, top_y);
             let bottom = aabb.get_point(0.5, bottom_y);
             let line = Line2d::new(vec![top, bottom]);

@@ -30,8 +30,8 @@
         outerwear:
           type: Cloak
           length: Ankle
-          outer_color: Blue
-          inner_color: Blue
+          outer_color: Green
+          inner_color: Green
     head:
       ears:
         type: Normal

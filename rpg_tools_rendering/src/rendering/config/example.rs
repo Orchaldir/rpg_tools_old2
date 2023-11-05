@@ -9,6 +9,7 @@ use crate::rendering::config::ear::EarConfig;
 use crate::rendering::config::equipment::belt::{BeltConfig, BuckleConfig};
 use crate::rendering::config::equipment::eyewear::EyewearConfig;
 use crate::rendering::config::equipment::footwear::FootwearConfig;
+use crate::rendering::config::equipment::outerwear::OuterwearConfig;
 use crate::rendering::config::equipment::pants::PantsConfig;
 use crate::rendering::config::equipment::shirt::ShirtConfig;
 use crate::rendering::config::eye::eyebrow::EyebrowConfig;
@@ -157,6 +158,15 @@ pub fn create_config() -> RenderConfig {
             height_sole: 0.02,
             width_shaft: 1.05,
             width_sole: 1.1,
+        },
+        outerwear: OuterwearConfig {
+            top_y: -0.05,
+            curve_offset: 0.01,
+            double_breasted_offset: 0.05,
+            padding_cloak: 0.2,
+            padding_coat_hip: 0.1,
+            padding_coat_pants: 0.03,
+            zipper_width: 2.0,
         },
         pants: PantsConfig {
             height_bermuda: 0.5,

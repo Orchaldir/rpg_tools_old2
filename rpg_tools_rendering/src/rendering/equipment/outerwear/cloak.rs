@@ -26,13 +26,16 @@ fn get_cloak_polygon(config: &RenderConfig, aabb: &AABB, body: &Body, cloak: &Cl
     let torso = config.body.get_torso_config(body.shape);
     let mut builder = Polygon2dBuilder::new();
     let y_factor = get_bottom_y(config, body, cloak.length);
-    let shoulder_width = torso.shoulder_width + 0.2;
+    let shoulder_width = torso.shoulder_width + config.outerwear.padding_cloak;
     let bottom_width = shoulder_width * config.body.get_torso_width(body);
 
-    builder.add_mirrored_points(&torso_aabb, shoulder_width, -0.05, false);
+    builder.add_mirrored_points(&torso_aabb, shoulder_width, config.outerwear.top_y, false);
     builder.add_mirrored_points(&torso_aabb, shoulder_width, config.body.y_upper, false);
     builder.add_mirrored_points(aabb, bottom_width, y_factor, true);
-    builder.add_point(aabb.get_point(0.5, y_factor - 0.01), false);
+    builder.add_point(
+        aabb.get_point(0.5, y_factor - config.outerwear.curve_offset),
+        false,
+    );
 
     builder.build()
 }
