@@ -48,7 +48,7 @@ pub fn render_character_from_front(
         Appearance::Humanoid { body, head, .. } => {
             let head_aabb = calculate_head_aabb(config, &inner);
             render_head_behind_body_from_front(renderer, config, head, &head_aabb);
-            render_clothing_behind_body(renderer, config, &inner, &body, true);
+            render_clothing_behind_body(renderer, config, &inner, body, true);
             render_body(renderer, config, &inner, body);
             render_clothing(renderer, config, &inner, body, true);
             render_hands(renderer, config, &inner, body);

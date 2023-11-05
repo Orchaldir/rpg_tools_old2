@@ -552,7 +552,7 @@
                               <b>Sleeve Style:</b> {{ macros::add_select(name="appearance.body.clothing.shirt.sleeve_style", options=[ "Long","None","Short" ], selected=appearance.body.clothing.shirt.sleeve_style, update=true) }}
                             </li>
                             <li>
-                              <b>Neckline:</b> {{ macros::add_select(name="appearance.body.clothing.shirt.neckline", options=[ "Boat","Crew","DeepV","None","Scoop","V","VeryDeppV" ], selected=appearance.body.clothing.shirt.neckline, update=true) }}
+                              <b>Neckline:</b> {{ macros::add_select(name="appearance.body.clothing.shirt.neckline", options=[ "Boat","Crew","DeepV","None","Scoop","V","VeryDeepV" ], selected=appearance.body.clothing.shirt.neckline, update=true) }}
                             </li>
                             <li>
                               <b>Color:</b> {{ macros::add_select(name="appearance.body.clothing.shirt.color", options=[ "Aqua","Black","Blue","Fuchsia","Gray","Green","Lime","Maroon","Navy","Olive","Orange","Purple","Red","SaddleBrown","Silver","Teal","White","Yellow" ], selected=appearance.body.clothing.shirt.color, update=true) }}
@@ -584,7 +584,7 @@
                                     <b>Length:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.length", options=[ "Hip","Knee","Ankle" ], selected=appearance.body.clothing.outerwear.style.length, update=true) }}
                                   </li>
                                   <li>
-                                    <b>Neckline:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.neckline", options=[ "Boat","Crew","DeepV","None","Scoop","V","VeryDeppV" ], selected=appearance.body.clothing.outerwear.style.neckline, update=true) }}
+                                    <b>Neckline:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.neckline", options=[ "Boat","Crew","DeepV","None","Scoop","V","VeryDeepV" ], selected=appearance.body.clothing.outerwear.style.neckline, update=true) }}
                                   </li>
                                   <li>
                                     <b>Closing:</b> {{ macros::add_select(name="appearance.body.clothing.outerwear.style.closing.type", options=[ "None","SingleBreasted","DoubleBreasted","Zipper" ], selected=appearance.body.clothing.outerwear.style.closing.type, update=true) }}

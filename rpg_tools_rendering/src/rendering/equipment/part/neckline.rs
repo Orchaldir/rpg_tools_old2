@@ -18,7 +18,7 @@ pub fn add_neckline(
         Neckline::None => add_straight_neckline(aabb, torso, builder),
         Neckline::Scoop => add_round(aabb, torso, builder, config.scoop_width, config.scoop_depth),
         Neckline::V => add_v(aabb, torso, builder, config.v_depth),
-        Neckline::VeryDeppV => add_v(aabb, torso, builder, config.very_deep_v_depth),
+        Neckline::VeryDeepV => add_v(aabb, torso, builder, config.very_deep_v_depth),
     }
 }
 
@@ -52,6 +52,6 @@ pub fn get_neckline_bottom_y(config: &ShirtConfig, neckline: Neckline) -> f32 {
         Neckline::None => 0.0,
         Neckline::Scoop => config.scoop_depth,
         Neckline::V => config.v_depth,
-        Neckline::VeryDeppV => config.very_deep_v_depth,
+        Neckline::VeryDeepV => config.very_deep_v_depth,
     }
 }

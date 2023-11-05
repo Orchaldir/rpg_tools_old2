@@ -3,7 +3,7 @@ use crate::model::size::Size;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
-/// A button used in clothing.
+/// A button used in (clothing)[crate::model::equipment::appearance::Clothing].
 #[derive(ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Button {
     pub size: Size,

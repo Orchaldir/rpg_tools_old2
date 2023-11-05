@@ -12,5 +12,5 @@ pub enum Neckline {
     None,
     Scoop,
     V,
-    VeryDeppV,
+    VeryDeepV,
 }
