@@ -5,8 +5,7 @@ use crate::rendering::equipment::outerwear::cloak::render_cloak_behind_body;
 use crate::rendering::equipment::outerwear::coat::render_coat;
 use crate::rendering::equipment::pants::interpolate_pants_y;
 use rpg_tools_core::model::character::appearance::body::Body;
-use rpg_tools_core::model::equipment::appearance::outerwear::coat::OuterwearLength;
-use rpg_tools_core::model::equipment::appearance::outerwear::Outerwear;
+use rpg_tools_core::model::equipment::appearance::outerwear::{Outerwear, OuterwearLength};
 
 pub mod cloak;
 pub mod coat;

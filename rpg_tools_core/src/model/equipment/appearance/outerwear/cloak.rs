@@ -1,5 +1,5 @@
 use crate::model::color::Color;
-use crate::model::equipment::appearance::outerwear::coat::OuterwearLength;
+use crate::model::equipment::appearance::outerwear::OuterwearLength;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

@@ -3,7 +3,7 @@ use crate::model::equipment::appearance::belt::Belt;
 use crate::model::equipment::appearance::option::button::ButtonColumn;
 use crate::model::equipment::appearance::option::neckline::Neckline;
 use crate::model::equipment::appearance::option::sleeve::SleeveStyle;
-use macro_convert::Convert;
+use crate::model::equipment::appearance::outerwear::OuterwearLength;
 use macro_core::visitor::visit_option;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
@@ -17,15 +17,6 @@ pub struct Coat {
     pub closing: ClosingOption,
     pub color: Color,
     pub belt: Option<Belt>,
-}
-
-/// How long is the [`outerwear`](Outerwear)?
-#[derive(Convert, ui, Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
-pub enum OuterwearLength {
-    #[default]
-    Hip,
-    Knee,
-    Ankle,
 }
 
 /// How is the [`outerwear`](Outerwear) closed?

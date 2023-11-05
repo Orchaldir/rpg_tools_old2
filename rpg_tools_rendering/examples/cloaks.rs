@@ -6,8 +6,7 @@ use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::equipment::appearance::outerwear::cloak::Cloak;
-use rpg_tools_core::model::equipment::appearance::outerwear::coat::OuterwearLength;
-use rpg_tools_core::model::equipment::appearance::outerwear::Outerwear;
+use rpg_tools_core::model::equipment::appearance::outerwear::{Outerwear, OuterwearLength};
 use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
 
