@@ -19,6 +19,18 @@ pub mod pants;
 pub mod part;
 pub mod shirt;
 
+pub fn render_clothing_behind_body(
+    renderer: &mut dyn Renderer,
+    config: &RenderConfig,
+    aabb: &AABB,
+    body: &Body,
+    from_front: bool,
+) {
+    if let Clothing::Simple { outerwear, .. } = &body.clothing {
+        render_outerwear_behind_body(renderer, config, aabb, body, outerwear, from_front);
+    }
+}
+
 pub fn render_clothing(
     renderer: &mut dyn Renderer,
     config: &RenderConfig,
@@ -33,7 +45,6 @@ pub fn render_clothing(
         outerwear,
     } = &body.clothing
     {
-        render_outerwear_behind_body(renderer, config, aabb, body, outerwear, from_front);
         render_shirt(renderer, config, aabb, body, shirt, from_front);
 
         if footwear.style.is_over_pants() {
