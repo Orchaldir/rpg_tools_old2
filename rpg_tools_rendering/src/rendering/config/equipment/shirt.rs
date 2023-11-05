@@ -9,4 +9,5 @@ pub struct ShirtConfig {
     pub scoop_depth: f32,
     pub scoop_width: f32,
     pub v_depth: f32,
+    pub very_deep_v_depth: f32,
 }

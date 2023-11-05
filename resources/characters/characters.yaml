@@ -27,6 +27,11 @@
           sleeve_style: Long
           neckline: Crew
           color: White
+        outerwear:
+          type: Cloak
+          length: Ankle
+          outer_color: Green
+          inner_color: Green
     head:
       ears:
         type: Normal
@@ -196,6 +201,8 @@
           sleeve_style: Long
           neckline: DeepV
           color: Red
+        outerwear:
+          type: None
     head:
       ears:
         type: Normal
@@ -256,16 +263,30 @@
         type: Simple
         footwear:
           color: SaddleBrown
-          style: Sandals
+          style: Shoes
           sole: Gray
         pants:
-          style: Shorts
-          color: Purple
+          style: Regular
+          color: Navy
           belt: null
         shirt:
-          sleeve_style: None
+          sleeve_style: Long
           neckline: Crew
-          color: Purple
+          color: Black
+        outerwear:
+          type: Coat
+          sleeve: Long
+          length: Knee
+          neckline: DeepV
+          closing:
+            type: SingleBreasted
+            buttons:
+              button:
+                size: Medium
+                color: Silver
+              count: 5
+          color: White
+          belt: null
     head:
       ears:
         type: None
@@ -328,6 +349,8 @@
           sleeve_style: Short
           neckline: Crew
           color: Gray
+        outerwear:
+          type: None
     head:
       ears:
         type: Normal

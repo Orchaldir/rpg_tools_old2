@@ -82,7 +82,11 @@ impl BodyConfig {
     }
 
     pub fn get_torso_bottom(&self) -> f32 {
-        self.y_torso + self.height_torso
+        self.from_torso_to_body(1.0)
+    }
+
+    pub fn from_torso_to_body(&self, torso_y: f32) -> f32 {
+        self.y_torso + self.height_torso * torso_y
     }
 
     pub fn get_arm_y(&self) -> f32 {

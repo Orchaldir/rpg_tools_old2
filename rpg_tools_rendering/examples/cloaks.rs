@@ -5,50 +5,39 @@ use crate::utils::render::{add_names, render_2_sets};
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::equipment::appearance::footwear::{Footwear, FootwearStyle};
+use rpg_tools_core::model::equipment::appearance::outerwear::cloak::Cloak;
+use rpg_tools_core::model::equipment::appearance::outerwear::{Outerwear, OuterwearLength};
 use rpg_tools_core::model::equipment::appearance::Clothing;
 use rpg_tools_core::model::length::Length;
 
 pub mod utils;
 
 fn main() {
-    let mut options = Vec::new();
-
-    for style in FootwearStyle::get_all() {
-        options.push(create(style));
-    }
-
     render_2_sets(
-        "footwear.svg",
-        options,
+        "cloaks.svg",
+        add_names(OuterwearLength::get_all()),
         add_names(BodyShape::get_all()),
         create_appearance,
         true,
     );
 }
 
-fn create(style: FootwearStyle) -> (String, Footwear) {
-    (
-        style.to_string(),
-        Footwear {
-            color: Color::Blue,
-            style,
-            sole: Color::Gray,
-        },
-    )
-}
-
-fn create_appearance(height: Length, footwear: &Footwear, shape: &BodyShape) -> Appearance {
+fn create_appearance(height: Length, length: &OuterwearLength, shape: &BodyShape) -> Appearance {
+    let cloak = Cloak {
+        length: *length,
+        outer_color: Color::Navy,
+        inner_color: Color::Blue,
+    };
     Appearance::humanoid(
         Body {
             shape: *shape,
             width: Default::default(),
             skin: Default::default(),
             clothing: Clothing::Simple {
-                footwear: *footwear,
+                footwear: Default::default(),
                 pants: Default::default(),
                 shirt: Default::default(),
-                outerwear: Default::default(),
+                outerwear: Outerwear::Cloak(cloak),
             },
         },
         Default::default(),
