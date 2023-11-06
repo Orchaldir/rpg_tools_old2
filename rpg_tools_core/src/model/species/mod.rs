@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+pub mod manager;
+
 /// The unique identifier of a [`species`](Species).
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct SpeciesId(usize);
@@ -14,7 +16,7 @@ impl SpeciesId {
     }
 }
 
-/// A species in the game.
+/// A species like human, elf or dragon.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Species {
     id: SpeciesId,
