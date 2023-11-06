@@ -4,5 +4,6 @@ pub mod equipment;
 pub mod length;
 pub mod side;
 pub mod size;
+pub mod species;
 pub mod transparency;
 pub mod width;
