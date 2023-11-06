@@ -68,7 +68,7 @@ fn add_character(data: &State<EditorData>) -> Option<Template> {
 
     println!("Create character {}", id.id());
 
-    data.get_mut(id)
+    data.get(id)
         .map(|character| edit_character_template(id.id(), character))
 }
 
@@ -176,12 +176,12 @@ fn update_appearance_preview(
     id: usize,
     update: String,
 ) -> Option<Template> {
-    let mut data = state.data.lock().expect("lock shared data");
+    let data = state.data.lock().expect("lock shared data");
     let mut preview = state.preview.lock().expect("lock shared preview");
 
     println!("Preview appearance of character {} with {:?}", id, update);
 
-    data.get_mut(CharacterId::new(id)).map(|character| {
+    data.get(CharacterId::new(id)).map(|character| {
         *preview = apply_update_to_appearance(&update);
 
         edit_appearance_template(character, &preview)
