@@ -1,5 +1,7 @@
+use crate::model::species::gender::GenderOption;
 use serde::{Deserialize, Serialize};
 
+pub mod gender;
 pub mod manager;
 
 /// The unique identifier of a [`species`](Species).
@@ -21,6 +23,7 @@ impl SpeciesId {
 pub struct Species {
     id: SpeciesId,
     name: String,
+    gender_option: GenderOption,
 }
 
 impl Species {
@@ -28,6 +31,7 @@ impl Species {
         Species {
             id,
             name: format!("Species {}", id.0),
+            gender_option: GenderOption::TwoGenders,
         }
     }
 
@@ -41,5 +45,9 @@ impl Species {
 
     pub fn set_name(&mut self, name: String) {
         self.name = name;
+    }
+
+    pub fn gender_option(&self) -> GenderOption {
+        self.gender_option
     }
 }
