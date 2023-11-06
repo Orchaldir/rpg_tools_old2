@@ -10,6 +10,7 @@ use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::Appearance;
+use rpg_tools_core::model::character::gender::Gender;
 use rpg_tools_core::model::character::manager::CharacterMgr;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_rendering::rendering::config::example::create_config;
@@ -205,7 +206,7 @@ fn edit_character_template(id: usize, character: &Character) -> Template {
         context! {
             id: id,
             name: character.name(),
-            genders: vec!["Female", "Genderless", "Male"],
+            genders: Gender::get_all(),
             gender: character.gender(),
         },
     )

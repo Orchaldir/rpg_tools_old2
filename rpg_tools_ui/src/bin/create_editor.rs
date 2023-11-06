@@ -3,8 +3,8 @@ extern crate rpg_tools_core;
 
 use macro_core::visitor::UI;
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_ui::ui::editor::EditorVisitor;
 use rpg_tools_ui::io::write_each;
+use rpg_tools_ui::ui::editor::EditorVisitor;
 
 fn main() {
     println!("Generate tera code for editor");
