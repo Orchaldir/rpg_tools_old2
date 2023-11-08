@@ -1,4 +1,5 @@
 use crate::EditorData;
+use rocket::form::Form;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::species::gender::GenderOption;
@@ -27,16 +28,9 @@ pub fn get_all_species(data: &State<EditorData>) -> Template {
 pub fn get_species_details(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
 
-    data.species_manager.get(SpeciesId::new(id)).map(|species| {
-        Template::render(
-            "species/details",
-            context! {
-                name: species.name(),
-                id: id,
-                gender_option: format!("{:?}", species.gender_option()),
-            },
-        )
-    })
+    data.species_manager
+        .get(SpeciesId::new(id))
+        .map(|species| get_details_template(id, species))
 }
 
 #[get("/species/edit/<id>")]
@@ -44,10 +38,47 @@ pub fn edit_species(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
     data.species_manager
         .get(SpeciesId::new(id))
-        .map(|species| edit_species_template(id, species))
+        .map(|species| get_edit_template(id, species))
 }
 
-fn edit_species_template(id: usize, species: &Species) -> Template {
+#[derive(FromForm, Debug)]
+pub struct SpeciesUpdate<'r> {
+    name: &'r str,
+    gender_option: &'r str,
+}
+
+#[post("/species/update/<id>", data = "<update>")]
+pub fn update_species(
+    data: &State<EditorData>,
+    id: usize,
+    update: Form<SpeciesUpdate<'_>>,
+) -> Option<Template> {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!("Update species {} with {:?}", id, update);
+
+    data.species_manager
+        .get_mut(SpeciesId::new(id))
+        .map(|species| {
+            species.set_name(update.name.trim().to_string());
+            species.set_gender_option(update.gender_option.into());
+            species
+        })
+        .map(|species| get_details_template(id, species))
+}
+
+fn get_details_template(id: usize, species: &Species) -> Template {
+    Template::render(
+        "species/details",
+        context! {
+            name: species.name(),
+            id: id,
+            gender_option: format!("{:?}", species.gender_option()),
+        },
+    )
+}
+
+fn get_edit_template(id: usize, species: &Species) -> Template {
     Template::render(
         "species/edit",
         context! {

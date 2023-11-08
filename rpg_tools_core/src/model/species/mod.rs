@@ -50,4 +50,8 @@ impl Species {
     pub fn gender_option(&self) -> GenderOption {
         self.gender_option
     }
+
+    pub fn set_gender_option(&mut self, gender_option: GenderOption) {
+        self.gender_option = gender_option;
+    }
 }

@@ -4,7 +4,7 @@ extern crate rocket;
 
 use crate::appearance::{apply_update_to_appearance, render_to_svg, RawSvg};
 use crate::io::{read, write};
-use crate::route::species::{edit_species, get_all_species, get_species_details};
+use crate::route::species::{edit_species, get_all_species, get_species_details, update_species};
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
@@ -268,6 +268,7 @@ async fn main() -> Result<()> {
                 get_all_species,
                 get_species_details,
                 edit_species,
+                update_species,
             ],
         )
         .attach(Template::fairing())
