@@ -14,6 +14,7 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::gender::Gender;
 use rpg_tools_core::model::character::manager::CharacterMgr;
 use rpg_tools_core::model::character::{Character, CharacterId};
+use rpg_tools_core::model::species::manager::SpeciesMgr;
 use rpg_tools_core::model::RpgData;
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
@@ -291,8 +292,11 @@ fn init() -> RpgData {
         }
     };
 
+    let mut species_manager = SpeciesMgr::default();
+    species_manager.create();
+
     RpgData {
-        species_manager: Default::default(),
+        species_manager,
         character_manager,
     }
 }

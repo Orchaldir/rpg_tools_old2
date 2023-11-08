@@ -4,6 +4,11 @@
     <p><h1>Species</h1></p>
     <div class="text">
       <p><b>Total:</b> {{ total }}</p>
+      <ul>
+      {% for s in species %}
+        <li><a href="/species/details/{{ s.0 }}">{{ s.1 }}</a></li>
+      {% endfor %}
+      </ul>
     </div>
     <p class="text"><a href="/">Back</a></p>
 {% endblock content %}
