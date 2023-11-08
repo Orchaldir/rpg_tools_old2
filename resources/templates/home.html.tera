@@ -4,7 +4,7 @@
     <p><h1>RPG Tools - Editor</h1></p>
     <h2>Overview</h2>
     <div class="text">
-      <p><b>Species:</b> <a href="/character">{{ species }}</a></p>
+      <p><b>Species:</b> <a href="/species">{{ species }}</a></p>
       <p><b>Characters:</b> <a href="/character">{{ characters }}</a></p>
     </div>
 {% endblock content %}

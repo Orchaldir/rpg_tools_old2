@@ -1,0 +1,9 @@
+{% extends "base" %}
+
+{% block content %}
+    <p><h1>Species</h1></p>
+    <div class="text">
+      <p><b>Total:</b> {{ total }}</p>
+    </div>
+    <p class="text"><a href="/">Back</a></p>
+{% endblock content %}

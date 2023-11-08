@@ -4,6 +4,7 @@ extern crate rocket;
 
 use crate::appearance::{apply_update_to_appearance, render_to_svg, RawSvg};
 use crate::io::{read, write};
+use crate::route::species::get_all_species;
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
@@ -22,10 +23,11 @@ use std::sync::Mutex;
 pub mod appearance;
 pub mod io;
 pub mod parser;
+pub mod route;
 
 const FILE: &str = "resources/characters/characters.yaml";
 
-struct EditorData {
+pub struct EditorData {
     config: RenderConfig,
     data: Mutex<RpgData>,
     preview: Mutex<Appearance>,
@@ -262,6 +264,7 @@ async fn main() -> Result<()> {
                 update_appearance_preview,
                 get_front,
                 get_back,
+                get_all_species,
             ],
         )
         .attach(Template::fairing())
