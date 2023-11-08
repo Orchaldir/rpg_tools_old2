@@ -37,6 +37,7 @@ fn home(data: &State<EditorData>) -> Template {
     Template::render(
         "home",
         context! {
+            species: data.species_manager.get_all().len(),
             characters: data.character_manager.get_all().len(),
         },
     )
