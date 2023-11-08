@@ -2,8 +2,10 @@
 
 {% block content %}
     <p><h1>Characters</h1></p>
-    <p><b>Total:</b> {{ total }}</p>
-    <p><a href="/character/new">Add</a></p>
+    <div class="text">
+      <p><b>Total:</b> {{ total }}</p>
+      <p><a href="/character/new">Add</a></p>
+    </div>
     <div class="grid-container">
     {% for c in characters %}
       <div class="grid-item">
@@ -14,5 +16,5 @@
       </div>
     {% endfor %}
     </div>
-    <p><a href="/">Back</a></p>
+    <p class="text"><a href="/">Back</a></p>
 {% endblock content %}
