@@ -1,8 +1,9 @@
 use crate::model::character::gender::Gender;
+use macro_convert::Convert;
 use serde::{Deserialize, Serialize};
 
 /// Which [`genders`](Gender) are available for members of this [`species`](crate::model::species::Species)?
-#[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Convert, Clone, Copy, Debug, PartialEq, Serialize, Deserialize)]
 pub enum GenderOption {
     NoGender,
     TwoGenders,
