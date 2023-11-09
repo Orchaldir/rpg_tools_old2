@@ -240,6 +240,7 @@ fn show_character_template(data: &RpgData, id: usize, character: &Character) -> 
         context! {
             id: id,
             name: character.name(),
+            race_id: character.race(),
             race: race,
             gender: character.gender(),
             appearance: character.appearance(),
