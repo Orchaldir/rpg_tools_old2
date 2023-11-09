@@ -2,7 +2,7 @@ use crate::model::character::gender::Gender;
 use macro_convert::Convert;
 use serde::{Deserialize, Serialize};
 
-/// Which [`genders`](Gender) are available for members of this [`species`](crate::model::species::Species)?
+/// Which [`genders`](Gender) are available for members of this [`race`](crate::model::race::Race)?
 #[derive(Convert, Clone, Copy, Debug, PartialEq, Serialize, Deserialize)]
 pub enum GenderOption {
     NoGender,
@@ -13,7 +13,7 @@ impl GenderOption {
     /// Is the [`gender`](Gender) valid for this option?
     ///
     /// ```
-    ///# use rpg_tools_core::model::species::gender::GenderOption::*;
+    ///# use rpg_tools_core::model::race::gender::GenderOption::*;
     ///# use rpg_tools_core::model::character::gender::Gender::*;
     ///
     /// assert!(!NoGender.is_valid(Female));

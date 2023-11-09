@@ -7,8 +7,8 @@
   <div class="text">
     <p><b>Id:</b> {{ id }}</p>
     <p><b>Gender Option:</b> {{ gender_option }}</p>
-    <p><a href="/species/edit/{{ id }}">Edit Data</a></p>
-    <p><a href="/species/all">Back</a></p>
+    <p><a href="/race/edit/{{ id }}">Edit Data</a></p>
+    <p><a href="/race/all">Back</a></p>
   </div>
 </div>
 {% endblock content %}

@@ -1,14 +1,14 @@
-use crate::model::species::gender::GenderOption;
+use crate::model::race::gender::GenderOption;
 use serde::{Deserialize, Serialize};
 
 pub mod gender;
 pub mod manager;
 
-/// The unique identifier of a [`species`](Species).
+/// The unique identifier of a [`race`](Race).
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
-pub struct SpeciesId(usize);
+pub struct RaceId(usize);
 
-impl SpeciesId {
+impl RaceId {
     pub fn new(id: usize) -> Self {
         Self(id)
     }
@@ -18,24 +18,24 @@ impl SpeciesId {
     }
 }
 
-/// A species like human, elf or dragon.
+/// A race like human, elf or dragon.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Species {
-    id: SpeciesId,
+pub struct Race {
+    id: RaceId,
     name: String,
     gender_option: GenderOption,
 }
 
-impl Species {
-    pub fn new(id: SpeciesId) -> Self {
-        Species {
+impl Race {
+    pub fn new(id: RaceId) -> Self {
+        Race {
             id,
-            name: format!("Species {}", id.0),
+            name: format!("Race {}", id.0),
             gender_option: GenderOption::TwoGenders,
         }
     }
 
-    pub fn id(&self) -> &SpeciesId {
+    pub fn id(&self) -> &RaceId {
         &self.id
     }
 

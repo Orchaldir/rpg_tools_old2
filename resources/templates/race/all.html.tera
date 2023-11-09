@@ -1,15 +1,15 @@
 {% extends "base" %}
 
 {% block content %}
-    <p><h1>Species</h1></p>
+    <p><h1>Races</h1></p>
     <div class="text">
       <p><b>Total:</b> {{ total }}</p>
       <ul>
-      {% for s in species %}
-        <li><a href="/species/details/{{ s.0 }}">{{ s.1 }}</a></li>
+      {% for s in race %}
+        <li><a href="/race/details/{{ s.0 }}">{{ s.1 }}</a></li>
       {% endfor %}
       </ul>
-      <p><a href="/species/new">Add</a></p>
+      <p><a href="/race/new">Add</a></p>
       <p><a href="/">Back</a></p>
     </div>
 {% endblock content %}

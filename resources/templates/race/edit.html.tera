@@ -4,7 +4,7 @@
     <p><h1>Edit {{ name }}</h1></p>
     <div class="text">
       <p><b>Id:</b> {{ id }}</p>
-      <form action="/species/update/{{ id }}" method="post">
+      <form action="/race/update/{{ id }}" method="post">
         <b><label for="name">Name:</label></b>
         <input type="text" id="name" name="name" value="{{ name }}">
         <br>
@@ -15,6 +15,6 @@
         <br>
         <input type="submit" value="Submit">
       </form>
-      <p><a href="/species/details/{{ id }}">Back</a></p>
+      <p><a href="/race/details/{{ id }}">Back</a></p>
     </div>
 {% endblock content %}
