@@ -4,7 +4,9 @@ extern crate rocket;
 
 use crate::appearance::{apply_update_to_appearance, render_to_svg, RawSvg};
 use crate::io::{read, write};
-use crate::route::race::{add_race, edit_race, get_all_races, get_race_details, update_race};
+use crate::route::race::{
+    add_race, edit_race, get_all_races, get_race_details, update_race, RACES_FILE,
+};
 use anyhow::Result;
 use rocket::form::Form;
 use rocket::fs::FileServer;
@@ -15,6 +17,7 @@ use rpg_tools_core::model::character::gender::Gender;
 use rpg_tools_core::model::character::manager::CharacterMgr;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::race::manager::RaceMgr;
+use rpg_tools_core::model::race::Race;
 use rpg_tools_core::model::RpgData;
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
@@ -283,6 +286,19 @@ async fn main() -> Result<()> {
 }
 
 fn init() -> RpgData {
+    let races: Result<Vec<Race>> = read(Path::new(RACES_FILE));
+
+    let race_manager = match races {
+        Ok(races) => {
+            println!("Loaded {} races.", races.len());
+            RaceMgr::new(races)
+        }
+        Err(e) => {
+            println!("Failed to load the races: {}", e);
+            return RpgData::default();
+        }
+    };
+
     let characters: Result<Vec<Character>> = read(Path::new(FILE));
 
     let character_manager = match characters {
@@ -295,9 +311,6 @@ fn init() -> RpgData {
             CharacterMgr::default()
         }
     };
-
-    let mut race_manager = RaceMgr::default();
-    race_manager.create();
 
     RpgData {
         character_manager,

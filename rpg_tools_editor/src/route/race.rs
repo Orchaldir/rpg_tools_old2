@@ -7,7 +7,7 @@ use rpg_tools_core::model::race::gender::GenderOption;
 use rpg_tools_core::model::race::{Race, RaceId};
 use std::path::Path;
 
-const FILE: &str = "resources/races.yaml";
+pub const RACES_FILE: &str = "resources/races.yaml";
 
 #[get("/race/all")]
 pub fn get_all_races(data: &State<EditorData>) -> Template {
@@ -84,7 +84,7 @@ pub fn update_race(
         })
         .map(|race| get_details_template(id, race));
 
-    if let Err(e) = write(data.race_manager.get_all(), Path::new(FILE)) {
+    if let Err(e) = write(data.race_manager.get_all(), Path::new(RACES_FILE)) {
         println!("Failed to save the races: {}", e);
     }
 
