@@ -1,5 +1,6 @@
 - id: 0
   name: Elf
+  race: 1
   gender: Male
   appearance:
     type: Humanoid
@@ -88,6 +89,7 @@
       millimetre: 1500
 - id: 1
   name: Devil
+  race: 4
   gender: Male
   appearance:
     type: Humanoid
@@ -139,45 +141,8 @@
     height:
       millimetre: 2500
 - id: 2
-  name: Watcher
-  gender: Genderless
-  appearance:
-    type: HeadOnly
-    head:
-      ears:
-        type: None
-      eyes:
-        type: One
-        eye:
-          type: Normal
-          eye_shape: Circle
-          pupil_shape: VerticalSlit
-          pupil_color: Blue
-          background_color: White
-        eyebrows:
-          type: Normal
-          color: Fuchsia
-          shape: Curved
-          style: Even
-          width: Average
-      hair:
-        type: None
-      mouth:
-        type: Simple
-        beard:
-          type: None
-        width: Medium
-        teeth:
-          type: None
-        teeth_color: White
-      shape: Round
-      skin:
-        type: Scales
-        color: Purple
-    height:
-      millimetre: 1500
-- id: 3
   name: Vampire
+  race: 5
   gender: Female
   appearance:
     type: Humanoid
@@ -248,8 +213,9 @@
         color: White
     height:
       millimetre: 1500
-- id: 4
+- id: 3
   name: Orc
+  race: 2
   gender: Male
   appearance:
     type: Humanoid
@@ -320,8 +286,9 @@
         color: Green
     height:
       millimetre: 1500
-- id: 5
+- id: 4
   name: Dwarf
+  race: 3
   gender: Male
   appearance:
     type: Humanoid

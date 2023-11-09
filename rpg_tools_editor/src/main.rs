@@ -214,6 +214,7 @@ fn show_character_template(id: usize, character: &Character) -> Template {
         context! {
             id: id,
             name: character.name(),
+            race: character.race(),
             gender: character.gender(),
             appearance: character.appearance(),
         },
