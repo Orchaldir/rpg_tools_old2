@@ -79,7 +79,7 @@ fn add_character(data: &State<EditorData>) -> Option<Template> {
 
     data.character_manager
         .get(id)
-        .map(|character| edit_character_template(id.id(), character))
+        .map(|character| edit_character_template(&data, id.id(), character))
 }
 
 #[get("/character/<id>")]
@@ -95,12 +95,13 @@ fn edit_character(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
     data.character_manager
         .get(CharacterId::new(id))
-        .map(|character| edit_character_template(id, character))
+        .map(|character| edit_character_template(&data, id, character))
 }
 
 #[derive(FromForm, Debug)]
 struct CharacterUpdate<'r> {
     name: &'r str,
+    race: &'r str,
     gender: &'r str,
 }
 
@@ -114,10 +115,22 @@ fn update_character(
 
     println!("Update character {} with {:?}", id, update);
 
+    let race = data
+        .race_manager
+        .get_all()
+        .iter()
+        .find(|race| race.name().eq(update.race))
+        .map(|race| race.id().clone());
+
     data.character_manager
         .get_mut(CharacterId::new(id))
         .map(|character| {
             character.set_name(update.name.trim().to_string());
+
+            if let Some(id) = race {
+                character.set_race(id);
+            }
+
             character.set_gender(update.gender.into());
             character
         });
@@ -232,12 +245,26 @@ fn show_character_template(data: &RpgData, id: usize, character: &Character) -> 
     )
 }
 
-fn edit_character_template(id: usize, character: &Character) -> Template {
+fn edit_character_template(data: &RpgData, id: usize, character: &Character) -> Template {
+    let races: Vec<&str> = data
+        .race_manager
+        .get_all()
+        .iter()
+        .map(|race| race.name())
+        .collect();
+    let race = data
+        .race_manager
+        .get(character.race())
+        .map(|race| race.name())
+        .unwrap_or("Unknown");
+
     Template::render(
         "character_edit",
         context! {
             id: id,
             name: character.name(),
+            races: races,
+            race: race,
             genders: Gender::get_all(),
             gender: character.gender(),
         },

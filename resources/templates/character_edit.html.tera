@@ -9,6 +9,10 @@
         <input type="text" id="name" name="name" value="{{ name }}">
         <br>
         <br>
+        <b><label for="race">Race:</label></b>
+        {{ macros::add_select(name="race", options=races, selected=race) }}
+        <br>
+        <br>
         <b><label for="gender">Gender:</label></b>
         {{ macros::add_select(name="gender", options=genders, selected=gender) }}
         <br>
