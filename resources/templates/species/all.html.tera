@@ -9,6 +9,7 @@
         <li><a href="/species/details/{{ s.0 }}">{{ s.1 }}</a></li>
       {% endfor %}
       </ul>
+      <p><a href="/species/new">Add</a></p>
+      <p><a href="/">Back</a></p>
     </div>
-    <p class="text"><a href="/">Back</a></p>
 {% endblock content %}

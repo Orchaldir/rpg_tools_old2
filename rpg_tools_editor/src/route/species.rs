@@ -41,6 +41,19 @@ pub fn edit_species(data: &State<EditorData>, id: usize) -> Option<Template> {
         .map(|species| get_edit_template(id, species))
 }
 
+#[get("/species/new")]
+pub fn add_species(data: &State<EditorData>) -> Option<Template> {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    let id = data.species_manager.create();
+
+    println!("Create species {}", id.id());
+
+    data.species_manager
+        .get(id)
+        .map(|species| get_edit_template(id.id(), species))
+}
+
 #[derive(FromForm, Debug)]
 pub struct SpeciesUpdate<'r> {
     name: &'r str,
