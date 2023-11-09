@@ -1,7 +1,7 @@
 use crate::model::character::appearance::Appearance;
 use crate::model::character::gender::Gender;
-use serde::{Deserialize, Serialize};
 use crate::model::race::RaceId;
+use serde::{Deserialize, Serialize};
 
 pub mod appearance;
 pub mod gender;

@@ -87,7 +87,7 @@ fn get_character(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
     data.character_manager
         .get(CharacterId::new(id))
-        .map(|character| show_character_template(id, character))
+        .map(|character| show_character_template(&data, id, character))
 }
 
 #[get("/character/<id>/edit")]
@@ -120,8 +120,11 @@ fn update_character(
             character.set_name(update.name.trim().to_string());
             character.set_gender(update.gender.into());
             character
-        })
-        .map(|character| show_character_template(id, character))
+        });
+
+    data.character_manager
+        .get(CharacterId::new(id))
+        .map(|character| show_character_template(&data, id, character))
 }
 
 #[get("/character/<id>/front.svg")]
@@ -172,14 +175,17 @@ fn update_appearance(data: &State<EditorData>, id: usize, update: String) -> Opt
 
     println!("Update appearance of character {} with {:?}", id, update);
 
-    let result = data
-        .character_manager
+    data.character_manager
         .get_mut(CharacterId::new(id))
         .map(|character| {
             character.set_appearance(apply_update_to_appearance(&update));
             character
-        })
-        .map(|character| show_character_template(id, character));
+        });
+
+    let result = data
+        .character_manager
+        .get(CharacterId::new(id))
+        .map(|character| show_character_template(&data, id, character));
 
     if let Err(e) = write(data.character_manager.get_all(), Path::new(FILE)) {
         println!("Failed to save the characters: {}", e);
@@ -208,13 +214,18 @@ fn update_appearance_preview(
         })
 }
 
-fn show_character_template(id: usize, character: &Character) -> Template {
+fn show_character_template(data: &RpgData, id: usize, character: &Character) -> Template {
+    let race = data
+        .race_manager
+        .get(character.race())
+        .map(|race| race.name())
+        .unwrap_or("Unknown");
     Template::render(
         "character",
         context! {
             id: id,
             name: character.name(),
-            race: character.race(),
+            race: race,
             gender: character.gender(),
             appearance: character.appearance(),
         },
