@@ -135,9 +135,7 @@ fn update_character(
             character
         });
 
-    data.character_manager
-        .get(CharacterId::new(id))
-        .map(|character| show_character_template(&data, id, character))
+    save_and_show_character(&data, id)
 }
 
 #[get("/character/<id>/front.svg")]
@@ -195,16 +193,7 @@ fn update_appearance(data: &State<EditorData>, id: usize, update: String) -> Opt
             character
         });
 
-    let result = data
-        .character_manager
-        .get(CharacterId::new(id))
-        .map(|character| show_character_template(&data, id, character));
-
-    if let Err(e) = write(data.character_manager.get_all(), Path::new(FILE)) {
-        println!("Failed to save the characters: {}", e);
-    }
-
-    result
+    save_and_show_character(&data, id)
 }
 
 #[post("/appearance/<id>/preview", data = "<update>")]
@@ -225,6 +214,19 @@ fn update_appearance_preview(
 
             edit_appearance_template(character, &preview)
         })
+}
+
+fn save_and_show_character(data: &RpgData, id: usize) -> Option<Template> {
+    let result = data
+        .character_manager
+        .get(CharacterId::new(id))
+        .map(|character| show_character_template(&data, id, character));
+
+    if let Err(e) = write(data.character_manager.get_all(), Path::new(FILE)) {
+        println!("Failed to save the characters: {}", e);
+    }
+
+    result
 }
 
 fn show_character_template(data: &RpgData, id: usize, character: &Character) -> Template {
