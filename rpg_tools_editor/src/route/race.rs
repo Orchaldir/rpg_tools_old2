@@ -5,6 +5,7 @@ use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::race::gender::GenderOption;
 use rpg_tools_core::model::race::{Race, RaceId};
+use rpg_tools_core::model::RpgData;
 use std::path::Path;
 
 pub const RACES_FILE: &str = "resources/races.yaml";
@@ -12,18 +13,18 @@ pub const RACES_FILE: &str = "resources/races.yaml";
 #[get("/race/all")]
 pub fn get_all_races(data: &State<EditorData>) -> Template {
     let data = data.data.lock().expect("lock shared data");
-    let race: Vec<(usize, &str)> = data
+    let races: Vec<(usize, &str)> = data
         .race_manager
         .get_all()
         .iter()
-        .map(|c| (c.id().id(), c.name()))
+        .map(|r| (r.id().id(), r.name()))
         .collect();
 
     Template::render(
         "race/all",
         context! {
-            total: race.len(),
-            race: race,
+            total: races.len(),
+            races: races,
         },
     )
 }
@@ -34,7 +35,7 @@ pub fn get_race_details(data: &State<EditorData>, id: usize) -> Option<Template>
 
     data.race_manager
         .get(RaceId::new(id))
-        .map(|race| get_details_template(id, race))
+        .map(|race| get_details_template(&data, id, race))
 }
 
 #[get("/race/edit/<id>")]
@@ -74,15 +75,16 @@ pub fn update_race(
 
     println!("Update race {} with {:?}", id, update);
 
+    data.race_manager.get_mut(RaceId::new(id)).map(|race| {
+        race.set_name(update.name.trim().to_string());
+        race.set_gender_option(update.gender_option.into());
+        race
+    });
+
     let result = data
         .race_manager
-        .get_mut(RaceId::new(id))
-        .map(|race| {
-            race.set_name(update.name.trim().to_string());
-            race.set_gender_option(update.gender_option.into());
-            race
-        })
-        .map(|race| get_details_template(id, race));
+        .get(RaceId::new(id))
+        .map(|race| get_details_template(&data, id, race));
 
     if let Err(e) = write(data.race_manager.get_all(), Path::new(RACES_FILE)) {
         println!("Failed to save the races: {}", e);
@@ -91,13 +93,22 @@ pub fn update_race(
     result
 }
 
-fn get_details_template(id: usize, race: &Race) -> Template {
+fn get_details_template(data: &RpgData, id: usize, race: &Race) -> Template {
+    let characters: Vec<(usize, &str)> = data
+        .character_manager
+        .get_all()
+        .iter()
+        .filter(|c| c.race().eq(race.id()))
+        .map(|c| (c.id().id(), c.name()))
+        .collect();
+
     Template::render(
         "race/details",
         context! {
             name: race.name(),
             id: id,
             gender_option: format!("{:?}", race.gender_option()),
+            characters: characters,
         },
     )
 }

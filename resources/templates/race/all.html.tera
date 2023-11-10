@@ -5,8 +5,8 @@
     <div class="text">
       <p><b>Total:</b> {{ total }}</p>
       <ul>
-      {% for s in race %}
-        <li><a href="/race/details/{{ s.0 }}">{{ s.1 }}</a></li>
+      {% for r in races %}
+        <li><a href="/race/details/{{ r.0 }}">{{ r.1 }}</a></li>
       {% endfor %}
       </ul>
       <p><a href="/race/new">Add</a></p>
