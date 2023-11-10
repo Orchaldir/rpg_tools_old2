@@ -17,7 +17,7 @@
   </center>
   <div class="text">
     <p><a href="/appearance/{{ id }}/edit">Edit Appearance</a></p>
-    <p><a href="/character">Back</a></p>
+    <p><a href="/character/all">Back</a></p>
   </div>
 </div>
 {% endblock content %}

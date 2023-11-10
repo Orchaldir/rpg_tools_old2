@@ -4,6 +4,7 @@ extern crate rocket;
 
 use crate::appearance::{apply_update_to_appearance, render_to_svg, RawSvg};
 use crate::io::{read, write};
+use crate::route::character::{get_all_characters, CHARACTER_FILE};
 use crate::route::race::{
     add_race, edit_race, get_all_races, get_race_details, update_race, RACES_FILE,
 };
@@ -29,8 +30,6 @@ pub mod io;
 pub mod parser;
 pub mod route;
 
-const FILE: &str = "resources/characters/characters.yaml";
-
 pub struct EditorData {
     config: RenderConfig,
     data: Mutex<RpgData>,
@@ -45,26 +44,6 @@ fn home(data: &State<EditorData>) -> Template {
         context! {
             races: data.race_manager.get_all().len(),
             characters: data.character_manager.get_all().len(),
-        },
-    )
-}
-
-#[get("/character")]
-fn get_characters(data: &State<EditorData>) -> Template {
-    let data = data.data.lock().expect("lock shared data");
-    let characters: Vec<(usize, &str)> = data
-        .character_manager
-        .get_all()
-        .iter()
-        .map(|c| (c.id().id(), c.name()))
-        .collect();
-    let total = characters.len();
-
-    Template::render(
-        "characters",
-        context! {
-            characters: characters,
-            total: total,
         },
     )
 }
@@ -222,7 +201,7 @@ fn save_and_show_character(data: &RpgData, id: usize) -> Option<Template> {
         .get(CharacterId::new(id))
         .map(|character| show_character_template(data, id, character));
 
-    if let Err(e) = write(data.character_manager.get_all(), Path::new(FILE)) {
+    if let Err(e) = write(data.character_manager.get_all(), Path::new(CHARACTER_FILE)) {
         println!("Failed to save the characters: {}", e);
     }
 
@@ -298,7 +277,7 @@ async fn main() -> Result<()> {
             "/",
             routes![
                 home,
-                get_characters,
+                get_all_characters,
                 add_character,
                 get_character,
                 edit_character,
@@ -341,7 +320,7 @@ fn init() -> RpgData {
         }
     };
 
-    let characters: Result<Vec<Character>> = read(Path::new(FILE));
+    let characters: Result<Vec<Character>> = read(Path::new(CHARACTER_FILE));
 
     let character_manager = match characters {
         Ok(characters) => {
