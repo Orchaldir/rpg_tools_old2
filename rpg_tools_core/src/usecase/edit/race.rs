@@ -1,3 +1,4 @@
+use crate::model::race::gender::GenderOption;
 use crate::model::race::RaceId;
 use crate::model::RpgData;
 use anyhow::{bail, Context, Result};
@@ -26,9 +27,24 @@ pub fn update_race_name(data: &mut RpgData, id: RaceId, name: &str) -> Result<()
     Ok(())
 }
 
+/// Tries to update the gender option of a race.
+pub fn update_gender_option(data: &mut RpgData, id: RaceId, option: GenderOption) -> Result<()> {
+    if !data.character_manager.get_all().is_empty() {
+        bail!("Cannot change, because the race is used by characters!")
+    }
+
+    data.race_manager
+        .get_mut(id)
+        .map(|r| r.set_gender_option(option))
+        .context("Race doesn't exist")?;
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use GenderOption::{NoGender, TwoGenders};
 
     #[test]
     fn test_empty_name() {
@@ -78,5 +94,42 @@ mod tests {
 
         assert!(update_race_name(&mut data, id0, "Test").is_ok());
         assert!(update_race_name(&mut data, id1, "Test").is_err());
+    }
+
+    #[test]
+    fn test_update_gender_of_non_existing_race() {
+        let mut data = RpgData::default();
+
+        assert!(update_gender_option(&mut data, RaceId::new(0), TwoGenders).is_err());
+    }
+
+    #[test]
+    fn test_update_gender_options() {
+        test_update_gender_option(NoGender);
+        test_update_gender_option(TwoGenders);
+    }
+
+    fn test_update_gender_option(option: GenderOption) {
+        let mut data = RpgData::default();
+        let id = data.race_manager.create();
+
+        assert!(update_gender_option(&mut data, id, option).is_ok());
+
+        assert_eq!(
+            option,
+            data.race_manager
+                .get(id)
+                .map(|r| r.gender_option())
+                .unwrap()
+        );
+    }
+
+    #[test]
+    fn test_update_gender_options_while_used_by_characters() {
+        let mut data = RpgData::default();
+        let id = data.race_manager.create();
+        data.character_manager.create();
+
+        assert!(update_gender_option(&mut data, id, NoGender).is_err());
     }
 }
