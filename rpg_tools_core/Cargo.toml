@@ -6,6 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0"
 macro_core = { path = "../macro_core" }
 macro_convert = { path = "../macro_convert" }
 macro_ui = { path = "../macro_ui" }
