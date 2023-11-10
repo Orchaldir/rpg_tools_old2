@@ -120,7 +120,7 @@ fn update_character(
         .get_all()
         .iter()
         .find(|race| race.name().eq(update.race))
-        .map(|race| race.id().clone());
+        .map(|race| *race.id());
 
     data.character_manager
         .get_mut(CharacterId::new(id))
@@ -220,7 +220,7 @@ fn save_and_show_character(data: &RpgData, id: usize) -> Option<Template> {
     let result = data
         .character_manager
         .get(CharacterId::new(id))
-        .map(|character| show_character_template(&data, id, character));
+        .map(|character| show_character_template(data, id, character));
 
     if let Err(e) = write(data.character_manager.get_all(), Path::new(FILE)) {
         println!("Failed to save the characters: {}", e);
