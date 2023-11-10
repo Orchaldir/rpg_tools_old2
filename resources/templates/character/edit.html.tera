@@ -12,6 +12,7 @@
         <br>
         <b><label for="race">Race:</label></b>
         {{ macros::add_select(name="race", options=races, selected=race) }}
+        {% if race_error %}<br><label class="error">{{ race_error }}</label>{% endif %}
         <br>
         <br>
         <b><label for="gender">Gender:</label></b>

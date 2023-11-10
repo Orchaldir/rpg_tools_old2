@@ -51,11 +51,41 @@ pub fn update_character_gender(data: &mut RpgData, id: CharacterId, gender: Gend
     Ok(())
 }
 
+/// Tries to update the [`race`](crate::model::race::Race) of a [`character`](crate::model::character::Character).
+pub fn update_character_race(data: &mut RpgData, id: CharacterId, race_name: &str) -> Result<()> {
+    let race = data
+        .race_manager
+        .get_all()
+        .iter()
+        .find(|race| race.name().eq(race_name))
+        .context("Race doesn't exist!")?;
+    let gender = data
+        .character_manager
+        .get(id)
+        .map(|c| c.gender())
+        .context("Character doesn't exist!")?;
+
+    if !race.gender_option().is_valid(gender) {
+        bail!("Race's gender option conflicts with the gender!")
+    }
+
+    let race_id = race.id().clone();
+
+    data.character_manager
+        .get_mut(id)
+        .map(|r| r.set_race(race_id))
+        .context("Character doesn't exist!")?;
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::model::character::gender::Gender::Female;
     use Gender::{Genderless, Male};
+
+    // update_character_name()
 
     #[test]
     fn test_empty_name() {
@@ -110,6 +140,8 @@ mod tests {
         assert!(update_character_name(&mut data, id1, "Test").is_err());
     }
 
+    // update_character_gender()
+
     #[test]
     fn test_update_gender_of_non_existing_character() {
         let mut data = RpgData::default();
@@ -155,4 +187,6 @@ mod tests {
 
         assert!(update_character_gender(&mut data, character_id, Genderless).is_err());
     }
+
+    // update_character_gender()
 }
