@@ -44,9 +44,9 @@ pub fn update_character_gender(data: &mut RpgData, id: CharacterId, gender: Gend
         bail!("Gender is not valid for the race's gender option!");
     }
 
-    data.character_manager
-        .get_mut(id)
-        .map(|r| r.set_gender(gender));
+    if let Some(c) = data.character_manager.get_mut(id) {
+        c.set_gender(gender)
+    }
 
     Ok(())
 }
@@ -69,7 +69,7 @@ pub fn update_character_race(data: &mut RpgData, id: CharacterId, race_name: &st
         bail!("Race's gender option conflicts with the gender!")
     }
 
-    let race_id = race.id().clone();
+    let race_id = *race.id();
 
     data.character_manager
         .get_mut(id)

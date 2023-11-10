@@ -42,9 +42,9 @@ pub fn update_gender_option(data: &mut RpgData, id: RaceId, option: GenderOption
         bail!("Cannot change, because the race is used by characters!")
     }
 
-    data.race_manager
-        .get_mut(id)
-        .map(|r| r.set_gender_option(option));
+    if let Some(r) = data.race_manager.get_mut(id) {
+        r.set_gender_option(option)
+    }
 
     Ok(())
 }
