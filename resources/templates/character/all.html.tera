@@ -11,7 +11,7 @@
       <div class="grid-item">
         <a href="/character/details/{{ c.0 }}">
           <div class="content">{{ c.1 }}</div>
-          <img src = "/appearance/{{ c.0 }}/front.svg" alt="Character {{ c.0 }}"/>
+          <img src = "/appearance/render/{{ c.0 }}/front.svg" alt="Character {{ c.0 }}"/>
         </a>
       </div>
     {% endfor %}
