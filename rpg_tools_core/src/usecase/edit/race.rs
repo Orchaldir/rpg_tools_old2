@@ -29,14 +29,22 @@ pub fn update_race_name(data: &mut RpgData, id: RaceId, name: &str) -> Result<()
 
 /// Tries to update the gender option of a race.
 pub fn update_gender_option(data: &mut RpgData, id: RaceId, option: GenderOption) -> Result<()> {
+    if data
+        .race_manager
+        .get(id)
+        .map(|r| r.gender_option() == option)
+        .context("Race doesn't exist")?
+    {
+        return Ok(());
+    }
+
     if !data.character_manager.get_all().is_empty() {
         bail!("Cannot change, because the race is used by characters!")
     }
 
     data.race_manager
         .get_mut(id)
-        .map(|r| r.set_gender_option(option))
-        .context("Race doesn't exist")?;
+        .map(|r| r.set_gender_option(option));
 
     Ok(())
 }
@@ -131,5 +139,14 @@ mod tests {
         data.character_manager.create();
 
         assert!(update_gender_option(&mut data, id, NoGender).is_err());
+    }
+
+    #[test]
+    fn test_update_gender_options_ignore_characters_if_unchanged() {
+        let mut data = RpgData::default();
+        let id = data.race_manager.create();
+        data.character_manager.create();
+
+        assert!(update_gender_option(&mut data, id, TwoGenders).is_ok());
     }
 }
