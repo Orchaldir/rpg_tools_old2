@@ -8,12 +8,12 @@
     <p><b>Id:</b> {{ id }}</p>
     <p><b>Race:</b> <a href="/race/details/{{ race_id }}">{{ race }}</a></p>
     <p><b>Gender:</b> {{ gender }}</p>
-    <p><a href="/character/{{ id }}/edit">Edit Data</a></p>
+    <p><a href="/character/edit/{{ id }}">Edit Data</a></p>
   </div>
   <p><h2>Appearance</h2></p>
   <center>
-    <img src = "/character/{{ id }}/front.svg" alt="Front View of the Character" width="25%"/>
-    <img src = "/character/{{ id }}/back.svg" alt="Back View of the Character" width="25%"/>
+    <img src = "/appearance/{{ id }}/front.svg" alt="Front View of the Character" width="25%"/>
+    <img src = "/appearance/{{ id }}/back.svg" alt="Back View of the Character" width="25%"/>
   </center>
   <div class="text">
     <p><a href="/appearance/{{ id }}/edit">Edit Appearance</a></p>

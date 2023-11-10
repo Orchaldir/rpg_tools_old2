@@ -3,18 +3,19 @@ extern crate macro_core;
 extern crate rocket;
 
 use crate::appearance::{apply_update_to_appearance, render_to_svg, RawSvg};
-use crate::io::{read, write};
-use crate::route::character::{get_all_characters, CHARACTER_FILE};
+use crate::io::read;
+use crate::route::character::{
+    add_character, edit_character, get_all_characters, get_character_details,
+    save_and_show_character, update_character, CHARACTER_FILE,
+};
 use crate::route::race::{
     add_race, edit_race, get_all_races, get_race_details, update_race, RACES_FILE,
 };
 use anyhow::Result;
-use rocket::form::Form;
 use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::character::gender::Gender;
 use rpg_tools_core::model::character::manager::CharacterMgr;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::race::manager::RaceMgr;
@@ -48,76 +49,7 @@ fn home(data: &State<EditorData>) -> Template {
     )
 }
 
-#[get("/character/new")]
-fn add_character(data: &State<EditorData>) -> Option<Template> {
-    let mut data = data.data.lock().expect("lock shared data");
-
-    let id = data.character_manager.create();
-
-    println!("Create character {}", id.id());
-
-    data.character_manager
-        .get(id)
-        .map(|character| edit_character_template(&data, id.id(), character))
-}
-
-#[get("/character/<id>")]
-fn get_character(data: &State<EditorData>, id: usize) -> Option<Template> {
-    let data = data.data.lock().expect("lock shared data");
-    data.character_manager
-        .get(CharacterId::new(id))
-        .map(|character| show_character_template(&data, id, character))
-}
-
-#[get("/character/<id>/edit")]
-fn edit_character(data: &State<EditorData>, id: usize) -> Option<Template> {
-    let data = data.data.lock().expect("lock shared data");
-    data.character_manager
-        .get(CharacterId::new(id))
-        .map(|character| edit_character_template(&data, id, character))
-}
-
-#[derive(FromForm, Debug)]
-struct CharacterUpdate<'r> {
-    name: &'r str,
-    race: &'r str,
-    gender: &'r str,
-}
-
-#[post("/character/<id>/update", data = "<update>")]
-fn update_character(
-    data: &State<EditorData>,
-    id: usize,
-    update: Form<CharacterUpdate<'_>>,
-) -> Option<Template> {
-    let mut data = data.data.lock().expect("lock shared data");
-
-    println!("Update character {} with {:?}", id, update);
-
-    let race = data
-        .race_manager
-        .get_all()
-        .iter()
-        .find(|race| race.name().eq(update.race))
-        .map(|race| *race.id());
-
-    data.character_manager
-        .get_mut(CharacterId::new(id))
-        .map(|character| {
-            character.set_name(update.name.trim().to_string());
-
-            if let Some(id) = race {
-                character.set_race(id);
-            }
-
-            character.set_gender(update.gender.into());
-            character
-        });
-
-    save_and_show_character(&data, id)
-}
-
-#[get("/character/<id>/front.svg")]
+#[get("/appearance/<id>/front.svg")]
 fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
     let data = state.data.lock().expect("lock shared data");
     data.character_manager
@@ -125,7 +57,7 @@ fn get_front(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
         .map(|character| render_to_svg(&state.config, character.appearance(), true))
 }
 
-#[get("/character/<id>/back.svg")]
+#[get("/appearance/<id>/back.svg")]
 fn get_back(state: &State<EditorData>, id: usize) -> Option<RawSvg> {
     let data = state.data.lock().expect("lock shared data");
     data.character_manager
@@ -195,64 +127,6 @@ fn update_appearance_preview(
         })
 }
 
-fn save_and_show_character(data: &RpgData, id: usize) -> Option<Template> {
-    let result = data
-        .character_manager
-        .get(CharacterId::new(id))
-        .map(|character| show_character_template(data, id, character));
-
-    if let Err(e) = write(data.character_manager.get_all(), Path::new(CHARACTER_FILE)) {
-        println!("Failed to save the characters: {}", e);
-    }
-
-    result
-}
-
-fn show_character_template(data: &RpgData, id: usize, character: &Character) -> Template {
-    let race = data
-        .race_manager
-        .get(character.race())
-        .map(|race| race.name())
-        .unwrap_or("Unknown");
-    Template::render(
-        "character",
-        context! {
-            id: id,
-            name: character.name(),
-            race_id: character.race(),
-            race: race,
-            gender: character.gender(),
-            appearance: character.appearance(),
-        },
-    )
-}
-
-fn edit_character_template(data: &RpgData, id: usize, character: &Character) -> Template {
-    let races: Vec<&str> = data
-        .race_manager
-        .get_all()
-        .iter()
-        .map(|race| race.name())
-        .collect();
-    let race = data
-        .race_manager
-        .get(character.race())
-        .map(|race| race.name())
-        .unwrap_or("Unknown");
-
-    Template::render(
-        "character_edit",
-        context! {
-            id: id,
-            name: character.name(),
-            races: races,
-            race: race,
-            genders: Gender::get_all(),
-            gender: character.gender(),
-        },
-    )
-}
-
 fn edit_appearance_template(character: &Character, appearance: &Appearance) -> Template {
     Template::render(
         "appearance_edit",
@@ -279,7 +153,7 @@ async fn main() -> Result<()> {
                 home,
                 get_all_characters,
                 add_character,
-                get_character,
+                get_character_details,
                 edit_character,
                 update_character,
                 edit_appearance,
