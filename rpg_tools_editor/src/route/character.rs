@@ -6,6 +6,7 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::gender::Gender;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::RpgData;
+use rpg_tools_core::usecase::edit::character::update_character_name;
 use std::path::Path;
 
 pub const CHARACTER_FILE: &str = "resources/characters/characters.yaml";
@@ -43,7 +44,7 @@ pub fn edit_character(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
     data.character_manager
         .get(CharacterId::new(id))
-        .map(|character| get_edit_template(&data, id, character))
+        .map(|character| get_edit_template(&data, id, character, ""))
 }
 
 #[get("/character/new")]
@@ -56,7 +57,7 @@ pub fn add_character(data: &State<EditorData>) -> Option<Template> {
 
     data.character_manager
         .get(id)
-        .map(|character| get_edit_template(&data, id.id(), character))
+        .map(|character| get_edit_template(&data, id.id(), character, ""))
 }
 
 #[derive(FromForm, Debug)]
@@ -76,6 +77,15 @@ pub fn update_character(
 
     println!("Update character {} with {:?}", id, update);
 
+    let character_id = CharacterId::new(id);
+
+    if let Err(e) = update_character_name(&mut data, character_id, update.name) {
+        return data
+            .character_manager
+            .get(character_id)
+            .map(|character| get_edit_template(&data, id, character, &e.to_string()));
+    }
+
     let race = data
         .race_manager
         .get_all()
@@ -86,8 +96,6 @@ pub fn update_character(
     data.character_manager
         .get_mut(CharacterId::new(id))
         .map(|character| {
-            character.set_name(update.name.trim().to_string());
-
             if let Some(id) = race {
                 character.set_race(id);
             }
@@ -119,7 +127,12 @@ fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Tem
     )
 }
 
-fn get_edit_template(data: &RpgData, id: usize, character: &Character) -> Template {
+fn get_edit_template(
+    data: &RpgData,
+    id: usize,
+    character: &Character,
+    name_error: &str,
+) -> Template {
     let races: Vec<&str> = data
         .race_manager
         .get_all()
@@ -137,6 +150,7 @@ fn get_edit_template(data: &RpgData, id: usize, character: &Character) -> Templa
         context! {
             id: id,
             name: character.name(),
+            name_error: name_error,
             races: races,
             race: race,
             genders: Gender::get_all(),

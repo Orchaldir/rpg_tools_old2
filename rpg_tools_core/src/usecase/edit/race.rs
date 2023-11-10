@@ -3,7 +3,7 @@ use crate::model::race::RaceId;
 use crate::model::RpgData;
 use anyhow::{bail, Context, Result};
 
-/// Tries to update the name of a race.
+/// Tries to update the name of a [`race`](crate::model::race::Race).
 pub fn update_race_name(data: &mut RpgData, id: RaceId, name: &str) -> Result<()> {
     let trimmed = name.trim().to_string();
 
@@ -27,7 +27,7 @@ pub fn update_race_name(data: &mut RpgData, id: RaceId, name: &str) -> Result<()
     Ok(())
 }
 
-/// Tries to update the gender option of a race.
+/// Tries to update the gender option of a [`race`](crate::model::race::Race).
 pub fn update_gender_option(data: &mut RpgData, id: RaceId, option: GenderOption) -> Result<()> {
     if data
         .race_manager

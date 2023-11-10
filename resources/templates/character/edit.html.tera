@@ -7,6 +7,7 @@
       <form action="/character/update/{{ id }}" method="post">
         <b><label for="name">Name:</label></b>
         <input type="text" id="name" name="name" value="{{ name }}">
+        {% if name_error %}<br><label class="error">{{ name_error }}</label>{% endif %}
         <br>
         <br>
         <b><label for="race">Race:</label></b>
