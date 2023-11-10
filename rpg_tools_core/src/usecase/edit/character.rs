@@ -1,8 +1,9 @@
+use crate::model::character::gender::Gender;
 use crate::model::character::CharacterId;
 use crate::model::RpgData;
 use anyhow::{bail, Context, Result};
 
-/// Tries to update the name of a [`character`](crate::model::character::Character)..
+/// Tries to update the name of a [`character`](crate::model::character::Character).
 pub fn update_character_name(data: &mut RpgData, id: CharacterId, name: &str) -> Result<()> {
     let trimmed = name.trim().to_string();
 
@@ -21,7 +22,31 @@ pub fn update_character_name(data: &mut RpgData, id: CharacterId, name: &str) ->
     data.character_manager
         .get_mut(id)
         .map(|r| r.set_name(trimmed))
-        .context("Character doesn't exist")?;
+        .context("Character doesn't exist!")?;
+
+    Ok(())
+}
+
+/// Tries to update the [`gender`](Gender) of a [`character`](crate::model::character::Character).
+pub fn update_character_gender(data: &mut RpgData, id: CharacterId, gender: Gender) -> Result<()> {
+    let race_id = data
+        .character_manager
+        .get(id)
+        .map(|c| c.race())
+        .context("Character doesn't exist!")?;
+    let option = data
+        .race_manager
+        .get(race_id)
+        .map(|r| r.gender_option())
+        .context("Character's race doesn't exist!")?;
+
+    if !option.is_valid(gender) {
+        bail!("Gender is not valid for the race's gender option!");
+    }
+
+    data.character_manager
+        .get_mut(id)
+        .map(|r| r.set_gender(gender));
 
     Ok(())
 }
@@ -29,6 +54,8 @@ pub fn update_character_name(data: &mut RpgData, id: CharacterId, name: &str) ->
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::model::character::gender::Gender::Female;
+    use Gender::{Genderless, Male};
 
     #[test]
     fn test_empty_name() {
@@ -81,5 +108,51 @@ mod tests {
 
         assert!(update_character_name(&mut data, id0, "Test").is_ok());
         assert!(update_character_name(&mut data, id1, "Test").is_err());
+    }
+
+    #[test]
+    fn test_update_gender_of_non_existing_character() {
+        let mut data = RpgData::default();
+
+        assert!(update_character_gender(&mut data, CharacterId::new(0), Male).is_err());
+    }
+
+    #[test]
+    fn test_update_gender_with_non_existing_race() {
+        let mut data = RpgData::default();
+        let character_id = data.character_manager.create();
+
+        assert!(update_character_gender(&mut data, character_id, Male).is_err());
+    }
+
+    #[test]
+    fn test_update_genders() {
+        test_update_gender(Male);
+        test_update_gender(Female);
+    }
+
+    fn test_update_gender(gender: Gender) {
+        let mut data = RpgData::default();
+        data.race_manager.create();
+        let character_id = data.character_manager.create();
+
+        assert!(update_character_gender(&mut data, character_id, gender).is_ok());
+
+        assert_eq!(
+            gender,
+            data.character_manager
+                .get(character_id)
+                .map(|r| r.gender())
+                .unwrap()
+        );
+    }
+
+    #[test]
+    fn test_update_invalid_genders() {
+        let mut data = RpgData::default();
+        data.race_manager.create();
+        let character_id = data.character_manager.create();
+
+        assert!(update_character_gender(&mut data, character_id, Genderless).is_err());
     }
 }

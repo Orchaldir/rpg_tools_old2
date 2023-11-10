@@ -6,7 +6,7 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::gender::Gender;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::RpgData;
-use rpg_tools_core::usecase::edit::character::update_character_name;
+use rpg_tools_core::usecase::edit::character::{update_character_gender, update_character_name};
 use std::path::Path;
 
 pub const CHARACTER_FILE: &str = "resources/characters/characters.yaml";
@@ -44,7 +44,7 @@ pub fn edit_character(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
     data.character_manager
         .get(CharacterId::new(id))
-        .map(|character| get_edit_template(&data, id, character, ""))
+        .map(|character| get_edit_template(&data, id, character, "", ""))
 }
 
 #[get("/character/new")]
@@ -57,7 +57,7 @@ pub fn add_character(data: &State<EditorData>) -> Option<Template> {
 
     data.character_manager
         .get(id)
-        .map(|character| get_edit_template(&data, id.id(), character, ""))
+        .map(|character| get_edit_template(&data, id.id(), character, "", ""))
 }
 
 #[derive(FromForm, Debug)]
@@ -83,7 +83,14 @@ pub fn update_character(
         return data
             .character_manager
             .get(character_id)
-            .map(|character| get_edit_template(&data, id, character, &e.to_string()));
+            .map(|character| get_edit_template(&data, id, character, &e.to_string(), ""));
+    }
+
+    if let Err(e) = update_character_gender(&mut data, character_id, update.gender.into()) {
+        return data
+            .character_manager
+            .get(character_id)
+            .map(|character| get_edit_template(&data, id, character, "", &e.to_string()));
     }
 
     let race = data
@@ -99,8 +106,6 @@ pub fn update_character(
             if let Some(id) = race {
                 character.set_race(id);
             }
-
-            character.set_gender(update.gender.into());
             character
         });
 
@@ -132,6 +137,7 @@ fn get_edit_template(
     id: usize,
     character: &Character,
     name_error: &str,
+    gender_error: &str,
 ) -> Template {
     let races: Vec<&str> = data
         .race_manager
@@ -155,6 +161,7 @@ fn get_edit_template(
             race: race,
             genders: Gender::get_all(),
             gender: character.gender(),
+            gender_error: gender_error,
         },
     )
 }
