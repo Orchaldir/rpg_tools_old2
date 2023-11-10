@@ -12,6 +12,7 @@
         <br>
         <b><label for="gender_option">Gender Option:</label></b>
         {{ macros::add_select(name="gender_option", options=gender_options, selected=gender_option) }}
+        {% if gender_error %}<br><label class="error">{{ gender_error }}</label>{% endif %}
         <br>
         <br>
         <input type="submit" value="Submit">

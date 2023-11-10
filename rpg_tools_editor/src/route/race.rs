@@ -6,7 +6,7 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::race::gender::GenderOption;
 use rpg_tools_core::model::race::{Race, RaceId};
 use rpg_tools_core::model::RpgData;
-use rpg_tools_core::usecase::edit::race::update_race_name;
+use rpg_tools_core::usecase::edit::race::{update_gender_option, update_race_name};
 use std::path::Path;
 
 pub const RACES_FILE: &str = "resources/races.yaml";
@@ -44,7 +44,7 @@ pub fn edit_race(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
     data.race_manager
         .get(RaceId::new(id))
-        .map(|race| get_edit_template(id, race, ""))
+        .map(|race| get_edit_template(id, race, "", ""))
 }
 
 #[get("/race/new")]
@@ -57,7 +57,7 @@ pub fn add_race(data: &State<EditorData>) -> Option<Template> {
 
     data.race_manager
         .get(id)
-        .map(|race| get_edit_template(id.id(), race, ""))
+        .map(|race| get_edit_template(id.id(), race, "", ""))
 }
 
 #[derive(FromForm, Debug)]
@@ -82,13 +82,15 @@ pub fn update_race(
         return data
             .race_manager
             .get(race_id)
-            .map(|race| get_edit_template(id, race, &e.to_string()));
+            .map(|race| get_edit_template(id, race, &e.to_string(), ""));
     }
 
-    data.race_manager.get_mut(race_id).map(|race| {
-        race.set_gender_option(update.gender_option.into());
-        race
-    });
+    if let Err(e) = update_gender_option(&mut data, race_id, update.gender_option.into()) {
+        return data
+            .race_manager
+            .get(race_id)
+            .map(|race| get_edit_template(id, race, "", &e.to_string()));
+    }
 
     let result = data
         .race_manager
@@ -122,7 +124,7 @@ fn get_details_template(data: &RpgData, id: usize, race: &Race) -> Template {
     )
 }
 
-fn get_edit_template(id: usize, race: &Race, name_error: &str) -> Template {
+fn get_edit_template(id: usize, race: &Race, name_error: &str, gender_error: &str) -> Template {
     Template::render(
         "race/edit",
         context! {
@@ -131,6 +133,7 @@ fn get_edit_template(id: usize, race: &Race, name_error: &str) -> Template {
             name_error: name_error,
             gender_options: GenderOption::get_all(),
             gender_option: race.gender_option(),
+            gender_error: gender_error,
         },
     )
 }
