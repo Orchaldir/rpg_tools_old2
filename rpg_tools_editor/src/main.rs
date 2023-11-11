@@ -28,7 +28,7 @@ use rpg_tools_core::model::culture::manager::CultureMgr;
 use rpg_tools_core::model::culture::Culture;
 use rpg_tools_core::model::race::manager::RaceMgr;
 use rpg_tools_core::model::race::Race;
-use rpg_tools_core::model::RpgData;
+use rpg_tools_core::model::{get_setting_path, RpgData};
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::path::PathBuf;
@@ -66,14 +66,14 @@ fn home(data: &State<EditorData>) -> Template {
 
 #[rocket::main]
 async fn main() -> Result<()> {
-    let setting_path = "resources/settings/eberron";
+    let setting = "eberron";
 
     if let Err(e) = rocket::build()
         .manage(EditorData {
             config: create_config(),
-            data: Mutex::new(init(setting_path)),
+            data: Mutex::new(init(setting)),
             preview: Mutex::new(Appearance::default()),
-            path: setting_path.to_string(),
+            path: setting.to_string(),
         })
         .mount("/static", FileServer::from("rpg_tools_editor/static/"))
         .mount(
@@ -114,8 +114,8 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn init(setting_path: &str) -> RpgData {
-    let cultures: Result<Vec<Culture>> = read(&get_path(setting_path, CULTURES_FILE));
+fn init(setting: &str) -> RpgData {
+    let cultures: Result<Vec<Culture>> = read(&get_setting_path(setting, CULTURES_FILE));
 
     let culture_manager = match cultures {
         Ok(cultures) => {
@@ -128,7 +128,7 @@ fn init(setting_path: &str) -> RpgData {
         }
     };
 
-    let races: Result<Vec<Race>> = read(&get_path(setting_path, RACES_FILE));
+    let races: Result<Vec<Race>> = read(&get_setting_path(setting, RACES_FILE));
 
     let race_manager = match races {
         Ok(races) => {
@@ -141,7 +141,7 @@ fn init(setting_path: &str) -> RpgData {
         }
     };
 
-    let characters: Result<Vec<Character>> = read(&get_path(setting_path, CHARACTERS_FILE));
+    let characters: Result<Vec<Character>> = read(&get_setting_path(setting, CHARACTERS_FILE));
 
     let character_manager = match characters {
         Ok(characters) => {
@@ -155,6 +155,7 @@ fn init(setting_path: &str) -> RpgData {
     };
 
     RpgData {
+        setting: setting.to_string(),
         character_manager,
         culture_manager,
         race_manager,

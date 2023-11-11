@@ -7,7 +7,6 @@ use rpg_tools_core::model::race::gender::GenderOption;
 use rpg_tools_core::model::race::{Race, RaceId};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::edit::race::{update_gender_option, update_race_name};
-use std::path::Path;
 
 pub const RACES_FILE: &str = "races.yaml";
 
@@ -97,7 +96,7 @@ pub fn update_race(
         .get(race_id)
         .map(|race| get_details_template(&data, id, race));
 
-    if let Err(e) = write(data.race_manager.get_all(), Path::new(RACES_FILE)) {
+    if let Err(e) = write(data.race_manager.get_all(), &data.get_path(RACES_FILE)) {
         println!("Failed to save the races: {}", e);
     }
 

@@ -9,7 +9,6 @@ use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::edit::character::{
     update_character_gender, update_character_name, update_character_race,
 };
-use std::path::Path;
 
 pub const CHARACTERS_FILE: &str = "characters.yaml";
 
@@ -190,7 +189,10 @@ pub fn save_and_show_character(data: &RpgData, id: usize) -> Option<Template> {
         .get(CharacterId::new(id))
         .map(|character| get_details_template(data, id, character));
 
-    if let Err(e) = write(data.character_manager.get_all(), Path::new(CHARACTERS_FILE)) {
+    if let Err(e) = write(
+        data.character_manager.get_all(),
+        &data.get_path(CHARACTERS_FILE),
+    ) {
         println!("Failed to save the characters: {}", e);
     }
 

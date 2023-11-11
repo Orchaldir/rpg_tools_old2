@@ -6,7 +6,6 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::culture::{Culture, CultureId};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::edit::culture::update_culture_name;
-use std::path::Path;
 
 pub const CULTURES_FILE: &str = "cultures.yaml";
 
@@ -88,7 +87,10 @@ pub fn update_culture(
         .get(culture_id)
         .map(|culture| get_details_template(&data, id, culture));
 
-    if let Err(e) = write(data.culture_manager.get_all(), Path::new(CULTURES_FILE)) {
+    if let Err(e) = write(
+        data.culture_manager.get_all(),
+        &data.get_path(CULTURES_FILE),
+    ) {
         println!("Failed to save the cultures: {}", e);
     }
 
