@@ -189,4 +189,58 @@ mod tests {
     }
 
     // update_character_gender()
+
+    #[test]
+    fn test_update_race_with_non_existing_race() {
+        let mut data = RpgData::default();
+        let character_id = data.character_manager.create();
+
+        assert!(update_character_race(&mut data, character_id, "Test").is_err());
+    }
+
+    #[test]
+    fn test_update_race_of_non_existing_character() {
+        let mut data = RpgData::default();
+        let race_id = data.race_manager.create();
+        data.race_manager
+            .get_mut(race_id)
+            .map(|r| r.set_name("Test".to_string()));
+
+        assert!(update_character_race(&mut data, CharacterId::new(0), "Test").is_err());
+    }
+
+    #[test]
+    fn test_update_race() {
+        let mut data = RpgData::default();
+        let character_id = data.character_manager.create();
+        let race_id = data.race_manager.create();
+        data.race_manager
+            .get_mut(race_id)
+            .map(|r| r.set_name("Test".to_string()));
+
+        assert!(update_character_race(&mut data, character_id, "Test").is_ok());
+
+        assert_eq!(
+            race_id,
+            data.character_manager
+                .get(character_id)
+                .map(|r| r.race())
+                .unwrap()
+        );
+    }
+
+    #[test]
+    fn test_update_race_with_invalid_gender() {
+        let mut data = RpgData::default();
+        let character_id = data.character_manager.create();
+        data.character_manager
+            .get_mut(character_id)
+            .map(|c| c.set_gender(Genderless));
+        let race_id = data.race_manager.create();
+        data.race_manager
+            .get_mut(race_id)
+            .map(|r| r.set_name("Test".to_string()));
+
+        assert!(update_character_race(&mut data, character_id, "Test").is_err());
+    }
 }
