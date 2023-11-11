@@ -78,6 +78,28 @@ pub fn update_character_race(data: &mut RpgData, id: CharacterId, race_name: &st
     Ok(())
 }
 
+/// Tries to update the [`culture`](crate::model::culture::Culture) of a [`character`](crate::model::character::Character).
+pub fn update_character_culture(
+    data: &mut RpgData,
+    id: CharacterId,
+    culture_name: &str,
+) -> Result<()> {
+    let culture_id = data
+        .culture_manager
+        .get_all()
+        .iter()
+        .find(|culture| culture.name().eq(culture_name))
+        .map(|culture| *culture.id())
+        .context("Culture doesn't exist!")?;
+
+    data.character_manager
+        .get_mut(id)
+        .map(|character| character.set_culture(culture_id))
+        .context("Character doesn't exist!")?;
+
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -187,7 +209,7 @@ mod tests {
         assert!(update_character_gender(&mut data, character_id, Genderless).is_err());
     }
 
-    // update_character_gender()
+    // update_character_race()
 
     #[test]
     fn test_update_race_with_non_existing_race() {
@@ -241,5 +263,46 @@ mod tests {
             .map(|r| r.set_name("Test".to_string()));
 
         assert!(update_character_race(&mut data, character_id, "Test").is_err());
+    }
+
+    // update_character_culture()
+
+    #[test]
+    fn test_update_culture_with_non_existing_culture() {
+        let mut data = RpgData::default();
+        let character_id = data.character_manager.create();
+
+        assert!(update_character_culture(&mut data, character_id, "Test").is_err());
+    }
+
+    #[test]
+    fn test_update_culture_of_non_existing_character() {
+        let mut data = RpgData::default();
+        let culture_id = data.culture_manager.create();
+        data.culture_manager
+            .get_mut(culture_id)
+            .map(|r| r.set_name("Test".to_string()));
+
+        assert!(update_character_culture(&mut data, CharacterId::new(0), "Test").is_err());
+    }
+
+    #[test]
+    fn test_update_culture() {
+        let mut data = RpgData::default();
+        let character_id = data.character_manager.create();
+        let culture_id = data.culture_manager.create();
+        data.culture_manager
+            .get_mut(culture_id)
+            .map(|r| r.set_name("Test".to_string()));
+
+        assert!(update_character_culture(&mut data, character_id, "Test").is_ok());
+
+        assert_eq!(
+            culture_id,
+            data.character_manager
+                .get(character_id)
+                .map(|r| r.culture())
+                .unwrap()
+        );
     }
 }

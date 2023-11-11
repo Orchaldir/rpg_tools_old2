@@ -1,5 +1,6 @@
 use crate::model::character::appearance::Appearance;
 use crate::model::character::gender::Gender;
+use crate::model::culture::CultureId;
 use crate::model::race::RaceId;
 use serde::{Deserialize, Serialize};
 
@@ -27,6 +28,7 @@ pub struct Character {
     id: CharacterId,
     name: String,
     race: RaceId,
+    culture: CultureId,
     gender: Gender,
     appearance: Appearance,
 }
@@ -37,6 +39,7 @@ impl Character {
             id,
             name: format!("Character {}", id.0),
             race: RaceId::new(0),
+            culture: CultureId::new(0),
             gender: Gender::default(),
             appearance: Appearance::default(),
         }
@@ -60,6 +63,14 @@ impl Character {
 
     pub fn set_race(&mut self, race: RaceId) {
         self.race = race;
+    }
+
+    pub fn culture(&self) -> CultureId {
+        self.culture
+    }
+
+    pub fn set_culture(&mut self, culture: CultureId) {
+        self.culture = culture;
     }
 
     pub fn gender(&self) -> Gender {

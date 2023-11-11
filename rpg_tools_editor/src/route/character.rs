@@ -7,11 +7,10 @@ use rpg_tools_core::model::character::gender::Gender;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::edit::character::{
-    update_character_gender, update_character_name, update_character_race,
+    update_character_culture, update_character_gender, update_character_name, update_character_race,
 };
-use std::path::Path;
 
-pub const CHARACTER_FILE: &str = "resources/characters/characters.yaml";
+pub const CHARACTERS_FILE: &str = "characters.yaml";
 
 #[get("/character/all")]
 pub fn get_all_characters(data: &State<EditorData>) -> Template {
@@ -46,7 +45,7 @@ pub fn edit_character(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
     data.character_manager
         .get(CharacterId::new(id))
-        .map(|character| get_edit_template(&data, id, character, "", "", ""))
+        .map(|character| get_edit_template(&data, id, character, "", "", "", ""))
 }
 
 #[get("/character/new")]
@@ -59,13 +58,14 @@ pub fn add_character(data: &State<EditorData>) -> Option<Template> {
 
     data.character_manager
         .get(id)
-        .map(|character| get_edit_template(&data, id.id(), character, "", "", ""))
+        .map(|character| get_edit_template(&data, id.id(), character, "", "", "", ""))
 }
 
 #[derive(FromForm, Debug)]
 pub struct CharacterUpdate<'r> {
     name: &'r str,
     race: &'r str,
+    culture: &'r str,
     gender: &'r str,
 }
 
@@ -85,21 +85,28 @@ pub fn update_character(
         return data
             .character_manager
             .get(character_id)
-            .map(|character| get_edit_template(&data, id, character, &e.to_string(), "", ""));
+            .map(|character| get_edit_template(&data, id, character, &e.to_string(), "", "", ""));
     }
 
     if let Err(e) = update_character_gender(&mut data, character_id, update.gender.into()) {
         return data
             .character_manager
             .get(character_id)
-            .map(|character| get_edit_template(&data, id, character, "", &e.to_string(), ""));
+            .map(|character| get_edit_template(&data, id, character, "", &e.to_string(), "", ""));
     }
 
     if let Err(e) = update_character_race(&mut data, character_id, update.race) {
         return data
             .character_manager
             .get(character_id)
-            .map(|character| get_edit_template(&data, id, character, "", "", &e.to_string()));
+            .map(|character| get_edit_template(&data, id, character, "", "", &e.to_string(), ""));
+    }
+
+    if let Err(e) = update_character_culture(&mut data, character_id, update.culture) {
+        return data
+            .character_manager
+            .get(character_id)
+            .map(|character| get_edit_template(&data, id, character, "", "", "", &e.to_string()));
     }
 
     let race = data
@@ -127,6 +134,11 @@ fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Tem
         .get(character.race())
         .map(|race| race.name())
         .unwrap_or("Unknown");
+    let culture = data
+        .culture_manager
+        .get(character.culture())
+        .map(|c| c.name())
+        .unwrap_or("Unknown");
 
     Template::render(
         "character/details",
@@ -135,6 +147,8 @@ fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Tem
             name: character.name(),
             race_id: character.race(),
             race: race,
+            culture_id: character.culture(),
+            culture: culture,
             gender: character.gender(),
             appearance: character.appearance(),
         },
@@ -148,6 +162,7 @@ fn get_edit_template(
     name_error: &str,
     gender_error: &str,
     race_error: &str,
+    culture_error: &str,
 ) -> Template {
     let races: Vec<&str> = data
         .race_manager
@@ -159,6 +174,17 @@ fn get_edit_template(
         .race_manager
         .get(character.race())
         .map(|race| race.name())
+        .unwrap_or("Unknown");
+    let cultures: Vec<&str> = data
+        .culture_manager
+        .get_all()
+        .iter()
+        .map(|culture| culture.name())
+        .collect();
+    let culture = data
+        .culture_manager
+        .get(character.culture())
+        .map(|culture| culture.name())
         .unwrap_or("Unknown");
 
     Template::render(
@@ -173,6 +199,9 @@ fn get_edit_template(
             genders: Gender::get_all(),
             gender: character.gender(),
             gender_error: gender_error,
+            cultures: cultures,
+            culture: culture,
+            culture_error: culture_error,
         },
     )
 }
@@ -183,7 +212,10 @@ pub fn save_and_show_character(data: &RpgData, id: usize) -> Option<Template> {
         .get(CharacterId::new(id))
         .map(|character| get_details_template(data, id, character));
 
-    if let Err(e) = write(data.character_manager.get_all(), Path::new(CHARACTER_FILE)) {
+    if let Err(e) = write(
+        data.character_manager.get_all(),
+        &data.get_path(CHARACTERS_FILE),
+    ) {
         println!("Failed to save the characters: {}", e);
     }
 

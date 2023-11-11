@@ -7,6 +7,7 @@
   <div class="text">
     <p><b>Id:</b> {{ id }}</p>
     <p><b>Race:</b> <a href="/race/details/{{ race_id }}">{{ race }}</a></p>
+    <p><b>Culture:</b> <a href="/culture/details/{{ culture_id }}">{{ culture }}</a></p>
     <p><b>Gender:</b> {{ gender }}</p>
     <p><a href="/character/edit/{{ id }}">Edit Data</a></p>
   </div>
