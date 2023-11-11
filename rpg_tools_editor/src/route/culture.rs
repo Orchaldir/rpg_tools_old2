@@ -8,7 +8,7 @@ use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::edit::culture::update_culture_name;
 use std::path::Path;
 
-pub const CULTURES_FILE: &str = "resources/cultures.yaml";
+pub const CULTURES_FILE: &str = "cultures.yaml";
 
 #[get("/culture/all")]
 pub fn get_all_cultures(data: &State<EditorData>) -> Template {

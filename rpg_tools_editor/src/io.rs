@@ -4,7 +4,11 @@ use serde::Serialize;
 use std::fs;
 use std::fs::File;
 use std::io::Write;
-use std::path::Path;
+use std::path::{Path, PathBuf};
+
+pub fn get_path(path: &str, file: &str) -> PathBuf {
+    [path, file].iter().collect()
+}
 
 pub fn read<T: DeserializeOwned>(path: &Path) -> Result<T> {
     let string = fs::read_to_string(path).context(format!("Failed to load {:?}", path))?;

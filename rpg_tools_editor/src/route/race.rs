@@ -9,7 +9,7 @@ use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::edit::race::{update_gender_option, update_race_name};
 use std::path::Path;
 
-pub const RACES_FILE: &str = "resources/races.yaml";
+pub const RACES_FILE: &str = "races.yaml";
 
 #[get("/race/all")]
 pub fn get_all_races(data: &State<EditorData>) -> Template {

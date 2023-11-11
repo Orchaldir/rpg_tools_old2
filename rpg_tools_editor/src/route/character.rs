@@ -11,7 +11,7 @@ use rpg_tools_core::usecase::edit::character::{
 };
 use std::path::Path;
 
-pub const CHARACTERS_FILE: &str = "resources/characters/characters.yaml";
+pub const CHARACTERS_FILE: &str = "characters.yaml";
 
 #[get("/character/all")]
 pub fn get_all_characters(data: &State<EditorData>) -> Template {

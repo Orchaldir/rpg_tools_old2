@@ -2,7 +2,7 @@ extern crate macro_core;
 #[macro_use]
 extern crate rocket;
 
-use crate::io::read;
+use crate::io::{get_path, read};
 use crate::route::appearance::{
     edit_appearance, get_appearance_back, get_appearance_front, get_preview_back,
     get_preview_front, update_appearance, update_appearance_preview,
@@ -31,7 +31,7 @@ use rpg_tools_core::model::race::Race;
 use rpg_tools_core::model::RpgData;
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
-use std::path::Path;
+use std::path::PathBuf;
 use std::sync::Mutex;
 
 pub mod io;
@@ -42,6 +42,13 @@ pub struct EditorData {
     config: RenderConfig,
     data: Mutex<RpgData>,
     preview: Mutex<Appearance>,
+    path: String,
+}
+
+impl EditorData {
+    pub fn get_path(&self, file: &str) -> PathBuf {
+        get_path(&self.path, file)
+    }
 }
 
 #[get("/")]
@@ -59,11 +66,14 @@ fn home(data: &State<EditorData>) -> Template {
 
 #[rocket::main]
 async fn main() -> Result<()> {
+    let setting_path = "resources/settings/eberron";
+
     if let Err(e) = rocket::build()
         .manage(EditorData {
             config: create_config(),
-            data: Mutex::new(init()),
+            data: Mutex::new(init(setting_path)),
             preview: Mutex::new(Appearance::default()),
+            path: setting_path.to_string(),
         })
         .mount("/static", FileServer::from("rpg_tools_editor/static/"))
         .mount(
@@ -104,8 +114,8 @@ async fn main() -> Result<()> {
     Ok(())
 }
 
-fn init() -> RpgData {
-    let cultures: Result<Vec<Culture>> = read(Path::new(CULTURES_FILE));
+fn init(setting_path: &str) -> RpgData {
+    let cultures: Result<Vec<Culture>> = read(&get_path(setting_path, CULTURES_FILE));
 
     let culture_manager = match cultures {
         Ok(cultures) => {
@@ -118,7 +128,7 @@ fn init() -> RpgData {
         }
     };
 
-    let races: Result<Vec<Race>> = read(Path::new(RACES_FILE));
+    let races: Result<Vec<Race>> = read(&get_path(setting_path, RACES_FILE));
 
     let race_manager = match races {
         Ok(races) => {
@@ -131,7 +141,7 @@ fn init() -> RpgData {
         }
     };
 
-    let characters: Result<Vec<Character>> = read(Path::new(CHARACTERS_FILE));
+    let characters: Result<Vec<Character>> = read(&get_path(setting_path, CHARACTERS_FILE));
 
     let character_manager = match characters {
         Ok(characters) => {
