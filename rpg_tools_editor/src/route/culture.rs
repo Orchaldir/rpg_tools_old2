@@ -5,6 +5,7 @@ use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::culture::{Culture, CultureId};
 use rpg_tools_core::model::RpgData;
+use rpg_tools_core::usecase::edit::culture::update_culture_name;
 use std::path::Path;
 
 pub const CULTURES_FILE: &str = "resources/cultures.yaml";
@@ -74,6 +75,13 @@ pub fn update_culture(
     println!("Update culture {} with {:?}", id, update);
 
     let culture_id = CultureId::new(id);
+
+    if let Err(e) = update_culture_name(&mut data, culture_id, update.name) {
+        return data
+            .culture_manager
+            .get(culture_id)
+            .map(|c| get_edit_template(id, c, &e.to_string()));
+    }
 
     let result = data
         .culture_manager
