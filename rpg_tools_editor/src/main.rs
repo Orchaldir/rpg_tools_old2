@@ -2,7 +2,7 @@ extern crate macro_core;
 #[macro_use]
 extern crate rocket;
 
-use crate::io::{get_path, read};
+use crate::io::read;
 use crate::route::appearance::{
     edit_appearance, get_appearance_back, get_appearance_front, get_preview_back,
     get_preview_front, update_appearance, update_appearance_preview,
@@ -32,7 +32,6 @@ use rpg_tools_core::model::{get_setting_path, RpgData};
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::env;
-use std::path::PathBuf;
 use std::sync::Mutex;
 
 pub mod io;
@@ -43,13 +42,6 @@ pub struct EditorData {
     config: RenderConfig,
     data: Mutex<RpgData>,
     preview: Mutex<Appearance>,
-    path: String,
-}
-
-impl EditorData {
-    pub fn get_path(&self, file: &str) -> PathBuf {
-        get_path(&self.path, file)
-    }
 }
 
 #[get("/")]
@@ -80,7 +72,6 @@ async fn main() -> Result<()> {
             config: create_config(),
             data: Mutex::new(init(setting)),
             preview: Mutex::new(Appearance::default()),
-            path: setting.to_string(),
         })
         .mount("/static", FileServer::from("rpg_tools_editor/static/"))
         .mount(
