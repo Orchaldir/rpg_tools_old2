@@ -100,7 +100,7 @@ fn get_details_template(data: &RpgData, id: usize, culture: &Culture) -> Templat
         .character_manager
         .get_all()
         .iter()
-        //.filter(|c| c.race().eq(race.id()))
+        .filter(|c| c.culture().eq(culture.id()))
         .map(|c| (c.id().id(), c.name()))
         .collect();
 

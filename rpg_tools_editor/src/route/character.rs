@@ -127,6 +127,11 @@ fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Tem
         .get(character.race())
         .map(|race| race.name())
         .unwrap_or("Unknown");
+    let culture = data
+        .culture_manager
+        .get(character.culture())
+        .map(|c| c.name())
+        .unwrap_or("Unknown");
 
     Template::render(
         "character/details",
@@ -135,6 +140,8 @@ fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Tem
             name: character.name(),
             race_id: character.race(),
             race: race,
+            culture_id: character.culture(),
+            culture: culture,
             gender: character.gender(),
             appearance: character.appearance(),
         },

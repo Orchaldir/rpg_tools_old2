@@ -1,6 +1,7 @@
 - id: 0
   name: Elf
   race: 1
+  culture: 0
   gender: Male
   appearance:
     type: Humanoid
@@ -90,6 +91,7 @@
 - id: 1
   name: Devil
   race: 4
+  culture: 0
   gender: Male
   appearance:
     type: Humanoid
@@ -143,6 +145,7 @@
 - id: 2
   name: Vampire
   race: 5
+  culture: 0
   gender: Female
   appearance:
     type: Humanoid
@@ -216,6 +219,7 @@
 - id: 3
   name: Orc
   race: 2
+  culture: 0
   gender: Male
   appearance:
     type: Humanoid
@@ -289,6 +293,7 @@
 - id: 4
   name: Dwarf
   race: 3
+  culture: 0
   gender: Male
   appearance:
     type: Humanoid
