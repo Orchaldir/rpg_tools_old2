@@ -1,0 +1,15 @@
+{% extends "base" %}
+
+{% block content %}
+    <p><h1>Races</h1></p>
+    <div class="text">
+      <p><b>Total:</b> {{ total }}</p>
+      <ul>
+      {% for r in races %}
+        <li><a href="/race/details/{{ r.0 }}">{{ r.1 }}</a></li>
+      {% endfor %}
+      </ul>
+      <p><a href="/race/new">Add</a></p>
+      <p><a href="/">Back</a></p>
+    </div>
+{% endblock content %}

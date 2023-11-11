@@ -1,20 +1,14 @@
 [package]
-name = "rpg_tools_editor"
+name = "rpg_tools_ui"
 version = "0.4.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1.0"
-rocket = "0.5.0-rc.3"
 macro_core = { path = "../macro_core" }
+macro_convert = { path = "../macro_convert" }
+macro_ui = { path = "../macro_ui" }
 rpg_tools_core = { path = "../rpg_tools_core" }
-rpg_tools_rendering = { path = "../rpg_tools_rendering" }
 serde = { version = "1.0", features = ["derive"] }
-serde_yaml = "0.9"
-url_encoded_data = "0.6"
-
-[dependencies.rocket_dyn_templates]
-version = "0.1.0-rc.3"
-features = ["tera"]
+titlecase = "2.2"

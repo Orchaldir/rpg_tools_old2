@@ -8,7 +8,7 @@
     <img id="preview" src="/appearance/preview/back.svg" alt="Back Preview" width="75%"/>
   </div>
   <div class="editor">
-    <form id="appearanceForm" action="/appearance/{{ id }}/preview" method="post">
+    <form id="appearanceForm" action="/appearance/preview/{{ id }}" method="post">
       <ul>
         <li>
           <b>Appearance:</b> {{ macros::add_select(name="appearance.type", options=[ "HeadOnly","Humanoid" ], selected=appearance.type, update=true) }}
@@ -1118,9 +1118,9 @@
           </ul>
         </li>
       </ul>
-      <button formaction="/appearance/{{ id }}/update" formmethod="post">Submit</button>
+      <button formaction="/appearance/update/{{ id }}" formmethod="post">Submit</button>
     </form>
-    <p><a href="/character/{{ id }}">Back</a></p>
+    <p><a href="/character/details/{{ id }}">Back</a></p>
   </div>
 </div>
 {% endblock content %}

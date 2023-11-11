@@ -6,6 +6,7 @@ members = [
     "macro_ui",
     "rpg_tools_core",
     "rpg_tools_rendering",
+    "rpg_tools_ui",
     "rpg_tools_editor",
 ]
 resolver = "2"

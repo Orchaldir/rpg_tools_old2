@@ -1,12 +1,10 @@
 extern crate macro_ui;
 extern crate rpg_tools_core;
 
-pub mod utils;
-
-use crate::utils::write_each;
 use macro_core::visitor::UI;
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::ui::viewer::ViewerVisitor;
+use rpg_tools_ui::io::write_each;
+use rpg_tools_ui::ui::viewer::ViewerVisitor;
 
 fn main() {
     println!("Generate tera code for viewer");

@@ -3,5 +3,8 @@
 {% block content %}
     <p><h1>RPG Tools - Editor</h1></p>
     <h2>Overview</h2>
-    <p><b>Characters:</b> <a href="/character">{{ characters }}</a></p>
+    <div class="text">
+      <p><b>Races:</b> <a href="/race/all">{{ races }}</a></p>
+      <p><b>Characters:</b> <a href="/character/all">{{ characters }}</a></p>
+    </div>
 {% endblock content %}

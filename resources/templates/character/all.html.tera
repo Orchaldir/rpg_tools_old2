@@ -1,0 +1,20 @@
+{% extends "base" %}
+
+{% block content %}
+    <p><h1>Characters</h1></p>
+    <div class="text">
+      <p><b>Total:</b> {{ total }}</p>
+      <p><a href="/character/new">Add</a></p>
+    </div>
+    <div class="grid-container">
+    {% for c in characters %}
+      <div class="grid-item">
+        <a href="/character/details/{{ c.0 }}">
+          <div class="content">{{ c.1 }}</div>
+          <img src = "/appearance/render/{{ c.0 }}/front.svg" alt="Character {{ c.0 }}"/>
+        </a>
+      </div>
+    {% endfor %}
+    </div>
+    <p class="text"><a href="/">Back</a></p>
+{% endblock content %}

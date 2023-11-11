@@ -1,0 +1,22 @@
+{% extends "base" %}
+
+{% block content %}
+<div class="left_right_container">
+  <p><h1>Race: {{ name }}</h1></p>
+  <p><h2>Data</h2></p>
+  <div class="text">
+    <p><b>Id:</b> {{ id }}</p>
+    <p><b>Gender Option:</b> {{ gender_option }}</p>
+    <p><a href="/race/edit/{{ id }}">Edit Data</a></p>
+  </div>
+  <p><h2>Characters</h2></p>
+  <div class="text">
+    <ul>
+      {% for c in characters %}
+      <li><a href="/character/details/{{ c.0 }}">{{ c.1 }}</a></li>
+      {% endfor %}
+    </ul>
+    <p><a href="/race/all">Back</a></p>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends "base" %}
+
+{% block content %}
+<div class="left_right_container">
+  <p><h1>Character: {{ name }}</h1></p>
+  <p><h2>Data</h2></p>
+  <div class="text">
+    <p><b>Id:</b> {{ id }}</p>
+    <p><b>Race:</b> <a href="/race/details/{{ race_id }}">{{ race }}</a></p>
+    <p><b>Gender:</b> {{ gender }}</p>
+    <p><a href="/character/edit/{{ id }}">Edit Data</a></p>
+  </div>
+  <p><h2>Appearance</h2></p>
+  <center>
+    <img src = "/appearance/render/{{ id }}/front.svg" alt="Front View of the Character" width="25%"/>
+    <img src = "/appearance/render/{{ id }}/back.svg" alt="Back View of the Character" width="25%"/>
+  </center>
+  <div class="text">
+    <p><a href="/appearance/edit/{{ id }}">Edit Appearance</a></p>
+    <p><a href="/character/all">Back</a></p>
+  </div>
+</div>
+{% endblock content %}

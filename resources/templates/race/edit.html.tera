@@ -1,0 +1,22 @@
+{% extends "base" %}
+
+{% block content %}
+    <p><h1>Edit Race: {{ name }}</h1></p>
+    <div class="text">
+      <p><b>Id:</b> {{ id }}</p>
+      <form action="/race/update/{{ id }}" method="post">
+        <b><label for="name">Name:</label></b>
+        <input type="text" id="name" name="name" value="{{ name }}">
+        {% if name_error %}<br><label class="error">{{ name_error }}</label>{% endif %}
+        <br>
+        <br>
+        <b><label for="gender_option">Gender Option:</label></b>
+        {{ macros::add_select(name="gender_option", options=gender_options, selected=gender_option) }}
+        {% if gender_error %}<br><label class="error">{{ gender_error }}</label>{% endif %}
+        <br>
+        <br>
+        <input type="submit" value="Submit">
+      </form>
+      <p><a href="/race/details/{{ id }}">Back</a></p>
+    </div>
+{% endblock content %}
