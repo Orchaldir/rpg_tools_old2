@@ -5,14 +5,14 @@
   name: Elf
   gender_option: TwoGenders
 - id: 2
-  name: Orc
-  gender_option: TwoGenders
-- id: 3
   name: Dwarf
   gender_option: TwoGenders
+- id: 3
+  name: Changeling
+  gender_option: TwoGenders
 - id: 4
-  name: Devil
+  name: Warforged
   gender_option: NoGender
 - id: 5
-  name: Vampire
+  name: Orc
   gender_option: TwoGenders

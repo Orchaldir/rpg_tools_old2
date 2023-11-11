@@ -1,7 +1,7 @@
 - id: 0
   name: Elf
   race: 1
-  culture: 0
+  culture: 1
   gender: Male
   appearance:
     type: Humanoid
@@ -89,211 +89,9 @@
     height:
       millimetre: 1500
 - id: 1
-  name: Devil
-  race: 4
-  culture: 0
-  gender: Male
-  appearance:
-    type: Humanoid
-    body:
-      shape: Muscular
-      width: Wide
-      skin:
-        type: Scales
-        color: Red
-      clothing:
-        type: None
-    head:
-      ears:
-        type: Normal
-        shape: Pointed
-        size: Large
-      eyes:
-        type: Two
-        eye:
-          type: Normal
-          eye_shape: Ellipse
-          pupil_shape: VerticalSlit
-          pupil_color: Blue
-          background_color: Yellow
-        eyebrows:
-          type: Normal
-          color: Black
-          shape: Angled
-          style: Even
-          width: Wide
-        distance: Medium
-        eyewear:
-          type: None
-      hair:
-        type: None
-      mouth:
-        type: Simple
-        beard:
-          type: None
-        width: Medium
-        teeth:
-          type: UpperFangs
-          size: Large
-        teeth_color: White
-      shape: TriangleUp
-      skin:
-        type: ExoticSkin
-        color: Red
-    height:
-      millimetre: 2500
-- id: 2
-  name: Vampire
-  race: 5
-  culture: 1
-  gender: Female
-  appearance:
-    type: Humanoid
-    body:
-      shape: Hourglass
-      width: Average
-      skin:
-        type: ExoticSkin
-        color: White
-      clothing:
-        type: Simple
-        footwear:
-          color: Red
-          style: Shoes
-          sole: Gray
-        pants:
-          style: Balloon
-          color: Red
-          belt: null
-        shirt:
-          sleeve_style: Long
-          neckline: DeepV
-          color: Red
-        outerwear:
-          type: None
-    head:
-      ears:
-        type: Normal
-        shape: Square
-        size: Medium
-      eyes:
-        type: Two
-        eye:
-          type: Normal
-          eye_shape: Ellipse
-          pupil_shape: Circle
-          pupil_color: Yellow
-          background_color: Black
-        eyebrows:
-          type: Normal
-          color: SaddleBrown
-          shape: Curved
-          style: Even
-          width: Wide
-        distance: Medium
-        eyewear:
-          type: None
-      hair:
-        type: Long
-        style: Straight
-        hairline:
-          style: Round
-          size: Medium
-        length:
-          millimetre: 800
-        color: SaddleBrown
-      mouth:
-        type: Female
-        width: Large
-        color: Red
-        teeth:
-          type: UpperFangs
-          size: Small
-        teeth_color: White
-      shape: Oval
-      skin:
-        type: ExoticSkin
-        color: White
-    height:
-      millimetre: 1500
-- id: 3
-  name: Orc
+  name: Morrikan d'Kundarak
   race: 2
-  culture: 0
-  gender: Male
-  appearance:
-    type: Humanoid
-    body:
-      shape: Rectangle
-      width: Average
-      skin:
-        type: ExoticSkin
-        color: Green
-      clothing:
-        type: Simple
-        footwear:
-          color: SaddleBrown
-          style: Shoes
-          sole: Gray
-        pants:
-          style: Regular
-          color: Navy
-          belt: null
-        shirt:
-          sleeve_style: Long
-          neckline: Crew
-          color: Black
-        outerwear:
-          type: Coat
-          sleeve: Long
-          length: Knee
-          neckline: DeepV
-          closing:
-            type: SingleBreasted
-            buttons:
-              button:
-                size: Medium
-                color: Silver
-              count: 5
-          color: White
-          belt: null
-    head:
-      ears:
-        type: None
-      eyes:
-        type: Two
-        eye:
-          type: Normal
-          eye_shape: Ellipse
-          pupil_shape: Circle
-          pupil_color: Blue
-          background_color: White
-        eyebrows:
-          type: None
-        distance: Medium
-        eyewear:
-          type: None
-      hair:
-        type: None
-      mouth:
-        type: Simple
-        beard:
-          type: None
-        width: Medium
-        teeth:
-          type: LowerFangs
-          size: Large
-        teeth_color: White
-      shape: Square
-      skin:
-        type: ExoticSkin
-        color: Green
-    height:
-      millimetre: 1500
-- id: 4
-  name: Dwarf
-  race: 3
-  culture: 0
+  culture: 6
   gender: Male
   appearance:
     type: Humanoid
@@ -378,3 +176,113 @@
         color: Light
     height:
       millimetre: 1000
+- id: 2
+  name: Tam
+  race: 3
+  culture: 2
+  gender: Female
+  appearance:
+    type: Humanoid
+    body:
+      shape: Hourglass
+      width: Average
+      skin:
+        type: ExoticSkin
+        color: White
+      clothing:
+        type: Simple
+        footwear:
+          color: SaddleBrown
+          style: Shoes
+          sole: Black
+        pants:
+          style: Regular
+          color: Purple
+          belt: null
+        shirt:
+          sleeve_style: Long
+          neckline: None
+          color: Purple
+        outerwear:
+          type: None
+    head:
+      ears:
+        type: None
+      eyes:
+        type: Two
+        eye:
+          type: Simple
+          eye_shape: Ellipse
+          color: Gray
+        eyebrows:
+          type: None
+        distance: Medium
+        eyewear:
+          type: None
+      hair:
+        type: Long
+        style: Straight
+        hairline:
+          style: Round
+          size: Medium
+        length:
+          millimetre: 500
+        color: Gray
+      mouth:
+        type: Female
+        width: Medium
+        color: Purple
+        teeth:
+          type: None
+        teeth_color: White
+      shape: Round
+      skin:
+        type: ExoticSkin
+        color: White
+    height:
+      millimetre: 1700
+- id: 3
+  name: Three
+  race: 4
+  culture: 2
+  gender: Genderless
+  appearance:
+    type: Humanoid
+    body:
+      shape: Rectangle
+      width: Average
+      skin:
+        type: ExoticSkin
+        color: Gray
+      clothing:
+        type: None
+    head:
+      ears:
+        type: None
+      eyes:
+        type: Two
+        eye:
+          type: Simple
+          eye_shape: Ellipse
+          color: Lime
+        eyebrows:
+          type: None
+        distance: Medium
+        eyewear:
+          type: None
+      hair:
+        type: None
+      mouth:
+        type: Simple
+        beard:
+          type: None
+        width: Medium
+        teeth:
+          type: None
+        teeth_color: White
+      shape: Rectangle
+      skin:
+        type: ExoticSkin
+        color: Gray
+    height:
+      millimetre: 1500

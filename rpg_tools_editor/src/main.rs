@@ -133,7 +133,7 @@ fn init(setting: &str) -> RpgData {
         }
         Err(e) => {
             println!("Failed to load the cultures: {}", e);
-            return RpgData::default();
+            return RpgData::empty(setting.to_string());
         }
     };
 
@@ -146,7 +146,7 @@ fn init(setting: &str) -> RpgData {
         }
         Err(e) => {
             println!("Failed to load the races: {}", e);
-            return RpgData::default();
+            return RpgData::empty(setting.to_string());
         }
     };
 
@@ -159,7 +159,7 @@ fn init(setting: &str) -> RpgData {
         }
         Err(e) => {
             println!("Failed to load the characters: {}", e);
-            CharacterMgr::default()
+            return RpgData::empty(setting.to_string());
         }
     };
 

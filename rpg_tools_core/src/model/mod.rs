@@ -23,6 +23,13 @@ pub struct RpgData {
 }
 
 impl RpgData {
+    pub fn empty(setting: String) -> Self {
+        RpgData {
+            setting,
+            ..RpgData::default()
+        }
+    }
+
     pub fn get_path(&self, file: &str) -> PathBuf {
         get_setting_path(&self.setting, file)
     }

@@ -1,4 +1,18 @@
 - id: 0
-  name: High Elf
+  name: Aerenal
 - id: 1
-  name: Human Kingdom
+  name: Aundair
+- id: 2
+  name: Breland
+- id: 3
+  name: Karrnath
+- id: 4
+  name: Thrane
+- id: 5
+  name: Cyre
+- id: 6
+  name: Mror Holds
+- id: 7
+  name: Valenar
+- id: 8
+  name: Shadow Marches
