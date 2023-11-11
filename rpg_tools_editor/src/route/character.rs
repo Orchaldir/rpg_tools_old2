@@ -11,7 +11,7 @@ use rpg_tools_core::usecase::edit::character::{
 };
 use std::path::Path;
 
-pub const CHARACTER_FILE: &str = "resources/characters/characters.yaml";
+pub const CHARACTERS_FILE: &str = "resources/characters/characters.yaml";
 
 #[get("/character/all")]
 pub fn get_all_characters(data: &State<EditorData>) -> Template {
@@ -183,7 +183,7 @@ pub fn save_and_show_character(data: &RpgData, id: usize) -> Option<Template> {
         .get(CharacterId::new(id))
         .map(|character| get_details_template(data, id, character));
 
-    if let Err(e) = write(data.character_manager.get_all(), Path::new(CHARACTER_FILE)) {
+    if let Err(e) = write(data.character_manager.get_all(), Path::new(CHARACTERS_FILE)) {
         println!("Failed to save the characters: {}", e);
     }
 

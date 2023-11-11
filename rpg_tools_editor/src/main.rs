@@ -9,7 +9,10 @@ use crate::route::appearance::{
 };
 use crate::route::character::{
     add_character, edit_character, get_all_characters, get_character_details, update_character,
-    CHARACTER_FILE,
+    CHARACTERS_FILE,
+};
+use crate::route::culture::{
+    add_culture, edit_culture, get_all_cultures, get_culture_details, update_culture, CULTURES_FILE,
 };
 use crate::route::race::{
     add_race, edit_race, get_all_races, get_race_details, update_race, RACES_FILE,
@@ -21,6 +24,8 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::manager::CharacterMgr;
 use rpg_tools_core::model::character::Character;
+use rpg_tools_core::model::culture::manager::CultureMgr;
+use rpg_tools_core::model::culture::Culture;
 use rpg_tools_core::model::race::manager::RaceMgr;
 use rpg_tools_core::model::race::Race;
 use rpg_tools_core::model::RpgData;
@@ -45,6 +50,7 @@ fn home(data: &State<EditorData>) -> Template {
     Template::render(
         "home",
         context! {
+            cultures: data.culture_manager.get_all().len(),
             races: data.race_manager.get_all().len(),
             characters: data.character_manager.get_all().len(),
         },
@@ -81,6 +87,11 @@ async fn main() -> Result<()> {
                 add_race,
                 edit_race,
                 update_race,
+                get_all_cultures,
+                get_culture_details,
+                add_culture,
+                edit_culture,
+                update_culture,
             ],
         )
         .attach(Template::fairing())
@@ -94,6 +105,19 @@ async fn main() -> Result<()> {
 }
 
 fn init() -> RpgData {
+    let cultures: Result<Vec<Culture>> = read(Path::new(CULTURES_FILE));
+
+    let culture_manager = match cultures {
+        Ok(cultures) => {
+            println!("Loaded {} cultures.", cultures.len());
+            CultureMgr::new(cultures)
+        }
+        Err(e) => {
+            println!("Failed to load the cultures: {}", e);
+            return RpgData::default();
+        }
+    };
+
     let races: Result<Vec<Race>> = read(Path::new(RACES_FILE));
 
     let race_manager = match races {
@@ -107,7 +131,7 @@ fn init() -> RpgData {
         }
     };
 
-    let characters: Result<Vec<Character>> = read(Path::new(CHARACTER_FILE));
+    let characters: Result<Vec<Character>> = read(Path::new(CHARACTERS_FILE));
 
     let character_manager = match characters {
         Ok(characters) => {
@@ -122,6 +146,7 @@ fn init() -> RpgData {
 
     RpgData {
         character_manager,
+        culture_manager,
         race_manager,
     }
 }
