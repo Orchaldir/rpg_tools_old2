@@ -71,10 +71,9 @@ pub fn update_character_race(data: &mut RpgData, id: CharacterId, race_name: &st
 
     let race_id = *race.id();
 
-    data.character_manager
-        .get_mut(id)
-        .map(|r| r.set_race(race_id))
-        .context("Character doesn't exist!")?;
+    if let Some(r) = data.character_manager.get_mut(id) {
+        r.set_race(race_id)
+    }
 
     Ok(())
 }
