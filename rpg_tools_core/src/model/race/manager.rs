@@ -1,6 +1,6 @@
 use crate::model::race::{Race, RaceId};
 
-/// Manages & stores the [`race`](Race).
+/// Manages & stores the [`races`](Race).
 #[derive(Default, Debug)]
 pub struct RaceMgr {
     races: Vec<Race>,
