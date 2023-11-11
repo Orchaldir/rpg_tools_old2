@@ -145,7 +145,7 @@
 - id: 2
   name: Vampire
   race: 5
-  culture: 0
+  culture: 1
   gender: Female
   appearance:
     type: Humanoid
