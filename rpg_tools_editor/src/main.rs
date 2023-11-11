@@ -17,7 +17,7 @@ use crate::route::culture::{
 use crate::route::race::{
     add_race, edit_race, get_all_races, get_race_details, update_race, RACES_FILE,
 };
-use anyhow::Result;
+use anyhow::{bail, Result};
 use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
@@ -31,6 +31,7 @@ use rpg_tools_core::model::race::Race;
 use rpg_tools_core::model::{get_setting_path, RpgData};
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
+use std::env;
 use std::path::PathBuf;
 use std::sync::Mutex;
 
@@ -66,7 +67,13 @@ fn home(data: &State<EditorData>) -> Template {
 
 #[rocket::main]
 async fn main() -> Result<()> {
-    let setting = "eberron";
+    let args: Vec<String> = env::args().collect();
+
+    if args.len() < 2 {
+        bail!("Setting argument missing!");
+    }
+
+    let setting = &args[1];
 
     if let Err(e) = rocket::build()
         .manage(EditorData {
@@ -115,6 +122,8 @@ async fn main() -> Result<()> {
 }
 
 fn init(setting: &str) -> RpgData {
+    println!("Load setting '{}'", setting);
+
     let cultures: Result<Vec<Culture>> = read(&get_setting_path(setting, CULTURES_FILE));
 
     let culture_manager = match cultures {
