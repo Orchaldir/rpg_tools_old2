@@ -15,7 +15,9 @@ pub fn delete_race(data: &mut RpgData, id: RaceId) -> DeleteResult {
         .collect();
 
     if !blocking_characters.is_empty() {
-        return DeleteResult::Blocked;
+        return DeleteResult::Blocked {
+            characters: blocking_characters,
+        };
     }
 
     match data.race_manager.delete(id) {

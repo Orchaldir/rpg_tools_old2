@@ -1,7 +1,9 @@
+use crate::model::character::CharacterId;
+
 pub mod race;
 
 pub enum DeleteResult {
     Ok,
     NotFound,
-    Blocked,
+    Blocked { characters: Vec<CharacterId> },
 }

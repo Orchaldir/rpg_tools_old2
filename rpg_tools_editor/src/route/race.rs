@@ -1,4 +1,5 @@
 use crate::io::write;
+use crate::route::get_failed_delete_template;
 use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
@@ -96,25 +97,24 @@ pub fn update_race(
 }
 
 #[get("/race/delete/<id>")]
-pub fn delete_race_route(data: &State<EditorData>, id: usize) -> Option<Template> {
+pub fn delete_race_route(data: &State<EditorData>, id: usize) -> Template {
     let mut data = data.data.lock().expect("lock shared data");
 
     println!("Delete race {}", id);
 
     let race_id = RaceId::new(id);
+    let result = delete_race(&mut data, race_id);
 
-    match delete_race(&mut data, race_id) {
-        DeleteResult::Ok => Some(get_all_template(data)),
-        DeleteResult::NotFound | DeleteResult::Blocked => {
-            data.race_manager.get(race_id).map(|race| {
-                Template::render(
-                    "generic/delete",
-                    context! {
-                        id: id,
-                        name: race.name(),
-                    },
-                )
-            })
+    match result {
+        DeleteResult::Ok => get_all_template(data),
+        _ => {
+            let name = data
+                .race_manager
+                .get(race_id)
+                .map(|race| race.name())
+                .unwrap_or("Unknown")
+                .to_string();
+            get_failed_delete_template(data, "race", id, &name, result)
         }
     }
 }
