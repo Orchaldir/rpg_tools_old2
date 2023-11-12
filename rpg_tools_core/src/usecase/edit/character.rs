@@ -111,21 +111,21 @@ mod tests {
     fn test_empty_name() {
         let mut data = RpgData::default();
 
-        assert!(update_character_name(&mut data, CharacterId::new(0), "").is_err());
+        assert!(update_character_name(&mut data, CharacterId::default(), "").is_err());
     }
 
     #[test]
     fn test_name_contains_only_whitespaces() {
         let mut data = RpgData::default();
 
-        assert!(update_character_name(&mut data, CharacterId::new(0), "  ").is_err());
+        assert!(update_character_name(&mut data, CharacterId::default(), "  ").is_err());
     }
 
     #[test]
     fn test_update_name_of_non_existing_race() {
         let mut data = RpgData::default();
 
-        assert!(update_character_name(&mut data, CharacterId::new(0), "Test").is_err());
+        assert!(update_character_name(&mut data, CharacterId::default(), "Test").is_err());
     }
 
     #[test]
@@ -166,7 +166,7 @@ mod tests {
     fn test_update_gender_of_non_existing_character() {
         let mut data = RpgData::default();
 
-        assert!(update_character_gender(&mut data, CharacterId::new(0), Male).is_err());
+        assert!(update_character_gender(&mut data, CharacterId::default(), Male).is_err());
     }
 
     #[test]
@@ -226,7 +226,7 @@ mod tests {
             .get_mut(race_id)
             .map(|r| r.set_name("Test".to_string()));
 
-        assert!(update_character_race(&mut data, CharacterId::new(0), "Test").is_err());
+        assert!(update_character_race(&mut data, CharacterId::default(), "Test").is_err());
     }
 
     #[test]
@@ -282,7 +282,7 @@ mod tests {
             .get_mut(culture_id)
             .map(|r| r.set_name("Test".to_string()));
 
-        assert!(update_character_culture(&mut data, CharacterId::new(0), "Test").is_err());
+        assert!(update_character_culture(&mut data, CharacterId::default(), "Test").is_err());
     }
 
     #[test]

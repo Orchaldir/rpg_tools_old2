@@ -10,6 +10,7 @@ use rpg_tools_core::usecase::edit::character::{
     update_character_culture, update_character_gender, update_character_name, update_character_race,
 };
 use rpg_tools_core::utils::storage::Entry;
+use rpg_tools_core::utils::storage::Id;
 
 pub const CHARACTERS_FILE: &str = "characters.yaml";
 

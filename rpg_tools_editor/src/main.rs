@@ -22,7 +22,6 @@ use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::character::manager::CharacterMgr;
 use rpg_tools_core::model::character::Character;
 use rpg_tools_core::model::culture::Culture;
 use rpg_tools_core::model::race::Race;
@@ -145,7 +144,7 @@ fn init(setting: &str) -> RpgData {
     let character_manager = match characters {
         Ok(characters) => {
             println!("Loaded {} characters.", characters.len());
-            CharacterMgr::new(characters)
+            Storage::new(characters)
         }
         Err(e) => {
             println!("Failed to load the characters: {}", e);

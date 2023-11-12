@@ -1,4 +1,4 @@
-use crate::model::character::manager::CharacterMgr;
+use crate::model::character::{Character, CharacterId};
 use crate::model::culture::{Culture, CultureId};
 use crate::model::race::{Race, RaceId};
 use crate::utils::storage::Storage;
@@ -13,7 +13,7 @@ pub mod race;
 #[derive(Debug)]
 pub struct RpgData {
     pub setting: String,
-    pub character_manager: CharacterMgr,
+    pub character_manager: Storage<CharacterId, Character>,
     pub culture_manager: Storage<CultureId, Culture>,
     pub race_manager: Storage<RaceId, Race>,
 }
