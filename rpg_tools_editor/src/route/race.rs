@@ -7,6 +7,7 @@ use rpg_tools_core::model::race::gender::GenderOption;
 use rpg_tools_core::model::race::{Race, RaceId};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::edit::race::{update_gender_option, update_race_name};
+use rpg_tools_core::utils::storage::{Entry, Id};
 
 pub const RACES_FILE: &str = "races.yaml";
 
@@ -108,7 +109,7 @@ fn get_details_template(data: &RpgData, id: usize, race: &Race) -> Template {
         .character_manager
         .get_all()
         .iter()
-        .filter(|c| c.race().eq(race.id()))
+        .filter(|c| c.race().eq(&race.id()))
         .map(|c| (c.id().id(), c.name()))
         .collect();
 

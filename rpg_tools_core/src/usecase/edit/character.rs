@@ -70,10 +70,8 @@ pub fn update_character_race(data: &mut RpgData, id: CharacterId, race_name: &st
         bail!("Race's gender option conflicts with the gender!")
     }
 
-    let race_id = *race.id();
-
     if let Some(r) = data.character_manager.get_mut(id) {
-        r.set_race(race_id)
+        r.set_race(race.id())
     }
 
     Ok(())

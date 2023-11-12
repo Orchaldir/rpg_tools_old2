@@ -9,6 +9,7 @@ use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::edit::character::{
     update_character_culture, update_character_gender, update_character_name, update_character_race,
 };
+use rpg_tools_core::utils::storage::Entry;
 
 pub const CHARACTERS_FILE: &str = "characters.yaml";
 
@@ -114,7 +115,7 @@ pub fn update_character(
         .get_all()
         .iter()
         .find(|race| race.name().eq(update.race))
-        .map(|race| *race.id());
+        .map(|race| race.id());
 
     data.character_manager
         .get_mut(CharacterId::new(id))

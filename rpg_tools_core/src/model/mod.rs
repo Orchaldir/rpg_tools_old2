@@ -1,6 +1,6 @@
 use crate::model::character::manager::CharacterMgr;
 use crate::model::culture::{Culture, CultureId};
-use crate::model::race::manager::RaceMgr;
+use crate::model::race::{Race, RaceId};
 use crate::utils::storage::Storage;
 use std::path::PathBuf;
 
@@ -10,12 +10,12 @@ pub mod culture;
 pub mod equipment;
 pub mod race;
 
-#[derive(Default, Debug)]
+#[derive(Debug)]
 pub struct RpgData {
     pub setting: String,
     pub character_manager: CharacterMgr,
     pub culture_manager: Storage<CultureId, Culture>,
-    pub race_manager: RaceMgr,
+    pub race_manager: Storage<RaceId, Race>,
 }
 
 impl RpgData {
@@ -28,6 +28,17 @@ impl RpgData {
 
     pub fn get_path(&self, file: &str) -> PathBuf {
         get_setting_path(&self.setting, file)
+    }
+}
+
+impl Default for RpgData {
+    fn default() -> Self {
+        Self {
+            setting: "".to_string(),
+            character_manager: Default::default(),
+            culture_manager: Default::default(),
+            race_manager: Storage::new(Vec::new()),
+        }
     }
 }
 

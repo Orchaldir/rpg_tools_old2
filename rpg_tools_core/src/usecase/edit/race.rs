@@ -1,6 +1,7 @@
 use crate::model::race::gender::GenderOption;
 use crate::model::race::RaceId;
 use crate::model::RpgData;
+use crate::utils::storage::Entry;
 use anyhow::{bail, Context, Result};
 
 /// Tries to update the name of a [`race`](crate::model::race::Race).
@@ -58,21 +59,21 @@ mod tests {
     fn test_empty_name() {
         let mut data = RpgData::default();
 
-        assert!(update_race_name(&mut data, RaceId::new(0), "").is_err());
+        assert!(update_race_name(&mut data, RaceId::default(), "").is_err());
     }
 
     #[test]
     fn test_name_contains_only_whitespaces() {
         let mut data = RpgData::default();
 
-        assert!(update_race_name(&mut data, RaceId::new(0), "  ").is_err());
+        assert!(update_race_name(&mut data, RaceId::default(), "  ").is_err());
     }
 
     #[test]
     fn test_update_name_of_non_existing_race() {
         let mut data = RpgData::default();
 
-        assert!(update_race_name(&mut data, RaceId::new(0), "Test").is_err());
+        assert!(update_race_name(&mut data, RaceId::default(), "Test").is_err());
     }
 
     #[test]
@@ -108,7 +109,7 @@ mod tests {
     fn test_update_gender_of_non_existing_race() {
         let mut data = RpgData::default();
 
-        assert!(update_gender_option(&mut data, RaceId::new(0), TwoGenders).is_err());
+        assert!(update_gender_option(&mut data, RaceId::default(), TwoGenders).is_err());
     }
 
     #[test]

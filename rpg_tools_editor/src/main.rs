@@ -25,7 +25,6 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::manager::CharacterMgr;
 use rpg_tools_core::model::character::Character;
 use rpg_tools_core::model::culture::Culture;
-use rpg_tools_core::model::race::manager::RaceMgr;
 use rpg_tools_core::model::race::Race;
 use rpg_tools_core::model::{get_setting_path, RpgData};
 use rpg_tools_core::utils::storage::Storage;
@@ -133,7 +132,7 @@ fn init(setting: &str) -> RpgData {
     let race_manager = match races {
         Ok(races) => {
             println!("Loaded {} races.", races.len());
-            RaceMgr::new(races)
+            Storage::new(races)
         }
         Err(e) => {
             println!("Failed to load the races: {}", e);
