@@ -1,9 +1,9 @@
 extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::length::Length;
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::length::Length;
 use rpg_tools_rendering::math::aabb2d::AABB;
 use rpg_tools_rendering::math::orientation::Orientation;
 use rpg_tools_rendering::math::point2d::Point2d;

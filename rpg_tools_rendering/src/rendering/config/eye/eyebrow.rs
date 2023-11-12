@@ -1,7 +1,7 @@
 use crate::rendering::config::width::WidthConfig;
+use rpg_tools_core::model::appearance::side::Side;
+use rpg_tools_core::model::appearance::width::Width;
 use rpg_tools_core::model::character::appearance::eye::brow::style::EyebrowStyle;
-use rpg_tools_core::model::side::Side;
-use rpg_tools_core::model::width::Width;
 
 /// The rendering config of the [`eyebrows`](rpg_tools_core::model::character::appearance::eye::brow::EyeBrows).
 #[derive(Debug, PartialEq)]

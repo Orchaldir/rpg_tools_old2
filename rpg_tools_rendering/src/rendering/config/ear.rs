@@ -1,6 +1,6 @@
 use crate::math::aabb2d::AABB;
 use crate::rendering::config::size::SizeConfig;
-use rpg_tools_core::model::size::Size;
+use rpg_tools_core::model::appearance::size::Size;
 
 /// The rendering config of the [`ears`](rpg_tools_core::model::character::appearance::ear::Ears).
 #[derive(Debug, PartialEq)]

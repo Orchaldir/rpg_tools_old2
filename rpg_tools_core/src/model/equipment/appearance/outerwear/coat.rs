@@ -1,4 +1,4 @@
-use crate::model::color::Color;
+use crate::model::appearance::color::Color;
 use crate::model::equipment::appearance::belt::Belt;
 use crate::model::equipment::appearance::option::button::ButtonColumn;
 use crate::model::equipment::appearance::option::neckline::Neckline;

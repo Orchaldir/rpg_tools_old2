@@ -1,8 +1,8 @@
+use crate::model::appearance::color::Color;
+use crate::model::appearance::length::Length;
 use crate::model::character::appearance::beard::full::FullBeardStyle;
 use crate::model::character::appearance::beard::goatee::GoateeStyle;
 use crate::model::character::appearance::beard::moustache::MoustacheStyle;
-use crate::model::color::Color;
-use crate::model::length::Length;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

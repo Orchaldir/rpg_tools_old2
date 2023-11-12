@@ -220,7 +220,7 @@ mod tests {
     use super::*;
     use crate::math::point2d::Point2d;
     use crate::renderer::color::WebColor;
-    use rpg_tools_core::model::color::Color;
+    use rpg_tools_core::model::appearance::color::Color;
 
     #[test]
     fn test_empty_svg() {

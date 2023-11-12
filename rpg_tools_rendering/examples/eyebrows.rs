@@ -2,6 +2,9 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::render::{add_names, render_2_sets};
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::length::Length;
+use rpg_tools_core::model::appearance::width::Width;
 use rpg_tools_core::model::character::appearance::eye::brow::shape::EyebrowShape;
 use rpg_tools_core::model::character::appearance::eye::brow::style::EyebrowStyle;
 use rpg_tools_core::model::character::appearance::eye::brow::EyeBrows;
@@ -9,9 +12,6 @@ use rpg_tools_core::model::character::appearance::eye::Eyes;
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::length::Length;
-use rpg_tools_core::model::width::Width;
 
 pub mod utils;
 

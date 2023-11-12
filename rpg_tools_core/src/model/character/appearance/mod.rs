@@ -1,6 +1,6 @@
+use crate::model::appearance::length::Length;
 use crate::model::character::appearance::body::Body;
 use crate::model::character::appearance::head::Head;
-use crate::model::length::Length;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

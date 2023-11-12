@@ -1,4 +1,4 @@
-use rpg_tools_core::model::width::Width;
+use rpg_tools_core::model::appearance::width::Width;
 use Width::*;
 
 /// The configuration of a [`width`](Width).

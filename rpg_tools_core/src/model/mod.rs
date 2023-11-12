@@ -3,16 +3,11 @@ use crate::model::culture::manager::CultureMgr;
 use crate::model::race::manager::RaceMgr;
 use std::path::PathBuf;
 
+pub mod appearance;
 pub mod character;
-pub mod color;
 pub mod culture;
 pub mod equipment;
-pub mod length;
 pub mod race;
-pub mod side;
-pub mod size;
-pub mod transparency;
-pub mod width;
 
 #[derive(Default, Debug)]
 pub struct RpgData {

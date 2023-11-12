@@ -14,7 +14,7 @@ impl Side {
     /// The right side is on the left and so the sign is negative.
     ///
     /// ```
-    ///# use rpg_tools_core::model::side::Side;
+    ///# use rpg_tools_core::model::appearance::side::Side;
     /// assert_eq!(Side::Left.get_sign_from_front(), 1.0);
     /// assert_eq!(Side::Right.get_sign_from_front(), -1.0);
     /// ```

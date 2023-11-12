@@ -2,15 +2,15 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::render::{add_names, render_2_sets};
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::length::Length;
 use rpg_tools_core::model::character::appearance::body::{Body, BodyShape};
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::equipment::appearance::belt::{Belt, Buckle};
 use rpg_tools_core::model::equipment::appearance::option::button::{Button, ButtonColumn};
 use rpg_tools_core::model::equipment::appearance::outerwear::coat::{ClosingOption, Coat};
 use rpg_tools_core::model::equipment::appearance::outerwear::{Outerwear, OuterwearLength};
 use rpg_tools_core::model::equipment::appearance::Clothing;
-use rpg_tools_core::model::length::Length;
 
 pub mod utils;
 

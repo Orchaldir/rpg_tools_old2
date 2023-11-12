@@ -2,10 +2,10 @@ use crate::math::aabb2d::{get_end_x, AABB};
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
+use rpg_tools_core::model::appearance::size::Size;
 use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
 use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::head::Head;
-use rpg_tools_core::model::size::Size;
 
 pub fn render_ears(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {
     let options = config.get_skin_options(&head.skin);

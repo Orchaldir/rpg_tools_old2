@@ -1,10 +1,10 @@
 use crate::math::aabb2d::AABB;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::size::Size;
 use rpg_tools_core::model::character::appearance::hair::bun::BunStyle;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::size::Size;
 
 pub fn render_buns(
     renderer: &mut dyn Renderer,

@@ -1,5 +1,5 @@
 use crate::rendering::config::size::SizeConfig;
-use rpg_tools_core::model::side::Side;
+use rpg_tools_core::model::appearance::side::Side;
 
 #[derive(Debug, PartialEq)]
 pub struct ShortHairConfig {

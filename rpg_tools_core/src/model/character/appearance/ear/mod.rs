@@ -1,5 +1,5 @@
+use crate::model::appearance::size::Size;
 use crate::model::character::appearance::ear::shape::EarShape;
-use crate::model::size::Size;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

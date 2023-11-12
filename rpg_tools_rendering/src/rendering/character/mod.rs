@@ -13,9 +13,9 @@ use ear::render_ears;
 use eye::render_eyes;
 use head::render_head_shape;
 use mouth::render_mouth;
+use rpg_tools_core::model::appearance::length::Length;
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::length::Length;
 
 pub mod beard;
 pub mod body;

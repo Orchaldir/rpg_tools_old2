@@ -1,6 +1,6 @@
+use crate::model::appearance::color::Color;
+use crate::model::appearance::size::Size;
 use crate::model::character::appearance::beard::Beard;
-use crate::model::color::Color;
-use crate::model::size::Size;
 use macro_convert::Convert;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};

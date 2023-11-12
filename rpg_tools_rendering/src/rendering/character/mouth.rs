@@ -8,10 +8,10 @@ use crate::rendering::character::beard::{
     render_beard_behind_mouth, render_beard_in_front_of_mouth,
 };
 use crate::rendering::config::RenderConfig;
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::size::Size;
 use rpg_tools_core::model::character::appearance::head::Head;
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::size::Size;
 use Color::Black;
 
 pub fn render_mouth(renderer: &mut dyn Renderer, config: &RenderConfig, aabb: &AABB, head: &Head) {

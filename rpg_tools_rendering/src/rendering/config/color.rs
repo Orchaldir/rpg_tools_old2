@@ -1,7 +1,7 @@
 use crate::renderer::color::WebColor;
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::transparency::Transparency;
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::transparency::Transparency;
 
 #[derive(Debug, PartialEq)]
 pub struct ColorConfig {

@@ -1,4 +1,4 @@
-use rpg_tools_core::model::color::Color;
+use rpg_tools_core::model::appearance::color::Color;
 use std::fmt::{Display, Formatter};
 
 /// A color supported by svg.

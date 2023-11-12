@@ -1,7 +1,7 @@
+use crate::model::appearance::color::Color;
+use crate::model::appearance::width::Width;
 use crate::model::character::appearance::eye::brow::shape::EyebrowShape;
 use crate::model::character::appearance::eye::brow::style::EyebrowStyle;
-use crate::model::color::Color;
-use crate::model::width::Width;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

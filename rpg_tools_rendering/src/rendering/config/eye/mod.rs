@@ -1,8 +1,8 @@
 use crate::math::aabb2d::AABB;
 use crate::rendering::config::eye::eyebrow::EyebrowConfig;
 use crate::rendering::config::size::SizeConfig;
+use rpg_tools_core::model::appearance::size::Size;
 use rpg_tools_core::model::character::appearance::eye::shape::EyeShape;
-use rpg_tools_core::model::size::Size;
 
 pub mod eyebrow;
 

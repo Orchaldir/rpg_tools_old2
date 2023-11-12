@@ -1,4 +1,4 @@
-use crate::model::color::Color;
+use crate::model::appearance::color::Color;
 use crate::model::equipment::appearance::option::neckline::Neckline;
 use crate::model::equipment::appearance::option::sleeve::SleeveStyle;
 use macro_ui::ui;

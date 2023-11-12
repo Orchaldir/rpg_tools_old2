@@ -3,11 +3,11 @@ use crate::math::polygon2d::builder::Polygon2dBuilder;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
+use rpg_tools_core::model::appearance::length::Length;
 use rpg_tools_core::model::character::appearance::hair::ponytail::position::PonytailPosition;
 use rpg_tools_core::model::character::appearance::hair::ponytail::style::PonytailStyle;
 use rpg_tools_core::model::character::appearance::hair::ponytail::Ponytail;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
-use rpg_tools_core::model::length::Length;
 
 pub fn render_ponytail(
     renderer: &mut dyn Renderer,

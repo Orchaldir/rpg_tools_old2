@@ -1,9 +1,9 @@
+use crate::model::appearance::color::Color;
+use crate::model::appearance::size::Size;
 use crate::model::character::appearance::eye::brow::EyeBrows;
 use crate::model::character::appearance::eye::pupil::PupilShape;
 use crate::model::character::appearance::eye::shape::EyeShape;
-use crate::model::color::Color;
 use crate::model::equipment::appearance::eyewear::Eyewear;
-use crate::model::size::Size;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 
