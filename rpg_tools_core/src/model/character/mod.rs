@@ -90,4 +90,8 @@ impl Entry<CharacterId> for Character {
     fn id(&self) -> CharacterId {
         self.id
     }
+
+    fn set_id(&mut self, id: CharacterId) {
+        self.id = id;
+    }
 }

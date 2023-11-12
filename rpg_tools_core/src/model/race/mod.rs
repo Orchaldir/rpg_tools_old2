@@ -56,4 +56,8 @@ impl Entry<RaceId> for Race {
     fn id(&self) -> RaceId {
         self.id
     }
+
+    fn set_id(&mut self, id: RaceId) {
+        self.id = id;
+    }
 }

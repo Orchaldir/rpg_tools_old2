@@ -43,4 +43,8 @@ impl Entry<CultureId> for Culture {
     fn id(&self) -> CultureId {
         self.id
     }
+
+    fn set_id(&mut self, id: CultureId) {
+        self.id = id;
+    }
 }
