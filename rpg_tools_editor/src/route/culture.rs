@@ -80,12 +80,7 @@ pub fn update_culture(
         .get(culture_id)
         .map(|culture| get_details_template(&data, id, culture));
 
-    if let Err(e) = write(
-        data.culture_manager.get_all(),
-        &data.get_path(CULTURES_FILE),
-    ) {
-        println!("Failed to save the cultures: {}", e);
-    }
+    save_cultures(&data);
 
     result
 }
@@ -100,7 +95,10 @@ pub fn delete_culture_route(data: &State<EditorData>, id: usize) -> Template {
     let result = delete_culture(&mut data, culture_id);
 
     match result {
-        DeleteResult::Ok => get_all_template(data),
+        DeleteResult::Ok => {
+            save_cultures(&data);
+            get_all_template(data)
+        }
         _ => {
             let name = data
                 .culture_manager
@@ -157,4 +155,13 @@ fn get_edit_template(id: usize, culture: &Culture, name_error: &str) -> Template
             name_error: name_error,
         },
     )
+}
+
+fn save_cultures(data: &RpgData) {
+    if let Err(e) = write(
+        data.culture_manager.get_all(),
+        &data.get_path(CULTURES_FILE),
+    ) {
+        println!("Failed to save the cultures: {}", e);
+    }
 }

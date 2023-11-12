@@ -89,9 +89,7 @@ pub fn update_race(
         .get(race_id)
         .map(|race| get_details_template(&data, id, race));
 
-    if let Err(e) = write(data.race_manager.get_all(), &data.get_path(RACES_FILE)) {
-        println!("Failed to save the races: {}", e);
-    }
+    save_races(&data);
 
     result
 }
@@ -106,7 +104,10 @@ pub fn delete_race_route(data: &State<EditorData>, id: usize) -> Template {
     let result = delete_race(&mut data, race_id);
 
     match result {
-        DeleteResult::Ok => get_all_template(data),
+        DeleteResult::Ok => {
+            save_races(&data);
+            get_all_template(data)
+        }
         _ => {
             let name = data
                 .race_manager
@@ -167,4 +168,10 @@ fn get_edit_template(id: usize, race: &Race, name_error: &str, gender_error: &st
             gender_error: gender_error,
         },
     )
+}
+
+fn save_races(data: &RpgData) {
+    if let Err(e) = write(data.race_manager.get_all(), &data.get_path(RACES_FILE)) {
+        println!("Failed to save the races: {}", e);
+    }
 }

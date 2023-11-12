@@ -131,7 +131,10 @@ pub fn delete_character_route(data: &State<EditorData>, id: usize) -> Template {
     let result = delete_character(&mut data, character_id);
 
     match result {
-        DeleteResult::Ok => get_all_template(data),
+        DeleteResult::Ok => {
+            write_characters(&data);
+            get_all_template(data)
+        }
         _ => {
             let name = data
                 .character_manager
@@ -244,12 +247,16 @@ pub fn save_and_show_character(data: &RpgData, id: usize) -> Option<Template> {
         .get(CharacterId::new(id))
         .map(|character| get_details_template(data, id, character));
 
+    write_characters(&data);
+
+    result
+}
+
+fn write_characters(data: &RpgData) {
     if let Err(e) = write(
         data.character_manager.get_all(),
         &data.get_path(CHARACTERS_FILE),
     ) {
         println!("Failed to save the characters: {}", e);
     }
-
-    result
 }
