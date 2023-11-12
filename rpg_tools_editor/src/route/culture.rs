@@ -1,31 +1,24 @@
 use crate::io::write;
+use crate::route::get_failed_delete_template;
 use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::culture::{Culture, CultureId};
 use rpg_tools_core::model::RpgData;
+use rpg_tools_core::usecase::delete::culture::delete_culture;
+use rpg_tools_core::usecase::delete::DeleteResult;
 use rpg_tools_core::usecase::edit::culture::update_culture_name;
 use rpg_tools_core::utils::storage::{Entry, Id};
+use std::sync::MutexGuard;
 
 pub const CULTURES_FILE: &str = "cultures.yaml";
 
 #[get("/culture/all")]
 pub fn get_all_cultures(data: &State<EditorData>) -> Template {
     let data = data.data.lock().expect("lock shared data");
-    let cultures: Vec<(usize, &str)> = data
-        .culture_manager
-        .get_all()
-        .iter()
-        .map(|r| (r.id().id(), r.name()))
-        .collect();
 
-    Template::render(
-        "culture/all",
-        context! {
-            cultures: cultures,
-        },
-    )
+    get_all_template(data)
 }
 
 #[get("/culture/details/<id>")]
@@ -95,6 +88,45 @@ pub fn update_culture(
     }
 
     result
+}
+
+#[get("/culture/delete/<id>")]
+pub fn delete_culture_route(data: &State<EditorData>, id: usize) -> Template {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!("Delete culture {}", id);
+
+    let culture_id = CultureId::new(id);
+    let result = delete_culture(&mut data, culture_id);
+
+    match result {
+        DeleteResult::Ok => get_all_template(data),
+        _ => {
+            let name = data
+                .culture_manager
+                .get(culture_id)
+                .map(|race| race.name())
+                .unwrap_or("Unknown")
+                .to_string();
+            get_failed_delete_template(data, "culture", id, &name, result)
+        }
+    }
+}
+
+fn get_all_template(data: MutexGuard<RpgData>) -> Template {
+    let cultures: Vec<(usize, &str)> = data
+        .culture_manager
+        .get_all()
+        .iter()
+        .map(|r| (r.id().id(), r.name()))
+        .collect();
+
+    Template::render(
+        "culture/all",
+        context! {
+            cultures: cultures,
+        },
+    )
 }
 
 fn get_details_template(data: &RpgData, id: usize, culture: &Culture) -> Template {

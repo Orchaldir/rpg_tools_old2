@@ -12,7 +12,8 @@ use crate::route::character::{
     CHARACTERS_FILE,
 };
 use crate::route::culture::{
-    add_culture, edit_culture, get_all_cultures, get_culture_details, update_culture, CULTURES_FILE,
+    add_culture, delete_culture_route, edit_culture, get_all_cultures, get_culture_details,
+    update_culture, CULTURES_FILE,
 };
 use crate::route::race::{
     add_race, delete_race_route, edit_race, get_all_races, get_race_details, update_race,
@@ -100,6 +101,7 @@ async fn main() -> Result<()> {
                 add_culture,
                 edit_culture,
                 update_culture,
+                delete_culture_route,
             ],
         )
         .attach(Template::fairing())

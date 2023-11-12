@@ -7,6 +7,7 @@
   <div class="text">
     <p><b>Id:</b> {{ id }}</p>
     <p><a href="/culture/edit/{{ id }}">Edit Data</a></p>
+    <p><a href="/culture/delete/{{ id }}">Delete</a></p>
   </div>
   <p><h2>Characters</h2></p>
   <div class="text">

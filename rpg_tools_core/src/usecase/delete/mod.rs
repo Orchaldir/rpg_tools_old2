@@ -1,5 +1,6 @@
 use crate::model::character::CharacterId;
 
+pub mod culture;
 pub mod race;
 
 pub enum DeleteResult {
