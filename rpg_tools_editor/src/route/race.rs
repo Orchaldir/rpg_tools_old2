@@ -130,7 +130,6 @@ fn get_all_template(data: MutexGuard<RpgData>) -> Template {
     Template::render(
         "race/all",
         context! {
-            total: races.len(),
             races: races,
         },
     )

@@ -23,13 +23,11 @@ pub fn get_all_characters(data: &State<EditorData>) -> Template {
         .iter()
         .map(|c| (c.id().id(), c.name()))
         .collect();
-    let total = characters.len();
 
     Template::render(
         "character/all",
         context! {
             characters: characters,
-            total: total,
         },
     )
 }

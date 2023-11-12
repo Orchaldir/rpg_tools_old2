@@ -3,7 +3,7 @@
 {% block content %}
     <p><h1>Cultures</h1></p>
     <div class="text">
-      <p><b>Total:</b> {{ total }}</p>
+        <p><b>Count:</b> {{ cultures | length }}</p>
       <ul>
       {% for c in cultures %}
         <li><a href="/culture/details/{{ c.0 }}">{{ c.1 }}</a></li>

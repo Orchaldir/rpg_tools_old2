@@ -23,7 +23,6 @@ pub fn get_all_cultures(data: &State<EditorData>) -> Template {
     Template::render(
         "culture/all",
         context! {
-            total: cultures.len(),
             cultures: cultures,
         },
     )
