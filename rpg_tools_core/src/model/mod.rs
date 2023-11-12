@@ -36,8 +36,8 @@ impl Default for RpgData {
         Self {
             setting: "".to_string(),
             character_manager: Default::default(),
-            culture_manager: Default::default(),
-            race_manager: Storage::new(Vec::new()),
+            culture_manager: Storage::default(),
+            race_manager: Storage::default(),
         }
     }
 }

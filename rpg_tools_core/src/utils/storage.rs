@@ -12,7 +12,7 @@ pub trait Entry<I: Id> {
     fn id(&self) -> I;
 }
 
-#[derive(Default, Debug)]
+#[derive(Debug)]
 pub struct Storage<I: Id, T: Entry<I>> {
     entries: Vec<T>,
     phantom: PhantomData<I>,
@@ -42,5 +42,11 @@ impl<I: Id, T: Entry<I>> Storage<I, T> {
 
     pub fn get_mut(&mut self, id: I) -> Option<&mut T> {
         self.entries.get_mut(id.id())
+    }
+}
+
+impl<I: Id, T: Entry<I>> Default for Storage<I, T> {
+    fn default() -> Self {
+        Storage::new(Vec::new())
     }
 }

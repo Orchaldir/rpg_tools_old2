@@ -16,7 +16,7 @@ impl Id for CultureId {
 }
 
 /// A [`character's`](crate::model::character::Character) culture influences names, fashion and much more.
-#[derive(Default, Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Culture {
     id: CultureId,
     name: String,
