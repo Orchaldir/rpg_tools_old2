@@ -10,6 +10,7 @@
     <p><a href="/race/edit/{{ id }}">Edit Data</a></p>
     <p><a href="/race/delete/{{ id }}">Delete</a></p>
   </div>
+  {% if characters %}
   <p><h2>Characters</h2></p>
   <div class="text">
     <ul>
@@ -17,6 +18,9 @@
       <li><a href="/character/details/{{ c.0 }}">{{ c.1 }}</a></li>
       {% endfor %}
     </ul>
+  </div>
+  {% endif %}
+  <div class="text">
     <p><a href="/race/all">Back</a></p>
   </div>
 </div>
