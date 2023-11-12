@@ -6,28 +6,19 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::race::gender::GenderOption;
 use rpg_tools_core::model::race::{Race, RaceId};
 use rpg_tools_core::model::RpgData;
+use rpg_tools_core::usecase::delete::race::delete_race;
+use rpg_tools_core::usecase::delete::DeleteResult;
 use rpg_tools_core::usecase::edit::race::{update_gender_option, update_race_name};
 use rpg_tools_core::utils::storage::{Entry, Id};
+use std::sync::MutexGuard;
 
 pub const RACES_FILE: &str = "races.yaml";
 
 #[get("/race/all")]
 pub fn get_all_races(data: &State<EditorData>) -> Template {
     let data = data.data.lock().expect("lock shared data");
-    let races: Vec<(usize, &str)> = data
-        .race_manager
-        .get_all()
-        .iter()
-        .map(|r| (r.id().id(), r.name()))
-        .collect();
 
-    Template::render(
-        "race/all",
-        context! {
-            total: races.len(),
-            races: races,
-        },
-    )
+    get_all_template(data)
 }
 
 #[get("/race/details/<id>")]
@@ -102,6 +93,46 @@ pub fn update_race(
     }
 
     result
+}
+
+#[get("/race/delete/<id>")]
+pub fn delete_race_route(data: &State<EditorData>, id: usize) -> Option<Template> {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!("Delete race {}", id);
+
+    let race_id = RaceId::new(id);
+
+    match delete_race(&mut data, race_id) {
+        DeleteResult::Ok => Some(get_all_template(data)),
+        DeleteResult::NotFound | DeleteResult::Blocked => {
+            data.race_manager.get(race_id).map(|race| {
+                Template::render(
+                    "generic/delete",
+                    context! {
+                        race: race.name(),
+                    },
+                )
+            })
+        }
+    }
+}
+
+fn get_all_template(data: MutexGuard<RpgData>) -> Template {
+    let races: Vec<(usize, &str)> = data
+        .race_manager
+        .get_all()
+        .iter()
+        .map(|r| (r.id().id(), r.name()))
+        .collect();
+
+    Template::render(
+        "race/all",
+        context! {
+            total: races.len(),
+            races: races,
+        },
+    )
 }
 
 fn get_details_template(data: &RpgData, id: usize, race: &Race) -> Template {

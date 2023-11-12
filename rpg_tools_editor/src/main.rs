@@ -15,7 +15,8 @@ use crate::route::culture::{
     add_culture, edit_culture, get_all_cultures, get_culture_details, update_culture, CULTURES_FILE,
 };
 use crate::route::race::{
-    add_race, edit_race, get_all_races, get_race_details, update_race, RACES_FILE,
+    add_race, delete_race_route, edit_race, get_all_races, get_race_details, update_race,
+    RACES_FILE,
 };
 use anyhow::{bail, Result};
 use rocket::fs::FileServer;
@@ -93,6 +94,7 @@ async fn main() -> Result<()> {
                 add_race,
                 edit_race,
                 update_race,
+                delete_race_route,
                 get_all_cultures,
                 get_culture_details,
                 add_culture,

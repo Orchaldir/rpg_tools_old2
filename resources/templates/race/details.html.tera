@@ -8,6 +8,7 @@
     <p><b>Id:</b> {{ id }}</p>
     <p><b>Gender Option:</b> {{ gender_option }}</p>
     <p><a href="/race/edit/{{ id }}">Edit Data</a></p>
+    <p><a href="/race/delete/{{ id }}">Delete</a></p>
   </div>
   <p><h2>Characters</h2></p>
   <div class="text">
