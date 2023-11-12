@@ -1,6 +1,7 @@
 use crate::model::character::gender::Gender;
 use crate::model::character::CharacterId;
 use crate::model::RpgData;
+use crate::utils::storage::Entry;
 use anyhow::{bail, Context, Result};
 
 /// Tries to update the name of a [`character`](crate::model::character::Character).
@@ -89,7 +90,7 @@ pub fn update_character_culture(
         .get_all()
         .iter()
         .find(|culture| culture.name().eq(culture_name))
-        .map(|culture| *culture.id())
+        .map(|culture| culture.id())
         .context("Culture doesn't exist!")?;
 
     data.character_manager

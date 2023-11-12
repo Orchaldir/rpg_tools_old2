@@ -6,6 +6,7 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::culture::{Culture, CultureId};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::edit::culture::update_culture_name;
+use rpg_tools_core::utils::storage::{Entry, Id};
 
 pub const CULTURES_FILE: &str = "cultures.yaml";
 
@@ -102,7 +103,7 @@ fn get_details_template(data: &RpgData, id: usize, culture: &Culture) -> Templat
         .character_manager
         .get_all()
         .iter()
-        .filter(|c| c.culture().eq(culture.id()))
+        .filter(|c| c.culture().eq(&culture.id()))
         .map(|c| (c.id().id(), c.name()))
         .collect();
 

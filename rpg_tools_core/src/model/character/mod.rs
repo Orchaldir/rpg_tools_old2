@@ -39,7 +39,7 @@ impl Character {
             id,
             name: format!("Character {}", id.0),
             race: RaceId::new(0),
-            culture: CultureId::new(0),
+            culture: CultureId::default(),
             gender: Gender::default(),
             appearance: Appearance::default(),
         }

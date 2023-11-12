@@ -1,6 +1,7 @@
 use crate::model::character::manager::CharacterMgr;
-use crate::model::culture::manager::CultureMgr;
+use crate::model::culture::{Culture, CultureId};
 use crate::model::race::manager::RaceMgr;
+use crate::utils::storage::Storage;
 use std::path::PathBuf;
 
 pub mod appearance;
@@ -13,7 +14,7 @@ pub mod race;
 pub struct RpgData {
     pub setting: String,
     pub character_manager: CharacterMgr,
-    pub culture_manager: CultureMgr,
+    pub culture_manager: Storage<CultureId, Culture>,
     pub race_manager: RaceMgr,
 }
 

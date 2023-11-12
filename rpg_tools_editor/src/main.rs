@@ -24,11 +24,11 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::manager::CharacterMgr;
 use rpg_tools_core::model::character::Character;
-use rpg_tools_core::model::culture::manager::CultureMgr;
 use rpg_tools_core::model::culture::Culture;
 use rpg_tools_core::model::race::manager::RaceMgr;
 use rpg_tools_core::model::race::Race;
 use rpg_tools_core::model::{get_setting_path, RpgData};
+use rpg_tools_core::utils::storage::Storage;
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::env;
@@ -120,7 +120,7 @@ fn init(setting: &str) -> RpgData {
     let culture_manager = match cultures {
         Ok(cultures) => {
             println!("Loaded {} cultures.", cultures.len());
-            CultureMgr::new(cultures)
+            Storage::new(cultures)
         }
         Err(e) => {
             println!("Failed to load the cultures: {}", e);
