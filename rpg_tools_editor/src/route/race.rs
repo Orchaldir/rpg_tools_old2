@@ -110,7 +110,8 @@ pub fn delete_race_route(data: &State<EditorData>, id: usize) -> Option<Template
                 Template::render(
                     "generic/delete",
                     context! {
-                        race: race.name(),
+                        id: id,
+                        name: race.name(),
                     },
                 )
             })
