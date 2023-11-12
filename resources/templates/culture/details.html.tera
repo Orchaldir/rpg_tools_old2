@@ -9,16 +9,13 @@
     <p><a href="/culture/edit/{{ id }}">Edit Data</a></p>
   </div>
   <p><h2>Characters</h2></p>
-  {% if characters %}
   <div class="text">
+    <p><b>Count:</b> {{ characters | length }}</p>
     <ul>
       {% for c in characters %}
       <li><a href="/character/details/{{ c.0 }}">{{ c.1 }}</a></li>
       {% endfor %}
     </ul>
-  </div>
-  {% endif %}
-  <div class="text">
     <p><a href="/culture/all">Back</a></p>
   </div>
 </div>
