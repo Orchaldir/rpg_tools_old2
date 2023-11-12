@@ -105,7 +105,7 @@ pub fn delete_culture_route(data: &State<EditorData>, id: usize) -> Template {
             let name = data
                 .culture_manager
                 .get(culture_id)
-                .map(|race| race.name())
+                .map(|culture| culture.name())
                 .unwrap_or("Unknown")
                 .to_string();
             get_failed_delete_template(data, "culture", id, &name, result)

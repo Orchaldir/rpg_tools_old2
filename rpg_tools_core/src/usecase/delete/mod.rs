@@ -1,5 +1,6 @@
 use crate::model::character::CharacterId;
 
+pub mod character;
 pub mod culture;
 pub mod race;
 

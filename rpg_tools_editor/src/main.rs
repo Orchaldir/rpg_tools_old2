@@ -8,8 +8,8 @@ use crate::route::appearance::{
     get_preview_front, update_appearance, update_appearance_preview,
 };
 use crate::route::character::{
-    add_character, edit_character, get_all_characters, get_character_details, update_character,
-    CHARACTERS_FILE,
+    add_character, delete_character_route, edit_character, get_all_characters,
+    get_character_details, update_character, CHARACTERS_FILE,
 };
 use crate::route::culture::{
     add_culture, delete_culture_route, edit_culture, get_all_cultures, get_culture_details,
@@ -85,6 +85,7 @@ async fn main() -> Result<()> {
                 update_character,
                 edit_appearance,
                 update_appearance,
+                delete_character_route,
                 get_preview_front,
                 get_preview_back,
                 update_appearance_preview,

@@ -1,4 +1,5 @@
 use crate::io::write;
+use crate::route::get_failed_delete_template;
 use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
@@ -6,30 +7,22 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::gender::Gender;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::RpgData;
+use rpg_tools_core::usecase::delete::character::delete_character;
+use rpg_tools_core::usecase::delete::DeleteResult;
 use rpg_tools_core::usecase::edit::character::{
     update_character_culture, update_character_gender, update_character_name, update_character_race,
 };
 use rpg_tools_core::utils::storage::Entry;
 use rpg_tools_core::utils::storage::Id;
+use std::sync::MutexGuard;
 
 pub const CHARACTERS_FILE: &str = "characters.yaml";
 
 #[get("/character/all")]
 pub fn get_all_characters(data: &State<EditorData>) -> Template {
     let data = data.data.lock().expect("lock shared data");
-    let characters: Vec<(usize, &str)> = data
-        .character_manager
-        .get_all()
-        .iter()
-        .map(|c| (c.id().id(), c.name()))
-        .collect();
 
-    Template::render(
-        "character/all",
-        context! {
-            characters: characters,
-        },
-    )
+    get_all_template(data)
 }
 
 #[get("/character/details/<id>")]
@@ -126,6 +119,45 @@ pub fn update_character(
         });
 
     save_and_show_character(&data, id)
+}
+
+#[get("/character/delete/<id>")]
+pub fn delete_character_route(data: &State<EditorData>, id: usize) -> Template {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!("Delete character {}", id);
+
+    let character_id = CharacterId::new(id);
+    let result = delete_character(&mut data, character_id);
+
+    match result {
+        DeleteResult::Ok => get_all_template(data),
+        _ => {
+            let name = data
+                .character_manager
+                .get(character_id)
+                .map(|character| character.name())
+                .unwrap_or("Unknown")
+                .to_string();
+            get_failed_delete_template(data, "character", id, &name, result)
+        }
+    }
+}
+
+fn get_all_template(data: MutexGuard<RpgData>) -> Template {
+    let characters: Vec<(usize, &str)> = data
+        .character_manager
+        .get_all()
+        .iter()
+        .map(|c| (c.id().id(), c.name()))
+        .collect();
+
+    Template::render(
+        "character/all",
+        context! {
+            characters: characters,
+        },
+    )
 }
 
 fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Template {

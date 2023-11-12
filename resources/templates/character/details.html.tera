@@ -10,6 +10,7 @@
     <p><b>Culture:</b> <a href="/culture/details/{{ culture_id }}">{{ culture }}</a></p>
     <p><b>Gender:</b> {{ gender }}</p>
     <p><a href="/character/edit/{{ id }}">Edit Data</a></p>
+    <p><a href="/character/delete/{{ id }}">Delete</a></p>
   </div>
   <p><h2>Appearance</h2></p>
   <center>
