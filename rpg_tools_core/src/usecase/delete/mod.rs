@@ -4,6 +4,7 @@ pub mod character;
 pub mod culture;
 pub mod race;
 
+#[derive(Debug, PartialEq, Eq)]
 pub enum DeleteResult {
     Ok,
     NotFound,
