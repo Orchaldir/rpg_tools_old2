@@ -45,6 +45,10 @@ impl<I: Id, T: Entry<I>> Storage<I, T> {
         &self.entries
     }
 
+    pub fn get_all_mut(&mut self) -> &mut Vec<T> {
+        &mut self.entries
+    }
+
     pub fn get(&self, id: I) -> Option<&T> {
         self.entries.get(id.id())
     }

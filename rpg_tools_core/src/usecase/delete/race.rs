@@ -23,7 +23,15 @@ pub fn delete_race(data: &mut RpgData, id: RaceId) -> DeleteResult {
     match data.race_manager.delete(id) {
         DeleteElementResult::NotFound => DeleteResult::NotFound,
         DeleteElementResult::DeletedLastElement => DeleteResult::Ok,
-        DeleteElementResult::SwappedAndRemoved { id_to_update } => DeleteResult::Ok,
+        DeleteElementResult::SwappedAndRemoved { id_to_update } => {
+            data.character_manager
+                .get_all_mut()
+                .iter_mut()
+                .filter(|character| character.race() == id_to_update)
+                .for_each(|character| character.set_race(id));
+
+            DeleteResult::Ok
+        }
     }
 }
 
@@ -67,7 +75,7 @@ mod tests {
     #[test]
     fn test_update_character_with_moved_race() {
         let mut data = RpgData::default();
-        let race_id0 = data.race_manager.create();
+        data.race_manager.create();
         let race_id1 = data.race_manager.create();
         let race_id2 = data.race_manager.create();
         let character_id = data.character_manager.create();
