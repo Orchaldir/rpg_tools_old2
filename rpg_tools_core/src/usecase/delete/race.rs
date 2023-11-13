@@ -62,4 +62,25 @@ mod tests {
             delete_race(&mut data, race_id)
         );
     }
+
+    #[test]
+    fn test_update_character_with_moved_race() {
+        let mut data = RpgData::default();
+        let race_id0 = data.race_manager.create();
+        let race_id1 = data.race_manager.create();
+        let race_id2 = data.race_manager.create();
+        let character_id = data.character_manager.create();
+        data.character_manager
+            .get_mut(character_id)
+            .map(|character| character.set_race(race_id2));
+
+        assert_eq!(Ok, delete_race(&mut data, race_id1));
+        assert_eq!(
+            race_id1,
+            data.character_manager
+                .get_mut(character_id)
+                .map(|character| character.race())
+                .unwrap()
+        );
+    }
 }

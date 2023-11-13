@@ -46,6 +46,7 @@ impl<I: Id, T: Entry<I>> Storage<I, T> {
         self.entries.get_mut(id.id())
     }
 
+    /// Deletes an element by swapping it with the last one, if necessary.
     pub fn delete(&mut self, id: I) -> Option<T> {
         if id.id() >= self.entries.len() {
             return None;
