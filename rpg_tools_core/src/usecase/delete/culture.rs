@@ -22,7 +22,16 @@ pub fn delete_culture(data: &mut RpgData, id: CultureId) -> DeleteResult {
 
     match data.culture_manager.delete(id) {
         DeleteElementResult::NotFound => DeleteResult::NotFound,
-        _ => DeleteResult::Ok,
+        DeleteElementResult::DeletedLastElement => DeleteResult::Ok,
+        DeleteElementResult::SwappedAndRemoved { id_to_update } => {
+            data.character_manager
+                .get_all_mut()
+                .iter_mut()
+                .filter(|character| character.culture() == id_to_update)
+                .for_each(|character| character.set_culture(id));
+
+            DeleteResult::Ok
+        }
     }
 }
 
@@ -60,6 +69,27 @@ mod tests {
                 characters: vec![character_id]
             },
             delete_culture(&mut data, culture_id)
+        );
+    }
+
+    #[test]
+    fn test_update_character_with_moved_culture() {
+        let mut data = RpgData::default();
+        data.culture_manager.create();
+        let culture_id1 = data.culture_manager.create();
+        let culture_id2 = data.culture_manager.create();
+        let character_id = data.character_manager.create();
+        data.character_manager
+            .get_mut(character_id)
+            .map(|character| character.set_culture(culture_id2));
+
+        assert_eq!(Ok, delete_culture(&mut data, culture_id1));
+        assert_eq!(
+            culture_id1,
+            data.character_manager
+                .get_mut(character_id)
+                .map(|character| character.culture())
+                .unwrap()
         );
     }
 }
