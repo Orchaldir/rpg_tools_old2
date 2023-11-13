@@ -1,12 +1,13 @@
 use crate::model::character::CharacterId;
 use crate::model::RpgData;
 use crate::usecase::delete::DeleteResult;
+use crate::utils::storage::DeleteElementResult;
 
 /// Tries to delete a [`character`](crate::model::character::Character).
 pub fn delete_character(data: &mut RpgData, id: CharacterId) -> DeleteResult {
     match data.character_manager.delete(id) {
-        None => DeleteResult::NotFound,
-        Some(_) => DeleteResult::Ok,
+        DeleteElementResult::NotFound => DeleteResult::NotFound,
+        _ => DeleteResult::Ok,
     }
 }
 

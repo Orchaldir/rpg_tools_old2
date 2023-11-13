@@ -14,6 +14,13 @@ pub trait Entry<I: Id> {
     fn set_id(&mut self, id: I);
 }
 
+#[derive(Debug, PartialEq, Eq)]
+pub enum DeleteElementResult<I: Id> {
+    DeletedLastElement,
+    SwappedAndRemoved { id_to_update: I },
+    NotFound,
+}
+
 #[derive(Debug)]
 pub struct Storage<I: Id, T: Entry<I>> {
     entries: Vec<T>,
@@ -47,17 +54,22 @@ impl<I: Id, T: Entry<I>> Storage<I, T> {
     }
 
     /// Deletes an element by swapping it with the last one, if necessary.
-    pub fn delete(&mut self, id: I) -> Option<T> {
-        if id.id() >= self.entries.len() {
-            return None;
-        } else if id.id() + 1 == self.entries.len() {
-            return self.entries.pop();
+    pub fn delete(&mut self, id: I) -> DeleteElementResult<I> {
+        let len = self.entries.len();
+
+        if id.id() >= len {
+            return DeleteElementResult::NotFound;
+        } else if id.id() + 1 == len {
+            self.entries.pop();
+            return DeleteElementResult::DeletedLastElement;
         }
 
-        let removed = self.entries.swap_remove(id.id());
+        self.entries.swap_remove(id.id());
         self.entries[id.id()].set_id(id);
 
-        Some(removed)
+        DeleteElementResult::SwappedAndRemoved {
+            id_to_update: I::new(len - 1),
+        }
     }
 }
 
@@ -71,12 +83,13 @@ impl<I: Id, T: Entry<I>> Default for Storage<I, T> {
 mod tests {
     use super::*;
     use crate::model::character::{Character, CharacterId};
+    use crate::utils::storage::DeleteElementResult::*;
 
     #[test]
     fn test_delete_element_in_empty_storage() {
         let mut storage: Storage<CharacterId, Character> = Storage::default();
 
-        assert_eq!(None, storage.delete(CharacterId::default()));
+        assert_eq!(NotFound, storage.delete(CharacterId::default()));
     }
 
     #[test]
@@ -84,7 +97,7 @@ mod tests {
         let mut storage: Storage<CharacterId, Character> = Storage::default();
         let id = storage.create();
 
-        assert!(storage.delete(id).is_some());
+        assert_eq!(DeletedLastElement, storage.delete(id));
         assert!(storage.get_all().is_empty());
     }
 
@@ -93,13 +106,9 @@ mod tests {
         let mut storage: Storage<CharacterId, Character> = Storage::default();
         let id0 = storage.create();
         let id1 = storage.create();
-        storage.create();
+        let id2 = storage.create();
 
-        if let Some(element) = storage.delete(id0) {
-            assert_element(&element, id0, "Character 0");
-        } else {
-            panic!("Failed to delete!");
-        }
+        assert_eq!(SwappedAndRemoved { id_to_update: id2 }, storage.delete(id0));
 
         assert_eq!(2, storage.get_all().len());
         assert_element(storage.get(id0).unwrap(), id0, "Character 2");
@@ -111,7 +120,7 @@ mod tests {
         let mut storage: Storage<CharacterId, Character> = Storage::default();
         let id = storage.create();
 
-        assert_eq!(None, storage.delete(CharacterId::new(5)));
+        assert_eq!(NotFound, storage.delete(CharacterId::new(5)));
         assert_eq!(1, storage.get_all().len());
         assert_element(storage.get(id).unwrap(), id, "Character 0");
     }

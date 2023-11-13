@@ -2,7 +2,7 @@ use crate::model::character::CharacterId;
 use crate::model::culture::CultureId;
 use crate::model::RpgData;
 use crate::usecase::delete::DeleteResult;
-use crate::utils::storage::Entry;
+use crate::utils::storage::{DeleteElementResult, Entry};
 
 /// Tries to delete a [`culture`](crate::model::culture::Culture).
 pub fn delete_culture(data: &mut RpgData, id: CultureId) -> DeleteResult {
@@ -21,8 +21,8 @@ pub fn delete_culture(data: &mut RpgData, id: CultureId) -> DeleteResult {
     }
 
     match data.culture_manager.delete(id) {
-        None => DeleteResult::NotFound,
-        Some(_) => DeleteResult::Ok,
+        DeleteElementResult::NotFound => DeleteResult::NotFound,
+        _ => DeleteResult::Ok,
     }
 }
 
