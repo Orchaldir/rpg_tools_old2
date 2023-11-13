@@ -1,4 +1,4 @@
-use crate::utils::storage::{Entry, Id};
+use crate::utils::storage::{Element, Id};
 use serde::{Deserialize, Serialize};
 
 /// The unique identifier of a [`culture`](Culture).
@@ -32,7 +32,7 @@ impl Culture {
     }
 }
 
-impl Entry<CultureId> for Culture {
+impl Element<CultureId> for Culture {
     fn new(id: CultureId) -> Self {
         Culture {
             id,

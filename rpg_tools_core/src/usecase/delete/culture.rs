@@ -2,7 +2,7 @@ use crate::model::character::CharacterId;
 use crate::model::culture::CultureId;
 use crate::model::RpgData;
 use crate::usecase::delete::DeleteResult;
-use crate::utils::storage::{DeleteElementResult, Entry};
+use crate::utils::storage::{DeleteElementResult, Element};
 
 /// Tries to delete a [`culture`](crate::model::culture::Culture).
 pub fn delete_culture(data: &mut RpgData, id: CultureId) -> DeleteResult {

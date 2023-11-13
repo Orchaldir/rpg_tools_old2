@@ -10,7 +10,7 @@ use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::delete::race::delete_race;
 use rpg_tools_core::usecase::delete::DeleteResult;
 use rpg_tools_core::usecase::edit::race::{update_gender_option, update_race_name};
-use rpg_tools_core::utils::storage::{Entry, Id};
+use rpg_tools_core::utils::storage::{Element, Id};
 use std::sync::MutexGuard;
 
 pub const RACES_FILE: &str = "races.yaml";

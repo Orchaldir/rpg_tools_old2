@@ -1,7 +1,7 @@
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::delete::DeleteResult;
-use rpg_tools_core::utils::storage::{Entry, Id};
+use rpg_tools_core::utils::storage::{Element, Id};
 use std::sync::MutexGuard;
 
 pub mod appearance;

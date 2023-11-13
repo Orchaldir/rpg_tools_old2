@@ -1,7 +1,7 @@
 use crate::model::character::gender::Gender;
 use crate::model::character::CharacterId;
 use crate::model::RpgData;
-use crate::utils::storage::Entry;
+use crate::utils::storage::Element;
 use anyhow::{bail, Context, Result};
 
 /// Tries to update the name of a [`character`](crate::model::character::Character).

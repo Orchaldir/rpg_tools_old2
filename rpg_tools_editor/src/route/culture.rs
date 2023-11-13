@@ -9,7 +9,7 @@ use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::delete::culture::delete_culture;
 use rpg_tools_core::usecase::delete::DeleteResult;
 use rpg_tools_core::usecase::edit::culture::update_culture_name;
-use rpg_tools_core::utils::storage::{Entry, Id};
+use rpg_tools_core::utils::storage::{Element, Id};
 use std::sync::MutexGuard;
 
 pub const CULTURES_FILE: &str = "cultures.yaml";

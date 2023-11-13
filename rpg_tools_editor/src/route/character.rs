@@ -12,7 +12,7 @@ use rpg_tools_core::usecase::delete::DeleteResult;
 use rpg_tools_core::usecase::edit::character::{
     update_character_culture, update_character_gender, update_character_name, update_character_race,
 };
-use rpg_tools_core::utils::storage::Entry;
+use rpg_tools_core::utils::storage::Element;
 use rpg_tools_core::utils::storage::Id;
 use std::sync::MutexGuard;
 
@@ -247,7 +247,7 @@ pub fn save_and_show_character(data: &RpgData, id: usize) -> Option<Template> {
         .get(CharacterId::new(id))
         .map(|character| get_details_template(data, id, character));
 
-    write_characters(&data);
+    write_characters(data);
 
     result
 }

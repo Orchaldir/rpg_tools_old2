@@ -2,7 +2,7 @@ use crate::model::character::appearance::Appearance;
 use crate::model::character::gender::Gender;
 use crate::model::culture::CultureId;
 use crate::model::race::RaceId;
-use crate::utils::storage::{Entry, Id};
+use crate::utils::storage::{Element, Id};
 use serde::{Deserialize, Serialize};
 
 pub mod appearance;
@@ -75,7 +75,7 @@ impl Character {
     }
 }
 
-impl Entry<CharacterId> for Character {
+impl Element<CharacterId> for Character {
     fn new(id: CharacterId) -> Self {
         Character {
             id,

@@ -6,7 +6,7 @@ pub trait Id: Copy {
     fn id(&self) -> usize;
 }
 
-pub trait Entry<I: Id> {
+pub trait Element<I: Id> {
     fn new(id: I) -> Self;
 
     fn id(&self) -> I;
@@ -22,54 +22,54 @@ pub enum DeleteElementResult<I: Id> {
 }
 
 #[derive(Debug)]
-pub struct Storage<I: Id, T: Entry<I>> {
-    entries: Vec<T>,
+pub struct Storage<I: Id, T: Element<I>> {
+    elements: Vec<T>,
     phantom: PhantomData<I>,
 }
 
-impl<I: Id, T: Entry<I>> Storage<I, T> {
+impl<I: Id, T: Element<I>> Storage<I, T> {
     pub fn new(entries: Vec<T>) -> Self {
         Self {
-            entries,
+            elements: entries,
             phantom: PhantomData,
         }
     }
 
     pub fn create(&mut self) -> I {
-        let id = Id::new(self.entries.len());
-        self.entries.push(T::new(id));
+        let id = Id::new(self.elements.len());
+        self.elements.push(T::new(id));
         id
     }
 
     pub fn get_all(&self) -> &Vec<T> {
-        &self.entries
+        &self.elements
     }
 
     pub fn get_all_mut(&mut self) -> &mut Vec<T> {
-        &mut self.entries
+        &mut self.elements
     }
 
     pub fn get(&self, id: I) -> Option<&T> {
-        self.entries.get(id.id())
+        self.elements.get(id.id())
     }
 
     pub fn get_mut(&mut self, id: I) -> Option<&mut T> {
-        self.entries.get_mut(id.id())
+        self.elements.get_mut(id.id())
     }
 
     /// Deletes an element by swapping it with the last one, if necessary.
     pub fn delete(&mut self, id: I) -> DeleteElementResult<I> {
-        let len = self.entries.len();
+        let len = self.elements.len();
 
         if id.id() >= len {
             return DeleteElementResult::NotFound;
         } else if id.id() + 1 == len {
-            self.entries.pop();
+            self.elements.pop();
             return DeleteElementResult::DeletedLastElement;
         }
 
-        self.entries.swap_remove(id.id());
-        self.entries[id.id()].set_id(id);
+        self.elements.swap_remove(id.id());
+        self.elements[id.id()].set_id(id);
 
         DeleteElementResult::SwappedAndRemoved {
             id_to_update: I::new(len - 1),
@@ -77,7 +77,7 @@ impl<I: Id, T: Entry<I>> Storage<I, T> {
     }
 }
 
-impl<I: Id, T: Entry<I>> Default for Storage<I, T> {
+impl<I: Id, T: Element<I>> Default for Storage<I, T> {
     fn default() -> Self {
         Storage::new(Vec::new())
     }

@@ -1,6 +1,6 @@
 use crate::model::culture::CultureId;
 use crate::model::RpgData;
-use crate::utils::storage::Entry;
+use crate::utils::storage::Element;
 use anyhow::{bail, Context, Result};
 
 /// Tries to update the name of a [`culture`](crate::model::culture::Culture).

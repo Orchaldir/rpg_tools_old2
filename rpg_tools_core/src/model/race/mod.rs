@@ -1,5 +1,5 @@
 use crate::model::race::gender::GenderOption;
-use crate::utils::storage::{Entry, Id};
+use crate::utils::storage::{Element, Id};
 use serde::{Deserialize, Serialize};
 
 pub mod gender;
@@ -44,7 +44,7 @@ impl Race {
     }
 }
 
-impl Entry<RaceId> for Race {
+impl Element<RaceId> for Race {
     fn new(id: RaceId) -> Self {
         Race {
             id,
