@@ -1,4 +1,4 @@
-use crate::model::size::Size;
+use crate::model::appearance::size::Size;
 use macro_convert::Convert;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};

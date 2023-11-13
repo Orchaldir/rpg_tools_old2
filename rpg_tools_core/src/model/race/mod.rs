@@ -1,19 +1,19 @@
 use crate::model::race::gender::GenderOption;
+use crate::utils::storage::{Element, Id};
 use serde::{Deserialize, Serialize};
 
 pub mod gender;
-pub mod manager;
 
 /// The unique identifier of a [`race`](Race).
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
+#[derive(Default, Copy, Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct RaceId(usize);
 
-impl RaceId {
-    pub fn new(id: usize) -> Self {
+impl Id for RaceId {
+    fn new(id: usize) -> Self {
         Self(id)
     }
 
-    pub fn id(&self) -> usize {
+    fn id(&self) -> usize {
         self.0
     }
 }
@@ -27,18 +27,6 @@ pub struct Race {
 }
 
 impl Race {
-    pub fn new(id: RaceId) -> Self {
-        Race {
-            id,
-            name: format!("Race {}", id.0),
-            gender_option: GenderOption::TwoGenders,
-        }
-    }
-
-    pub fn id(&self) -> &RaceId {
-        &self.id
-    }
-
     pub fn name(&self) -> &str {
         &self.name
     }
@@ -53,5 +41,23 @@ impl Race {
 
     pub fn set_gender_option(&mut self, gender_option: GenderOption) {
         self.gender_option = gender_option;
+    }
+}
+
+impl Element<RaceId> for Race {
+    fn new(id: RaceId) -> Self {
+        Race {
+            id,
+            name: format!("Race {}", id.0),
+            gender_option: GenderOption::TwoGenders,
+        }
+    }
+
+    fn id(&self) -> RaceId {
+        self.id
+    }
+
+    fn set_id(&mut self, id: RaceId) {
+        self.id = id;
     }
 }

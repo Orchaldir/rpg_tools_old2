@@ -23,7 +23,7 @@ use crate::rendering::config::mouth::{CircularMouthConfig, MouthConfig};
 use crate::rendering::config::size::SizeConfig;
 use crate::rendering::config::width::WidthConfig;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::color::Color;
+use rpg_tools_core::model::appearance::color::Color;
 
 pub fn create_border_options() -> RenderOptions {
     RenderOptions::new(

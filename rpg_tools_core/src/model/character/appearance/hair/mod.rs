@@ -1,11 +1,11 @@
+use crate::model::appearance::color::Color;
+use crate::model::appearance::length::Length;
+use crate::model::appearance::size::Size;
 use crate::model::character::appearance::hair::bun::BunStyle;
 use crate::model::character::appearance::hair::hairline::Hairline;
 use crate::model::character::appearance::hair::long::LongHairStyle;
 use crate::model::character::appearance::hair::ponytail::Ponytail;
 use crate::model::character::appearance::hair::short::ShortHair;
-use crate::model::color::Color;
-use crate::model::length::Length;
-use crate::model::size::Size;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

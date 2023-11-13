@@ -13,9 +13,9 @@ use crate::rendering::config::eye::EyeConfig;
 use crate::rendering::config::hair::HairConfig;
 use crate::rendering::config::head::HeadConfig;
 use crate::rendering::config::mouth::MouthConfig;
+use rpg_tools_core::model::appearance::color::Color;
 use rpg_tools_core::model::character::appearance::mouth::TeethColor;
 use rpg_tools_core::model::character::appearance::skin::Skin;
-use rpg_tools_core::model::color::Color;
 
 pub mod body;
 pub mod color;

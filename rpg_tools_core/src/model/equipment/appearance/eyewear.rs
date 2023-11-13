@@ -1,6 +1,6 @@
-use crate::model::color::Color;
-use crate::model::side::Side;
-use crate::model::transparency::Transparency;
+use crate::model::appearance::color::Color;
+use crate::model::appearance::side::Side;
+use crate::model::appearance::transparency::Transparency;
 use macro_convert::Convert;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};

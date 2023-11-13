@@ -3,8 +3,8 @@ use crate::math::point2d::Point2d;
 use crate::renderer::color::WebColor;
 use crate::renderer::{RenderOptions, Renderer};
 use crate::rendering::config::RenderConfig;
+use rpg_tools_core::model::appearance::side::Side;
 use rpg_tools_core::model::equipment::appearance::eyewear::{Eyewear, LensShape, LensStyle};
-use rpg_tools_core::model::side::Side;
 
 pub fn render_eyewear(
     renderer: &mut dyn Renderer,

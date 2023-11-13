@@ -2,12 +2,12 @@ use crate::math::aabb2d::AABB;
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
+use rpg_tools_core::model::appearance::side::Side;
+use rpg_tools_core::model::appearance::side::Side::{Left, Right};
+use rpg_tools_core::model::appearance::width::Width;
 use rpg_tools_core::model::character::appearance::eye::brow::shape::EyebrowShape;
 use rpg_tools_core::model::character::appearance::eye::brow::style::EyebrowStyle;
 use rpg_tools_core::model::character::appearance::eye::brow::EyeBrows;
-use rpg_tools_core::model::side::Side;
-use rpg_tools_core::model::side::Side::{Left, Right};
-use rpg_tools_core::model::width::Width;
 
 pub fn render_eyebrow(
     renderer: &mut dyn Renderer,

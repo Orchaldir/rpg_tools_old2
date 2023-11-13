@@ -1,5 +1,5 @@
-use crate::model::side::Side;
-use crate::model::size::Size;
+use crate::model::appearance::side::Side;
+use crate::model::appearance::size::Size;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

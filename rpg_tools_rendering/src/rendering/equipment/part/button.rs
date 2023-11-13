@@ -1,8 +1,8 @@
 use crate::math::aabb2d::AABB;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
+use rpg_tools_core::model::appearance::size::Size;
 use rpg_tools_core::model::equipment::appearance::option::button::ButtonColumn;
-use rpg_tools_core::model::size::Size;
 
 pub fn render_buttons(
     renderer: &mut dyn Renderer,

@@ -7,9 +7,11 @@
   <div class="text">
     <p><b>Id:</b> {{ id }}</p>
     <p><a href="/culture/edit/{{ id }}">Edit Data</a></p>
+    <p><a href="/culture/delete/{{ id }}">Delete</a></p>
   </div>
   <p><h2>Characters</h2></p>
   <div class="text">
+    <p><b>Count:</b> {{ characters | length }}</p>
     <ul>
       {% for c in characters %}
       <li><a href="/character/details/{{ c.0 }}">{{ c.1 }}</a></li>

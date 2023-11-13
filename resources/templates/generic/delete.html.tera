@@ -1,0 +1,18 @@
+{% extends "base" %}
+
+{% block content %}
+<p><h1>Failed to delete {{ name }}</h1></p>
+{% if characters %}
+<div class="text">
+  <p><b>Blocking Characters:</b> {{ characters | length }}</p>
+  <ul>
+    {% for c in characters %}
+    <li><a href="/character/details/{{ c.0 }}">{{ c.1 }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+<div class="text">
+  <p><a href="/{{ endpoint }}/details/{{ id }}">Back</a></p>
+</div>
+{% endblock content %}

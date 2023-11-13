@@ -1,8 +1,8 @@
+use crate::model::appearance::color::Color;
+use crate::model::appearance::length::Length;
 use crate::model::character::appearance::hair::hairline::Hairline;
 use crate::model::character::appearance::hair::ponytail::position::PonytailPosition;
 use crate::model::character::appearance::hair::ponytail::style::PonytailStyle;
-use crate::model::color::Color;
-use crate::model::length::Length;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};
 

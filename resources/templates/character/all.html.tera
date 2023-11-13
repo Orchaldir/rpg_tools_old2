@@ -3,7 +3,7 @@
 {% block content %}
     <p><h1>Characters</h1></p>
     <div class="text">
-      <p><b>Total:</b> {{ total }}</p>
+      <p><b>Count:</b> {{ characters | length }}</p>
       <p><a href="/character/new">Add</a></p>
     </div>
     <div class="grid-container">

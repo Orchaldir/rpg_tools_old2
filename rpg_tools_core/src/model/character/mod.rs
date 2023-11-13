@@ -2,22 +2,22 @@ use crate::model::character::appearance::Appearance;
 use crate::model::character::gender::Gender;
 use crate::model::culture::CultureId;
 use crate::model::race::RaceId;
+use crate::utils::storage::{Element, Id};
 use serde::{Deserialize, Serialize};
 
 pub mod appearance;
 pub mod gender;
-pub mod manager;
 
 /// The unique identifier of a [`character`](Character).
-#[derive(Copy, Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
+#[derive(Default, Copy, Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
 pub struct CharacterId(usize);
 
-impl CharacterId {
-    pub fn new(id: usize) -> Self {
+impl Id for CharacterId {
+    fn new(id: usize) -> Self {
         Self(id)
     }
 
-    pub fn id(&self) -> usize {
+    fn id(&self) -> usize {
         self.0
     }
 }
@@ -34,21 +34,6 @@ pub struct Character {
 }
 
 impl Character {
-    pub fn new(id: CharacterId) -> Self {
-        Character {
-            id,
-            name: format!("Character {}", id.0),
-            race: RaceId::new(0),
-            culture: CultureId::new(0),
-            gender: Gender::default(),
-            appearance: Appearance::default(),
-        }
-    }
-
-    pub fn id(&self) -> &CharacterId {
-        &self.id
-    }
-
     pub fn name(&self) -> &str {
         &self.name
     }
@@ -87,5 +72,26 @@ impl Character {
 
     pub fn set_appearance(&mut self, appearance: Appearance) {
         self.appearance = appearance;
+    }
+}
+
+impl Element<CharacterId> for Character {
+    fn new(id: CharacterId) -> Self {
+        Character {
+            id,
+            name: format!("Character {}", id.0),
+            race: RaceId::default(),
+            culture: CultureId::default(),
+            gender: Gender::default(),
+            appearance: Appearance::default(),
+        }
+    }
+
+    fn id(&self) -> CharacterId {
+        self.id
+    }
+
+    fn set_id(&mut self, id: CharacterId) {
+        self.id = id;
     }
 }

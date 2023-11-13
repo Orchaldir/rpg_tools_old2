@@ -9,13 +9,13 @@ use crate::rendering::character::beard::goatee::{
 };
 use crate::rendering::character::beard::moustache::*;
 use crate::rendering::config::RenderConfig;
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::length::Length;
 use rpg_tools_core::model::character::appearance::beard::full::FullBeardStyle;
 use rpg_tools_core::model::character::appearance::beard::goatee::GoateeStyle;
 use rpg_tools_core::model::character::appearance::beard::moustache::MoustacheStyle;
 use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::length::Length;
 
 pub mod full;
 pub mod goatee;

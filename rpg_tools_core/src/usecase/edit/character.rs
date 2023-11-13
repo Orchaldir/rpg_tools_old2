@@ -1,6 +1,7 @@
 use crate::model::character::gender::Gender;
 use crate::model::character::CharacterId;
 use crate::model::RpgData;
+use crate::utils::storage::Element;
 use anyhow::{bail, Context, Result};
 
 /// Tries to update the name of a [`character`](crate::model::character::Character).
@@ -69,10 +70,8 @@ pub fn update_character_race(data: &mut RpgData, id: CharacterId, race_name: &st
         bail!("Race's gender option conflicts with the gender!")
     }
 
-    let race_id = *race.id();
-
     if let Some(r) = data.character_manager.get_mut(id) {
-        r.set_race(race_id)
+        r.set_race(race.id())
     }
 
     Ok(())
@@ -89,7 +88,7 @@ pub fn update_character_culture(
         .get_all()
         .iter()
         .find(|culture| culture.name().eq(culture_name))
-        .map(|culture| *culture.id())
+        .map(|culture| culture.id())
         .context("Culture doesn't exist!")?;
 
     data.character_manager
@@ -112,21 +111,21 @@ mod tests {
     fn test_empty_name() {
         let mut data = RpgData::default();
 
-        assert!(update_character_name(&mut data, CharacterId::new(0), "").is_err());
+        assert!(update_character_name(&mut data, CharacterId::default(), "").is_err());
     }
 
     #[test]
     fn test_name_contains_only_whitespaces() {
         let mut data = RpgData::default();
 
-        assert!(update_character_name(&mut data, CharacterId::new(0), "  ").is_err());
+        assert!(update_character_name(&mut data, CharacterId::default(), "  ").is_err());
     }
 
     #[test]
     fn test_update_name_of_non_existing_race() {
         let mut data = RpgData::default();
 
-        assert!(update_character_name(&mut data, CharacterId::new(0), "Test").is_err());
+        assert!(update_character_name(&mut data, CharacterId::default(), "Test").is_err());
     }
 
     #[test]
@@ -167,7 +166,7 @@ mod tests {
     fn test_update_gender_of_non_existing_character() {
         let mut data = RpgData::default();
 
-        assert!(update_character_gender(&mut data, CharacterId::new(0), Male).is_err());
+        assert!(update_character_gender(&mut data, CharacterId::default(), Male).is_err());
     }
 
     #[test]
@@ -227,7 +226,7 @@ mod tests {
             .get_mut(race_id)
             .map(|r| r.set_name("Test".to_string()));
 
-        assert!(update_character_race(&mut data, CharacterId::new(0), "Test").is_err());
+        assert!(update_character_race(&mut data, CharacterId::default(), "Test").is_err());
     }
 
     #[test]
@@ -283,7 +282,7 @@ mod tests {
             .get_mut(culture_id)
             .map(|r| r.set_name("Test".to_string()));
 
-        assert!(update_character_culture(&mut data, CharacterId::new(0), "Test").is_err());
+        assert!(update_character_culture(&mut data, CharacterId::default(), "Test").is_err());
     }
 
     #[test]

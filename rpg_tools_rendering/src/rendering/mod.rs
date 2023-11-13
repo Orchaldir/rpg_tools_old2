@@ -1,7 +1,7 @@
 use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
-use rpg_tools_core::model::color::Color;
+use rpg_tools_core::model::appearance::color::Color;
 
 pub mod character;
 pub mod config;

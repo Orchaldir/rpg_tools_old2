@@ -1,25 +1,21 @@
-use crate::model::character::manager::CharacterMgr;
-use crate::model::culture::manager::CultureMgr;
-use crate::model::race::manager::RaceMgr;
+use crate::model::character::{Character, CharacterId};
+use crate::model::culture::{Culture, CultureId};
+use crate::model::race::{Race, RaceId};
+use crate::utils::storage::Storage;
 use std::path::PathBuf;
 
+pub mod appearance;
 pub mod character;
-pub mod color;
 pub mod culture;
 pub mod equipment;
-pub mod length;
 pub mod race;
-pub mod side;
-pub mod size;
-pub mod transparency;
-pub mod width;
 
-#[derive(Default, Debug)]
+#[derive(Debug)]
 pub struct RpgData {
     pub setting: String,
-    pub character_manager: CharacterMgr,
-    pub culture_manager: CultureMgr,
-    pub race_manager: RaceMgr,
+    pub character_manager: Storage<CharacterId, Character>,
+    pub culture_manager: Storage<CultureId, Culture>,
+    pub race_manager: Storage<RaceId, Race>,
 }
 
 impl RpgData {
@@ -32,6 +28,17 @@ impl RpgData {
 
     pub fn get_path(&self, file: &str) -> PathBuf {
         get_setting_path(&self.setting, file)
+    }
+}
+
+impl Default for RpgData {
+    fn default() -> Self {
+        Self {
+            setting: "".to_string(),
+            character_manager: Default::default(),
+            culture_manager: Storage::default(),
+            race_manager: Storage::default(),
+        }
     }
 }
 

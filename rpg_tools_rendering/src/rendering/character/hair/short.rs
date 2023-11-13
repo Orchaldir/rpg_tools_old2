@@ -5,11 +5,11 @@ use crate::renderer::Renderer;
 use crate::rendering::character::hair::hairline::add_hairlines;
 use crate::rendering::character::head::{get_head_corners, render_head_shape_with_option};
 use crate::rendering::config::RenderConfig;
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::side::Side;
+use rpg_tools_core::model::appearance::size::Size;
 use rpg_tools_core::model::character::appearance::hair::hairline::Hairline;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::side::Side;
-use rpg_tools_core::model::size::Size;
 
 pub fn render_buzz_cut(
     renderer: &mut dyn Renderer,

@@ -1,7 +1,7 @@
 use crate::renderer::color::WebColor;
 use crate::rendering::config::size::SizeConfig;
+use rpg_tools_core::model::appearance::size::Size;
 use rpg_tools_core::model::character::appearance::mouth::TeethColor;
-use rpg_tools_core::model::size::Size;
 
 /// The rendering config of the [`mouth`](rpg_tools_core::model::character::appearance::mouth::Mouth).
 #[derive(Debug, PartialEq)]

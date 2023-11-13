@@ -1,4 +1,4 @@
-use crate::model::color::Color;
+use crate::model::appearance::color::Color;
 use macro_convert::Convert;
 use macro_ui::ui;
 use serde::{Deserialize, Serialize};

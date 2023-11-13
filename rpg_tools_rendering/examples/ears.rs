@@ -2,16 +2,16 @@ extern crate rpg_tools_core;
 extern crate rpg_tools_rendering;
 
 use crate::utils::render::{add_names, render_2_sets};
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::length::Length;
+use rpg_tools_core::model::appearance::side::Side::Left;
+use rpg_tools_core::model::appearance::size::Size;
 use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
 use rpg_tools_core::model::character::appearance::ear::Ears;
 use rpg_tools_core::model::character::appearance::hair::short::ShortHair;
 use rpg_tools_core::model::character::appearance::hair::Hair;
 use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::length::Length;
-use rpg_tools_core::model::side::Side::Left;
-use rpg_tools_core::model::size::Size;
 use EarShape::*;
 use Size::*;
 

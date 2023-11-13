@@ -2,8 +2,8 @@ use crate::math::aabb2d::AABB;
 use crate::renderer::Renderer;
 use crate::rendering::character::body::{get_left_arm, get_left_arm_short};
 use crate::rendering::config::RenderConfig;
+use rpg_tools_core::model::appearance::color::Color;
 use rpg_tools_core::model::character::appearance::body::Body;
-use rpg_tools_core::model::color::Color;
 use rpg_tools_core::model::equipment::appearance::option::sleeve::SleeveStyle;
 
 pub fn render_sleeves(

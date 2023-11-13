@@ -5,10 +5,10 @@ use crate::math::polygon2d::Polygon2d;
 use crate::renderer::Renderer;
 use crate::rendering::config::RenderConfig;
 use crate::rendering::render_polygon;
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::length::Length;
 use rpg_tools_core::model::character::appearance::hair::long::LongHairStyle;
 use rpg_tools_core::model::character::appearance::head::HeadShape;
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::length::Length;
 use std::ops::Add;
 use LongHairStyle::{Rounded, Straight, Triangle, Wide};
 

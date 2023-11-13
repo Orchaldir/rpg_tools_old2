@@ -1,3 +1,6 @@
+use rpg_tools_core::model::appearance::color::Color;
+use rpg_tools_core::model::appearance::length::Length;
+use rpg_tools_core::model::appearance::size::Size::Medium;
 use rpg_tools_core::model::character::appearance::beard::Beard;
 use rpg_tools_core::model::character::appearance::body::Body;
 use rpg_tools_core::model::character::appearance::ear::shape::EarShape;
@@ -10,9 +13,6 @@ use rpg_tools_core::model::character::appearance::head::{Head, HeadShape};
 use rpg_tools_core::model::character::appearance::mouth::{Mouth, SpecialTeeth, TeethColor};
 use rpg_tools_core::model::character::appearance::skin::{Skin, SkinColor};
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::color::Color;
-use rpg_tools_core::model::length::Length;
-use rpg_tools_core::model::size::Size::Medium;
 
 pub fn create_head_with_hair(height: Length, hair: &Hair, shape: &HeadShape) -> Appearance {
     Appearance::head(create_head(*shape, hair), height)

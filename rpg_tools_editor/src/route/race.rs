@@ -1,4 +1,5 @@
 use crate::io::write;
+use crate::route::get_failed_delete_template;
 use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
@@ -6,27 +7,19 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::race::gender::GenderOption;
 use rpg_tools_core::model::race::{Race, RaceId};
 use rpg_tools_core::model::RpgData;
+use rpg_tools_core::usecase::delete::race::delete_race;
+use rpg_tools_core::usecase::delete::DeleteResult;
 use rpg_tools_core::usecase::edit::race::{update_gender_option, update_race_name};
+use rpg_tools_core::utils::storage::{Element, Id};
+use std::sync::MutexGuard;
 
 pub const RACES_FILE: &str = "races.yaml";
 
 #[get("/race/all")]
 pub fn get_all_races(data: &State<EditorData>) -> Template {
     let data = data.data.lock().expect("lock shared data");
-    let races: Vec<(usize, &str)> = data
-        .race_manager
-        .get_all()
-        .iter()
-        .map(|r| (r.id().id(), r.name()))
-        .collect();
 
-    Template::render(
-        "race/all",
-        context! {
-            total: races.len(),
-            races: races,
-        },
-    )
+    get_all_template(data)
 }
 
 #[get("/race/details/<id>")]
@@ -96,11 +89,51 @@ pub fn update_race(
         .get(race_id)
         .map(|race| get_details_template(&data, id, race));
 
-    if let Err(e) = write(data.race_manager.get_all(), &data.get_path(RACES_FILE)) {
-        println!("Failed to save the races: {}", e);
-    }
+    save_races(&data);
 
     result
+}
+
+#[get("/race/delete/<id>")]
+pub fn delete_race_route(data: &State<EditorData>, id: usize) -> Template {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!("Delete race {}", id);
+
+    let race_id = RaceId::new(id);
+    let result = delete_race(&mut data, race_id);
+
+    match result {
+        DeleteResult::Ok => {
+            save_races(&data);
+            get_all_template(data)
+        }
+        _ => {
+            let name = data
+                .race_manager
+                .get(race_id)
+                .map(|race| race.name())
+                .unwrap_or("Unknown")
+                .to_string();
+            get_failed_delete_template(data, "race", id, &name, result)
+        }
+    }
+}
+
+fn get_all_template(data: MutexGuard<RpgData>) -> Template {
+    let races: Vec<(usize, &str)> = data
+        .race_manager
+        .get_all()
+        .iter()
+        .map(|r| (r.id().id(), r.name()))
+        .collect();
+
+    Template::render(
+        "race/all",
+        context! {
+            races: races,
+        },
+    )
 }
 
 fn get_details_template(data: &RpgData, id: usize, race: &Race) -> Template {
@@ -108,7 +141,7 @@ fn get_details_template(data: &RpgData, id: usize, race: &Race) -> Template {
         .character_manager
         .get_all()
         .iter()
-        .filter(|c| c.race().eq(race.id()))
+        .filter(|c| c.race().eq(&race.id()))
         .map(|c| (c.id().id(), c.name()))
         .collect();
 
@@ -135,4 +168,10 @@ fn get_edit_template(id: usize, race: &Race, name_error: &str, gender_error: &st
             gender_error: gender_error,
         },
     )
+}
+
+fn save_races(data: &RpgData) {
+    if let Err(e) = write(data.race_manager.get_all(), &data.get_path(RACES_FILE)) {
+        println!("Failed to save the races: {}", e);
+    }
 }

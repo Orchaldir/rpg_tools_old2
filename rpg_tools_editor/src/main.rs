@@ -8,27 +8,27 @@ use crate::route::appearance::{
     get_preview_front, update_appearance, update_appearance_preview,
 };
 use crate::route::character::{
-    add_character, edit_character, get_all_characters, get_character_details, update_character,
-    CHARACTERS_FILE,
+    add_character, delete_character_route, edit_character, get_all_characters,
+    get_character_details, update_character, CHARACTERS_FILE,
 };
 use crate::route::culture::{
-    add_culture, edit_culture, get_all_cultures, get_culture_details, update_culture, CULTURES_FILE,
+    add_culture, delete_culture_route, edit_culture, get_all_cultures, get_culture_details,
+    update_culture, CULTURES_FILE,
 };
 use crate::route::race::{
-    add_race, edit_race, get_all_races, get_race_details, update_race, RACES_FILE,
+    add_race, delete_race_route, edit_race, get_all_races, get_race_details, update_race,
+    RACES_FILE,
 };
 use anyhow::{bail, Result};
 use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::character::manager::CharacterMgr;
 use rpg_tools_core::model::character::Character;
-use rpg_tools_core::model::culture::manager::CultureMgr;
 use rpg_tools_core::model::culture::Culture;
-use rpg_tools_core::model::race::manager::RaceMgr;
 use rpg_tools_core::model::race::Race;
 use rpg_tools_core::model::{get_setting_path, RpgData};
+use rpg_tools_core::utils::storage::Storage;
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::env;
@@ -85,6 +85,7 @@ async fn main() -> Result<()> {
                 update_character,
                 edit_appearance,
                 update_appearance,
+                delete_character_route,
                 get_preview_front,
                 get_preview_back,
                 update_appearance_preview,
@@ -95,11 +96,13 @@ async fn main() -> Result<()> {
                 add_race,
                 edit_race,
                 update_race,
+                delete_race_route,
                 get_all_cultures,
                 get_culture_details,
                 add_culture,
                 edit_culture,
                 update_culture,
+                delete_culture_route,
             ],
         )
         .attach(Template::fairing())
@@ -120,7 +123,7 @@ fn init(setting: &str) -> RpgData {
     let culture_manager = match cultures {
         Ok(cultures) => {
             println!("Loaded {} cultures.", cultures.len());
-            CultureMgr::new(cultures)
+            Storage::new(cultures)
         }
         Err(e) => {
             println!("Failed to load the cultures: {}", e);
@@ -133,7 +136,7 @@ fn init(setting: &str) -> RpgData {
     let race_manager = match races {
         Ok(races) => {
             println!("Loaded {} races.", races.len());
-            RaceMgr::new(races)
+            Storage::new(races)
         }
         Err(e) => {
             println!("Failed to load the races: {}", e);
@@ -146,7 +149,7 @@ fn init(setting: &str) -> RpgData {
     let character_manager = match characters {
         Ok(characters) => {
             println!("Loaded {} characters.", characters.len());
-            CharacterMgr::new(characters)
+            Storage::new(characters)
         }
         Err(e) => {
             println!("Failed to load the characters: {}", e);

@@ -14,7 +14,7 @@ impl Length {
     /// Creates a length from meters.
     ///
     /// ```
-    ///# use rpg_tools_core::model::length::Length;
+    ///# use rpg_tools_core::model::appearance::length::Length;
     ///
     /// assert_eq!(Length::from_millimetre(1500), Length::from_metre(1.5));
     /// ```
@@ -27,7 +27,7 @@ impl Length {
     /// Creates a length from centimetres.
     ///
     /// ```
-    ///# use rpg_tools_core::model::length::Length;
+    ///# use rpg_tools_core::model::appearance::length::Length;
     ///
     /// assert_eq!(Length::from_millimetre(15), Length::from_centimetre(1.5));
     /// ```
@@ -45,7 +45,7 @@ impl Length {
     /// Converts to metres.
     ///
     /// ```
-    ///# use rpg_tools_core::model::length::Length;
+    ///# use rpg_tools_core::model::appearance::length::Length;
     ///
     /// assert_eq!(Length::from_millimetre(1500).to_metre(), 1.5);
     /// ```
@@ -56,7 +56,7 @@ impl Length {
     /// Converts to centimetres.
     ///
     /// ```
-    ///# use rpg_tools_core::model::length::Length;
+    ///# use rpg_tools_core::model::appearance::length::Length;
     ///
     /// assert_eq!(Length::from_millimetre(15).to_centimetre(), 1.5);
     /// ```
@@ -67,7 +67,7 @@ impl Length {
     /// Converts to millimetres.
     ///
     /// ```
-    ///# use rpg_tools_core::model::length::Length;
+    ///# use rpg_tools_core::model::appearance::length::Length;
     ///
     /// assert_eq!(Length::from_metre(0.5).to_millimetre(), 500);
     /// ```
