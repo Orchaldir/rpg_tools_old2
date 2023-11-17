@@ -7,6 +7,7 @@ use serde::{Deserialize, Serialize};
 
 pub mod appearance;
 pub mod gender;
+pub mod relation;
 
 /// The unique identifier of a [`character`](Character).
 #[derive(Default, Copy, Clone, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]
