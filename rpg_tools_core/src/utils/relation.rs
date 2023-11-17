@@ -11,9 +11,21 @@ impl<I: Id, T> RelationStorage<I, T> {
         Self { relations }
     }
 
-    /// Gets all relations for the element with *id*.
+    /// Gets all relations for a specific element.
     pub fn get(&self, id: I) -> Option<&HashMap<I, T>> {
         self.relations.get(&id)
+    }
+
+    /// Gets the relation between 2 elements.
+    pub fn get_between(&self, from: I, to: I) -> Option<&T> {
+        self.relations.get(&from).and_then(|map| map.get(&to))
+    }
+
+    /// Adds a relation between 2 elements.
+    pub fn add_between(&mut self, from: I, to: I, relation: T) {
+        self.relations.entry(from)
+            .or_default()
+            .insert(to, relation);
     }
 }
 
