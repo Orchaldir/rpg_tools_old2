@@ -14,6 +14,22 @@ pub fn edit_relationship(data: &State<EditorData>, id: usize) -> Option<Template
         .map(|character| get_edit_template(&data, id, character))
 }
 
+#[get("/relation/relationship/delete/<from>/<to>")]
+pub fn delete_relationship(data: &State<EditorData>, from: usize, to: usize) -> Option<Template> {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!("Delete relationship from {} to {}", from, to);
+
+    let from_id = CharacterId::new(from);
+    let to_id = CharacterId::new(to);
+
+    data.relations.relationships.delete(from_id, to_id);
+
+    data.character_manager
+        .get(from_id)
+        .map(|character| get_edit_template(&data, from, character))
+}
+
 fn get_edit_template(data: &RpgData, id: usize, character: &Character) -> Template {
     Template::render(
         "generic/edit_relations",
