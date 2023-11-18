@@ -7,7 +7,7 @@ use rpg_tools_core::utils::storage::Element;
 use rpg_tools_core::utils::storage::Id;
 
 #[get("/relation/relationship/edit/<id>")]
-pub fn edit_relationship(data: &State<EditorData>, id: usize) -> Option<Template> {
+pub fn edit_relationships(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
     data.character_manager
         .get(CharacterId::new(id))
