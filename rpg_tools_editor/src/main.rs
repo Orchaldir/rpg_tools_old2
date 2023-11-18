@@ -162,5 +162,6 @@ fn init(setting: &str) -> RpgData {
         character_manager,
         culture_manager,
         race_manager,
+        relations: Default::default(),
     }
 }

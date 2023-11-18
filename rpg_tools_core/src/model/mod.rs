@@ -1,6 +1,8 @@
+use crate::model::character::relation::relationship::RelationshipType;
 use crate::model::character::{Character, CharacterId};
 use crate::model::culture::{Culture, CultureId};
 use crate::model::race::{Race, RaceId};
+use crate::utils::relation::RelationStorage;
 use crate::utils::storage::Storage;
 use std::path::PathBuf;
 
@@ -16,6 +18,7 @@ pub struct RpgData {
     pub character_manager: Storage<CharacterId, Character>,
     pub culture_manager: Storage<CultureId, Culture>,
     pub race_manager: Storage<RaceId, Race>,
+    pub relations: Relations,
 }
 
 impl RpgData {
@@ -38,10 +41,24 @@ impl Default for RpgData {
             character_manager: Default::default(),
             culture_manager: Storage::default(),
             race_manager: Storage::default(),
+            relations: Default::default(),
         }
     }
 }
 
 pub fn get_setting_path(setting: &str, file: &str) -> PathBuf {
     ["resources", "settings", setting, file].iter().collect()
+}
+
+#[derive(Debug)]
+pub struct Relations {
+    pub relationships: RelationStorage<CultureId, RelationshipType>,
+}
+
+impl Default for Relations {
+    fn default() -> Self {
+        Self {
+            relationships: Default::default(),
+        }
+    }
 }
