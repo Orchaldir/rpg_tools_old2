@@ -1,5 +1,6 @@
 use crate::io::write;
 use crate::route::get_failed_delete_template;
+use crate::route::relation::get_relationships;
 use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
@@ -174,24 +175,6 @@ fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Tem
         .get(character.culture())
         .map(|c| c.name())
         .unwrap_or("Unknown");
-    let relationships: Vec<(usize, &str, String)> = data
-        .relations
-        .relationships
-        .get_all_of(character.id())
-        .map(|relations| {
-            relations
-                .into_iter()
-                .map(|(id, relation)| {
-                    let name = data
-                        .character_manager
-                        .get(*id)
-                        .map(|c| c.name())
-                        .unwrap_or("Unknown");
-                    (id.id(), name, relation.to_string())
-                })
-                .collect()
-        })
-        .unwrap_or_default();
 
     Template::render(
         "character/details",
@@ -204,7 +187,7 @@ fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Tem
             culture: culture,
             gender: character.gender(),
             appearance: character.appearance(),
-            relationships: relationships,
+            relationships: get_relationships(data, character),
         },
     )
 }

@@ -20,6 +20,7 @@
       <li><a href="/character/details/{{ r.0 }}">{{ r.1 }}</a>: {{ r.2 }}</li>
       {% endfor %}
     </ul>
+    <p><a href="/relation/relationship/edit/{{ id }}">Edit Relations</a></p>
   </div>
   <p><h2>Appearance</h2></p>
   <center>

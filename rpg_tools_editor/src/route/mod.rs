@@ -8,6 +8,7 @@ pub mod appearance;
 pub mod character;
 pub mod culture;
 pub mod race;
+pub mod relation;
 
 pub fn get_failed_delete_template(
     data: MutexGuard<RpgData>,
