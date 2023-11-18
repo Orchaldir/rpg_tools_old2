@@ -1,6 +1,7 @@
 use crate::EditorData;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
+use rpg_tools_core::model::character::relation::relationship::RelationshipType;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::utils::storage::Element;
@@ -9,9 +10,8 @@ use rpg_tools_core::utils::storage::Id;
 #[get("/relation/relationship/edit/<id>")]
 pub fn edit_relationships(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
-    data.character_manager
-        .get(CharacterId::new(id))
-        .map(|character| get_edit_template(&data, id, character))
+
+    get_edit_template(&data, CharacterId::new(id))
 }
 
 #[get("/relation/relationship/delete/<from>/<to>")]
@@ -25,22 +25,23 @@ pub fn delete_relationship(data: &State<EditorData>, from: usize, to: usize) -> 
 
     data.relations.relationships.delete(from_id, to_id);
 
-    data.character_manager
-        .get(from_id)
-        .map(|character| get_edit_template(&data, from, character))
+    get_edit_template(&data, from_id)
 }
 
-fn get_edit_template(data: &RpgData, id: usize, character: &Character) -> Template {
-    Template::render(
+fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
+    let character = data.character_manager.get(id)?;
+
+    Some(Template::render(
         "generic/edit_relations",
         context! {
             title: "Relationships",
             link: "relationship",
-            id: id,
+            id: id.id(),
             name: character.name(),
             relations: get_relationships(data, character),
+            options: RelationshipType::get_all(),
         },
-    )
+    ))
 }
 
 pub fn get_relationships<'a>(
