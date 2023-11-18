@@ -24,11 +24,12 @@ use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::character::Character;
+use rpg_tools_core::model::character::relation::relationship::RelationshipType::Friend;
+use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::culture::Culture;
 use rpg_tools_core::model::race::Race;
-use rpg_tools_core::model::{get_setting_path, RpgData};
-use rpg_tools_core::utils::storage::Storage;
+use rpg_tools_core::model::{get_setting_path, Relations, RpgData};
+use rpg_tools_core::utils::storage::{Id, Storage};
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::env;
@@ -157,11 +158,16 @@ fn init(setting: &str) -> RpgData {
         }
     };
 
+    let mut relations = Relations::default();
+    relations
+        .relationships
+        .add(CharacterId::new(0), CharacterId::new(1), Friend);
+
     RpgData {
         setting: setting.to_string(),
         character_manager,
         culture_manager,
         race_manager,
-        relations: Default::default(),
+        relations,
     }
 }

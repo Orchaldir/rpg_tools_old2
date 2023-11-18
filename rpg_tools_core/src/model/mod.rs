@@ -50,15 +50,7 @@ pub fn get_setting_path(setting: &str, file: &str) -> PathBuf {
     ["resources", "settings", setting, file].iter().collect()
 }
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct Relations {
-    pub relationships: RelationStorage<CultureId, RelationshipType>,
-}
-
-impl Default for Relations {
-    fn default() -> Self {
-        Self {
-            relationships: Default::default(),
-        }
-    }
+    pub relationships: RelationStorage<CharacterId, RelationshipType>,
 }
