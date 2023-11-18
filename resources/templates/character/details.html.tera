@@ -12,6 +12,15 @@
     <p><a href="/character/edit/{{ id }}">Edit Data</a></p>
     <p><a href="/character/delete/{{ id }}">Delete</a></p>
   </div>
+  <p><h2>Relations</h2></p>
+  <div class="text">
+    <p><b>Relationships:</b> {{ relationships | length }}</p>
+    <ul>
+      {% for r in relationships %}
+      <li><a href="/character/details/{{ r.0 }}">{{ r.1 }}</a>: {{ r.2 }}</li>
+      {% endfor %}
+    </ul>
+  </div>
   <p><h2>Appearance</h2></p>
   <center>
     <img src = "/appearance/render/{{ id }}/front.svg" alt="Front View of the Character" width="25%"/>
