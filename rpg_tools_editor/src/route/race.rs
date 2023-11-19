@@ -8,7 +8,7 @@ use rpg_tools_core::model::race::gender::GenderOption;
 use rpg_tools_core::model::race::{Race, RaceId};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::delete::race::delete_race;
-use rpg_tools_core::usecase::delete::DeleteResult;
+use rpg_tools_core::usecase::delete::{BlockingReason, DeleteResult};
 use rpg_tools_core::usecase::edit::race::{update_gender_option, update_race_name};
 use rpg_tools_core::utils::storage::{Element, Id};
 use std::sync::MutexGuard;
@@ -102,20 +102,23 @@ pub fn delete_race_route(data: &State<EditorData>, id: usize) -> Template {
 
     let race_id = RaceId::new(id);
     let result = delete_race(&mut data, race_id);
+    let name = data
+        .race_manager
+        .get(race_id)
+        .map(|race| race.name())
+        .unwrap_or("Unknown")
+        .to_string();
 
     match result {
         DeleteResult::Ok => {
             save_races(&data);
             get_all_template(data)
         }
-        _ => {
-            let name = data
-                .race_manager
-                .get(race_id)
-                .map(|race| race.name())
-                .unwrap_or("Unknown")
-                .to_string();
-            get_failed_delete_template(data, "race", id, &name, result)
+        DeleteResult::NotFound => {
+            get_failed_delete_template(data, "race", id, &name, BlockingReason::default())
+        }
+        DeleteResult::Blocked(reason) => {
+            get_failed_delete_template(data, "race", id, &name, reason)
         }
     }
 }
