@@ -30,6 +30,13 @@ pub fn delete_relationship(data: &State<EditorData>, from: usize, to: usize) -> 
 
 fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
     let character = data.character_manager.get(id)?;
+    let characters: Vec<(usize, &str)> = data
+        .character_manager
+        .get_all()
+        .iter()
+        .filter(|c| c.id().ne(&id))
+        .map(|c| (c.id().id(), c.name()))
+        .collect();
 
     Some(Template::render(
         "generic/edit_relations",
@@ -39,7 +46,8 @@ fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
             id: id.id(),
             name: character.name(),
             relations: get_relationships(data, character),
-            options: RelationshipType::get_all(),
+            characters: characters,
+            types: RelationshipType::get_all(),
         },
     ))
 }
