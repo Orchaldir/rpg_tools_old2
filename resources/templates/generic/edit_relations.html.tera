@@ -14,8 +14,8 @@
       </select>
       <br>
       <br>
-      <b><label for="type">Type:</label></b>
-      <select id="type" name="type">
+      <b><label for="relationship">Type:</label></b>
+      <select id="relationship" name="relationship">
         {% for t in types %}
         <option value="{{ t }}">{{ t }}</option>
         {% endfor %}

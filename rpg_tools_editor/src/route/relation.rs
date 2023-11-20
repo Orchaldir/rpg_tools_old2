@@ -1,4 +1,5 @@
 use crate::EditorData;
+use rocket::form::Form;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::relation::relationship::RelationshipType;
@@ -26,6 +27,35 @@ pub fn delete_relationship(data: &State<EditorData>, from: usize, to: usize) -> 
     data.relations.relationships.delete(from_id, to_id);
 
     get_edit_template(&data, from_id)
+}
+
+#[derive(FromForm, Debug)]
+pub struct RelationshipUpdate<'r> {
+    character: usize,
+    relationship: &'r str,
+}
+
+#[post("/relation/relationship/update/<id>", data = "<update>")]
+pub fn update_relationship(
+    data: &State<EditorData>,
+    id: usize,
+    update: Form<RelationshipUpdate<'_>>,
+) -> Option<Template> {
+    let mut data = data.data.lock().expect("lock shared data");
+
+    println!(
+        "Update relationship {} for character {} to {}",
+        update.relationship, id, update.character,
+    );
+
+    let character_id = CharacterId::new(id);
+    data.relations.relationships.add(
+        character_id,
+        CharacterId::new(update.character),
+        update.relationship.into(),
+    );
+
+    get_edit_template(&data, character_id)
 }
 
 fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {

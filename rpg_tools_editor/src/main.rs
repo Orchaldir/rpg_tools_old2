@@ -19,7 +19,7 @@ use crate::route::race::{
     add_race, delete_race_route, edit_race, get_all_races, get_race_details, update_race,
     RACES_FILE,
 };
-use crate::route::relation::{delete_relationship, edit_relationships};
+use crate::route::relation::{delete_relationship, edit_relationships, update_relationship};
 use anyhow::{bail, Result};
 use rocket::fs::FileServer;
 use rocket::State;
@@ -107,6 +107,7 @@ async fn main() -> Result<()> {
                 delete_culture_route,
                 edit_relationships,
                 delete_relationship,
+                update_relationship,
             ],
         )
         .attach(Template::fairing())
