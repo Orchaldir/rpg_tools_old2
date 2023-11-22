@@ -13,6 +13,8 @@ pub fn get_edit_relations_template<T: Clone + Display + Serialize>(
     data: &RpgData,
     id: CharacterId,
     relations: &RelationStorage<CharacterId, T>,
+    title: &str,
+    link: &str,
     types: Vec<T>,
 ) -> Option<Template> {
     let character = data.character_manager.get(id)?;
@@ -27,8 +29,8 @@ pub fn get_edit_relations_template<T: Clone + Display + Serialize>(
     Some(Template::render(
         "generic/edit_relations",
         context! {
-            title: "Relationships",
-            link: "relationship",
+            title: title,
+            link: link,
             id: id.id(),
             name: character.name(),
             relations: get_relations(data, relations, id),

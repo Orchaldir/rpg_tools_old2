@@ -63,6 +63,8 @@ fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
         &data,
         id,
         &data.relations.relationships,
+        "Relationships",
+        "relationship",
         Relationship::get_all(),
     )
 }
