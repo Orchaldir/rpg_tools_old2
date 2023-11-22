@@ -66,9 +66,10 @@ mod tests {
             .map(|character| character.set_culture(culture_id));
 
         assert_eq!(
-            Blocked {
-                characters: vec![character_id]
-            },
+            Blocked(BlockingReason {
+                characters: vec![character_id],
+                relations: 0,
+            }),
             delete_culture(&mut data, culture_id)
         );
     }
