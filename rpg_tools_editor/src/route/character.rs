@@ -1,6 +1,6 @@
 use crate::io::write;
 use crate::route::get_failed_delete_template;
-use crate::route::relation::get_relationships;
+use crate::route::relation::get_relations;
 use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
@@ -190,7 +190,8 @@ fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Tem
             culture: culture,
             gender: character.gender(),
             appearance: character.appearance(),
-            relationships: get_relationships(data, &data.relations.relationships, character.id()),
+            relationships: get_relations(data, &data.relations.relationships, character.id()),
+            romantic: get_relations(data, &data.relations.romantic, character.id()),
         },
     )
 }

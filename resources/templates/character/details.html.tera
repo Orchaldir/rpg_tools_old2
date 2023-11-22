@@ -20,7 +20,14 @@
       <li><a href="/character/details/{{ r.0 }}">{{ r.1 }}</a>: {{ r.2 }}</li>
       {% endfor %}
     </ul>
-    <p><a href="/relation/relationship/edit/{{ id }}">Edit Relations</a></p>
+    <p><a href="/relation/relationship/edit/{{ id }}">Edit Relationships</a></p>
+    <p><b>Romantic Relationships:</b> {{ romantic | length }}</p>
+    <ul>
+      {% for r in romantic %}
+      <li><a href="/character/details/{{ r.0 }}">{{ r.1 }}</a>: {{ r.2 }}</li>
+      {% endfor %}
+    </ul>
+    <p><a href="/relation/romantic/edit/{{ id }}">Edit Romantic Relationships</a></p>
   </div>
   <p><h2>Appearance</h2></p>
   <center>

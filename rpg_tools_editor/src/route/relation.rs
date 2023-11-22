@@ -77,14 +77,14 @@ fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
             link: "relationship",
             id: id.id(),
             name: character.name(),
-            relations: get_relationships(data, &data.relations.relationships, id),
+            relations: get_relations(data, &data.relations.relationships, id),
             characters: characters,
             types: Relationship::get_all(),
         },
     ))
 }
 
-pub fn get_relationships<'a, T: Clone + Display>(
+pub fn get_relations<'a, T: Clone + Display>(
     data: &'a RpgData,
     relations: &'a RelationStorage<CharacterId, T>,
     id: CharacterId,

@@ -26,6 +26,7 @@ use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::relation::relationship::Relationship::Friend;
+use rpg_tools_core::model::character::relation::romantic::RomanticRelationship::Lover;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::culture::Culture;
 use rpg_tools_core::model::race::Race;
@@ -166,6 +167,9 @@ fn init(setting: &str) -> RpgData {
     relations
         .relationships
         .add(CharacterId::new(0), CharacterId::new(1), Friend);
+    relations
+        .romantic
+        .add(CharacterId::new(0), CharacterId::new(2), Lover);
 
     RpgData {
         setting: setting.to_string(),
