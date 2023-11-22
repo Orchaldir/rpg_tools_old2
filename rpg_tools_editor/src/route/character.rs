@@ -190,7 +190,7 @@ fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Tem
             culture: culture,
             gender: character.gender(),
             appearance: character.appearance(),
-            relationships: get_relationships(data, character.id()),
+            relationships: get_relationships(data, &data.relations.relationships, character.id()),
         },
     )
 }

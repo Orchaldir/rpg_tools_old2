@@ -5,8 +5,10 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::relation::relationship::Relationship;
 use rpg_tools_core::model::character::CharacterId;
 use rpg_tools_core::model::RpgData;
+use rpg_tools_core::utils::relation::RelationStorage;
 use rpg_tools_core::utils::storage::Element;
 use rpg_tools_core::utils::storage::Id;
+use std::fmt::Display;
 
 #[get("/relation/relationship/edit/<id>")]
 pub fn edit_relationships(data: &State<EditorData>, id: usize) -> Option<Template> {
@@ -75,16 +77,19 @@ fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
             link: "relationship",
             id: id.id(),
             name: character.name(),
-            relations: get_relationships(data, id),
+            relations: get_relationships(data, &data.relations.relationships, id),
             characters: characters,
             types: Relationship::get_all(),
         },
     ))
 }
 
-pub fn get_relationships(data: &RpgData, id: CharacterId) -> Vec<(usize, &str, String)> {
-    data.relations
-        .relationships
+pub fn get_relationships<'a: 'b, 'b, T: Clone + Display>(
+    data: &'a RpgData,
+    relations: &'b RelationStorage<CharacterId, T>,
+    id: CharacterId,
+) -> Vec<(usize, &'b str, String)> {
+    relations
         .get_all_of(id)
         .map(|relations| {
             relations
