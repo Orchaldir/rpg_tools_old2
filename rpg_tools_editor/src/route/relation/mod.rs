@@ -8,6 +8,13 @@ use serde::Serialize;
 use std::fmt::Display;
 
 pub mod relationship;
+pub mod romantic;
+
+#[derive(FromForm, Debug)]
+pub struct RelationUpdate<'r> {
+    character: usize,
+    relation: &'r str,
+}
 
 pub fn get_edit_relations_template<T: Clone + Display + Serialize>(
     data: &RpgData,

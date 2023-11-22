@@ -5,7 +5,7 @@
   <p><h1>Edit {{ title }} of {{ name }}</h1></p>
   <p><h2>Add</h2></p>
   <div class="text">
-    <form action="/relation/relationship/update/{{ id }}" method="post">
+    <form action="/relation/{{ link }}/update/{{ id }}" method="post">
       <b><label for="character">Name:</label></b>
       <select id="character" name="character">
         {% for c in characters %}
@@ -14,8 +14,8 @@
       </select>
       <br>
       <br>
-      <b><label for="relationship">Type:</label></b>
-      <select id="relationship" name="relationship">
+      <b><label for="relation">Type:</label></b>
+      <select id="relation" name="relation">
         {% for t in types %}
         <option value="{{ t }}">{{ t }}</option>
         {% endfor %}
@@ -30,7 +30,7 @@
     <ul>
       {% for r in relations %}
       <li>
-        <a href="/relation/relationship/delete/{{ id }}/{{ r.0 }}">Delete</a>
+        <a href="/relation/{{ link }}/delete/{{ id }}/{{ r.0 }}">Delete</a>
         <a href="/character/details/{{ r.0 }}">{{ r.1 }}</a>: {{ r.2 }}
       </li>
       {% endfor %}

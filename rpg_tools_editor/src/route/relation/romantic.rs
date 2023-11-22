@@ -3,34 +3,34 @@ use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
 use rocket_dyn_templates::Template;
-use rpg_tools_core::model::character::relation::relationship::Relationship;
+use rpg_tools_core::model::character::relation::romantic::RomanticRelationship;
 use rpg_tools_core::model::character::CharacterId;
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::utils::storage::Id;
 
-#[get("/relation/relationship/edit/<id>")]
-pub fn edit_relationships(data: &State<EditorData>, id: usize) -> Option<Template> {
+#[get("/relation/romantic/edit/<id>")]
+pub fn edit_romantic(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
 
     get_edit_template(&data, CharacterId::new(id))
 }
 
-#[get("/relation/relationship/delete/<from>/<to>")]
-pub fn delete_relationship(data: &State<EditorData>, from: usize, to: usize) -> Option<Template> {
+#[get("/relation/romantic/delete/<from>/<to>")]
+pub fn delete_romantic(data: &State<EditorData>, from: usize, to: usize) -> Option<Template> {
     let mut data = data.data.lock().expect("lock shared data");
 
-    println!("Delete relationship from {} to {}", from, to);
+    println!("Delete romantic relationship from {} to {}", from, to);
 
     let from_id = CharacterId::new(from);
     let to_id = CharacterId::new(to);
 
-    data.relations.relationships.delete(from_id, to_id);
+    data.relations.romantic.delete(from_id, to_id);
 
     get_edit_template(&data, from_id)
 }
 
-#[post("/relation/relationship/update/<id>", data = "<update>")]
-pub fn update_relationship(
+#[post("/relation/romantic/update/<id>", data = "<update>")]
+pub fn update_romantic(
     data: &State<EditorData>,
     id: usize,
     update: Form<RelationUpdate<'_>>,
@@ -38,12 +38,12 @@ pub fn update_relationship(
     let mut data = data.data.lock().expect("lock shared data");
 
     println!(
-        "Update relationship {} for character {} to {}",
+        "Update romantic relationship {} for character {} to {}",
         update.relation, id, update.character,
     );
 
     let character_id = CharacterId::new(id);
-    data.relations.relationships.add(
+    data.relations.romantic.add(
         character_id,
         CharacterId::new(update.character),
         update.relation.into(),
@@ -56,9 +56,9 @@ fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
     get_edit_relations_template(
         &data,
         id,
-        &data.relations.relationships,
-        "Relationships",
-        "relationship",
-        Relationship::get_all(),
+        &data.relations.romantic,
+        "Romantic Relationships",
+        "romantic",
+        RomanticRelationship::get_all(),
     )
 }
