@@ -3,7 +3,7 @@ use rocket::form::Form;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::relation::relationship::Relationship;
-use rpg_tools_core::model::character::{Character, CharacterId};
+use rpg_tools_core::model::character::CharacterId;
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::utils::storage::Element;
 use rpg_tools_core::utils::storage::Id;
@@ -75,30 +75,27 @@ fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
             link: "relationship",
             id: id.id(),
             name: character.name(),
-            relations: get_relationships(data, character),
+            relations: get_relationships(data, id),
             characters: characters,
             types: Relationship::get_all(),
         },
     ))
 }
 
-pub fn get_relationships<'a>(
-    data: &'a RpgData,
-    character: &Character,
-) -> Vec<(usize, &'a str, String)> {
+pub fn get_relationships(data: &RpgData, id: CharacterId) -> Vec<(usize, &str, String)> {
     data.relations
         .relationships
-        .get_all_of(character.id())
+        .get_all_of(id)
         .map(|relations| {
             relations
                 .into_iter()
-                .map(|(id, relation)| {
+                .map(|(other_id, relation)| {
                     let name = data
                         .character_manager
-                        .get(*id)
+                        .get(*other_id)
                         .map(|c| c.name())
                         .unwrap_or("Unknown");
-                    (id.id(), name, relation.to_string())
+                    (other_id.id(), name, relation.to_string())
                 })
                 .collect()
         })
