@@ -2,7 +2,7 @@ use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
-use rpg_tools_core::model::character::relation::relationship::RelationshipType;
+use rpg_tools_core::model::character::relation::relationship::Relationship;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::utils::storage::Element;
@@ -77,7 +77,7 @@ fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
             name: character.name(),
             relations: get_relationships(data, character),
             characters: characters,
-            types: RelationshipType::get_all(),
+            types: Relationship::get_all(),
         },
     ))
 }

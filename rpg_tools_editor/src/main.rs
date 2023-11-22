@@ -25,7 +25,7 @@ use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::character::relation::relationship::RelationshipType::Friend;
+use rpg_tools_core::model::character::relation::relationship::Relationship::Friend;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::culture::Culture;
 use rpg_tools_core::model::race::Race;
