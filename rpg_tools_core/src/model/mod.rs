@@ -1,4 +1,5 @@
 use crate::model::character::relation::relationship::Relationship;
+use crate::model::character::relation::romantic::RomanticRelationship;
 use crate::model::character::{Character, CharacterId};
 use crate::model::culture::{Culture, CultureId};
 use crate::model::race::{Race, RaceId};
@@ -53,4 +54,5 @@ pub fn get_setting_path(setting: &str, file: &str) -> PathBuf {
 #[derive(Debug, Default)]
 pub struct Relations {
     pub relationships: RelationStorage<CharacterId, Relationship>,
+    pub romantic: RelationStorage<CharacterId, RomanticRelationship>,
 }
