@@ -84,11 +84,11 @@ fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
     ))
 }
 
-pub fn get_relationships<'a: 'b, 'b, T: Clone + Display>(
+pub fn get_relationships<'a, T: Clone + Display>(
     data: &'a RpgData,
-    relations: &'b RelationStorage<CharacterId, T>,
+    relations: &'a RelationStorage<CharacterId, T>,
     id: CharacterId,
-) -> Vec<(usize, &'b str, String)> {
+) -> Vec<(usize, &'a str, String)> {
     relations
         .get_all_of(id)
         .map(|relations| {
