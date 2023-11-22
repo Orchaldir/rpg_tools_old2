@@ -9,17 +9,21 @@ use rpg_tools_core::model::RpgData;
 use rpg_tools_core::utils::storage::Id;
 
 #[get("/relation/romantic/edit/<id>")]
-pub fn edit_romantic(data: &State<EditorData>, id: usize) -> Option<Template> {
+pub fn edit_romantic_relations(data: &State<EditorData>, id: usize) -> Option<Template> {
     let data = data.data.lock().expect("lock shared data");
 
     get_edit_template(&data, CharacterId::new(id))
 }
 
 #[get("/relation/romantic/delete/<from>/<to>")]
-pub fn delete_romantic(data: &State<EditorData>, from: usize, to: usize) -> Option<Template> {
+pub fn delete_romantic_relation(
+    data: &State<EditorData>,
+    from: usize,
+    to: usize,
+) -> Option<Template> {
     let mut data = data.data.lock().expect("lock shared data");
 
-    println!("Delete romantic relationship from {} to {}", from, to);
+    println!("Delete romantic relationship between {} to {}", from, to);
 
     let from_id = CharacterId::new(from);
     let to_id = CharacterId::new(to);
@@ -30,7 +34,7 @@ pub fn delete_romantic(data: &State<EditorData>, from: usize, to: usize) -> Opti
 }
 
 #[post("/relation/romantic/update/<id>", data = "<update>")]
-pub fn update_romantic(
+pub fn update_romantic_relation(
     data: &State<EditorData>,
     id: usize,
     update: Form<RelationUpdate<'_>>,
@@ -38,8 +42,8 @@ pub fn update_romantic(
     let mut data = data.data.lock().expect("lock shared data");
 
     println!(
-        "Update romantic relationship {} for character {} to {}",
-        update.relation, id, update.character,
+        "Update romantic relationship between characters {} & {} to {}",
+        id, update.character, update.relation,
     );
 
     let character_id = CharacterId::new(id);

@@ -19,7 +19,7 @@ pub fn edit_relationships(data: &State<EditorData>, id: usize) -> Option<Templat
 pub fn delete_relationship(data: &State<EditorData>, from: usize, to: usize) -> Option<Template> {
     let mut data = data.data.lock().expect("lock shared data");
 
-    println!("Delete relationship from {} to {}", from, to);
+    println!("Delete relationship between {} & {}", from, to);
 
     let from_id = CharacterId::new(from);
     let to_id = CharacterId::new(to);
@@ -38,8 +38,8 @@ pub fn update_relationship(
     let mut data = data.data.lock().expect("lock shared data");
 
     println!(
-        "Update relationship {} for character {} to {}",
-        update.relation, id, update.character,
+        "Update relationship between characters {} & {} to {}",
+        id, update.character, update.relation,
     );
 
     let character_id = CharacterId::new(id);

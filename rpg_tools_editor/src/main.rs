@@ -22,7 +22,9 @@ use crate::route::race::{
 use crate::route::relation::relationship::{
     delete_relationship, edit_relationships, update_relationship,
 };
-use crate::route::relation::romantic::{delete_romantic, edit_romantic, update_romantic};
+use crate::route::relation::romantic::{
+    delete_romantic_relation, edit_romantic_relations, update_romantic_relation,
+};
 use anyhow::{bail, Result};
 use rocket::fs::FileServer;
 use rocket::State;
@@ -112,9 +114,9 @@ async fn main() -> Result<()> {
                 edit_relationships,
                 delete_relationship,
                 update_relationship,
-                edit_romantic,
-                delete_romantic,
-                update_romantic,
+                edit_romantic_relations,
+                delete_romantic_relation,
+                update_romantic_relation,
             ],
         )
         .attach(Template::fairing())
