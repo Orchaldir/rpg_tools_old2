@@ -5,12 +5,8 @@ use crate::utils::storage::DeleteElementResult;
 
 /// Tries to delete a [`character`](crate::model::character::Character).
 pub fn delete_character(data: &mut RpgData, id: CharacterId) -> DeleteResult {
-    let relations = data
-        .relations
-        .relationships
-        .get_all_of(id)
-        .map(|map| map.len())
-        .unwrap_or_default();
+    let relations =
+        data.relations.relationships.count_all_of(id) + data.relations.romantic.count_all_of(id);
 
     if relations > 0 {
         return DeleteResult::Blocked(BlockingReason {
@@ -29,6 +25,7 @@ pub fn delete_character(data: &mut RpgData, id: CharacterId) -> DeleteResult {
 mod tests {
     use super::*;
     use crate::model::character::relation::relationship::Relationship::Friend;
+    use crate::model::character::relation::romantic::RomanticRelationship::Spouse;
     use DeleteResult::*;
 
     const RESULT: DeleteResult = Blocked(BlockingReason {
@@ -60,6 +57,17 @@ mod tests {
         let id0 = data.character_manager.create();
         let id1 = data.character_manager.create();
         data.relations.relationships.add(id0, id1, Friend);
+
+        assert_eq!(RESULT, delete_character(&mut data, id0));
+        assert_eq!(RESULT, delete_character(&mut data, id1));
+    }
+
+    #[test]
+    fn test_blocked_by_romantic() {
+        let mut data = RpgData::default();
+        let id0 = data.character_manager.create();
+        let id1 = data.character_manager.create();
+        data.relations.romantic.add(id0, id1, Spouse);
 
         assert_eq!(RESULT, delete_character(&mut data, id0));
         assert_eq!(RESULT, delete_character(&mut data, id1));

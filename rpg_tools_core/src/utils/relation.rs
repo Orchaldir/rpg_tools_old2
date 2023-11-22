@@ -17,6 +17,14 @@ impl<I: Id, T: Clone> RelationStorage<I, T> {
         self.relations.contains_key(&id)
     }
 
+    /// Counts all relations for a specific element.
+    pub fn count_all_of(&self, id: I) -> usize {
+        self.relations
+            .get(&id)
+            .map(|map| map.len())
+            .unwrap_or_default()
+    }
+
     /// Gets all relations for a specific element.
     pub fn get_all_of(&self, id: I) -> Option<&HashMap<I, T>> {
         self.relations.get(&id)
