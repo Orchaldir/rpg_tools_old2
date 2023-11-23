@@ -58,7 +58,7 @@ pub fn update_romantic_relation(
 
 fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
     get_edit_relations_template(
-        &data,
+        data,
         id,
         &data.relations.romantic,
         "Romantic Relationships",

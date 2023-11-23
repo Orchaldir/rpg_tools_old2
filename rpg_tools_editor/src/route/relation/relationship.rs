@@ -1,4 +1,4 @@
-use crate::route::relation::{get_edit_relations_template, RelationUpdate};
+use crate::route::relation::{get_edit_relations_template, save_relations, RelationUpdate};
 use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
@@ -7,6 +7,8 @@ use rpg_tools_core::model::character::relation::relationship::Relationship;
 use rpg_tools_core::model::character::CharacterId;
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::utils::storage::Id;
+
+pub const RELATIONSHIPS_FILE: &str = "relations/relationships.csv";
 
 #[get("/relation/relationship/edit/<id>")]
 pub fn edit_relationships(data: &State<EditorData>, id: usize) -> Option<Template> {
@@ -25,6 +27,8 @@ pub fn delete_relationship(data: &State<EditorData>, from: usize, to: usize) -> 
     let to_id = CharacterId::new(to);
 
     data.relations.relationships.delete(from_id, to_id);
+
+    save_relations(&data, &data.relations.relationships, RELATIONSHIPS_FILE);
 
     get_edit_template(&data, from_id)
 }
@@ -49,12 +53,14 @@ pub fn update_relationship(
         update.relation.into(),
     );
 
+    save_relations(&data, &data.relations.relationships, RELATIONSHIPS_FILE);
+
     get_edit_template(&data, character_id)
 }
 
 fn get_edit_template(data: &RpgData, id: CharacterId) -> Option<Template> {
     get_edit_relations_template(
-        &data,
+        data,
         id,
         &data.relations.relationships,
         "Relationships",

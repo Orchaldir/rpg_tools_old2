@@ -56,7 +56,7 @@ pub fn get_relations<'a, T: Clone + Display>(
         .get_all_of(id)
         .map(|relations| {
             relations
-                .into_iter()
+                .iter()
                 .map(|(other_id, relation)| {
                     let name = data
                         .character_manager
@@ -68,4 +68,14 @@ pub fn get_relations<'a, T: Clone + Display>(
                 .collect()
         })
         .unwrap_or_default()
+}
+
+pub fn save_relations<T: Clone + Display + Serialize>(
+    data: &RpgData,
+    relations: &RelationStorage<CharacterId, T>,
+    filename: &str,
+) {
+    if let Err(e) = relations.save(&data.get_path(filename)) {
+        println!("Failed to save {}: {}", filename, e);
+    }
 }

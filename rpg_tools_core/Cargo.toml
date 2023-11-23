@@ -7,6 +7,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0"
+itertools = "0.12.0"
 macro_core = { path = "../macro_core" }
 macro_convert = { path = "../macro_convert" }
 macro_ui = { path = "../macro_ui" }
