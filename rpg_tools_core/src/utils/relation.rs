@@ -71,7 +71,9 @@ impl<I: Id, T: Clone + Display> RelationStorage<I, T> {
 
         for (id0, relations0) in self.relations.iter().sorted_by_key(|x| x.0.id()) {
             for (id1, relations0) in relations0.iter().sorted_by_key(|x| x.0.id()) {
-                writeln!(file, "{},{},{}", id0.id(), id1.id(), relations0)?;
+                if id0.id() < id1.id() {
+                    writeln!(file, "{},{},{}", id0.id(), id1.id(), relations0)?;
+                }
             }
         }
 
