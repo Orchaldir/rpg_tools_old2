@@ -1,4 +1,4 @@
-use crate::route::relation::{get_edit_relations_template, RelationUpdate};
+use crate::route::relation::{get_edit_relations_template, save_relations, RelationUpdate};
 use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
@@ -7,6 +7,8 @@ use rpg_tools_core::model::character::relation::romantic::RomanticRelationship;
 use rpg_tools_core::model::character::CharacterId;
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::utils::storage::Id;
+
+pub const ROMANTIC_FILE: &str = "relations/romantic.csv";
 
 #[get("/relation/romantic/edit/<id>")]
 pub fn edit_romantic_relations(data: &State<EditorData>, id: usize) -> Option<Template> {
@@ -30,6 +32,8 @@ pub fn delete_romantic_relation(
 
     data.relations.romantic.delete(from_id, to_id);
 
+    save_relations(&data, &data.relations.romantic, ROMANTIC_FILE);
+
     get_edit_template(&data, from_id)
 }
 
@@ -52,6 +56,8 @@ pub fn update_romantic_relation(
         CharacterId::new(update.character),
         update.relation.into(),
     );
+
+    save_relations(&data, &data.relations.romantic, ROMANTIC_FILE);
 
     get_edit_template(&data, character_id)
 }
