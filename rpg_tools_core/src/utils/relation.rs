@@ -1,6 +1,8 @@
 use crate::utils::storage::Id;
 use anyhow::{Context, Result};
 use itertools::Itertools;
+use serde::de::DeserializeOwned;
+use serde::Deserialize;
 use std::collections::hash_map::Entry;
 use std::collections::HashMap;
 use std::fmt::Display;
@@ -13,7 +15,14 @@ pub struct RelationStorage<I: Id, T: Clone> {
     relations: HashMap<I, HashMap<I, T>>,
 }
 
-impl<I: Id, T: Clone + Display> RelationStorage<I, T> {
+#[derive(Deserialize)]
+struct Record<T> {
+    id0: usize,
+    id1: usize,
+    relation: T,
+}
+
+impl<I: Id, T: Clone + Display + for<'a> Deserialize<'a>> RelationStorage<I, T> {
     pub fn new(relations: HashMap<I, HashMap<I, T>>) -> Self {
         Self { relations }
     }
@@ -63,16 +72,31 @@ impl<I: Id, T: Clone + Display> RelationStorage<I, T> {
         }
     }
 
-    /// Saves the relation to a file.
+    /// Loads the relations from a file.
+    pub fn load(path: &Path) -> Result<Self> {
+        let mut reader =
+            csv::Reader::from_path(path).context(format!("Failed to load {:?}", path))?;
+        let mut storage = Self::new(HashMap::new());
+
+        for (line, record) in reader.deserialize().enumerate() {
+            let entry: Record<T> = record?; //.with_context(|| panic!("Cannot read line {}", line))?;
+
+            storage.add(Id::new(entry.id0), Id::new(entry.id1), entry.relation);
+        }
+
+        Ok(storage)
+    }
+
+    /// Saves the relations to a file.
     pub fn save(&self, path: &Path) -> Result<()> {
         let mut file = File::create(path).context(format!("Failed to create {:?}", path))?;
 
         writeln!(file, "Id0,Id1,Relation")?;
 
-        for (id0, relations0) in self.relations.iter().sorted_by_key(|x| x.0.id()) {
-            for (id1, relations0) in relations0.iter().sorted_by_key(|x| x.0.id()) {
+        for (id0, relations) in self.relations.iter().sorted_by_key(|x| x.0.id()) {
+            for (id1, relation) in relations.iter().sorted_by_key(|x| x.0.id()) {
                 if id0.id() < id1.id() {
-                    writeln!(file, "{},{},{}", id0.id(), id1.id(), relations0)?;
+                    writeln!(file, "{},{},{}", id0.id(), id1.id(), relation)?;
                 }
             }
         }
@@ -81,7 +105,7 @@ impl<I: Id, T: Clone + Display> RelationStorage<I, T> {
     }
 }
 
-impl<I: Id, T: Clone + Display> Default for RelationStorage<I, T> {
+impl<I: Id, T: Clone + Display + for<'a> Deserialize<'a>> Default for RelationStorage<I, T> {
     fn default() -> Self {
         RelationStorage::new(HashMap::new())
     }

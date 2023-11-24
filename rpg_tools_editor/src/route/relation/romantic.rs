@@ -3,12 +3,10 @@ use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
 use rocket_dyn_templates::Template;
-use rpg_tools_core::model::character::relation::romantic::RomanticRelationship;
+use rpg_tools_core::model::character::relation::romantic::{RomanticRelationship, ROMANTIC_FILE};
 use rpg_tools_core::model::character::CharacterId;
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::utils::storage::Id;
-
-pub const ROMANTIC_FILE: &str = "relations/romantic.csv";
 
 #[get("/relation/romantic/edit/<id>")]
 pub fn edit_romantic_relations(data: &State<EditorData>, id: usize) -> Option<Template> {

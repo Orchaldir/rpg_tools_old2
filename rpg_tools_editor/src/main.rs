@@ -30,17 +30,16 @@ use rocket::fs::FileServer;
 use rocket::State;
 use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::character::appearance::Appearance;
-use rpg_tools_core::model::character::relation::relationship::Relationship::Friend;
-use rpg_tools_core::model::character::relation::romantic::RomanticRelationship::Lover;
-use rpg_tools_core::model::character::{Character, CharacterId};
+use rpg_tools_core::model::character::Character;
 use rpg_tools_core::model::culture::Culture;
 use rpg_tools_core::model::race::Race;
-use rpg_tools_core::model::{get_setting_path, Relations, RpgData};
+use rpg_tools_core::model::{get_setting_path, RpgData};
 use rpg_tools_core::utils::storage::{Id, Storage};
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::env;
 use std::sync::Mutex;
+use rpg_tools_core::model::relations::Relations;
 
 pub mod io;
 pub mod parser;
@@ -171,13 +170,13 @@ fn init(setting: &str) -> RpgData {
         }
     };
 
-    let mut relations = Relations::default();
-    relations
-        .relationships
-        .add(CharacterId::new(0), CharacterId::new(1), Friend);
-    relations
-        .romantic
-        .add(CharacterId::new(0), CharacterId::new(2), Lover);
+    let relations = match Relations::load(setting) {
+        Ok(relations) => relations,
+        Err(e) => {
+            println!("Failed to load the relations: {}", e);
+            return RpgData::empty(setting.to_string());
+        }
+    };
 
     RpgData {
         setting: setting.to_string(),

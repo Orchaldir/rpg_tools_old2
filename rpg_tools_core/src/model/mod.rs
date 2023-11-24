@@ -1,9 +1,7 @@
-use crate::model::character::relation::relationship::Relationship;
-use crate::model::character::relation::romantic::RomanticRelationship;
 use crate::model::character::{Character, CharacterId};
 use crate::model::culture::{Culture, CultureId};
 use crate::model::race::{Race, RaceId};
-use crate::utils::relation::RelationStorage;
+use crate::model::relations::Relations;
 use crate::utils::storage::Storage;
 use std::path::PathBuf;
 
@@ -12,6 +10,7 @@ pub mod character;
 pub mod culture;
 pub mod equipment;
 pub mod race;
+pub mod relations;
 
 #[derive(Debug)]
 pub struct RpgData {
@@ -49,10 +48,4 @@ impl Default for RpgData {
 
 pub fn get_setting_path(setting: &str, file: &str) -> PathBuf {
     ["resources", "settings", setting, file].iter().collect()
-}
-
-#[derive(Debug, Default)]
-pub struct Relations {
-    pub relationships: RelationStorage<CharacterId, Relationship>,
-    pub romantic: RelationStorage<CharacterId, RomanticRelationship>,
 }
