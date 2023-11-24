@@ -150,20 +150,48 @@ mod tests {
     }
 
     #[test]
+    fn test_switch() {
+        let mut storage = init_storage();
+
+        assert!(storage
+            .update_id(CharacterId::new(2), CharacterId::new(1))
+            .is_ok());
+        assert_change(&mut storage, 1, 3, 4);
+    }
+
+    #[test]
     fn test_switch_unknown_new() {
         let mut storage = init_storage();
 
         assert!(storage
             .update_id(CharacterId::new(0), CharacterId::new(1))
             .is_ok());
-        assert_eq!(
-            storage.get(CharacterId::new(2), CharacterId::new(3)),
-            Some(&Friend)
-        );
-        assert_eq!(
-            storage.get(CharacterId::new(2), CharacterId::new(4)),
-            Some(&Enemy)
-        );
+        assert_change(&mut storage, 2, 3, 4);
+    }
+
+    #[test]
+    fn test_switch_known_old() {
+        let mut storage = init_storage();
+
+        assert!(storage
+            .update_id(CharacterId::new(2), CharacterId::new(3))
+            .is_err());
+        assert_change(&mut storage, 2, 3, 4);
+    }
+
+    fn assert_change(
+        storage: &mut RelationStorage<CharacterId, Relationship>,
+        id0: usize,
+        id1: usize,
+        id2: usize,
+    ) {
+        let id0 = CharacterId::new(id0);
+        let id1 = CharacterId::new(id1);
+        let id2 = CharacterId::new(id2);
+        assert_eq!(storage.get(id0, id1), Some(&Friend));
+        assert_eq!(storage.get(id1, id0), Some(&Friend));
+        assert_eq!(storage.get(id0, id2), Some(&Enemy));
+        assert_eq!(storage.get(id2, id0), Some(&Enemy));
     }
 
     fn init_storage() -> RelationStorage<CharacterId, Relationship> {
