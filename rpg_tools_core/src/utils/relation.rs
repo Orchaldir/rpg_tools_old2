@@ -1,5 +1,5 @@
 use crate::utils::storage::Id;
-use anyhow::{Context, Result};
+use anyhow::{bail, Context, Result};
 use itertools::Itertools;
 use std::collections::hash_map::Entry;
 use std::collections::HashMap;
@@ -63,6 +63,26 @@ impl<I: Id, T: Clone + Display> RelationStorage<I, T> {
         }
     }
 
+    /// Switches an id to another.
+    pub fn update_id(&mut self, old: I, new: I) -> Result<()> {
+        if self.contains(new) {
+            bail!(
+                "Cannot switch id from {} to {}, because it is already contained!",
+                old.id(),
+                new.id()
+            )
+        }
+
+        if let Some(relations) = self.relations.remove(&old) {
+            for (id1, relation) in relations {
+                self.delete_one_direction(id1, old);
+                self.add(new, id1, relation);
+            }
+        }
+
+        Ok(())
+    }
+
     /// Saves the relations to a file.
     pub fn save(&self, path: &Path) -> Result<()> {
         let mut file = File::create(path).context(format!("Failed to create {:?}", path))?;
@@ -114,7 +134,7 @@ pub fn load_relations<I: Id, T: Clone + Display + for<'a> From<&'a str>>(
 mod tests {
     use super::*;
     use crate::model::character::relation::relationship::Relationship;
-    use crate::model::character::relation::relationship::Relationship::Friend;
+    use crate::model::character::relation::relationship::Relationship::{Enemy, Friend};
     use crate::model::character::CharacterId;
     use tempdir::TempDir;
 
@@ -129,9 +149,28 @@ mod tests {
         assert_eq!(storage, load_relations(&file_path).unwrap());
     }
 
+    #[test]
+    fn test_switch_unknown_new() {
+        let mut storage = init_storage();
+
+        assert!(storage
+            .update_id(CharacterId::new(0), CharacterId::new(1))
+            .is_ok());
+        assert_eq!(
+            storage.get(CharacterId::new(2), CharacterId::new(3)),
+            Some(&Friend)
+        );
+        assert_eq!(
+            storage.get(CharacterId::new(2), CharacterId::new(4)),
+            Some(&Enemy)
+        );
+    }
+
     fn init_storage() -> RelationStorage<CharacterId, Relationship> {
         let mut storage = RelationStorage::default();
-        storage.add(CharacterId::new(2), CharacterId::new(3), Friend);
+        let id0 = CharacterId::new(2);
+        storage.add(id0, CharacterId::new(3), Friend);
+        storage.add(id0, CharacterId::new(4), Enemy);
         storage
     }
 }
