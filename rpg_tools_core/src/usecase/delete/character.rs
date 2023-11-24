@@ -5,8 +5,7 @@ use crate::utils::storage::DeleteElementResult;
 
 /// Tries to delete a [`character`](crate::model::character::Character).
 pub fn delete_character(data: &mut RpgData, id: CharacterId) -> DeleteResult {
-    let relations =
-        data.relations.relationships.count_all_of(id) + data.relations.romantic.count_all_of(id);
+    let relations = data.relations.count_for_character(id);
 
     if relations > 0 {
         return DeleteResult::Blocked(BlockingReason {

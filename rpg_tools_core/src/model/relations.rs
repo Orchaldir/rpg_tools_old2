@@ -12,6 +12,7 @@ pub struct Relations {
 }
 
 impl Relations {
+    /// Loads all relations from a file.
     pub fn load(setting: &str) -> Result<Self> {
         let relationships = load_relations(&get_setting_path(setting, RELATIONSHIPS_FILE))?;
         let romantic = load_relations(&get_setting_path(setting, ROMANTIC_FILE))?;
@@ -20,5 +21,10 @@ impl Relations {
             relationships,
             romantic,
         })
+    }
+
+    /// Counts all relations of a character.
+    pub fn count_for_character(&self, id: CharacterId) -> usize {
+        self.relationships.count_all_of(id) + self.romantic.count_all_of(id)
     }
 }
