@@ -63,8 +63,8 @@ impl<I: Id, T: Clone + Display> RelationStorage<I, T> {
         }
     }
 
-    /// Switches an id to another.
-    pub fn update_id(&mut self, old: I, new: I) -> Result<()> {
+    /// Swaps an id with another.
+    pub fn swap(&mut self, old: I, new: I) -> Result<()> {
         if self.contains(new) {
             bail!(
                 "Cannot switch id from {} to {}, because it is already contained!",
@@ -150,36 +150,36 @@ mod tests {
     }
 
     #[test]
-    fn test_switch() {
+    fn test_swap() {
         let mut storage = init_storage();
 
         assert!(storage
-            .update_id(CharacterId::new(2), CharacterId::new(1))
+            .swap(CharacterId::new(2), CharacterId::new(1))
             .is_ok());
-        assert_change(&mut storage, 1, 3, 4);
+        assert_swap(&mut storage, 1, 3, 4);
     }
 
     #[test]
-    fn test_switch_unknown_new() {
+    fn test_swap_unknown_new() {
         let mut storage = init_storage();
 
         assert!(storage
-            .update_id(CharacterId::new(0), CharacterId::new(1))
+            .swap(CharacterId::new(0), CharacterId::new(1))
             .is_ok());
-        assert_change(&mut storage, 2, 3, 4);
+        assert_swap(&mut storage, 2, 3, 4);
     }
 
     #[test]
-    fn test_switch_known_old() {
+    fn test_swap_known_old() {
         let mut storage = init_storage();
 
         assert!(storage
-            .update_id(CharacterId::new(2), CharacterId::new(3))
+            .swap(CharacterId::new(2), CharacterId::new(3))
             .is_err());
-        assert_change(&mut storage, 2, 3, 4);
+        assert_swap(&mut storage, 2, 3, 4);
     }
 
-    fn assert_change(
+    fn assert_swap(
         storage: &mut RelationStorage<CharacterId, Relationship>,
         id0: usize,
         id1: usize,
