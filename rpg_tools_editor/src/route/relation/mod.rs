@@ -4,7 +4,7 @@ use rpg_tools_core::model::RpgData;
 use rpg_tools_core::utils::relation::RelationStorage;
 use rpg_tools_core::utils::storage::Element;
 use rpg_tools_core::utils::storage::Id;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use std::fmt::Display;
 
 pub mod relationship;
@@ -16,7 +16,7 @@ pub struct RelationUpdate<'r> {
     relation: &'r str,
 }
 
-pub fn get_edit_relations_template<'a, T: Clone + Display + Serialize>(
+pub fn get_edit_relations_template<T: Clone + Display + Serialize>(
     data: &RpgData,
     id: CharacterId,
     relations: &RelationStorage<CharacterId, T>,
