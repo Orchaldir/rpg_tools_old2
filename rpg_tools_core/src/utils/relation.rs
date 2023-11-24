@@ -8,7 +8,7 @@ use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub struct RelationStorage<I: Id, T: Clone> {
     relations: HashMap<I, HashMap<I, T>>,
 }
@@ -108,4 +108,30 @@ pub fn load_relations<I: Id, T: Clone + Display + for<'a> From<&'a str>>(
     }
 
     Ok(storage)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::model::character::relation::relationship::Relationship;
+    use crate::model::character::relation::relationship::Relationship::Friend;
+    use crate::model::character::CharacterId;
+    use tempdir::TempDir;
+
+    #[test]
+    fn test_io() {
+        let storage = init_storage();
+
+        let dir = TempDir::new("test").unwrap();
+        let file_path = dir.path().join("relations.csv");
+
+        assert!(storage.save(&file_path).is_ok());
+        assert_eq!(storage, load_relations(&file_path).unwrap());
+    }
+
+    fn init_storage() -> RelationStorage<CharacterId, Relationship> {
+        let mut storage = RelationStorage::default();
+        storage.add(CharacterId::new(2), CharacterId::new(3), Friend);
+        storage
+    }
 }
