@@ -1,8 +1,6 @@
 use crate::utils::storage::Id;
 use anyhow::{Context, Result};
 use itertools::Itertools;
-use serde::de::DeserializeOwned;
-use serde::Deserialize;
 use std::collections::hash_map::Entry;
 use std::collections::HashMap;
 use std::fmt::Display;
@@ -15,14 +13,7 @@ pub struct RelationStorage<I: Id, T: Clone> {
     relations: HashMap<I, HashMap<I, T>>,
 }
 
-#[derive(Deserialize)]
-struct Record<T> {
-    id0: usize,
-    id1: usize,
-    relation: T,
-}
-
-impl<I: Id, T: Clone + Display + for<'a> Deserialize<'a>> RelationStorage<I, T> {
+impl<I: Id, T: Clone + Display> RelationStorage<I, T> {
     pub fn new(relations: HashMap<I, HashMap<I, T>>) -> Self {
         Self { relations }
     }
@@ -72,21 +63,6 @@ impl<I: Id, T: Clone + Display + for<'a> Deserialize<'a>> RelationStorage<I, T> 
         }
     }
 
-    /// Loads the relations from a file.
-    pub fn load(path: &Path) -> Result<Self> {
-        let mut reader =
-            csv::Reader::from_path(path).context(format!("Failed to load {:?}", path))?;
-        let mut storage = Self::new(HashMap::new());
-
-        for (line, record) in reader.deserialize().enumerate() {
-            let entry: Record<T> = record?; //.with_context(|| panic!("Cannot read line {}", line))?;
-
-            storage.add(Id::new(entry.id0), Id::new(entry.id1), entry.relation);
-        }
-
-        Ok(storage)
-    }
-
     /// Saves the relations to a file.
     pub fn save(&self, path: &Path) -> Result<()> {
         let mut file = File::create(path).context(format!("Failed to create {:?}", path))?;
@@ -105,8 +81,31 @@ impl<I: Id, T: Clone + Display + for<'a> Deserialize<'a>> RelationStorage<I, T> 
     }
 }
 
-impl<I: Id, T: Clone + Display + for<'a> Deserialize<'a>> Default for RelationStorage<I, T> {
+impl<I: Id, T: Clone + Display> Default for RelationStorage<I, T> {
     fn default() -> Self {
         RelationStorage::new(HashMap::new())
     }
+}
+
+/// Loads the relations from a file.
+pub fn load_relations<I: Id, T: Clone + Display + for<'a> From<&'a str>>(
+    path: &Path,
+) -> Result<RelationStorage<I, T>> {
+    let mut reader = csv::Reader::from_path(path).context(format!("Failed to load {:?}", path))?;
+    let mut storage = RelationStorage::new(HashMap::new());
+
+    for (line, result) in reader.records().enumerate() {
+        let record = result.with_context(|| format!("Cannot read line {}", line))?;
+
+        let id0: usize = record[0]
+            .parse()
+            .with_context(|| format!("Failed to parse id0 of line {}", line))?;
+        let id1: usize = record[1]
+            .parse()
+            .with_context(|| format!("Failed to parse id1 of line {}", line))?;
+        let relation: T = record[2].into();
+        storage.add(Id::new(id0), Id::new(id1), relation);
+    }
+
+    Ok(storage)
 }

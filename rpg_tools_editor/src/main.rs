@@ -33,13 +33,13 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::Character;
 use rpg_tools_core::model::culture::Culture;
 use rpg_tools_core::model::race::Race;
+use rpg_tools_core::model::relations::Relations;
 use rpg_tools_core::model::{get_setting_path, RpgData};
 use rpg_tools_core::utils::storage::{Id, Storage};
 use rpg_tools_rendering::rendering::config::example::create_config;
 use rpg_tools_rendering::rendering::config::RenderConfig;
 use std::env;
 use std::sync::Mutex;
-use rpg_tools_core::model::relations::Relations;
 
 pub mod io;
 pub mod parser;

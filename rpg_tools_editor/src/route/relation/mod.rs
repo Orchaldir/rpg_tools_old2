@@ -16,7 +16,7 @@ pub struct RelationUpdate<'r> {
     relation: &'r str,
 }
 
-pub fn get_edit_relations_template<'a, T: Clone + Display + Serialize + Deserialize<'a>>(
+pub fn get_edit_relations_template<'a, T: Clone + Display + Serialize>(
     data: &RpgData,
     id: CharacterId,
     relations: &RelationStorage<CharacterId, T>,
@@ -47,7 +47,7 @@ pub fn get_edit_relations_template<'a, T: Clone + Display + Serialize + Deserial
     ))
 }
 
-pub fn get_relations<'a, T: Clone + Display + Deserialize<'a>>(
+pub fn get_relations<'a, T: Clone + Display>(
     data: &'a RpgData,
     relations: &'a RelationStorage<CharacterId, T>,
     id: CharacterId,
