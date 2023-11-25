@@ -8,5 +8,11 @@ pub mod race;
 pub enum DeleteResult {
     Ok,
     NotFound,
-    Blocked { characters: Vec<CharacterId> },
+    Blocked(BlockingReason),
+}
+
+#[derive(Debug, Default, PartialEq, Eq)]
+pub struct BlockingReason {
+    pub characters: Vec<CharacterId>,
+    pub relations: usize,
 }

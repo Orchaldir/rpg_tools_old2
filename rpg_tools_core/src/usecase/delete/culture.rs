@@ -1,7 +1,7 @@
 use crate::model::character::CharacterId;
 use crate::model::culture::CultureId;
 use crate::model::RpgData;
-use crate::usecase::delete::DeleteResult;
+use crate::usecase::delete::{BlockingReason, DeleteResult};
 use crate::utils::storage::{DeleteElementResult, Element};
 
 /// Tries to delete a [`culture`](crate::model::culture::Culture).
@@ -15,9 +15,10 @@ pub fn delete_culture(data: &mut RpgData, id: CultureId) -> DeleteResult {
         .collect();
 
     if !blocking_characters.is_empty() {
-        return DeleteResult::Blocked {
+        return DeleteResult::Blocked(BlockingReason {
             characters: blocking_characters,
-        };
+            relations: 0,
+        });
     }
 
     match data.culture_manager.delete(id) {
@@ -65,9 +66,10 @@ mod tests {
             .map(|character| character.set_culture(culture_id));
 
         assert_eq!(
-            Blocked {
-                characters: vec![character_id]
-            },
+            Blocked(BlockingReason {
+                characters: vec![character_id],
+                relations: 0,
+            }),
             delete_culture(&mut data, culture_id)
         );
     }

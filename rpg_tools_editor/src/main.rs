@@ -19,6 +19,12 @@ use crate::route::race::{
     add_race, delete_race_route, edit_race, get_all_races, get_race_details, update_race,
     RACES_FILE,
 };
+use crate::route::relation::relationship::{
+    delete_relationship, edit_relationships, update_relationship,
+};
+use crate::route::relation::romantic::{
+    delete_romantic_relation, edit_romantic_relations, update_romantic_relation,
+};
 use anyhow::{bail, Result};
 use rocket::fs::FileServer;
 use rocket::State;
@@ -27,6 +33,7 @@ use rpg_tools_core::model::character::appearance::Appearance;
 use rpg_tools_core::model::character::Character;
 use rpg_tools_core::model::culture::Culture;
 use rpg_tools_core::model::race::Race;
+use rpg_tools_core::model::relations::Relations;
 use rpg_tools_core::model::{get_setting_path, RpgData};
 use rpg_tools_core::utils::storage::Storage;
 use rpg_tools_rendering::rendering::config::example::create_config;
@@ -103,6 +110,12 @@ async fn main() -> Result<()> {
                 edit_culture,
                 update_culture,
                 delete_culture_route,
+                edit_relationships,
+                delete_relationship,
+                update_relationship,
+                edit_romantic_relations,
+                delete_romantic_relation,
+                update_romantic_relation,
             ],
         )
         .attach(Template::fairing())
@@ -157,10 +170,19 @@ fn init(setting: &str) -> RpgData {
         }
     };
 
+    let relations = match Relations::load(setting) {
+        Ok(relations) => relations,
+        Err(e) => {
+            println!("Failed to load the relations: {}", e);
+            return RpgData::empty(setting.to_string());
+        }
+    };
+
     RpgData {
         setting: setting.to_string(),
         character_manager,
         culture_manager,
         race_manager,
+        relations,
     }
 }

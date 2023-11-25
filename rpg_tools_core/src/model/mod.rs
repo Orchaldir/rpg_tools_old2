@@ -1,6 +1,7 @@
 use crate::model::character::{Character, CharacterId};
 use crate::model::culture::{Culture, CultureId};
 use crate::model::race::{Race, RaceId};
+use crate::model::relations::Relations;
 use crate::utils::storage::Storage;
 use std::path::PathBuf;
 
@@ -9,6 +10,7 @@ pub mod character;
 pub mod culture;
 pub mod equipment;
 pub mod race;
+pub mod relations;
 
 #[derive(Debug)]
 pub struct RpgData {
@@ -16,6 +18,7 @@ pub struct RpgData {
     pub character_manager: Storage<CharacterId, Character>,
     pub culture_manager: Storage<CultureId, Culture>,
     pub race_manager: Storage<RaceId, Race>,
+    pub relations: Relations,
 }
 
 impl RpgData {
@@ -38,6 +41,7 @@ impl Default for RpgData {
             character_manager: Default::default(),
             culture_manager: Storage::default(),
             race_manager: Storage::default(),
+            relations: Default::default(),
         }
     }
 }

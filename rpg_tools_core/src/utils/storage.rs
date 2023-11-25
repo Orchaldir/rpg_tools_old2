@@ -1,6 +1,7 @@
+use std::hash::Hash;
 use std::marker::PhantomData;
 
-pub trait Id: Copy {
+pub trait Id: Copy + Hash + Eq {
     fn new(id: usize) -> Self;
 
     fn id(&self) -> usize;

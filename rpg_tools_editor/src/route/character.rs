@@ -1,5 +1,6 @@
 use crate::io::write;
 use crate::route::get_failed_delete_template;
+use crate::route::relation::get_relations;
 use crate::EditorData;
 use rocket::form::Form;
 use rocket::State;
@@ -8,7 +9,7 @@ use rpg_tools_core::model::character::gender::Gender;
 use rpg_tools_core::model::character::{Character, CharacterId};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::delete::character::delete_character;
-use rpg_tools_core::usecase::delete::DeleteResult;
+use rpg_tools_core::usecase::delete::{BlockingReason, DeleteResult};
 use rpg_tools_core::usecase::edit::character::{
     update_character_culture, update_character_gender, update_character_name, update_character_race,
 };
@@ -129,20 +130,23 @@ pub fn delete_character_route(data: &State<EditorData>, id: usize) -> Template {
 
     let character_id = CharacterId::new(id);
     let result = delete_character(&mut data, character_id);
+    let name = data
+        .character_manager
+        .get(character_id)
+        .map(|character| character.name())
+        .unwrap_or("Unknown")
+        .to_string();
 
     match result {
         DeleteResult::Ok => {
             write_characters(&data);
             get_all_template(data)
         }
-        _ => {
-            let name = data
-                .character_manager
-                .get(character_id)
-                .map(|character| character.name())
-                .unwrap_or("Unknown")
-                .to_string();
-            get_failed_delete_template(data, "character", id, &name, result)
+        DeleteResult::NotFound => {
+            get_failed_delete_template(data, "character", id, &name, BlockingReason::default())
+        }
+        DeleteResult::Blocked(reason) => {
+            get_failed_delete_template(data, "character", id, &name, reason)
         }
     }
 }
@@ -186,6 +190,8 @@ fn get_details_template(data: &RpgData, id: usize, character: &Character) -> Tem
             culture: culture,
             gender: character.gender(),
             appearance: character.appearance(),
+            relationships: get_relations(data, &data.relations.relationships, character.id()),
+            romantic: get_relations(data, &data.relations.romantic, character.id()),
         },
     )
 }

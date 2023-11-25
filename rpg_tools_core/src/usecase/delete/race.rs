@@ -1,7 +1,7 @@
 use crate::model::character::CharacterId;
 use crate::model::race::RaceId;
 use crate::model::RpgData;
-use crate::usecase::delete::DeleteResult;
+use crate::usecase::delete::{BlockingReason, DeleteResult};
 use crate::utils::storage::{DeleteElementResult, Element};
 
 /// Tries to delete a [`race`](crate::model::race::Race).
@@ -15,9 +15,10 @@ pub fn delete_race(data: &mut RpgData, id: RaceId) -> DeleteResult {
         .collect();
 
     if !blocking_characters.is_empty() {
-        return DeleteResult::Blocked {
+        return DeleteResult::Blocked(BlockingReason {
             characters: blocking_characters,
-        };
+            relations: 0,
+        });
     }
 
     match data.race_manager.delete(id) {
@@ -65,9 +66,10 @@ mod tests {
             .map(|character| character.set_race(race_id));
 
         assert_eq!(
-            Blocked {
-                characters: vec![character_id]
-            },
+            Blocked(BlockingReason {
+                characters: vec![character_id],
+                relations: 0,
+            }),
             delete_race(&mut data, race_id)
         );
     }

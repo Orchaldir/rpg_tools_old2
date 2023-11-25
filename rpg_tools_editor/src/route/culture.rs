@@ -7,7 +7,7 @@ use rocket_dyn_templates::{context, Template};
 use rpg_tools_core::model::culture::{Culture, CultureId};
 use rpg_tools_core::model::RpgData;
 use rpg_tools_core::usecase::delete::culture::delete_culture;
-use rpg_tools_core::usecase::delete::DeleteResult;
+use rpg_tools_core::usecase::delete::{BlockingReason, DeleteResult};
 use rpg_tools_core::usecase::edit::culture::update_culture_name;
 use rpg_tools_core::utils::storage::{Element, Id};
 use std::sync::MutexGuard;
@@ -93,20 +93,23 @@ pub fn delete_culture_route(data: &State<EditorData>, id: usize) -> Template {
 
     let culture_id = CultureId::new(id);
     let result = delete_culture(&mut data, culture_id);
+    let name = data
+        .culture_manager
+        .get(culture_id)
+        .map(|culture| culture.name())
+        .unwrap_or("Unknown")
+        .to_string();
 
     match result {
         DeleteResult::Ok => {
             save_cultures(&data);
             get_all_template(data)
         }
-        _ => {
-            let name = data
-                .culture_manager
-                .get(culture_id)
-                .map(|culture| culture.name())
-                .unwrap_or("Unknown")
-                .to_string();
-            get_failed_delete_template(data, "culture", id, &name, result)
+        DeleteResult::NotFound => {
+            get_failed_delete_template(data, "culture", id, &name, BlockingReason::default())
+        }
+        DeleteResult::Blocked(reason) => {
+            get_failed_delete_template(data, "culture", id, &name, reason)
         }
     }
 }
