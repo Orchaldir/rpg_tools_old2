@@ -3,7 +3,7 @@ use crate::model::character::relation::romantic::{RomanticRelationship, ROMANTIC
 use crate::model::character::CharacterId;
 use crate::model::get_setting_path;
 use crate::utils::relation::{load_relations, RelationStorage};
-use anyhow::Result;
+use anyhow::{Context, Result};
 
 #[derive(Debug, Default)]
 pub struct Relations {
@@ -26,5 +26,17 @@ impl Relations {
     /// Counts all relations of a character.
     pub fn count_for_character(&self, id: CharacterId) -> usize {
         self.relationships.count_all_of(id) + self.romantic.count_all_of(id)
+    }
+
+    /// Swaps a character id with another.
+    pub fn swap_character(&mut self, old: CharacterId, new: CharacterId) -> Result<()> {
+        self.relationships
+            .swap(old, new)
+            .context("Failed to swap character for relationships")?;
+        self.romantic
+            .swap(old, new)
+            .context("Failed to swap character for romantic relationships")?;
+
+        Ok(())
     }
 }

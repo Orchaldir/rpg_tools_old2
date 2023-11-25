@@ -16,7 +16,12 @@ pub fn delete_character(data: &mut RpgData, id: CharacterId) -> DeleteResult {
 
     match data.character_manager.delete(id) {
         DeleteElementResult::NotFound => DeleteResult::NotFound,
-        _ => DeleteResult::Ok,
+        DeleteElementResult::DeletedLastElement => DeleteResult::Ok,
+        DeleteElementResult::SwappedAndRemoved { id_to_update } => {
+            data.relations.swap_character(id_to_update, id).unwrap();
+
+            DeleteResult::Ok
+        }
     }
 }
 
@@ -70,5 +75,20 @@ mod tests {
 
         assert_eq!(RESULT, delete_character(&mut data, id0));
         assert_eq!(RESULT, delete_character(&mut data, id1));
+    }
+
+    #[test]
+    fn test_update_relations_with_moved_character() {
+        let mut data = RpgData::default();
+        data.culture_manager.create();
+        let id0 = data.character_manager.create();
+        let id1 = data.character_manager.create();
+        let id2 = data.character_manager.create();
+        data.relations.relationships.add(id1, id2, Friend);
+
+        assert_eq!(Ok, delete_character(&mut data, id0));
+        assert_eq!(data.relations.relationships.get(id0, id1), Some(&Friend));
+        assert_eq!(data.relations.relationships.get(id1, id2), None);
+        assert_eq!(data.relations.relationships.get(id0, id2), None);
     }
 }
